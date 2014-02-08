@@ -1,0 +1,14 @@
+ListsIO\Bundle\UserBundle\Entity\User:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    oneToMany:
+        lists:
+            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
+            mappedBy: user
+    lifecycleCallbacks: {  }

@@ -1,0 +1,27 @@
+ListsIO\Bundle\ListBundle\Entity\LIOList:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        subtitle:
+            type: string
+            length: 255
+        imageURL:
+            type: string
+            length: 255
+    manyToOne:
+        user:
+          targetEntity: ListsIO\Bundle\UserBundle\Entity\User
+    oneToMany:
+        listItems:
+            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListItem
+            mappedBy: list
+    lifecycleCallbacks: {  }

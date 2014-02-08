@@ -1,0 +1,20 @@
+ListsIO\Bundle\ListBundle\Entity\LIOListItem:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: '1024'
+    manyToOne:
+        list:
+          targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
+    lifecycleCallbacks: {  }

@@ -1,0 +1,11 @@
+lists_io_list_homepage:
+    pattern:  /
+    defaults: { _controller: ListsIOListBundle:Lists:index }
+lists_io_single_list:
+    pattern: /list/{id}.{_format}
+    defaults:  { _controller: ListsIOListBundle:Lists:viewSingle, _format: html }
+    requirements:
+      id: \d+
+      _format: html|json
+
+
