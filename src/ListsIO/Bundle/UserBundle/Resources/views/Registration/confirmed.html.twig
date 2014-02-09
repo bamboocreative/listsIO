@@ -8,4 +8,10 @@
         {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
         {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
     {% endif %}
+    <p><strong>You will be redirected to your profile.</strong></p>
+    <script type="text/javascript">
+        setTimeout(function() {
+            window.location = "{{ path('fos_user_profile_show') }}";
+        }, 2000);
+    </script>
 {% endblock fos_user_content %}

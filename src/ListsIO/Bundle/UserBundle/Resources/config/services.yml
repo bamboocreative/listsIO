@@ -2,6 +2,4 @@ parameters:
 #    lists_io_user.example.class: ListsIO\Bundle\UserBundle\Example
 
 services:
-#    lists_io_user.example:
-#        class: %lists_io_user.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+
