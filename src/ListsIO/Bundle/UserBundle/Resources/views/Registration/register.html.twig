@@ -2,14 +2,27 @@
 
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block logo %}
+<div class="home-logo">
+	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists.svg') }}"><br>
+	<h3 class="title">Lists.io</h3>
+</div>
+{% endblock %}
+
 {% block bgImage %}http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52c470899a2e1_1.JPG{% endblock %}
 {% block fos_user_content %}
 <div class="home-header">
 	<h1>These are a few of your favorite things.</h1>
 	
+	{# Button - Does nothing
+	<div class="sign-up-wrapper">
+		<a href="javascript:void(0);">
+			<button class="sign-up">Sign Up</button>
+		</a>
+	</div> #}
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4 col-md-offset-4 register-form">
+			<div class="col-md-4 col-md-offset-4 register-form" d>
 				{% include "FOSUserBundle:Registration:register_content.html.twig" %}
 			</div>
 		</div>
