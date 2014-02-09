@@ -4989,7 +4989,5 @@ button.close {
   box-sizing: border-box;
   outline: none !important; }
 
-.register-form form label {
-  display: none; }
 .register-form form input {
   width: 100%; }
