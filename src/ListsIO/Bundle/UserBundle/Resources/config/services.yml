@@ -2,4 +2,3 @@ parameters:
 #    lists_io_user.example.class: ListsIO\Bundle\UserBundle\Example
 
 services:
-
