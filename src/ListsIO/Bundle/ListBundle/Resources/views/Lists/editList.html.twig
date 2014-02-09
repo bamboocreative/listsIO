@@ -45,4 +45,12 @@
 		</div>
 	</div>
 </div>
+<div style="display: none !important" hidden id="item-template">
+	<li class="list-item">
+        <span class='number'>{{ i }}</span>
+        <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
+        <textarea placeholder="(Optional) A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
+        <a class="delete-list-item delete-button" href="javascript:void(0)">X</a>
+    </li>
+</div>
 {% endblock %}
