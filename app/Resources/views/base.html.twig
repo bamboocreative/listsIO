@@ -8,9 +8,24 @@
         <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
     </head>
     <body>        
-        {% block body %}{% endblock %}
-        {% block javascripts %}
+    	
+    	<!-- Tells you to log in or log out -->
+    	<div class="pull-right">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ user.username }}
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+			</div>
+        </div>
+        <!-- End Log in or log out message -->
         
+        {% block body %}{% endblock %}
+        
+        {% block javascripts %}
         <!-- Uncompressed DEV JQuery -->
         <script src="{{ asset('assets/js/jquery-2.1.0.js') }}"></script>
         
@@ -37,7 +52,7 @@
         <script src="{{ asset('assets/js/bootstrap/modal.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap/tooltip.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap/popover.js') }}"></script>
-         
         {% endblock %}
+        
     </body>
 </html>
