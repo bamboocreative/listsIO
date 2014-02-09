@@ -23,6 +23,30 @@ $(document).ready(function(){
 	});
 	
 	
+	/*
+	*
+	* Show Save
+	*
+	*/
+	function show_save(msg){
+
+		$saveIndicator.fadeIn().text(msg);
+
+	}
+	
+	/*
+	*
+	* Hide Save
+	*
+	*/
+	function hide_save(){
+
+		setTimeout(function(){
+				$saveIndicator.fadeOut();
+			}, 1200)	
+	}
+	
+	
 	/* 
 	*
 	* Add a list item and save it to the DB
@@ -39,7 +63,7 @@ $(document).ready(function(){
 					
 		$.ajax({
 		  type: "POST",
-		  url: '/app_dev.php/list/new_item/'+listID,
+		  url: '/list/new_item/'+listID,
 		  data : {},
 		  success: function(data){
 
@@ -68,23 +92,33 @@ $(document).ready(function(){
         $this = $(this);
         
         var listID = $this.parent().attr('data-id');
+        var url = '/list/remove/'+listID;
         
-        //Add an alert "are you sure you want to delete
-        $('#save_indicator').fadeIn().text("Saved.");
-					
-		$.ajax({
-		  type: "POST",
-		  url: '/app_dev.php/list/remove/'+listID,
-		  data : {},
-		  success: function(data){
-			  
-			  $this.parent().parent().fadeOut();
-              //remove from DOM
-              
-               $('#save_indicator').fadeOut();
-		  }
+        var confirmation = confirm("Are you sure you want to delete this list?");
 
-		});
+		if(confirmation == true){
+	
+			show_save('List deleted.')
+					
+			$.ajax({
+			  type: "POST",
+			  url: url,
+			  data : {},
+			  success: function(data){
+				  
+				  $this.parent().parent().fadeOut();
+	              
+	               hide_save()
+			  }
+	
+			});
+			
+		} else {
+
+			show_save("That was a close one!")
+			hide_save();
+
+		}
 	});
 	
 	/*
@@ -94,9 +128,7 @@ $(document).ready(function(){
 	*
 	*/
 	$(document).on('keydown', '.list-item, #title, #subtitle, #img', function(e){
-	
-		$('#save_indicator').fadeIn().text("Saving...");
-		
+		show_save('Saving...')
 	});
 
 	
@@ -142,11 +174,11 @@ $(document).ready(function(){
 	*/
 	function save_list(userID, dataID, title, subtitle, imgURL){
 		
-		$saveIndicator.text("Saved.");
+		show_save('Saved.');
 		
 		$.ajax({
 		  type: "POST",
-		  url: '/app_dev.php/list/save/'+userID,
+		  url: '/list/save/'+userID,
 		  data: {
 		  	'id': dataID,
 		  	'title' : title,
@@ -158,9 +190,7 @@ $(document).ready(function(){
 		  }
 		});
 		
-		setTimeout(function(){
-			$saveIndicator.fadeOut();
-		}, 1200)	
+		hide_save();	
 		
 	}
 	
@@ -205,7 +235,7 @@ $(document).ready(function(){
 	*/
 	function save_list_item(listID, dataID, item, desc){
 
-		$('#save_indicator').text("Saved.");
+		show_save('Saved.')
 		
 		$.ajax({
 		  type: "POST",
@@ -220,11 +250,14 @@ $(document).ready(function(){
 		  }
 		});	
 		
-		setTimeout(function(){
-			$('#save_indicator').fadeOut();
-		}, 1200)	
+		hide_save();	
 	}
 
+	/*
+	*
+	* Reorder the current list
+	*
+	*/
     function reorder_list_items()
     {
         $('.list-item').each(function(index, object) {
@@ -248,26 +281,33 @@ $(document).ready(function(){
         $this = $(this);
         
         var itemID = $this.siblings('input.item').attr('data-id');
-        var url = '/app_dev.php/list/remove_item/'+itemID;
+        var url = '/list/remove_item/'+itemID;
         
-        //Add an alert "are you sure you want to delete
-        $('#save_indicator').fadeIn().text("Deleting...");
-					
-		$.ajax({
-		  type: "POST",
-		  url: url,
-		  data : {},
-		  success: function(data) {
-              $container = $this.parents('li');
-			  $container.fadeOut();
-              $container.remove();
+        var confirmation = confirm("Are you sure you want to delete this item?");
 
-               $('#save_indicator').text('Deleted.').fadeOut();
-
-              reorder_list_items();
-		  }
-
-		});
+		if(confirmation == true){
+		
+			show_save("Item Deleted.");
+			
+			$.ajax({
+			  type: "POST",
+			  url: url,
+			  data : {},
+			  success: function(data) {
+	              $container = $this.parents('li');
+				  $container.fadeOut();
+	              $container.remove();
+	
+	               hide_save();
+	
+	              reorder_list_items();
+			  }
+	
+			});	
+		} else {
+			show_save("Good choice!")
+			hide_save();
+		}	
 	});
 	
 });
