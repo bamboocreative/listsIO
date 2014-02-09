@@ -25,13 +25,11 @@ $(document).ready(function(){
 	*
 	*/
 	$('#add').on('click', function(e){
-			
-		$('.list').append(new_item);
-		
+					
 		$.ajax({
 		  type: "POST",
 		  url: 'list/new_item/1',
-		  data: data,
+		  //data nothing
 		  success: function(){
 		  
 		  	var dataID = data.id;
@@ -64,7 +62,7 @@ $(document).ready(function(){
 	
 	/*
 	*
-	* Listen for stop typing on title and subtitle and then call save_list()
+	* Listen for stop in typing on title and subtitle and then call save_list()
 	*
 	*/
 	$('#title, #subtitle, #img').on('keyup', function(e){
@@ -130,9 +128,9 @@ $(document).ready(function(){
 	
 	/*
 	*
-	* Listen for stop typing on items and then call save_list_item()
+	* Listen for stop in typing on items and then call save_list_item()
 	*
-	
+	*
 	*/
 	$('.list').on('keyup', '.list-item', function(e){
 	

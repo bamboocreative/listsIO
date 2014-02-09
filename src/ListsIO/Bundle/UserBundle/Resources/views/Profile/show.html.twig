@@ -2,7 +2,10 @@
 
 {% block fos_user_content %}
 <h1>Profile</h1>
-{{ user }}
+{{ user.username }}<br>
+{{ user.email }}<br>
+{{ user.email|trim|lower }} -- needs to be md5 encoded for gravatar.<br>
+<a href="list/new">Add a new list</a>
 
 {% include "FOSUserBundle:Profile:show_content.html.twig" %}
 {% endblock fos_user_content %}
