@@ -17,6 +17,12 @@ $(document).ready(function(){
 	*
 	*/
 	
+	$('.share').on('click', function(){
+	
+		console.log("hello");
+		$(this).addClass('move-right');	
+		$('.share-buttons ul li').addClass('move-left')	
+	})
 	
 	
 	/* 
@@ -24,9 +30,20 @@ $(document).ready(function(){
 	* Add a list item and save it to the DB
 	*
 	*/
+	
+	var listCount = 1;
+	
 	$('#add').on('click', function(e){
+	
+		listCount++
+			
+		var dataID = 1234;
+		  	
+		  	var new_item = "<li class='list-item'><span class='number'>"+listCount+".</span><input type='text' placeholder='item' data-id='" + dataID + "'class='item' /><textarea placeholder='description' class='description'></textarea></li>";
+		
+		  	$('.list').append(new_item);
 					
-		$.ajax({
+		/*$.ajax({
 		  type: "POST",
 		  url: 'list/new_item/1',
 		  //data nothing
@@ -39,7 +56,7 @@ $(document).ready(function(){
 		  	$('.list').append(new_item);
 
 		  },
-		});
+		});*/
 		
 	});
 	
