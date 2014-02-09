@@ -1,28 +1,13 @@
 {% extends "base.html.twig" %}
 {% block body %}
-<<<<<<< HEAD
-{{ user.getEmail }}<br>
-{{ list.getTitle }}<br>
 
-{{ list.getID }}
-
-
-<ol>
-{% for item in list.getListItems() %}
-<li>  
-{{ item.title }} -
-{{ item.description }}
-</li>
-{% endfor %}
-</ol>
-
-{{ user.getEmail() }}
 <div class="background" style="min-height: 100%; min-width: 100%;">
 	
 	<div class="items">
-	
 		<input type="text" id="title" data-id="{{ list.getId() }}" placeholder="List title" value="{{ list.getTitle() }}"/>
 		<input type="text" id="subtitle" placeholder="subtitle" value="{{ list.getSubtitle() }}"/>
+		<br>
+		<br>
 		<input type="text" id="img" placeholder="http://mysite.com/myimage.jpg" value="{{ list.getImageURL() }}"/>
         <div class="list">
             {% for item in list.getListItems() %}

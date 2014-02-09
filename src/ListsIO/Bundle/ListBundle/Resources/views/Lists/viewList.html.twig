@@ -1,7 +1,20 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-		<div class="container">
-			<h1>You are now viewing a list</h1>
-		</div>
+{{ user.getEmail }}<br>
+{{ list.getTitle }}<br>
+
+{{ list.getID }}
+
+
+<ol>
+{% for item in list.getListItems() %}
+<li>  
+{{ item.title }} -
+{{ item.description }}
+</li>
+{% endfor %}
+</ol>
+
+{{ user.getEmail() }}
 {% endblock %}

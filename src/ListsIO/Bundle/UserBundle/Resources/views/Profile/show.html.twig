@@ -7,5 +7,7 @@
 {{ user.email|trim|lower }} -- needs to be md5 encoded for gravatar.<br>
 <a href="list/new">Add a new list</a>
 
+<!-- Need an array of a user's lists here -->
+
 {% include "FOSUserBundle:Profile:show_content.html.twig" %}
 {% endblock fos_user_content %}
