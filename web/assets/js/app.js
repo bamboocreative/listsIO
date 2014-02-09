@@ -36,33 +36,21 @@ $(document).ready(function(){
 	$('#add').on('click', function(e){
 	
 		listCount++
-			
-		var dataID = 1234;
+					
+		$.ajax({
+		  type: "POST",
+		  url: 'list/new_item/1',
+		  data : data,
+		  success: function(data){
+		  
+		  	var dataID = data.id;
 		  	
 		  	var new_item = "<li class='list-item'><span class='number'>"+listCount+".</span><input type='text' placeholder='item' data-id='" + dataID + "'class='item' /><textarea placeholder='description' class='description'></textarea></li>";
 		
 		  	$('.list').append(new_item);
-					
-		/*$.ajax({
-		  type: "POST",
-		  url: 'list/new_item/1',
-		  //data nothing
-		  success: function(){
-		  
-		  	var dataID = data.id;
-		  	
-		  	var new_item = "<input type='text' class='item' data-id='" + dataID + "' placeholder='item'/>";
-		
-		  	$('.list').append(new_item);
 
-<<<<<<< HEAD
 		  },
-		});*/
-=======
-		  }
 		});
->>>>>>> 5513bbb4216f9a15669e0164069bb6a307199303
-		
 	});
 	
 	
@@ -123,6 +111,8 @@ $(document).ready(function(){
 	* Take list title and save
 	*
 	* Communicate saved
+	*
+	* Using 1 as a test id should grab 1 from dataID
 	*/
 	function save_list(dataID, title, subtitle, imgURL){
 		
@@ -132,9 +122,9 @@ $(document).ready(function(){
 		
 		$.ajax({
 		  type: "POST",
-		  url: '/app_dev.php/list/save/1',
+		  url: '/save/1',
 		  data: {
-		  	'id': dataID,
+		  	'id': '1',
 		  	'title' : title,
 		  	'subtitle' : subtitle,
 		  	'imageURL' : imgURL
@@ -180,6 +170,8 @@ $(document).ready(function(){
 	* Take list item and save
 	*
 	* Communicate saved
+	*
+	* Using 1 as a test id should grab 1 from dataID
 	*/
 	function save_list_item(dataID, item, desc){
 		
@@ -190,7 +182,7 @@ $(document).ready(function(){
 		  type: "POST",
 		  url: 'save_item/1',
 		  data: {
-		  	'id': dataID,
+		  	'id': '1',
 		  	'title' : item,
 		  	'description' : desc
 		  },
