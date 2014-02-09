@@ -98,7 +98,9 @@
 			<ul>
 			{% for list in user.getLists() if list.title %}
 					<li data-id="{{ list.id }}"> 
-						<a href="list/{{ list.id }}">
+						
+						<a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
+						<!-- <a href="list/{{ list.id }}"> -->
 							<h3 class="list-title">{{ list.title }}</h3>
 							<span class="list-subtitle">{{ list.subtitle }}</span>
 						</a>
