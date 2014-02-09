@@ -59,6 +59,18 @@
 {{ asset(random(imgURL)) }} 
 {% endspaceless %}
 {% endblock %}
+{% block share %}
+<div class="share">
+        	<img src='{{ asset('assets/images/sharebuttonwhite.png') }}'><span class="share-text">share</span>
+        </div>
+        <div class="share-buttons">
+        	<ul>
+        		<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/user/view/{{ user.getId() }}"><span class="icon-facebook"></span></a></li>
+        		<li><a href="http://twitter.com/share?text=Check%20out%20my%20lists%20on%20@listIO%20–%20http://lists.io/user/view/{{ user.getId() }}"><span class="icon-twitter"></span></a></li>
+        		<li><a href="mailto:?subject=Check Out My Lists on Lists.io &body=Check out my lists.io lists%0D%0A%0D%0A – http://lists.io/user/view/{{ user.getId() }}"><span class="icon-mail"></span></a></li>
+        	</ul>
+</div>
+{% endblock %}
 {% block fos_user_content %}
 <div class="profile-wrapper">
 
