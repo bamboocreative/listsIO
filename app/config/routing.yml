@@ -1,4 +1,8 @@
-fos_lists:
+lists_io_user:
+  resource: "@ListsIOUserBundle/Resources/config/routing.yml"
+  prefix: /user
+
+lists_io_lists:
   resource: "@ListsIOListBundle/Resources/config/routing.yml"
   prefix: /
 
