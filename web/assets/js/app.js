@@ -289,7 +289,7 @@ $(document).ready(function(){
 
 		if(confirmation == true){
 		
-			show_save("Item Deleted.");
+			show_save("Item deleted.");
 			
 			$.ajax({
 			  type: "POST",

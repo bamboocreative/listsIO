@@ -52,14 +52,14 @@ class ListsController extends Controller
         $list_user = $list->getUser();
         $user = $this->getUser();
         $data = array(
-            'user' => $user,
+            'user' => $list_user,
             'list' => ($format === 'html') ? $list : $this->serializer->serialize($list, $format)
         );
         // If list belongs to user, render edit template, otherwise render view template.
-        if ($list_user->getId() === $user->getId()) {
-            return $this->render('ListsIOListBundle:Lists:editList.html.twig', $data);
-        } else {
+        if ( empty($user) || ! ($list_user->getId() === $user->getId())) {
             return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $data);
+        } else {
+            return $this->render('ListsIOListBundle:Lists:editList.html.twig', $data);
         }
     }
 
