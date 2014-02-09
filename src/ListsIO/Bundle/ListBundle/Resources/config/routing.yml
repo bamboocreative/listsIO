@@ -1,11 +1,44 @@
 lists_io_list_homepage:
     pattern:  /
     defaults: { _controller: ListsIOListBundle:Lists:index }
-lists_io_single_list:
+lists_io_view_list:
     pattern: /list/{id}.{_format}
-    defaults:  { _controller: ListsIOListBundle:Lists:viewSingle, _format: html }
+    defaults:  { _controller: ListsIOListBundle:Lists:viewList, _format: html }
     requirements:
-      id: \d+
-      _format: html|json
-
-
+        id: \d+
+        _format: html|json
+lists_io_new_list:
+    pattern: /list/new.{_format}
+    requirements:
+        _format: html
+    defaults:  { _controller: ListsIOListBundle:Lists:newList, _format: html }
+lists_io_new_list_item:
+    pattern: /list/new_item/{listId}.{_format}
+    requirements:
+        listId: \d+
+        _format: json
+    defaults: { _controller: ListsIOListBundle:Lists:newListItem, _format: json }
+lists_io_save_list:
+    pattern: /list/save/{userId}.{_format}
+    requirements:
+        userId: \d+
+        _format: json
+    defaults: { _controller: ListsIOListBundle:Lists:saveList, _format: json }
+lists_io_save_list_item:
+    pattern: /list/save_item/{listId}.{_format}
+    requirements:
+        listId: \d+
+        _format: json
+    defaults: { _controller: ListsIOListBundle:Lists:saveListItem, _format: json }
+lists_io_remove_list:
+    pattern: /list/remove/{listId}.{_format}
+    requirements:
+        listId: \d+
+        _format: json
+    defaults: { _controller: ListsIOListBundle:Lists:removeList, _format: json }
+lists_io_remove_list_item:
+    pattern: /list/remove_item/{itemId}.{_format}
+    requirements:
+        itemId: \d+
+        _format: json
+    defaults: { _controller: ListsIOListBundle:Lists:removeListItem, _format: json }

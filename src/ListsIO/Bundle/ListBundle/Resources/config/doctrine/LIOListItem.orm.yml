@@ -17,4 +17,5 @@ ListsIO\Bundle\ListBundle\Entity\LIOListItem:
     manyToOne:
         list:
           targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
+          inversedBy: listItems
     lifecycleCallbacks: {  }

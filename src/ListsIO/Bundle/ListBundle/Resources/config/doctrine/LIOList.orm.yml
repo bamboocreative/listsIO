@@ -20,6 +20,7 @@ ListsIO\Bundle\ListBundle\Entity\LIOList:
     manyToOne:
         user:
           targetEntity: ListsIO\Bundle\UserBundle\Entity\User
+          inversedBy: lists
     oneToMany:
         listItems:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListItem

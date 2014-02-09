@@ -44,6 +44,9 @@ class LIOList
     public function __construct()
     {
         $this->listItems = new ArrayCollection();
+        $this->title = "";
+        $this->subtitle = "";
+        $this->imageURL = "";
     }
 
     /**
@@ -128,12 +131,12 @@ class LIOList
     /**
      * Add listItems
      *
-     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListItem $listItems
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListItem $listItem
      * @return LIOList
      */
-    public function addListItem(\ListsIO\Bundle\ListBundle\Entity\LIOListItem $listItems)
+    public function addListItem(LIOListItem $listItem)
     {
-        $this->listItems[] = $listItems;
+        $this->listItems[] = $listItem;
 
         return $this;
     }
@@ -141,11 +144,11 @@ class LIOList
     /**
      * Remove listItems
      *
-     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListItem $listItems
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListItem $listItem
      */
-    public function removeListItem(\ListsIO\Bundle\ListBundle\Entity\LIOListItem $listItems)
+    public function removeListItem(LIOListItem $listItem)
     {
-        $this->listItems->removeElement($listItems);
+        $this->listItems->removeElement($listItem);
     }
 
     /**
@@ -180,4 +183,5 @@ class LIOList
     {
         return $this->user;
     }
+
 }

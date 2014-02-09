@@ -29,6 +29,11 @@ class LIOListItem
      */
     private $list;
 
+    public function __construct()
+    {
+        $this->title = "";
+        $this->description = "";
+    }
 
     /**
      * Get id
@@ -108,4 +113,5 @@ class LIOListItem
     {
         return $this->list;
     }
+
 }
