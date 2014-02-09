@@ -6,6 +6,8 @@ $(document).ready(function(){
     var listID = $title.attr('data-id');
 
     var userID = $title.attr('data-user_id');
+
+    var $saveIndicator = $('#save_indicator');
 	
 	/*
 	*
@@ -18,7 +20,7 @@ $(document).ready(function(){
 		console.log("hello");
 		$(this).addClass('move-right');	
 		$('.share-buttons ul li').addClass('move-left');
-	})
+	});
 	
 	
 	/* 
@@ -140,7 +142,7 @@ $(document).ready(function(){
 	*/
 	function save_list(userID, dataID, title, subtitle, imgURL){
 		
-		$('#save_indicator').text("Saved.");
+		$saveIndicator.text("Saved.");
 		
 		$.ajax({
 		  type: "POST",
@@ -157,7 +159,7 @@ $(document).ready(function(){
 		});
 		
 		setTimeout(function(){
-			$('#save_indicator').fadeOut();
+			$saveIndicator.fadeOut();
 		}, 1200)	
 		
 	}
@@ -222,6 +224,15 @@ $(document).ready(function(){
 			$('#save_indicator').fadeOut();
 		}, 1200)	
 	}
+
+    function reorder_list_items()
+    {
+        $('.list-item').each(function(index, object) {
+
+            $(this).find('.number').html(""+(index + 1)+".");
+
+        });
+    }
 	
 	
 	/* 
@@ -236,23 +247,25 @@ $(document).ready(function(){
         
         $this = $(this);
         
-        var itemID = $this.parent().find('.item').attr('data-id');
+        var itemID = $this.siblings('input.item').attr('data-id');
+        var url = '/app_dev.php/list/remove_item/'+itemID;
         
         //Add an alert "are you sure you want to delete
-        $('#save_indicator').fadeIn().text("Saved.");
+        $('#save_indicator').fadeIn().text("Deleting...");
 					
 		$.ajax({
 		  type: "POST",
-		  url: '/app_dev.php/list/remove_item/'+itemID,
+		  url: url,
 		  data : {},
-		  success: function(data){
-			  
-			  $this.parent().fadeOut();
-              //remove from DOM and reshuffle list-item numbers
-              
-               $('#save_indicator').fadeOut();
+		  success: function(data) {
+              $container = $this.parents('li');
+			  $container.fadeOut();
+              $container.remove();
+
+               $('#save_indicator').text('Deleted.').fadeOut();
+
+              reorder_list_items();
 		  }
-		  
 
 		});
 	});

@@ -127,18 +127,18 @@ class ListsController extends Controller
         $format = $request->getRequestFormat();
         $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $listId);
         $this->removeEntity($list);
-        return $this->render('ListsIOListBundle:Lists:remove.'.$format.'.twig',
-            array('result' => array('success' => TRUE)));
+        $response = json_encode(array('success' => TRUE));
+        return new Response($response);
     }
 
-    public function removeListItemAction(Request $request, $listItemId)
+    public function removeListItemAction(Request $request, $itemId)
     {
         $this->requireXmlHttpRequest($request);
         $format = $request->getRequestFormat();
-        $listItem = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOListItem', $listItemId);
+        $listItem = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOListItem', $itemId);
         $this->removeEntity($listItem);
-        return $this->render('ListsIOListBundle:Lists:remove.'.$format.'.twig',
-            array('result' => array('success' => TRUE)));
+        $response = json_encode(array('success' => TRUE));
+        return new Response($response);
     }
 
     public function requireXmlHttpRequest(Request $request)
