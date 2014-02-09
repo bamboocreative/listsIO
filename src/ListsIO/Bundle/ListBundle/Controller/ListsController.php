@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Doctrine\Bundle\DoctrineBundle\Registry as Registry;
+use Symfony\Component\HttpFoundation\Response as Response;
 
 class ListsController extends Controller
 {
@@ -74,11 +75,10 @@ class ListsController extends Controller
     public function newListItemAction(Request $request, $listId)
     {
         $this->requireXmlHttpRequest($request);
-        $format = $request->getRequestFormat();
         $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $listId);
         $listItem = $this->newListItem($list);
-        return $this->render('ListsIOListBundle:Lists:viewListItem.'.$format.'.twig',
-            array('listItem' => json_encode($listItem)));
+        $response = json_encode($listItem);
+        return new Response($response);
     }
 
     public function saveListAction(Request $request, $userId)

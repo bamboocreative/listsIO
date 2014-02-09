@@ -21,8 +21,11 @@
 		        <div class="list">
 			        <div class="col-md-8 col-md-offset-2">
 			            <ol>
+                        {%  set i = 0 %}
 			            {% for item in list.getListItems() %}
+                            {%  set i = i+1 %}
 			                <li class="list-item">
+                                <span class='number'>{{ i }}</span>
 			                    <div data-id="{{ item.getId() }}" class="item">{{ item.getTitle() }}</div>
 			                    <div class="description">{{ item.getDescription() }}</div>
 			                </li>
@@ -34,5 +37,5 @@
 			<br><br>
 		</div>
 	</div>
-<div/>
+</div>
 {% endblock %}

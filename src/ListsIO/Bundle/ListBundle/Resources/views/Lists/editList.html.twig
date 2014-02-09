@@ -18,15 +18,18 @@
 		        <div class="list">
 			        <div class="col-md-8 col-md-offset-2">
 			            <ol>
+                        {%  set i = 0 %}
 			            {% for item in list.getListItems() %}
+                            {%  set i = i+1 %}
 			                <li class="list-item">
+                                <span class='number'>{{ i }}</span>
 			                    <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
 			                    <textarea placeholder="(Optional) A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
 			                </li>
 			            {% endfor %}
 			            </ol>
 			            <div class="list-button-wrapper">
-							<a id="add" class="add-list-button" href="javascript:void(0)">
+							<a id="add" class="add-list-button" href="#">
 								<table>
 									<tr>
 										<td class="add-img"><img src="{{ asset('assets/images/list-add.png') }}"></td>
@@ -34,6 +37,7 @@
 									</tr>
 								</table>
 							</a>
+                        </div>
                     </div>
 		        </div>
 			</div>

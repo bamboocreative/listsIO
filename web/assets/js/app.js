@@ -17,7 +17,7 @@ $(document).ready(function(){
 	
 		console.log("hello");
 		$(this).addClass('move-right');	
-		$('.share-buttons ul li').addClass('move-left')	
+		$('.share-buttons ul li').addClass('move-left');
 	})
 	
 	
@@ -27,10 +27,12 @@ $(document).ready(function(){
 	*
 	*/
 	
-	var listCount = 1;
+	var listCount = $('.list-item').length;
 	
 	$('#add').on('click', function(e){
-	
+
+        e.preventDefault();
+
 		listCount++;
 					
 		$.ajax({
@@ -38,32 +40,16 @@ $(document).ready(function(){
 		  url: '/app_dev.php/list/new_item/'+listID,
 		  data : {},
 		  success: function(data){
-		  
-		  	var dataID = data.id;
-		  	
-		  	var $new_item = $("<li class='list-item'><span class='number'>"+listCount+".</span><input type='text' placeholder='item' data-id='" + dataID + "'class='item' /><textarea placeholder='description' class='description'></textarea></li>");
-		
-		  	$('.list').append($new_item);
+
+              var dataID = data.id;
+
+              var $new_item = $("<li class='list-item'><span class='number'>"+listCount+".</span><input type='text' placeholder='List item title' data-id='" + dataID + "' class='item' /><textarea placeholder='(Optional) A short description of this list item.' class='description'></textarea></li>");
+
+              $('ol', '.list').append($new_item);
 
 		  }
 
 		});
-	});
-	
-	
-	
-	
-	/*
-	*
-	* Listen for a key down and communicate saving
-	*
-	*/
-	
-	$(document).on('keydown', function(e){
-			
-			console.log("Saving....");
-			//$('.saveIndicator').text("Saving...");
-		
 	});
 	
 	
@@ -167,8 +153,7 @@ $(document).ready(function(){
 	* Using 1 as a test id should grab 1 from dataID
 	*/
 	function save_list_item(listID, dataID, item, desc){
-		
-		console.log("Saved! " + item + " with id " + dataID + " " + desc);
+
 		//$('.saveIndicator').text("Saved.");
 		
 		$.ajax({
