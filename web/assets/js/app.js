@@ -90,32 +90,34 @@ $(document).ready(function(){
         e.preventDefault();
         
         $this = $(this);
-        
-        var listID = $this.parent().attr('data-id');
-        var url = '/list/remove/'+listID;
+
+        var $container = $this.parents('li');
+        var listID = $container.attr('data-id');
+
+        alert(listID);
+
+        var url = '/app_dev.php/list/remove/'+listID;
         
         var confirmation = confirm("Are you sure you want to delete this list?");
 
 		if(confirmation == true){
-	
-			show_save('List deleted.')
 					
 			$.ajax({
 			  type: "POST",
 			  url: url,
 			  data : {},
 			  success: function(data){
-				  
-				  $this.parent().parent().fadeOut();
-	              
-	               hide_save()
+				  $container.fadeOut();
+                  $container.remove();
+                  show_save('List deleted.');
+	              hide_save()
 			  }
 	
 			});
 			
 		} else {
 
-			show_save("That was a close one!")
+			show_save("That was a close one!");
 			hide_save();
 
 		}
@@ -235,7 +237,7 @@ $(document).ready(function(){
 	*/
 	function save_list_item(listID, dataID, item, desc){
 
-		show_save('Saved.')
+		show_save('Saved.');
 		
 		$.ajax({
 		  type: "POST",
@@ -305,7 +307,7 @@ $(document).ready(function(){
 	
 			});	
 		} else {
-			show_save("Good choice!")
+			show_save("Good choice!");
 			hide_save();
 		}	
 	});

@@ -11,4 +11,5 @@ ListsIO\Bundle\UserBundle\Entity\User:
         lists:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
             mappedBy: user
+            cascade: ["remove"]
     lifecycleCallbacks: {  }

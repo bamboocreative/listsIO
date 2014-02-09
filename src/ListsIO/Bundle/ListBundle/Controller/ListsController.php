@@ -124,8 +124,10 @@ class ListsController extends Controller
     public function removeListAction(Request $request, $listId)
     {
         $this->requireXmlHttpRequest($request);
-        $format = $request->getRequestFormat();
         $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $listId);
+        if (empty($list)) {
+            throw new EntityNotFoundException("Couldn't find list to remove it.");
+        }
         $this->removeEntity($list);
         $response = json_encode(array('success' => TRUE));
         return new Response($response);
@@ -136,6 +138,9 @@ class ListsController extends Controller
         $this->requireXmlHttpRequest($request);
         $format = $request->getRequestFormat();
         $listItem = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOListItem', $itemId);
+        if (empty($listItem)) {
+            throw new EntityNotFoundException("Couldn't find list item to remove it.");
+        }
         $this->removeEntity($listItem);
         $response = json_encode(array('success' => TRUE));
         return new Response($response);
