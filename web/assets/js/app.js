@@ -8,6 +8,8 @@ $(document).ready(function(){
     var userID = $title.attr('data-user_id');
 
     var $saveIndicator = $('#save_indicator');
+    
+    var $item_template = $('#item-template');
 	
 	/*
 	*
@@ -68,11 +70,12 @@ $(document).ready(function(){
 		  success: function(data){
 
               var dataID = data.id;
+              
+              $item_template.find('.item').attr('data-id', dataID);
 
-			  //move out to twig template
-              var $new_item = $("<li class='list-item'><span class='number'>"+listCount+".</span><input type='text' placeholder='List item title' data-id='" + dataID + "' class='item' /><textarea placeholder='(Optional) A short description of this list item.' class='description'></textarea></li>");
-
-              $('ol', '.list').append($new_item);
+              $('ol', '.list').append($item_template.html());
+              
+              reorder_list_items()
 
 		  }
 
@@ -276,7 +279,7 @@ $(document).ready(function(){
 	*
 	*/
 		
-	$('.list-item').on('click', '.delete-list-item', function(e){
+	$('.list').on('click', '.delete-list-item', function(e){
 
         e.preventDefault();
         
