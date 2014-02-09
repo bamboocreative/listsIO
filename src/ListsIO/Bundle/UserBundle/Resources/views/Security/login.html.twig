@@ -2,24 +2,32 @@
 
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block logo %}
+<div class="home-logo">
+	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists.svg') }}"><br>
+	<h3 class="title">Lists.io</h3>
+</div>
+{% endblock %}
 
 {% block fos_user_content %}
+<div class="container">
+<div class="row">
+<div class="col-md-4 col-md-offset-4 login-wrapper">
 {% if error %}
     <div>{{ error|trans }}</div>
 {% endif %}
-
 <form action="{{ path("fos_user_security_check") }}" method="post">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-
     <label for="username">{{ ''|trans }}</label>
     <input placeholder="username/email" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
-
     <label for="password">{{ ''|trans }}</label>
     <input placeholder="password" type="password" id="password" name="_password" required="required" />
-
     <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'Remember Me'|trans }}</label>
-
+    <label class="checkbox-label" for="remember_me">{{ 'Remember Me'|trans }}</label>
     <input type="submit" id="_submit" name="_submit" value="Login" />
 </form>
+</div>
+</div>
+</div>
 {% endblock fos_user_content %}
+

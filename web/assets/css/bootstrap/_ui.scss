@@ -423,6 +423,22 @@ div#subtitle{
 	margin: 0px 0px 35px;
 }
 
+.login-wrapper{
+	input[type="text"], input[type="password"], input[type="submit"]{
+		width: 100% !important;
+	}
+	
+	input[type="checkbox"]{
+		padding: 10px 0px;
+	}
+	
+	.checkbox-label{
+		padding: 10px 0px;
+		font-weight: 100;
+		margin-bottom: 0px;
+	}
+}
+
 div#author{
 	font-size: 1.3em;
 	padding-left: 3px;

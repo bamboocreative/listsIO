@@ -5371,6 +5371,15 @@ div#subtitle {
   line-height: 1.3em;
   margin: 0px 0px 35px; }
 
+.login-wrapper input[type="text"], .login-wrapper textarea[type="text"], .login-wrapper input[type="password"], .login-wrapper textarea[type="password"], .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"] {
+  width: 100% !important; }
+.login-wrapper input[type="checkbox"], .login-wrapper textarea[type="checkbox"] {
+  padding: 10px 0px; }
+.login-wrapper .checkbox-label {
+  padding: 10px 0px;
+  font-weight: 100;
+  margin-bottom: 0px; }
+
 div#author {
   font-size: 1.3em;
   padding-left: 3px;
