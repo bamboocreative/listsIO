@@ -342,6 +342,40 @@ hr {
   clip: rect(0, 0, 0, 0);
   border: 0; }
 
+@font-face {
+  font-family: 'lists_iconfont';
+  src: url("/assets/fonts/ico/lists_iconfont.eot?-3yy6vr");
+  src: url("/assets/fonts/ico/lists_iconfont.eot?#iefix-3yy6vr") format("embedded-opentype"), url("/assets/fonts/ico/lists_iconfont.woff?-3yy6vr") format("woff"), url("/assets/fonts/ico/lists_iconfont.ttf?-3yy6vr") format("truetype"), url("/assets/fonts/ico/lists_iconfont.svg?-3yy6vr#lists_iconfont") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'lists_iconfont';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon-facebook:before {
+  content: "\e600"; }
+
+.icon-twitter:before {
+  content: "\e601"; }
+
+.icon-mail:before {
+  content: "\e602"; }
+
+.icon-link:before {
+  content: "\e603"; }
+
+.icon-add_bgimage:before {
+  content: "\e604"; }
+
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: inherit;
@@ -5337,6 +5371,15 @@ div#subtitle {
   line-height: 1.3em;
   margin: 0px 0px 35px; }
 
+.login-wrapper input[type="text"], .login-wrapper textarea[type="text"], .login-wrapper input[type="password"], .login-wrapper textarea[type="password"], .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"] {
+  width: 100% !important; }
+.login-wrapper input[type="checkbox"], .login-wrapper textarea[type="checkbox"] {
+  padding: 10px 0px; }
+.login-wrapper .checkbox-label {
+  padding: 10px 0px;
+  font-weight: 100;
+  margin-bottom: 0px; }
+
 div#author {
   font-size: 1.3em;
   padding-left: 3px;
@@ -5444,37 +5487,55 @@ div#author {
 
 .share {
   position: fixed;
-  right: 40px;
-  bottom: 40px; }
+  right: 50px;
+  bottom: 30px; }
+  .share img {
+    width: 30px;
+    margin-bottom: 12px; }
+  .share .share-text {
+    position: relative;
+    margin-left: 5px;
+    font-size: 1em; }
+  .share:hover {
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    opacity: .7;
+    cursor: pointer; }
 
 .share-buttons ul {
   list-style: none;
   margin: 0; }
+  .share-buttons ul a {
+    color: #ffffff;
+    background: none;
+    text-decoration: none; }
   .share-buttons ul li {
     position: fixed;
     right: -250px;
     bottom: 40px;
-    display: inline; }
+    display: inline;
+    font-size: 1.5em; }
     .share-buttons ul li:nth-child(1) {
+      -webkit-transition-delay: 0.1s;
+      transition-delay: 0.1s;
+      right: -100px; }
+    .share-buttons ul li:nth-child(2) {
       -webkit-transition-delay: 0.2s;
       transition-delay: 0.2s;
-      right: -130px; }
-    .share-buttons ul li:nth-child(2) {
-      -webkit-transition-delay: 0.3s;
-      transition-delay: 0.3s;
       right: -170px; }
     .share-buttons ul li:nth-child(3) {
-      -webkit-transition-delay: 0.5s;
-      transition-delay: 0.5s;
-      right: -210px; }
-    .share-buttons ul li:nth-child(4) {
-      -webkit-transition-delay: 0.8s;
-      transition-delay: 0.8s;
-      right: -250px; }
+      -webkit-transition-delay: 0.3s;
+      transition-delay: 0.3s;
+      right: -230px; }
+    .share-buttons ul li:hover {
+      -webkit-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+      opacity: .7;
+      cursor: pointer; }
 
 .move-left {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
   -webkit-transform: translate(-300px, 0);
   -ms-transform: translate(-300px, 0);
   transform: translate(-300px, 0); }

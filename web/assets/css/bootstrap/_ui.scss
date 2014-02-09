@@ -423,6 +423,22 @@ div#subtitle{
 	margin: 0px 0px 35px;
 }
 
+.login-wrapper{
+	input[type="text"], input[type="password"], input[type="submit"]{
+		width: 100% !important;
+	}
+	
+	input[type="checkbox"]{
+		padding: 10px 0px;
+	}
+	
+	.checkbox-label{
+		padding: 10px 0px;
+		font-weight: 100;
+		margin-bottom: 0px;
+	}
+}
+
 div#author{
 	font-size: 1.3em;
 	padding-left: 3px;
@@ -522,10 +538,27 @@ div#author{
 	}
 }
 
-.share{
+.share {
 	position: fixed;
-	right: 40px;
-	bottom: 40px;
+	right: 50px;
+	bottom: 30px;
+	
+	img {
+		width: 30px;
+		margin-bottom: 12px;
+	}
+	
+	.share-text {
+		position: relative;
+		margin-left: 5px;
+		font-size: 1em;
+	}
+	
+	&:hover{
+		@include transition(all .5s ease);
+		opacity: .7;
+		cursor: pointer;
+	}
 }
 
 .share-buttons{
@@ -533,34 +566,44 @@ div#author{
 		list-style: none;
 		margin: 0;
 		
+		a {
+			color: #ffffff;
+			background: none;
+			text-decoration: none;
+		}
+		
 		li {
 			position: fixed;
 			right: -250px;
 			bottom: 40px;
 			display: inline;
+			font-size: 1.5em;
 			
 			&:nth-child(1){
-				@include transition-delay(.2s);
-				right: -130px;
+				@include transition-delay(.1s);
+				right: -100px;
 			}
 			&:nth-child(2){
-				@include transition-delay(.3s);
+				@include transition-delay(.2s);
 				right: -170px;
 			}
 			&:nth-child(3){
-				@include transition-delay(.5s);
-				right: -210px;
+				@include transition-delay(.3s);
+				right: -230px;
 			}
-			&:nth-child(4){
-				@include transition-delay(.8s);
-				right: -250px;
+
+			
+			&:hover{
+				@include transition(all .3s ease);
+				opacity: .7;
+				cursor: pointer;
 			}
 		}
 	}
 }
 
 .move-left{
-	@include transition(all .3s ease-in);
+	@include transition(all .2s ease-in);
 	@include translate(-300px, 0);
 }
 

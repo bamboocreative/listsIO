@@ -17,12 +17,13 @@ $(document).ready(function(){
 	*
 	*/
 	
-	$('.share').on('click', function(){
+	$('.share').on('mouseover', function(e){
 	
-		console.log("hello");
 		$(this).addClass('move-right');	
 		$('.share-buttons ul li').addClass('move-left');
+		
 	});
+	
 	
 	
 	/*
