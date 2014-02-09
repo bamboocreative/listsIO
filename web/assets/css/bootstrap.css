@@ -5032,14 +5032,19 @@ button.close {
   top: 15px; }
   .logo a:hover {
     text-decoration: none; }
-  .logo:hover img.lists-bg {
-    -webkit-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    transform: rotate(360deg); }
+  .logo.spinning img.lists-bg {
+    -webkit-animation-name: logo;
+    animation-name: logo;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: normal;
+    animation-direction: normal; }
   .logo img {
-    width: 80px;
-    -webkit-transition: 0.4s all;
-    transition: 0.4s all; }
+    width: 80px; }
     .logo img.lists-l {
       position: absolute;
       left: 2px;
@@ -5048,6 +5053,27 @@ button.close {
     font-size: .7em;
     font-weight: 100;
     padding-left: 15px; }
+
+@-moz-keyframes logo {
+  from {
+    -moz-transform: rotate(0deg); }
+
+  to {
+    -moz-transform: rotate(360deg); } }
+
+@-webkit-keyframes logo {
+  from {
+    -webkit-transform: rotate(0deg); }
+
+  to {
+    -webkit-transform: rotate(360deg); } }
+
+@keyframes logo {
+  from {
+    transform: rotate(0deg); }
+
+  to {
+    transform: rotate(360deg); } }
 
 .svg .png-img {
   display: none; }

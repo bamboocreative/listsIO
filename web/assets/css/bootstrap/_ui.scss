@@ -18,6 +18,7 @@
 	&:hover{
 		color: white;
 	}
+	
 }
 
 .logo{
@@ -26,24 +27,32 @@
 	left: 20px;
 	top:15px;
 	
+	
 	a{
 		&:hover{
 			text-decoration: none;
 		}
 	}
 	
-	&:hover{
 	
-		img.lists-bg{
-			@include rotate(360deg);
-		}
-		
+	img.lists-bg{
+			
+					
+			
 	}
 	
+	&.spinning{
+		img.lists-bg{
+			@include animation-name(logo);
+			@include animation-duration(1s);
+			@include animation-timing-function(linear);
+			@include animation-iteration-count(infinite);
+			@include animation-direction(normal);
+		}
+	}	
+	
 	img{
-		width: 80px;
-		
-		@include transition(.4s all);
+		width: 80px;	
 		
 		&.lists-l{
 			position: absolute;
@@ -61,6 +70,21 @@
 		padding-left: 15px;
 	}
 }
+
+@-moz-keyframes logo {
+		    from { -moz-transform: rotate(0deg); }
+		    to { -moz-transform: rotate(360deg); }
+			}
+			@-webkit-keyframes logo {
+			    from { -webkit-transform: rotate(0deg); }
+			    to { -webkit-transform: rotate(360deg); }
+			}
+			@keyframes logo {
+			    from {transform:rotate(0deg);}
+			    to {transform:rotate(360deg);}
+			}
+
+			
 
 .svg{
 	.png-img{
