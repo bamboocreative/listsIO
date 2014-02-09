@@ -26,9 +26,34 @@
 	left: 20px;
 	top:15px;
 	
-	img{
-		width: 60px;
+	a{
+		&:hover{
+			text-decoration: none;
+		}
 	}
+	
+	&:hover{
+	
+		img.lists-bg{
+			@include rotate(360deg);
+		}
+		
+	}
+	
+	img{
+		width: 80px;
+		
+		@include transition(.4s all);
+		
+		&.lists-l{
+			position: absolute;
+			left: 2px;
+			top: 0;
+		}
+		
+	}
+	
+	
 	
 	#save_indicator{
 		font-size: .7em;
@@ -145,14 +170,15 @@
 	ul{
 		margin: 0;
 		padding: 0;
-		a{
-			color: white;
-			text-decoration: none;
 			
 			li{
+				position: relative;
 				list-style-type: none;
 				margin-bottom: 4em;
-				
+				a{
+					color: white;
+					text-decoration: none;
+
 				.list-title{
 						font-weight: 900;
 						margin-bottom: 8px;
@@ -166,6 +192,13 @@
 		}
 	}
 	
+}
+
+.delete-button{
+	position: absolute;
+	top:0;
+	right: 0;
+	padding: 10px;
 }
 
 .list-button-wrapper{

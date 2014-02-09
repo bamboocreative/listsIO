@@ -5030,8 +5030,20 @@ button.close {
   position: absolute;
   left: 20px;
   top: 15px; }
+  .logo a:hover {
+    text-decoration: none; }
+  .logo:hover img.lists-bg {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg); }
   .logo img {
-    width: 60px; }
+    width: 80px;
+    -webkit-transition: 0.4s all;
+    transition: 0.4s all; }
+    .logo img.lists-l {
+      position: absolute;
+      left: 2px;
+      top: 0; }
   .logo #save_indicator {
     font-size: .7em;
     font-weight: 100;
@@ -5107,17 +5119,24 @@ button.close {
 .profile-lists-wrapper ul {
   margin: 0;
   padding: 0; }
-  .profile-lists-wrapper ul a {
-    color: white;
-    text-decoration: none; }
-    .profile-lists-wrapper ul a li {
-      list-style-type: none;
-      margin-bottom: 4em; }
-      .profile-lists-wrapper ul a li .list-title {
+  .profile-lists-wrapper ul li {
+    position: relative;
+    list-style-type: none;
+    margin-bottom: 4em; }
+    .profile-lists-wrapper ul li a {
+      color: white;
+      text-decoration: none; }
+      .profile-lists-wrapper ul li a .list-title {
         font-weight: 900;
         margin-bottom: 8px; }
-      .profile-lists-wrapper ul a li .list-subtitle {
+      .profile-lists-wrapper ul li a .list-subtitle {
         font-weight: 100; }
+
+.delete-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px; }
 
 .list-button-wrapper {
   text-align: center;

@@ -15,7 +15,12 @@
     </head>
     <body style="background-image:url('{% block bgImage %}{% endblock %}');">        
     	<div class="logo">
-    	<a href=""><img class="svg-img" src="{{ asset('assets/images/lists.svg') }}"><img class="png-img" src="{{ asset('assets/images/lists.png') }}"></a><span id="save_indicator"></span>
+	    	<a href="">
+		    	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists_bg.svg') }}">
+		    	<img class="svg-img lists-l" src="{{ asset('assets/images/lists_fg.svg') }}">
+		    	<img class="png-img" src="{{ asset('assets/images/lists.png') }}">
+	    	</a>
+    	<span id="save_indicator"></span>
     	</div>
     	<div class="body-screen"></div>
     	<!-- Tells you to log in or log out -->
