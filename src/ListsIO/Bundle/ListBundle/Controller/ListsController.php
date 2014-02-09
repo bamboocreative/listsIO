@@ -99,8 +99,8 @@ class ListsController extends Controller
         $list->setImageURL($data['imageURL']);
         $list->setUser($user);
         $this->saveEntity($list);
-        return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig',
-            array('list' => json_encode($list)));
+        $response = json_encode($list);
+        return new Response($response);
     }
 
     public function saveListItemAction(Request $request, $listId)
@@ -117,8 +117,8 @@ class ListsController extends Controller
         $listItem->setTitle($data['title']);
         $listItem->setDescription($data['description']);
         $this->saveEntity($listItem);
-        return $this->render('ListsIOListBundle:Lists:viewListItem.'.$format.'.twig',
-            array('listItem' => json_encode($listItem->jsonSerialize())));
+        $response= json_encode($listItem);
+        return new Response($response);
     }
 
     public function removeListAction(Request $request, $listId)

@@ -266,7 +266,7 @@ $(document).ready(function(){
     {
         $('.list-item').each(function(index, object) {
 
-            $(this).find('.number').html(""+(index + 1)+".");
+            $(this).find('.number').html(""+(index + 1));
 
         });
     }
