@@ -43,6 +43,7 @@ $(document).ready(function(){
 
               var dataID = data.id;
 
+			  //move out to twig template
               var $new_item = $("<li class='list-item'><span class='number'>"+listCount+".</span><input type='text' placeholder='List item title' data-id='" + dataID + "' class='item' /><textarea placeholder='(Optional) A short description of this list item.' class='description'></textarea></li>");
 
               $('ol', '.list').append($new_item);
@@ -65,6 +66,9 @@ $(document).ready(function(){
         $this = $(this);
         
         var listID = $this.parent().attr('data-id');
+        
+        //Add an alert "are you sure you want to delete
+        $('#save_indicator').fadeIn().text("Saved.");
 					
 		$.ajax({
 		  type: "POST",
@@ -74,10 +78,25 @@ $(document).ready(function(){
 			  
 			  $this.parent().parent().fadeOut();
               //remove from DOM
+              
+               $('#save_indicator').fadeOut();
 		  }
 
 		});
 	});
+	
+	/*
+	*
+	* Listen for stop in typing on items and then call save_list_item()
+	*
+	*
+	*/
+	$(document).on('keydown', '.list-item, #title, #subtitle, #img', function(e){
+	
+		$('#save_indicator').fadeIn().text("Saving...");
+		
+	});
+
 	
 	
 	/*
@@ -95,6 +114,8 @@ $(document).ready(function(){
 		
 			if(imgURL){
 				$('body').css('background-image', 'url(' + imgURL + ')');
+			} else {
+				$('body').css('background-image', 'none');
 			}
 		
 		clearTimeout($.data(this, 'timer'));
@@ -119,9 +140,7 @@ $(document).ready(function(){
 	*/
 	function save_list(userID, dataID, title, subtitle, imgURL){
 		
-		console.log("Saved! " + title + " with id " + dataID + " " + subtitle + " and image " + imgURL);
-		//$('.saveIndicator').text("Saved.");
-		
+		$('#save_indicator').text("Saved.");
 		
 		$.ajax({
 		  type: "POST",
@@ -136,6 +155,11 @@ $(document).ready(function(){
 		  	console.log(resp);
 		  }
 		});
+		
+		setTimeout(function(){
+			$('#save_indicator').fadeOut();
+		}, 1200)	
+		
 	}
 	
 	
@@ -179,7 +203,7 @@ $(document).ready(function(){
 	*/
 	function save_list_item(listID, dataID, item, desc){
 
-		//$('.saveIndicator').text("Saved.");
+		$('#save_indicator').text("Saved.");
 		
 		$.ajax({
 		  type: "POST",
@@ -192,7 +216,11 @@ $(document).ready(function(){
 		  success: function(){
 		  	console.log(resp);
 		  }
-		});		
+		});	
+		
+		setTimeout(function(){
+			$('#save_indicator').fadeOut();
+		}, 1200)	
 	}
 	
 	
@@ -209,6 +237,9 @@ $(document).ready(function(){
         $this = $(this);
         
         var itemID = $this.parent().find('.item').attr('data-id');
+        
+        //Add an alert "are you sure you want to delete
+        $('#save_indicator').fadeIn().text("Saved.");
 					
 		$.ajax({
 		  type: "POST",
@@ -217,8 +248,11 @@ $(document).ready(function(){
 		  success: function(data){
 			  
 			  $this.parent().fadeOut();
-              //remove from DOM
+              //remove from DOM and reshuffle list-item numbers
+              
+               $('#save_indicator').fadeOut();
 		  }
+		  
 
 		});
 	});
