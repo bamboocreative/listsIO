@@ -25,13 +25,11 @@ $(document).ready(function(){
 	*
 	*/
 	$('#add').on('click', function(e){
-			
-		$('.list').append(new_item);
-		
+					
 		$.ajax({
 		  type: "POST",
 		  url: 'list/new_item/1',
-		  data: data,
+		  //data nothing
 		  success: function(){
 		  
 		  	var dataID = data.id;
