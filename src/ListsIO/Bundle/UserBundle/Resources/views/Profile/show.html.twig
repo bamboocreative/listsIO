@@ -101,9 +101,10 @@
 			<ul>
 			{% for list in user.getLists() %}
 				<a href="list/{{ list.id }}">
-				<li> 
+				<li data-id="{{ list.id }}"> 
 				<h3 class="list-title">{{ list.title }}</h3>
 				<span class="list-subtitle">{{ list.subtitle }}</span>
+				<button class="delete-list">Remove</button>
 				</li>
 				</a>
 			{% endfor %}

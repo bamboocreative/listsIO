@@ -52,6 +52,33 @@ $(document).ready(function(){
 		});
 	});
 	
+	/* 
+	*
+	* Delete a list and remove it from the DOM
+	*
+	*/
+		
+	$('.delete-list').on('click', function(e){
+
+        e.preventDefault();
+        
+        $this = $(this);
+        
+        var listID = $this.parent().attr('data-id');
+					
+		$.ajax({
+		  type: "POST",
+		  url: '/app_dev.php/list/remove/'+listID,
+		  data : {},
+		  success: function(data){
+			  
+			  $this.parent().parent().fadeOut();
+              //remove from DOM
+		  }
+
+		});
+	});
+	
 	
 	/*
 	*
@@ -89,7 +116,6 @@ $(document).ready(function(){
 	*
 	* Communicate saved
 	*
-	* Using 1 as a test id should grab 1 from dataID
 	*/
 	function save_list(userID, dataID, title, subtitle, imgURL){
 		
@@ -150,7 +176,6 @@ $(document).ready(function(){
 	*
 	* Communicate saved
 	*
-	* Using 1 as a test id should grab 1 from dataID
 	*/
 	function save_list_item(listID, dataID, item, desc){
 
@@ -171,5 +196,31 @@ $(document).ready(function(){
 	}
 	
 	
+	/* 
+	*
+	* Delete a list item and remove it from the DOM
+	*
+	*/
+		
+	$('.list-item').on('click', '.delete-list-item', function(e){
+
+        e.preventDefault();
+        
+        $this = $(this);
+        
+        var itemID = $this.parent().find('.item').attr('data-id');
+					
+		$.ajax({
+		  type: "POST",
+		  url: '/app_dev.php/list/remove_item/'+itemID,
+		  data : {},
+		  success: function(data){
+			  
+			  $this.parent().fadeOut();
+              //remove from DOM
+		  }
+
+		});
+	});
 	
 });
