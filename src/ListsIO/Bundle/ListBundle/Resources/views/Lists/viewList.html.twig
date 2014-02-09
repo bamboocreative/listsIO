@@ -28,7 +28,12 @@
                                 <span class='number'>{{ i }}</span>
 			                    <div data-id="{{ item.getId() }}" class="item">{{ item.getTitle() }}</div>
 			                    <div class="description">{{ item.getDescription() }}</div>
+			                <h1 class="pull-left">
+			                {% if loop.first %}1{% endif %}
+			                {{ loop.index + 1 }}
+			                </h1>
 			                </li>
+			                
 			            {% endfor %}
 			            </ol>
 			        </div>

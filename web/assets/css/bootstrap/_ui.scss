@@ -21,10 +21,20 @@
 }
 
 .logo{
-	width: 60px;
+	
 	position: absolute;
 	left: 20px;
 	top:15px;
+	
+	img{
+		width: 60px;
+	}
+	
+	#save_indicator{
+		font-size: .7em;
+		font-weight: 100;
+		padding-left: 15px;
+	}
 }
 
 .login-out{
