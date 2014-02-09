@@ -2,13 +2,21 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block logo %}
+<div class="home-logo">
+	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists.svg') }}"><br>
+	<h3 class="title">Lists.io</h3>
+</div>
+{% endblock %}
+
 {% block fos_user_content %}
+	<div class="confirmed">
     <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
     {% if app.session is not empty %}
         {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
         {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
     {% endif %}
-    <p><strong>You will be redirected to your profile.</strong></p>
+	</div>
     <script type="text/javascript">
         setTimeout(function() {
             window.location = "{{ path('fos_user_profile_show') }}";

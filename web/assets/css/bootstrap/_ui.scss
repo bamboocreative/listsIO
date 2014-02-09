@@ -6,7 +6,8 @@
 
 .loggedin{
 	@include border-radius(100%);
-	width: 30px;
+	width: 40px;
+	margin-right: 5px;
 }
 
 .logo{
@@ -536,6 +537,13 @@ div#author{
 			}
 		}
 	}
+}
+
+.confirmed{
+	text-align: center;
+	margin: 2em 0em;
+	font-size: 1.5em;
+	font-weight: 100;
 }
 
 .share {

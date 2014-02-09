@@ -5050,7 +5050,8 @@ button.close {
   -moz-border-radius: 100%;
   -webkit-border-radius: 100%;
   border-radius: 100%;
-  width: 30px; }
+  width: 40px;
+  margin-right: 5px; }
 
 .logo {
   position: absolute;
@@ -5484,6 +5485,12 @@ div#author {
           color: rgba(255, 255, 255, 0.5); }
         .list ol .list-item .description::-webkit-input-placeholder {
           color: rgba(255, 255, 255, 0.5); }
+
+.confirmed {
+  text-align: center;
+  margin: 2em 0em;
+  font-size: 1.5em;
+  font-weight: 100; }
 
 .share {
   position: fixed;
