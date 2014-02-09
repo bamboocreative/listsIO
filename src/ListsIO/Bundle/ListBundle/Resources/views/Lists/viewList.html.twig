@@ -14,7 +14,7 @@
 				<div class="col-md-8 col-md-offset-2 edit-list-head-wrapper">
 					<div id="title" data-id="{{ list.getId() }}">{{ list.getTitle() }}</div>
 					<div id="subtitle">{{ list.getSubtitle() }}</div>
-					<div id="author">by <a href="">{{ user.username }}<img class="loggedin" src="{{ user.getGravatarURL }}"></a></div>
+					<div id="author"><a href=""><img class="loggedin" src="{{ user.getGravatarURL }}">{{ user.username }}</a></div>
 				</div>
 			</div>
 			<div class="row">
@@ -28,10 +28,7 @@
                                 <span class='number'>{{ i }}</span>
 			                    <div data-id="{{ item.getId() }}" class="item">{{ item.getTitle() }}</div>
 			                    <div class="description">{{ item.getDescription() }}</div>
-			                <h1 class="pull-left">
-			                {% if loop.first %}1{% endif %}
-			                {{ loop.index + 1 }}
-			                </h1>
+			                
 			                </li>
 			                
 			            {% endfor %}

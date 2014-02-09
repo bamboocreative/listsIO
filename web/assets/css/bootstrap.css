@@ -5258,14 +5258,25 @@ div#subtitle {
 
 div#author {
   font-size: 1.3em;
-  padding-left: 2px;
+  padding-left: 3px;
   font-weight: 900; }
   div#author a {
+    display: inline-block;
+    padding: 10px 20px;
+    line-height: 1em;
+    border: 1px solid #fff;
+    -moz-border-radius: 999px;
+    -webkit-border-radius: 999px;
+    border-radius: 999px;
+    -webkit-transition: background, 0.4s;
+    transition: background, 0.4s;
     color: white; }
     div#author a:hover {
-      color: white; }
+      color: white;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.3); }
     div#author a img {
-      margin-left: 5px; }
+      margin-right: 10px; }
 
 #img {
   background: none;
@@ -5295,52 +5306,60 @@ div#author {
 
 .list {
   list-style: none; }
-  .list .list-item {
-    position: relative;
-    margin: 0 auto;
-    list-style-type: none; }
-    .list .list-item .number {
-      font-size: 4em;
-      color: #ffffff;
-      font-weight: 600;
-      position: absolute;
-      left: 20px; }
-    .list .list-item .item {
-      border: none;
-      background: none;
-      font-size: 1.8em;
-      font-weight: 900;
-      width: 90%;
-      margin-left: 9%;
-      margin-top: 20px; }
-      .list .list-item .item:-moz-placeholder {
-        color: rgba(255, 255, 255, 0.5); }
-      .list .list-item .item::-moz-placeholder {
-        color: rgba(255, 255, 255, 0.5);
-        opacity: 1; }
-      .list .list-item .item:-ms-input-placeholder {
-        color: rgba(255, 255, 255, 0.5); }
-      .list .list-item .item::-webkit-input-placeholder {
-        color: rgba(255, 255, 255, 0.5); }
-    .list .list-item div.item {
-      padding-left: 30px; }
-    .list .list-item .description {
-      font-size: 1em;
-      resize: none;
-      width: 90%;
-      margin-left: 9%;
-      max-height: 200px;
-      padding-left: 31px;
-      min-height: inherit; }
-      .list .list-item .description:-moz-placeholder {
-        color: rgba(255, 255, 255, 0.5); }
-      .list .list-item .description::-moz-placeholder {
-        color: rgba(255, 255, 255, 0.5);
-        opacity: 1; }
-      .list .list-item .description:-ms-input-placeholder {
-        color: rgba(255, 255, 255, 0.5); }
-      .list .list-item .description::-webkit-input-placeholder {
-        color: rgba(255, 255, 255, 0.5); }
+  .list ol {
+    margin: 0;
+    padding: 0; }
+    .list ol .list-item {
+      position: relative;
+      margin: 0 auto;
+      list-style-type: none; }
+      .list ol .list-item .number {
+        font-size: 3em;
+        color: #ffffff;
+        font-weight: 600;
+        position: absolute;
+        display: inline-block;
+        text-align: right;
+        line-height: 1.1em;
+        left: -40px;
+        width: 80px; }
+      .list ol .list-item .item {
+        border: none;
+        background: none;
+        font-size: 1.8em;
+        font-weight: 900;
+        width: 90%;
+        margin-left: 6%;
+        padding-top: 0px; }
+        .list ol .list-item .item:-moz-placeholder {
+          color: rgba(255, 255, 255, 0.5); }
+        .list ol .list-item .item::-moz-placeholder {
+          color: rgba(255, 255, 255, 0.5);
+          opacity: 1; }
+        .list ol .list-item .item:-ms-input-placeholder {
+          color: rgba(255, 255, 255, 0.5); }
+        .list ol .list-item .item::-webkit-input-placeholder {
+          color: rgba(255, 255, 255, 0.5); }
+      .list ol .list-item div.item {
+        padding-left: 30px; }
+      .list ol .list-item .description {
+        font-size: 1em;
+        resize: none;
+        width: 90%;
+        margin-left: 6%;
+        max-height: 200px;
+        padding-left: 31px;
+        margin-bottom: 60px;
+        min-height: inherit; }
+        .list ol .list-item .description:-moz-placeholder {
+          color: rgba(255, 255, 255, 0.5); }
+        .list ol .list-item .description::-moz-placeholder {
+          color: rgba(255, 255, 255, 0.5);
+          opacity: 1; }
+        .list ol .list-item .description:-ms-input-placeholder {
+          color: rgba(255, 255, 255, 0.5); }
+        .list ol .list-item .description::-webkit-input-placeholder {
+          color: rgba(255, 255, 255, 0.5); }
 
 .share {
   position: fixed;

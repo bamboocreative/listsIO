@@ -323,15 +323,24 @@ div#subtitle{
 
 div#author{
 	font-size: 1.3em;
-	padding-left: 2px;
+	padding-left: 3px;
 	font-weight: 900;
 	a{
+		display: inline-block;
+		padding: 10px 20px;
+		line-height: 1em;
+		border: 1px solid #fff;
+		@include border-radius(999px);
+		@include transition(background, .4s);
+		
 		color: white;
 		&:hover{
 			color: white;
+			text-decoration: none;
+			background: rgba(255,255,255,.3);
 		}
 		img{
-			margin-left: 5px;
+			margin-right: 10px;
 		}
 	}
 }
@@ -360,44 +369,53 @@ div#author{
 .list{
 	list-style: none;
 
-	.list-item{
-		position: relative;
-		margin: 0 auto;
-		list-style-type: none;
-		
-		.number{
-			font-size: 4em;
-			color: #ffffff;
-			font-weight: 600;
-			position: absolute;
-			left: 20px;
+	ol{
+	margin: 0;
+	padding: 0;
+		.list-item{
+			position: relative;
+			margin: 0 auto;
+			list-style-type: none;
 			
-		}
-		
-		.item {
-			border: none;
-			background: none;
-			font-size: 1.8em;
-			font-weight: 900;
-			width: 90%;
-			margin-left: 9%;
-			margin-top: 20px;
-			@include placeholder(rgba(255,255,255,0.5));
-		}
-		
-		div.item{
-			padding-left: 30px;
-		}
-		
-		.description {
-			font-size: 1em;
-			resize:none;
-			width: 90%;
-			margin-left: 9%; 
-			@include placeholder(rgba(255,255,255,0.5));
-			max-height: 200px;
-			padding-left: 31px;
-			min-height: inherit;
+			.number{
+				font-size: 3em;
+				color: #ffffff;
+				font-weight: 600;
+				position: absolute;
+				display: inline-block;
+				text-align: right;
+				line-height: 1.1em;
+				left: -40px;
+				width: 80px;
+				
+			}
+			
+			.item {
+				border: none;
+				background: none;
+				font-size: 1.8em;
+				font-weight: 900;
+				width: 90%;
+				margin-left: 6%;
+				padding-top: 0px;
+				@include placeholder(rgba(255,255,255,0.5));
+			}
+			
+			div.item{
+				padding-left: 30px;
+			}
+			
+			.description {
+				font-size: 1em;
+				resize:none;
+				width: 90%;
+				margin-left: 6%; 
+				@include placeholder(rgba(255,255,255,0.5));
+				max-height: 200px;
+				padding-left: 31px;
+				margin-bottom: 60px;
+				min-height: inherit;
+			}
 		}
 	}
 }
