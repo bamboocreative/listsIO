@@ -3,7 +3,66 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 
-{% block bgImage %} http://24.media.tumblr.com/a95254c15c271bc1bc6ab9fde74d76af/tumblr_mzzr1q92gB1st5lhmo1_1280.jpg {% endblock %}
+{% block bgImage %}
+{% spaceless %} 
+{% set imgURL = [
+"https://s3.amazonaws.com/ooomf-com-files/deYU3EyQP9cN23moYfLw_Dandelion.jpg"
+,"https://s3.amazonaws.com/ooomf-com-files/8H0UdTsvRFqe03hZkNJr_New%20York%20-%20On%20the%20rock%20-%20Empire%20State%20Building.jpg"
+,"https://s3.amazonaws.com/ooomf-com-files/aSt89oJ1SGmKePxQEK5s_2013-09-17%2012.19.54.jpg"
+,"https://s3.amazonaws.com/ooomf-com-files/BSvurG4S1SG3s5dhEwFQ_Francisco%20Javier.jpg"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52dc849c8a95f_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52dbe5607f0db_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52d65d1ebeeb2_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52d5b2dfdf619_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52d092fc163a3_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52cd96f512830_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52be0803ecaec_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52c36ef60f8df_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52a4c3446e23d_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52a4c3446e23d_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52a088bb6fb98_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_529f51e60b51c_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_528c8f581f45e_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_528b276e41166_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_528aedf6ec3df_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_527e864de3770_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52850d6938211_1.JPG"
+,"http://unsplash.s3.amazonaws.com/batch%2018/cracked-earth.jpg"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_525d7892901ff_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_525b54bcc32ba_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_5249ec183ab2c_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52585c3dd6b34_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_526069a5a3f56_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_524e281add2d1_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_5259a34e5d050_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_5239d6c04342c_1.JPG"
+,"http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_522af94630a3d_1.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%2011/santa-monica-beach.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%2010/camera-man.jpg"
+,"vhttp://unsplash.s3.amazonaws.com/batch%209/bob-van-aubel-ray-bans.jpg"
+,"vhttp://unsplash.s3.amazonaws.com/batch%209/DeepInTheForest_cre8art4life_JulieGeiger.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%209/barcelona-traffic.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%209/fields.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%208/maldives.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%208/nepal.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%207/Top_view.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%206/lighthouse.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%206/overhead-hi-res.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%206/Fence-Filtered.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%205/beach.JPG"
+,"http://unsplash.s3.amazonaws.com/batch%205/missionpeak.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%205/pier.JPG"
+,"http://unsplash.s3.amazonaws.com/batch%205/nose-up.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%205/unsplash-kitsune-4.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%203/man-fishing.JPG"
+,"http://unsplash.s3.amazonaws.com/batch%203/GoWildImages_MtEverest_NEP0555.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%202/04.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%202/03.jpg"
+,"http://unsplash.s3.amazonaws.com/batch%202/02.jpg"
+] %}
+{{ random(imgURL) }} 
+{% endspaceless %}
+{% endblock %}
 {% block fos_user_content %}
 <div class="profile-wrapper">
 	<!-- Error: Getting current user's info, not author info -->
