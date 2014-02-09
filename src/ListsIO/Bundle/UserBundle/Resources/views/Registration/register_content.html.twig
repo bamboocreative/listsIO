@@ -1,7 +1,12 @@
 {# Loads in the register form #}
 {% trans_default_domain 'FOSUserBundle' %}
 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
-    {{ form_widget(form) }}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.email, { 'attr': {'placeholder': 'me@example.com'} }) }}
+        {{ form_row(form.username, { 'attr': {'placeholder': 'myusername'} }) }}
+    {{ form_end(form) }}
+    {# form_widget(form) #}
     <div>
     	<br>
         <input type="submit" value="{{ 'REGISTER'|trans }}" />
