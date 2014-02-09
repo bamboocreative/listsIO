@@ -117,11 +117,13 @@ class LIOListItem implements JsonSerializable
 
     public function jsonSerialize()
     {
+        $list = $this->getList();
+        $listId = empty($list) ? null : $list->getId();
         return array(
             'id'            => $this->id,
             'title'         => $this->title,
             'description'   => $this->description,
-            'listID'        => $this->list->getId()
+            'listID'        => $listId
         );
     }
 

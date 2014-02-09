@@ -1,15 +1,11 @@
 $(document).ready(function(){
-	
-	
-	/*
-	*
-	* Toggle Login and Signup
-	*
-	*/
-	
-	
-	
-	
+
+
+    var $title = $("#title");
+
+    var listID = $title.attr('data-id');
+
+    var userID = $title.attr('data-user_id');
 	
 	/*
 	*
@@ -35,21 +31,22 @@ $(document).ready(function(){
 	
 	$('#add').on('click', function(e){
 	
-		listCount++
+		listCount++;
 					
 		$.ajax({
 		  type: "POST",
-		  url: 'list/new_item/1',
-		  data : data,
+		  url: '/app_dev.php/list/new_item/'+listID,
+		  data : {},
 		  success: function(data){
 		  
 		  	var dataID = data.id;
 		  	
-		  	var new_item = "<li class='list-item'><span class='number'>"+listCount+".</span><input type='text' placeholder='item' data-id='" + dataID + "'class='item' /><textarea placeholder='description' class='description'></textarea></li>";
+		  	var $new_item = $("<li class='list-item'><span class='number'>"+listCount+".</span><input type='text' placeholder='item' data-id='" + dataID + "'class='item' /><textarea placeholder='description' class='description'></textarea></li>");
 		
-		  	$('.list').append(new_item);
+		  	$('.list').append($new_item);
 
-		  },
+		  }
+
 		});
 	});
 	
@@ -75,11 +72,7 @@ $(document).ready(function(){
 	* Listen for stop in typing on title and subtitle and then call save_list()
 	*
 	*/
-	$('#title, #subtitle, #img').on('keyup', function(e){
-
-        var $title = $("#title");
-
-		var dataID = $title.attr('data-id');
+	$('#title, #subtitle, #img').on('keyup', function(e) {
 		
 		var title = $title.val();
 		
@@ -95,7 +88,7 @@ $(document).ready(function(){
 		
 		$(this).data('timer', setTimeout(function(){
 		
-			save_list(dataID, title, subtitle, imgURL);
+			save_list(userID, listID, title, subtitle, imgURL);
 		
 		}, 300));
 		
@@ -112,7 +105,7 @@ $(document).ready(function(){
 	*
 	* Using 1 as a test id should grab 1 from dataID
 	*/
-	function save_list(dataID, title, subtitle, imgURL){
+	function save_list(userID, dataID, title, subtitle, imgURL){
 		
 		console.log("Saved! " + title + " with id " + dataID + " " + subtitle + " and image " + imgURL);
 		//$('.saveIndicator').text("Saved.");
@@ -120,9 +113,9 @@ $(document).ready(function(){
 		
 		$.ajax({
 		  type: "POST",
-		  url: '/save/1',
+		  url: '/app_dev.php/list/save/'+userID,
 		  data: {
-		  	'id': '1',
+		  	'id': dataID,
 		  	'title' : title,
 		  	'subtitle' : subtitle,
 		  	'imageURL' : imgURL
@@ -145,10 +138,12 @@ $(document).ready(function(){
 	$('.list').on('keyup', '.list-item', function(e){
 	
 		$this = $(this);
+
+        $item = $this.find('.item');
 	
-		var dataID = $this.find('.item').attr('data-id');
+		var dataID = $item.attr('data-id');
 	
-		var item = $this.find('.item').val();
+		var item = $item.val();
 		
 		var desc = $this.find('.description').val();
 				
@@ -156,7 +151,7 @@ $(document).ready(function(){
 		
 		$(this).data('timer', setTimeout(function(){
 		
-			save_list_item(dataID, item, desc);
+			save_list_item(listID, dataID, item, desc);
 		
 		}, 300));
 		
@@ -171,16 +166,16 @@ $(document).ready(function(){
 	*
 	* Using 1 as a test id should grab 1 from dataID
 	*/
-	function save_list_item(dataID, item, desc){
+	function save_list_item(listID, dataID, item, desc){
 		
 		console.log("Saved! " + item + " with id " + dataID + " " + desc);
 		//$('.saveIndicator').text("Saved.");
 		
 		$.ajax({
 		  type: "POST",
-		  url: 'save_item/1',
+		  url: 'save_item/'+listID,
 		  data: {
-		  	'id': '1',
+		  	'id': dataID,
 		  	'title' : item,
 		  	'description' : desc
 		  },
@@ -192,4 +187,4 @@ $(document).ready(function(){
 	
 	
 	
-})
+});
