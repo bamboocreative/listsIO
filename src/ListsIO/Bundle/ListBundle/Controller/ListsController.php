@@ -78,7 +78,7 @@ class ListsController extends Controller
         $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $listId);
         $listItem = $this->newListItem($list);
         return $this->render('ListsIOListBundle:Lists:viewListItem.'.$format.'.twig',
-            array('listItem' => $this->serialize($listItem, $format)));
+            array('listItem' => json_encode($listItem)));
     }
 
     public function saveListAction(Request $request, $userId)
@@ -90,11 +90,17 @@ class ListsController extends Controller
         if (empty($user)) {
             throw new EntityNotFoundException("Unable to load user to save list.");
         }
-        $list = $this->deserialize($data, 'ListsIO\Bundle\ListBundle\Entity\LIOList', $format);
+        $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $data['id']);
+        if (empty($list)) {
+            throw new EntityNotFoundException("Unable to find list by ID.");
+        }
+        $list->setTitle($data['title']);
+        $list->setSubtitle($data['subtitle']);
+        $list->setImageURL($data['imageURL']);
         $list->setUser($user);
         $this->saveEntity($list);
         return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig',
-            array('list' => $this->serialize($list, $format)));
+            array('list' => json_encode($list)));
     }
 
     public function saveListItemAction(Request $request, $listId)
@@ -107,14 +113,12 @@ class ListsController extends Controller
         if (empty($list)) {
             throw new EntityNotFoundException("Unable to load list to save list item.");
         }
-        $listItem = $this->deserialize($data, 'ListsIO\Bundle\ListBundle\Entity\LIOListItem', $format);
-        $list->addListItem($listItem);
-        $em = $this->doctrine->getManager();
-        $em->persist($list);
-        $em->persist($listItem);
-        $em->flush();
+        $listItem = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOListItem', $data['id']);
+        $listItem->setTitle($data['title']);
+        $listItem->setDescription($data['description']);
+        $this->saveEntity($listItem);
         return $this->render('ListsIOListBundle:Lists:viewListItem.'.$format.'.twig',
-            array('listItem' => $this->serialize($listItem, $format)));
+            array('listItem' => json_encode($listItem->jsonSerialize())));
     }
 
     public function removeListAction(Request $request, $listId)
@@ -176,7 +180,7 @@ class ListsController extends Controller
         if (empty($list)) {
             throw new EntityNotFoundException("Unable to load list to create new list item.");
         }
-        $list->addListItem($listItem);
+        $listItem->setList($list);
         $em->persist($list);
         $em->persist($listItem);
         $em->flush();

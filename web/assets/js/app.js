@@ -55,8 +55,13 @@ $(document).ready(function(){
 		
 		  	$('.list').append(new_item);
 
+<<<<<<< HEAD
 		  },
 		});*/
+=======
+		  }
+		});
+>>>>>>> 5513bbb4216f9a15669e0164069bb6a307199303
 		
 	});
 	
@@ -71,10 +76,10 @@ $(document).ready(function(){
 	
 	$(document).on('keydown', function(e){
 			
-			console.log("Saving....")
+			console.log("Saving....");
 			//$('.saveIndicator').text("Saving...");
 		
-	})
+	});
 	
 	
 	/*
@@ -83,10 +88,12 @@ $(document).ready(function(){
 	*
 	*/
 	$('#title, #subtitle, #img').on('keyup', function(e){
+
+        var $title = $("#title");
+
+		var dataID = $title.attr('data-id');
 		
-		var dataID = $('#title').attr('data-id');
-		
-		var title = $('#title').val();
+		var title = $title.val();
 		
 		var subtitle = $('#subtitle').val(); 
 		
@@ -125,12 +132,12 @@ $(document).ready(function(){
 		
 		$.ajax({
 		  type: "POST",
-		  url: 'save/1',
+		  url: '/app_dev.php/list/save/1',
 		  data: {
 		  	'id': dataID,
 		  	'title' : title,
 		  	'subtitle' : subtitle,
-		  	'imgageURL' : imgURL,
+		  	'imageURL' : imgURL
 		  },
 		  success: function(){
 		  	console.log(resp);
@@ -185,11 +192,11 @@ $(document).ready(function(){
 		  data: {
 		  	'id': dataID,
 		  	'title' : item,
-		  	'description' : desc,
+		  	'description' : desc
 		  },
 		  success: function(){
 		  	console.log(resp);
-		  },
+		  }
 		});		
 	}
 	
