@@ -1,0 +1,186 @@
+$(document).ready(function(){
+	
+	
+	/*
+	*
+	* Toggle Login and Signup
+	*
+	*/
+	
+	
+	
+	
+	
+	/*
+	*
+	* Show Share
+	*
+	*/
+	
+	
+	
+	/* 
+	*
+	* Add a list item and save it to the DB
+	*
+	*/
+	$('#add').on('click', function(e){
+			
+		$('.list').append(new_item);
+		
+		$.ajax({
+		  type: "POST",
+		  url: 'list/new_item/1',
+		  data: data,
+		  success: function(){
+		  
+		  	var dataID = data.id;
+		  	
+		  	var new_item = "<input type='text' class='item' data-id='" + dataID + "' placeholder='item'/>";
+		
+		  	$('.list').append(new_item);
+
+		  },
+		  dataType: dataType
+		});
+		
+	});
+	
+	
+	
+	
+	/*
+	*
+	* Listen for a key down and communicate saving
+	*
+	*/
+	
+	$(document).on('keydown', function(e){
+			
+			console.log("Saving....")
+			//$('.saveIndicator').text("Saving...");
+		
+	})
+	
+	
+	/*
+	*
+	* Listen for stop typing on title and subtitle and then call save_list()
+	*
+	*/
+	$('#title, #subtitle, #img').on('keyup', function(e){
+		
+		var dataID = $('#title').attr('data-id');
+		
+		var title = $('#title').val();
+		
+		var subtitle = $('#subtitle').val(); 
+		
+		var imgURL = $('#img').val();
+		
+			if(imgURL){
+				$('.background').css('background-image', 'url(' + imgURL + ')');
+			} else {
+				$('.background').css('background-image', 'none');
+			}
+		
+		clearTimeout($.data(this, 'timer'));
+		
+		$(this).data('timer', setTimeout(function(){
+		
+			save_list(dataID, title, subtitle, imgURL);
+		
+		}, 300));
+		
+		
+	});
+	
+
+	
+	/*
+	*
+	* Take list title and save
+	*
+	* Communicate saved
+	*/
+	function save_list(dataID, title, subtitle, imgURL){
+		
+		console.log("Saved! " + title + " with id " + dataID + " " + subtitle + " and image " + imgURL);
+		//$('.saveIndicator').text("Saved.");
+		
+		
+		$.ajax({
+		  type: "POST",
+		  url: 'list/save/1',
+		  data: {
+		  	'id': dataID,
+		  	'title' : title,
+		  	'subtitle' : subtitle,
+		  	'imgageURL' : imgURL,
+		  },
+		  success: function(){
+		  	console.log(resp);
+		  }
+		  dataType: dataType
+		});
+	}
+	
+	
+	
+	
+	/*
+	*
+	* Listen for stop typing on items and then call save_list_item()
+	*
+	
+	*/
+	$('.list').on('keyup', '.list-item', function(e){
+	
+		$this = $(this);
+	
+		var dataID = $this.find('.item').attr('data-id');
+	
+		var item = $this.find('.item').val();
+		
+		var desc = $this.find('.description').val();
+				
+		clearTimeout($.data(this, 'timer'));
+		
+		$(this).data('timer', setTimeout(function(){
+		
+			save_list_item(dataID, item, desc);
+		
+		}, 300));
+		
+	});
+	
+	
+	/*
+	*
+	* Take list item and save
+	*
+	* Communicate saved
+	*/
+	function save_list_item(dataID, item, desc){
+		
+		console.log("Saved! " + item + " with id " + dataID + " " + desc);
+		//$('.saveIndicator').text("Saved.");
+		
+		$.ajax({
+		  type: "POST",
+		  url: 'list/save_item/1',
+		  data: {
+		  	'id': dataID,
+		  	'title' : item,
+		  	'description' : desc,
+		  },
+		  success: function(){
+		  	console.log(resp);
+		  },
+		  dataType: dataType
+		});		
+	}
+	
+	
+	
+})
