@@ -85,7 +85,7 @@ class ListsController extends Controller
     {
         $this->requireXmlHttpRequest($request);
         $format = $request->getRequestFormat();
-        $data = $request->request->get('data');
+        $data = $request->request->all();
         $user = $this->loadEntityFromId('ListsIOUserBundle:User', $userId);
         if (empty($user)) {
             throw new EntityNotFoundException("Unable to load user to save list.");
@@ -102,7 +102,7 @@ class ListsController extends Controller
         $this->requireXmlHttpRequest($request);
         $this->_initDoctrine();
         $format = $request->getRequestFormat();
-        $data = $request->request->get('data');
+        $data = $request->request->all();
         $list = $this->loadEntityFromId('ListsIOUserBundle:LIOList', $listId);
         if (empty($list)) {
             throw new EntityNotFoundException("Unable to load list to save list item.");
