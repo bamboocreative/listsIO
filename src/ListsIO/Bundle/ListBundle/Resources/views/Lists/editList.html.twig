@@ -1,6 +1,23 @@
-<html>
-<body>
+{% extends "base.html.twig" %}
+{% block body %}
 {{ user.getEmail() }}
 {{ list.getTitle() }}
-</body>
-</html>
+<div class="background" style="min-height: 100%; min-width: 100%;">
+	
+	<div class="items">
+	
+		<input type="text" id="title" data-id="1234" placeholder="title"/>
+		<input type="text" id="subtitle" placeholder="subtitle"/>
+		<input type="text" id="img" placeholder="img url"/>
+		
+		<div class="list">
+			<div class="list-item">
+				<input type="text" placeholder="item" data-id="1234" class="item" />
+				<textarea placeholder="description" class="description"></textarea>
+			</div>
+		</div>
+		<button id="add">Add</button>
+		
+	</div>
+<div/>
+{% endblock %}

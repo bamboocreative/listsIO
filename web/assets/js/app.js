@@ -41,7 +41,6 @@ $(document).ready(function(){
 		  	$('.list').append(new_item);
 
 		  },
-		  dataType: dataType
 		});
 		
 	});
@@ -111,7 +110,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 		  type: "POST",
-		  url: 'list/save/1',
+		  url: 'save/1',
 		  data: {
 		  	'id': dataID,
 		  	'title' : title,
@@ -121,7 +120,6 @@ $(document).ready(function(){
 		  success: function(){
 		  	console.log(resp);
 		  }
-		  dataType: dataType
 		});
 	}
 	
@@ -168,7 +166,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 		  type: "POST",
-		  url: 'list/save_item/1',
+		  url: 'save_item/1',
 		  data: {
 		  	'id': dataID,
 		  	'title' : item,
@@ -177,7 +175,6 @@ $(document).ready(function(){
 		  success: function(){
 		  	console.log(resp);
 		  },
-		  dataType: dataType
 		});		
 	}
 	
