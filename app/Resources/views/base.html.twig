@@ -7,13 +7,15 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
     </head>
-    <body>
+    <body>        
         {% block body %}{% endblock %}
         {% block javascripts %}
         
         <!-- Uncompressed DEV JQuery -->
         <script src="{{ asset('assets/js/jquery-2.1.0.js') }}"></script>
         
+        <!-- Uncompressed DEV Modernizr-->
+        <script src="{{ asset('assets/js/modernizr.js') }}"></script>
         
         <!-- Bootstap JS Files -->
         <script src="{{ asset('assets/js/bootstrap/affix.js') }}"></script>

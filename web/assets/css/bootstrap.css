@@ -4983,3 +4983,13 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
+*, *:before, *:after, *:active, *:link {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none !important; }
+
+.register-form form label {
+  display: none; }
+.register-form form input {
+  width: 100%; }
