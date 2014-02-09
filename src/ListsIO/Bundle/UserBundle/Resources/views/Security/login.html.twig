@@ -2,7 +2,6 @@
 
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
 {% if error %}
@@ -12,14 +11,14 @@
 <form action="{{ path("fos_user_security_check") }}" method="post">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-    <label for="username">{{ 'security.login.username'|trans }}</label>
+    <label for="username">{{ ''|trans }}</label>
     <input placeholder="username" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
 
-    <label for="password">{{ 'security.login.password'|trans }}</label>
+    <label for="password">{{ ''|trans }}</label>
     <input placeholder="password" type="password" id="password" name="_password" required="required" />
 
     <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+    <label for="remember_me">{{ 'Remember Me'|trans }}</label>
 
     <input type="submit" id="_submit" name="_submit" value="Login" />
 </form>
