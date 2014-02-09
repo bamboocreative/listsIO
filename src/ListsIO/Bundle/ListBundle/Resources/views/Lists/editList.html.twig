@@ -1,21 +1,21 @@
 {% extends "base.html.twig" %}
 {% block body %}
 {{ user.getEmail() }}
-{{ list.getTitle() }}
 <div class="background" style="min-height: 100%; min-width: 100%;">
 	
 	<div class="items">
 	
-		<input type="text" id="title" data-id="1234" placeholder="title"/>
-		<input type="text" id="subtitle" placeholder="subtitle"/>
-		<input type="text" id="img" placeholder="img url"/>
-		
-		<div class="list">
-			<div class="list-item">
-				<input type="text" placeholder="item" data-id="1234" class="item" />
-				<textarea placeholder="description" class="description"></textarea>
-			</div>
-		</div>
+		<input type="text" id="title" data-id="{{ list.getId() }}" placeholder="List title" value="{{ list.getTitle() }}"/>
+		<input type="text" id="subtitle" placeholder="subtitle" value="{{ list.getSubtitle() }}"/>
+		<input type="text" id="img" placeholder="http://mysite.com/myimage.jpg" value="{{ list.getImageURL() }}"/>
+        <div class="list">
+            {% for item in list.getListItems() %}
+                <div class="list-item">
+                    <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
+                    <textarea placeholder="A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
+                </div>
+            {% endfor %}
+        </div>
 		<button id="add">Add</button>
 		
 	</div>

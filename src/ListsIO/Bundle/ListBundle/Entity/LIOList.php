@@ -2,6 +2,7 @@
 
 namespace ListsIO\Bundle\ListBundle\Entity;
 
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 use ListsIO\Bundle\UserBundle\Entity\User as User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * List
  */
-class LIOList
+class LIOList implements JsonSerializable
 {
     /**
      * @var integer
@@ -182,6 +183,21 @@ class LIOList
     public function getUser()
     {
         return $this->user;
+    }
+
+    public function jsonSerialize()
+    {
+        $listItems = array();
+        foreach($this->listItems as $item) {
+            $listItems[] = $item->jsonSerialize();
+        }
+        return array(
+            'userID'    => $this->getUser()->getId(),
+            'id'        => $this->getId(),
+            'title'     => $this->getTitle(),
+            'subtitle'  => $this->getSubtitle(),
+            'listItems' => $listItems
+        );
     }
 
 }
