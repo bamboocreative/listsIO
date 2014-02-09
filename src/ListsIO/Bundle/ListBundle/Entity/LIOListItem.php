@@ -2,12 +2,13 @@
 
 namespace ListsIO\Bundle\ListBundle\Entity;
 
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * ListItem
  */
-class LIOListItem
+class LIOListItem implements JsonSerializable
 {
     /**
      * @var integer
@@ -112,6 +113,16 @@ class LIOListItem
     public function getList()
     {
         return $this->list;
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id'            => $this->id,
+            'title'         => $this->title,
+            'description'   => $this->description,
+            'listID'        => $this->list->getId()
+        );
     }
 
 }
