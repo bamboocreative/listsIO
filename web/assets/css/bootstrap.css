@@ -5054,6 +5054,16 @@ button.close {
     font-weight: 100;
     padding-left: 15px; }
 
+.home-logo {
+  text-align: center;
+  margin-top: 50px; }
+  .home-logo img {
+    max-width: 150px; }
+  .home-logo .title {
+    margin: 0px;
+    padding: 0px;
+    font-weight: 900; }
+
 @-moz-keyframes logo {
   from {
     -moz-transform: rotate(0deg); }
@@ -5078,7 +5088,7 @@ button.close {
 .svg .png-img {
   display: none; }
 .svg .svg-img {
-  display: inherit; }
+  display: inline; }
 
 .login-out {
   position: absolute;
@@ -5095,9 +5105,13 @@ button.close {
   z-index: -1; }
 
 .register-form {
-  margin-bottom: 3em; }
+  margin-bottom: 8em; }
+  .register-form form label {
+    margin-bottom: 0px;
+    margin-top: 5px; }
   .register-form form input, .register-form form textarea {
-    width: 100%; }
+    width: 100%;
+    padding: 5px 15px; }
 
 .home-header {
   background-attachment: fixed !important;
@@ -5106,7 +5120,7 @@ button.close {
   .home-header h1 {
     margin: 0px;
     text-align: center;
-    padding: 4em 0 3em;
+    padding: 2em 0 2em;
     font-weight: 100; }
 
 .home-content {
@@ -5254,10 +5268,29 @@ textarea {
   background: none;
   border: none; }
 
-input[type="submit"], textarea[type="submit"] {
+input[type="submit"], textarea[type="submit"], button {
   background: #10c362;
   border: 1px solid #10c362;
   padding: 7px 30px 7px 30px !important; }
+
+.sign-up-wrapper {
+  margin: 0 auto 6em;
+  text-align: center; }
+  .sign-up-wrapper button.sign-up {
+    color: #fff;
+    font-weight: 900;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    font-size: 2em;
+    max-width: 100%;
+    padding: 20px 60px !important;
+    line-height: 1em;
+    -webkit-transition: 0.3s all;
+    transition: 0.3s all; }
+    .sign-up-wrapper button.sign-up:hover {
+      background: #0c944a;
+      border: 1px solid #0c944a; }
 
 #title {
   background: none;

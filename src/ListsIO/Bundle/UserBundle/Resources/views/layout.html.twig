@@ -2,6 +2,13 @@
 
 {% extends "base.html.twig" %}
 
+{% block logo %}
+<div class="home-logo">
+	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists.svg') }}"><br>
+	<h3 class="title">Lists.io</h3>
+</div>
+{% endblock %}
+ 
 {% block body %}
 		
 		{% block fos_user_content %}{% endblock %}
