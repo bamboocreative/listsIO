@@ -40,8 +40,21 @@
 			</div>
         </div>
         <!-- End Log in or log out message -->
+        {% block share %}
+        <div class="share">
+        	<img src='{{ asset('assets/images/sharebuttonwhite.png') }}'><span class="share-text">share</span>
+        </div>
+        <div class="share-buttons">
+        	<ul>
+        		<li><a href="#"><span class="icon-facebook"></span></a></li>
+        		<li><a href="#"><span class="icon-twitter"></span></a></li>
+        		<li><a href="#"><span class="icon-mail"></span></a></li>
+        	</ul>
+        </div>
+        {% endblock %}
+        {% block body %}
+        {% endblock %}
         
-        {% block body %}{% endblock %}
         
         {% block javascripts %}
         <!-- Uncompressed DEV JQuery -->
