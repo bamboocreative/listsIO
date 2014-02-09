@@ -37,6 +37,16 @@
 	}
 }
 
+.svg{
+	.png-img{
+		display: none;
+	}
+	.svg-img{
+		display: inherit;
+	}
+}
+
+
 .login-out{
 	position: absolute;
 	top: 30px;

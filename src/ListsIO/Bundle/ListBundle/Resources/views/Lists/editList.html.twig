@@ -25,9 +25,15 @@
                                 <span class='number'>{{ i }}</span>
 			                    <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
 			                    <textarea placeholder="(Optional) A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
-			                    <button class="delete-list-item">Remove</button>
+			                    <a class="delete-list-item" href="javascript:void(0)">X</a>
 			                </li>
 			            {% endfor %}
+			            <li class="list-item">
+	                        <span class='number'></span>
+				            <input type="text" placeholder="List item title" data-id="" class="item" value=""/>
+				            <textarea placeholder="(Optional) A short description of this list item." class="description"></textarea>
+							<a class="delete-list-item" href="javascript:void(0)">X</a>
+			            </li>
 			            </ol>
 			            <div class="list-button-wrapper">
 							<a id="add" class="add-list-button" href="#">
