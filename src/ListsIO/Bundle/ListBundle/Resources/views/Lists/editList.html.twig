@@ -25,6 +25,7 @@
                                 <span class='number'>{{ i }}</span>
 			                    <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
 			                    <textarea placeholder="(Optional) A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
+			                    <button class="delete-list-item">Remove</button>
 			                </li>
 			            {% endfor %}
 			            </ol>
