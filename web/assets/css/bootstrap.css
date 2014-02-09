@@ -5018,14 +5018,6 @@ button.close {
   border-radius: 100%;
   width: 30px; }
 
-.logout-link {
-  font-size: .8em;
-  margin-left: 7px;
-  display: inline-block;
-  color: white; }
-  .logout-link:hover {
-    color: white; }
-
 .logo {
   position: absolute;
   left: 20px;
@@ -5092,8 +5084,8 @@ button.close {
 
 .login-out {
   position: absolute;
-  top: 30px;
-  right: 20px; }
+  top: 40px;
+  right: 30px; }
 
 .body-screen {
   position: fixed;
@@ -5226,20 +5218,26 @@ body {
   .edit-list-head-wrapper input, .edit-list-head-wrapper textarea {
     max-width: 100%; }
 
-.button {
+.button, .logout-link {
   background: #10c463;
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
   border-radius: 8px;
   box-shadow: none;
   border: none;
-  padding: 5px 30px 5px 30px;
   min-height: 50px;
-  min-width: 300px;
   color: #ffffff;
-  font-weight: 600;
-  font-size: 23px; }
-  .button:focus {
+  padding: 5px 20px 7px;
+  font-weight: 100;
+  line-height: 1em;
+  text-align: center;
+  -webkit-transition: 0.3s background;
+  transition: 0.3s background; }
+  .button:hover, .logout-link:hover {
+    background: #0c944a;
+    color: #fff;
+    text-decoration: none; }
+  .button:focus, .logout-link:focus {
     outline: none; }
 
 input, textarea {
@@ -5342,10 +5340,10 @@ div#subtitle {
 div#author {
   font-size: 1.3em;
   padding-left: 3px;
-  font-weight: 900; }
+  font-weight: 300; }
   div#author a {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 13px;
     line-height: 1em;
     border: 1px solid #fff;
     -moz-border-radius: 999px;

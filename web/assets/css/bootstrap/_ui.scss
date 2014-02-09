@@ -9,18 +9,6 @@
 	width: 30px;
 }
 
-.logout-link{
-	font-size: .8em;
-	margin-left: 7px;
-	display: inline-block;
-	color: white;
-	
-	&:hover{
-		color: white;
-	}
-	
-}
-
 .logo{
 	
 	position: absolute;
@@ -112,8 +100,8 @@
 
 .login-out{
 	position: absolute;
-	top: 30px;
-	right: 20px;
+	top: 40px;
+	right: 30px;
 }
 
 .body-screen{
@@ -319,17 +307,24 @@ body {
 }
 
 //Button
-.button{
+.button, .logout-link{
 	background: #10c463;
 	@include border-radius(8px);
 	box-shadow: none;
 	border: none;
-	padding: 5px 30px 5px 30px;
 	min-height: 50px;
-	min-width: 300px;
 	color: #ffffff;
-	font-weight: 600;
-	font-size: $font-size-large;
+	padding: 5px 20px 7px;
+	font-weight: 100;
+	line-height: 1em;
+	text-align: center;
+	@include transition(.3s background);
+	
+	&:hover{
+		background: darken($brand-success, 10%);
+		color: #fff;
+		text-decoration: none;
+	}
 	
 	
 	&:focus{
@@ -431,10 +426,10 @@ div#subtitle{
 div#author{
 	font-size: 1.3em;
 	padding-left: 3px;
-	font-weight: 900;
+	font-weight: 300;
 	a{
 		display: inline-block;
-		padding: 10px 20px;
+		padding: 10px 13px;
 		line-height: 1em;
 		border: 1px solid #fff;
 		@include border-radius(999px);
