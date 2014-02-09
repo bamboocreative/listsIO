@@ -97,9 +97,7 @@ $(document).ready(function(){
         var $container = $this.parents('li');
         var listID = $container.attr('data-id');
 
-        alert(listID);
-
-        var url = '/app_dev.php/list/remove/'+listID;
+        var url = '/list/remove/'+listID;
         
         var confirmation = confirm("Are you sure you want to delete this list?");
 
