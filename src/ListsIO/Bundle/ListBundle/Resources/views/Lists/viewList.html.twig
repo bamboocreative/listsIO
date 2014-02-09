@@ -24,10 +24,12 @@
                         {%  set i = 0 %}
 			            {% for item in list.getListItems() %}
                             {%  set i = i+1 %}
+                            {%  set title = item.getTitle() %}
+                            {%  set description = item.getDescription() %}
 			                <li class="list-item">
                                 <span class='number'>{{ i }}</span>
-			                    <div data-id="{{ item.getId() }}" class="item">{{ item.getTitle() }}</div>
-			                    <div class="description">{{ item.getDescription() }}</div>
+			                    <div data-id="{{ item.getId() }}" class="item">{{ title ? title : "Untitled"  }}</div>
+			                    <div class="description">{{ description }}</div>
 			                </li>
 			            {% endfor %}
 			            </ol>
