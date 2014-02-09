@@ -1,10 +1,25 @@
+{# Sets up the situation around the register form #}
+
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-
+{% block bgImage %}http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_52c470899a2e1_1.JPG{% endblock %}
 {% block fos_user_content %}
-<div class="row">
-	<div class="col-md-4 col-md-offset-4 register-form">
-		{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+<div class="home-header">
+	<h1>These are a few of your favorite things.</h1>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4 register-form">
+				{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="home-content">
+	<div class="container">
+		<div class="row">
+		<h1>It’s Scientifically Proven* that Lists are the Best Way to Share Information.</h1>
+		</div>
 	</div>
 </div>
 {% endblock fos_user_content %}

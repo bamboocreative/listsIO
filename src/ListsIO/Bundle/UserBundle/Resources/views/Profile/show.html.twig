@@ -1,11 +1,57 @@
+{# User profile page (Logged in & Logged Out Users) #}
+
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+
+{% block bgImage %} http://24.media.tumblr.com/a95254c15c271bc1bc6ab9fde74d76af/tumblr_mzzr1q92gB1st5lhmo1_1280.jpg {% endblock %}
 {% block fos_user_content %}
-<h1>Profile</h1>
-{{ user.username }}<br>
-{{ user.email }}<br>
-{{ user.email|trim|lower }} -- needs to be md5 encoded for gravatar.<br>
-<a href="list/new">Add a new list</a>
+<div class="profile-wrapper">
+	<!-- Error: Getting current user's info, not author info -->
+	<div class="gravatar-image">
+		<div class="gravatar-inner">
+		<a href="http://en.gravatar.com/">
+			<img src="{{ user.getGravatarURL }}">
+		</a>
+		</div>
+	</div>
+	<h1 class="profile-name">
+		{{ user.username }}
+	</h1>
+	<div class="profile-email">
+		<a href="mailto:{{ user.email }}">{{ user.email }}</a>
+	</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="container profile-lists-wrapper">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+				<div class="list-button-wrapper">
+					<a class="add-list-button" href="list/new">
+						<table>
+							<tr>
+								<td class="add-img"><img src="{{ asset('assets/images/list-add.png') }}"></td>
+								<td class="add-txt">Create a List</td>
+							</tr>
+						</table>
+					</a>
+				</div>
+			{% endif %}
+			<ul>
+			{% for list in user.getLists() %}
+				<a href="list/{{ list.id }}">
+				<li> 
+				<h3 class="list-title">{{ list.title }}</h3>
+				<span class="list-subtitle">{{ list.subtitle }}</span>
+				</li>
+				</a>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
 
 <!-- Need an array of a user's lists here -->
 

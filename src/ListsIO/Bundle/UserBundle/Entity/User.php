@@ -56,9 +56,9 @@ class User extends BaseUser
      * @return String containing either just a URL or a complete image tag
      */
     public function createGravatarURL() {
-        $s = 80;
+        $s = 240;
         $d = 'mm';
-        $r = 'g';
+        $r = 'x';
         $url = 'http://www.gravatar.com/avatar/';
         $url .= md5(strtolower(trim($this->getEmail())));
         $url .= "?s=$s&d=$d&r=$r";
@@ -97,5 +97,4 @@ class User extends BaseUser
     {
         return $this->lists;
     }
-
 }

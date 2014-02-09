@@ -1,3 +1,5 @@
+{# Base View - This is what every page on the site loads #}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,20 +10,25 @@
         <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
         
         <!-- TypeKit -->
-        <script type="text/javascript" src="//use.typekit.net/qys4bwa.js"></script>
+        <script type="text/javascript" src="//use.typekit.net/mjl7zre.js"></script>
 		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     </head>
-    <body>        
-    	
+    <body style="background-image:url('{% block bgImage %}{% endblock %}');">        
+    	<div class="logo">
+    	<a href=""><img src="{{ asset('assets/images/lists.svg') }}"></a>
+    	</div>
+    	<div class="body-screen"></div>
     	<!-- Tells you to log in or log out -->
-    	<div class="pull-right">
+    	<div class="login-out">
+            <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ user.username }}
-                <a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'logout'|trans({}, 'FOSUserBundle') }}
+                <!-- Link gravitar to profile page -->
+                <a href=""><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
+                <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
+                    {{ 'Log out'|trans({}, 'FOSUserBundle') }}
                 </a>
             {% else %}
-                <a href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
+                <a class="logout-link" href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
             {% endif %}
 			</div>
         </div>
@@ -38,8 +45,6 @@
         
         <!-- Uncompressed DEV Modernizr-->
         <script src="{{ asset('assets/js/modernizr.js') }}"></script>
-        
-      
         
         <!-- Bootstap JS Files -->
         <script src="{{ asset('assets/js/bootstrap/affix.js') }}"></script>

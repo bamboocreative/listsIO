@@ -1,24 +1,49 @@
+{# View & Edit the list (Owner & Logged in) #}
+
 {% extends "base.html.twig" %}
+
+{% block bgImage %} {{ list.getImageURL() }} {% endblock %}
 {% block body %}
 
 <div class="background" style="min-height: 100%; min-width: 100%;">
 	
+	
 	<div class="items">
-		<input type="text" id="title" data-id="{{ list.getId() }}" placeholder="List title" value="{{ list.getTitle() }}"/>
-		<input type="text" id="subtitle" placeholder="subtitle" value="{{ list.getSubtitle() }}"/>
-		<br>
-		<br>
-		<input type="text" id="img" placeholder="http://mysite.com/myimage.jpg" value="{{ list.getImageURL() }}"/>
-        <div class="list">
-            {% for item in list.getListItems() %}
-                <div class="list-item">
-                    <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
-                    <textarea placeholder="A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
-                </div>
-            {% endfor %}
-        </div>
-		<button id="add">Add</button>
-		
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 edit-list-head-wrapper">
+				<input type="text" id="title" data-id="{{ list.getId() }}" placeholder="List title" value="{{ list.getTitle() }}"/>
+				<input type="text" id="subtitle" placeholder="subtitle" value="{{ list.getSubtitle() }}"/>
+				<input type="text" id="img" placeholder="http://mysite.com/myimage.jpg" value="{{ list.getImageURL() }}"/>
+				</div>
+			</div>
+			<div class="row">
+		        <div class="list">
+			        <div class="col-md-8 col-md-offset-2">
+			            {% for item in list.getListItems() %}
+			                <div class="list-item">
+			                    <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
+			                    <textarea placeholder="(Optional) A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
+			                </div>
+			            {% endfor %}
+			            <div>			            
+			            <div class="list-button-wrapper">
+							<a id="add" class="add-list-button" href="javascript:void(0)">
+								<table>
+									<tr>
+										<td class="add-img"><img src="{{ asset('assets/images/list-add.png') }}"></td>
+										<td class="add-txt">Add an Item</td>
+									</tr>
+								</table>
+							</a>
+						</div>
+			            
+			            </div>
+			        </div>
+		        </div>
+			</div>
+			
+		</div>
 	</div>
 <div/>
 {% endblock %}

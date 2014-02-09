@@ -88,9 +88,7 @@ $(document).ready(function(){
 		var imgURL = $('#img').val();
 		
 			if(imgURL){
-				$('.background').css('background-image', 'url(' + imgURL + ')');
-			} else {
-				$('.background').css('background-image', 'none');
+				$('body').css('background-image', 'url(' + imgURL + ')');
 			}
 		
 		clearTimeout($.data(this, 'timer'));

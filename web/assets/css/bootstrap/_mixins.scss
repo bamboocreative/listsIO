@@ -16,6 +16,16 @@
 //    that are clearfixed.
 // 2. The use of `table` rather than `block` is only necessary if using
 //    `:before` to contain the top-margins of child elements.
+
+
+// Custom Mixins
+@mixin border-radius($border-radius){
+	-moz-border-radius: $border-radius;
+	-webkit-border-radius: $border-radius;
+	border-radius: $border-radius;
+}
+
+
 @mixin clearfix() {
   &:before,
   &:after {
@@ -26,6 +36,9 @@
     clear: both;
   }
 }
+
+
+
 
 // WebKit-style focus
 @mixin tab-focus() {
