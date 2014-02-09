@@ -1,8 +1,7 @@
-{% extends '::base.html.twig' %}
-{% block content %}
-    {{ user.getUsername() }}
-    <img src="{{ user.getGravatarURL() }}" />
-    <h1>{{ list.getTitle() }}</h1>
-    <p>{{ list.getDescription() }}</p>
-    <img src="{{ list.getImageURL() }}" />
+{% extends "base.html.twig" %}
+
+{% block body %}
+		<div class="container">
+			<h1>You are now viewing a list</h1>
+		</div>
 {% endblock %}

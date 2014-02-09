@@ -5,9 +5,30 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        
+        <!-- Uncompressed DEV JQuery -->
+        <script src="{{ asset('assets/js/jquery-2.1.0.js') }}"></script>
+        
+        
+        <!-- Bootstap JS Files -->
+        <script src="{{ asset('assets/js/bootstrap/affix.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/alert.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/button.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/carousel.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/collapse.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/dropdown.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/tab.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/transition.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/scrollspy.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/modal.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/tooltip.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap/popover.js') }}"></script>
+         
+        {% endblock %}
     </body>
 </html>
