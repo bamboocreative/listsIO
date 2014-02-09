@@ -103,7 +103,7 @@ class ListsController extends Controller
         $this->_initDoctrine();
         $format = $request->getRequestFormat();
         $data = $request->request->all();
-        $list = $this->loadEntityFromId('ListsIOUserBundle:LIOList', $listId);
+        $list = $this->loadEntityFromId('ListsIOListBundle:LIOList', $listId);
         if (empty($list)) {
             throw new EntityNotFoundException("Unable to load list to save list item.");
         }
