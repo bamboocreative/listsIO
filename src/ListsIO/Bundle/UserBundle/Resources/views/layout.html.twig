@@ -2,10 +2,25 @@
 
 {% extends "base.html.twig" %}
  
+{% block share %}
+{% endblock %}
+{% block login %}
+		<div class="login-out">
+            <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <!-- Link gravitar to profile page -->
+                <a href="{{ path('lists_io_list_homepage') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
+                <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
+                    {{ 'Log out'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a class="logout-link" href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+			</div>
+        </div>
+{% endblock %}
 {% block body %}
-		
 		{% block fos_user_content %}{% endblock %}
-       
         {% for type, messages in app.session.flashbag.all() %}
             {% for message in messages %}
                 <div class="flash-{{ type }}">
@@ -13,7 +28,6 @@
                 </div>
             {% endfor %}
         {% endfor %}
-
         <div class="container">
         </div>
 {% endblock %}

@@ -8,6 +8,7 @@
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <meta name="viewport" content="initial-scale=1">
         
         <!-- TypeKit -->
         <script type="text/javascript" src="//use.typekit.net/mjl7zre.js"></script>
@@ -26,6 +27,7 @@
     	{% endblock %}
     	<div class="body-screen"></div>
     	<!-- Tells you to log in or log out -->
+    	{% block login %}
     	<div class="login-out">
             <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -39,6 +41,7 @@
             {% endif %}
 			</div>
         </div>
+        {% endblock %}
         <!-- End Log in or log out message -->
         {% block share %}
         <div class="share">

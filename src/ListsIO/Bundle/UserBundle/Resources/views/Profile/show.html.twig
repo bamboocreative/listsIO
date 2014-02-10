@@ -97,7 +97,7 @@
 		<div class="col-md-6 col-md-offset-3">
 			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 				<div class="list-button-wrapper">
-					<a class="add-list-button" href="list/new">
+					<a class="add-list-button" href="{{ path('lists_io_new_list') }}">
 						<table>
 							<tr>
 								<td class="add-img"><img src="{{ asset('assets/images/list-add.png') }}"></td>
