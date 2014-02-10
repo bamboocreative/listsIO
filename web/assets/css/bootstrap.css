@@ -5178,59 +5178,13 @@ input, textarea, textarea {
     font-weight: 100; }
 
 .home-content {
-  position: relative;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  padding: 3% 0 3% 0;
+  padding: 50px 0;
   background: white;
-  color: black;
-  min-height: 400px; }
+  color: black; }
   .home-content h1 {
     text-align: center;
     font-weight: 100;
     line-height: 1.3em; }
-  .home-content ol {
-    list-style: none; }
-    .home-content ol li {
-      margin: 10% 0 10% 0; }
-      .home-content ol li h1 {
-        color: #ffffff;
-        font-weight: 600;
-        text-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2); }
-        .home-content ol li h1 a {
-          color: #ffffff; }
-          .home-content ol li h1 a:hover {
-            text-decoration: none;
-            opacity: .7;
-            -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease; }
-
-.how-to-section {
-  background: #eedc2d;
-  padding: 3% 0 3% 0;
-  color: black; }
-  .how-to-section h2 {
-    text-align: center;
-    font-weight: 100;
-    line-height: 1.3em; }
-  .how-to-section .how-to-wrapper {
-    padding: 5% 0 5% 0; }
-    .how-to-section .how-to-wrapper .how-to {
-      text-align: center; }
-      .how-to-section .how-to-wrapper .how-to img {
-        display: block;
-        margin: 0 auto;
-        max-width: 60%;
-        margin-bottom: 20px; }
-  .how-to-section .home-cta {
-    padding: 3% 0 3% 0;
-    text-align: center; }
-    .how-to-section .home-cta a {
-      display: inline-block;
-      min-width: 40%;
-      padding: 30px;
-      font-size: 1.3em;
-      min-height: 60px; }
 
 .profile-wrapper {
   text-align: center;
@@ -5333,7 +5287,7 @@ body {
   overflow: auto; }
 
 .edit-list-head-wrapper {
-  margin-top: 70px;
+  margin-top: 110px;
   margin-bottom: 40px; }
   .edit-list-head-wrapper input, .edit-list-head-wrapper textarea {
     max-width: 100%; }
@@ -5441,8 +5395,7 @@ div#title {
   min-width: 100%;
   padding: 0px;
   padding-left: 3px;
-  display: block;
-  margin: 0 auto; }
+  display: block; }
   #subtitle:-moz-placeholder {
     color: rgba(255, 255, 255, 0.5); }
   #subtitle::-moz-placeholder {
