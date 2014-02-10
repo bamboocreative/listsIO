@@ -10,6 +10,10 @@
 	margin-right: 5px;
 }
 
+input, textarea{
+	min-width: 0px !important;
+}
+
 .logo{
 	
 	position: absolute;
@@ -394,7 +398,7 @@ body {
 
 // List Edit
 .edit-list-head-wrapper{
-	margin-top: 20px;
+	margin-top: 70px;
 	margin-bottom: 40px;
 	input{
 		max-width: 100%;
@@ -715,12 +719,56 @@ div#author{
 	@include translate(-300px, 0);
 }
 
-
-
-
 .move-right{
 	@include transition(all .5s ease-in);
 	@include transition-delay(.2s);
 	@include translate(200px, 0);
 	opacity: .3;
+}
+
+@media (max-width: $screen-xs-max) {
+  .login-out{
+	  top: 20px;
+	  right: 15px;
+	  position: absolute;
+  }
+  .logo, .logo img{
+	  position: absolute !important;
+  }
+  
+  .profile-wrapper .profile-name{
+	  font-size: 2em;
+	  
+  }
+  
+  .list-title{
+	font-size: 25px;		  
+  }
+  
+  html {
+  height: auto !important;
+  width: auto !important;
+  overflow: auto !important;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+  
+}
+
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  
+  
+  
+}
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  
+}
+
+@media (min-width: $screen-lg-min) {
+  
 }

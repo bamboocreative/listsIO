@@ -5075,6 +5075,9 @@ button.close {
   width: 40px;
   margin-right: 5px; }
 
+input, textarea, textarea {
+  min-width: 0px !important; }
+
 .logo {
   position: absolute;
   left: 20px;
@@ -5330,7 +5333,7 @@ body {
   overflow: auto; }
 
 .edit-list-head-wrapper {
-  margin-top: 20px;
+  margin-top: 70px;
   margin-bottom: 40px; }
   .edit-list-head-wrapper input, .edit-list-head-wrapper textarea {
     max-width: 100%; }
@@ -5640,3 +5643,28 @@ div#author {
   -ms-transform: translate(200px, 0);
   transform: translate(200px, 0);
   opacity: .3; }
+
+@media (max-width: 767px) {
+  .login-out {
+    top: 20px;
+    right: 15px;
+    position: absolute; }
+
+  .logo, .logo img {
+    position: absolute !important; }
+
+  .profile-wrapper .profile-name {
+    font-size: 2em; }
+
+  .list-title {
+    font-size: 25px; }
+
+  html {
+    height: auto !important;
+    width: auto !important;
+    overflow: auto !important; }
+
+  body {
+    height: 100%;
+    width: 100%;
+    overflow: auto; } }

@@ -16,7 +16,7 @@
     <body style="background-image:url('{% block bgImage %}{% endblock %}');">        
     	{% block logo %}
     	<div class="logo">
-	    	<a href="">
+	    	<a href="{{ path('lists_io_list_homepage') }}">
 		    	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists_bg.svg') }}">
 		    	<img class="svg-img lists-l" src="{{ asset('assets/images/lists_fg.svg') }}">
 		    	<img class="png-img" src="{{ asset('assets/images/lists.png') }}">
