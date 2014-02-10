@@ -30,7 +30,7 @@
             <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <!-- Link gravitar to profile page -->
-                <a href=""><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
+                <a href="{{ path('lists_io_list_homepage') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
                 <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
                     {{ 'Log out'|trans({}, 'FOSUserBundle') }}
                 </a>
