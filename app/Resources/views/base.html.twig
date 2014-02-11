@@ -4,60 +4,83 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Lists.io | Create and share lists with your friends. {% endblock %}</title>
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="" />
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}"><!-- Major Browsers -->
+		<!--[if IE]><link rel="SHORTCUT ICON" href="{{ asset('favicon.ico') }}"/><![endif]--><!-- Internet Explorer-->
+        
+        
         <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
-        <meta name="viewport" content="initial-scale=1">
+        <meta name="viewport" content="initial-scale=1, user-scalable=no">
         
         <!-- TypeKit -->
         <script type="text/javascript" src="//use.typekit.net/mjl7zre.js"></script>
 		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+		
+		<!-- Google Analytics -->
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		  ga('create', 'UA-47958167-1', 'lists.io');
+		  ga('send', 'pageview');
+		
+		</script>
     </head>
-    <body style="background-image:url('{% block bgImage %}{% endblock %}');">        
-    	{% block logo %}
-    	<div class="logo">
-	    	<a href="{{ path('lists_io_list_homepage') }}">
-		    	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists_bg.svg') }}">
-		    	<img class="svg-img lists-l" src="{{ asset('assets/images/lists_fg.svg') }}">
-		    	<img class="png-img" src="{{ asset('assets/images/lists.png') }}">
-	    	</a>
-    	<span id="save_indicator"></span>
-    	</div>
-    	{% endblock %}
-    	<div class="body-screen"></div>
-    	<!-- Tells you to log in or log out -->
-    	{% block login %}
-    	<div class="login-out">
-            <div>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <!-- Link gravitar to profile page -->
-                <a href="{{ path('lists_io_list_homepage') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
-                <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
-                    {{ 'Log out'|trans({}, 'FOSUserBundle') }}
-                </a>
-            {% else %}
-                <a class="logout-link" href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
-            {% endif %}
-			</div>
+    <body>        
+    	<div id="site_wrapper">
+	    	<div class="bg-wrapper" style="background-image: url('{{ block('bgImage') }}');"></div>
+	    	{% block logo %}
+	    	<div class="logo">
+		    	<a href="{{ path('lists_io_list_homepage') }}">
+			    	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists_bg.svg') }}">
+			    	<img class="svg-img lists-l" src="{{ asset('assets/images/lists_fg.svg') }}">
+			    	<img class="png-img" src="{{ asset('assets/images/lists.png') }}">
+		    	</a>
+	    	<span id="save_indicator"></span>
+	    	</div>
+	    	{% endblock %}
+	    	<div class="body-screen"></div>
+	    	<!-- Tells you to log in or log out -->
+	    	{% block login %}
+	    	<div class="login-out">
+	            <div>
+	            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	                <!-- Link gravitar to profile page -->
+	                <a href="{{ path('lists_io_list_homepage') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
+	                <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
+	                    {{ 'Log out'|trans({}, 'FOSUserBundle') }}
+	                </a>
+	            {% else %}
+	                <a class="logout-link" href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
+	            {% endif %}
+				</div>
+	        </div>
+	        {% endblock %}
+	        <!-- End Log in or log out message -->
+	        {% block share %}
+	        <div class="share">
+	        	<img src='{{ asset('assets/images/sharebuttonwhite.png') }}'><span class="share-text">share</span>
+	        </div>
+	        <div class="share-buttons">
+	        	<ul>
+	        		<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/"><span class="icon-facebook"></span></a></li>
+	        		<li><a href="http://twitter.com/share?text=Check%20out%20@listsIO:%20Create,%20share%20and%20discover%20lists.%20http://lists.io"><span class="icon-twitter"></span></a></li>
+	        		<li><a href="mailto:?subject=Check out Lists.io&body=Check out Lists.io: Create, share, and discover lists. %22%0D%0A%0D%0A – http://lists.io/"><span class="icon-mail"></span></a></li>
+	        	</ul>
+	        </div>
+	        {% endblock %}
+	        {% block body %}
+	        {% endblock %}
         </div>
-        {% endblock %}
-        <!-- End Log in or log out message -->
-        {% block share %}
-        <div class="share">
-        	<img src='{{ asset('assets/images/sharebuttonwhite.png') }}'><span class="share-text">share</span>
-        </div>
-        <div class="share-buttons">
-        	<ul>
-        		<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/"><span class="icon-facebook"></span></a></li>
-        		<li><a href="http://twitter.com/share?text=Check%20out%20@listsIO:%20Create,%20share%20and%20discover%20lists.%20http://lists.io"><span class="icon-twitter"></span></a></li>
-        		<li><a href="mailto:?subject=Check out Lists.io&body=Check out Lists.io: Create, share, and discover lists. %22%0D%0A%0D%0A – http://lists.io/"><span class="icon-mail"></span></a></li>
-        	</ul>
-        </div>
-        {% endblock %}
-        {% block body %}
-        {% endblock %}
-        
+        <footer class="footer">
+	        <div class="container">
+		        &copy 2014 <a href="mailto:info@lists.io">info@lists.io</a>
+	        </div>
+        </footer>
         
         {% block javascripts %}
         <!-- Uncompressed DEV JQuery -->
@@ -83,6 +106,5 @@
         <script src="{{ asset('assets/js/bootstrap/tooltip.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap/popover.js') }}"></script>
         {% endblock %}
-        
     </body>
 </html>
