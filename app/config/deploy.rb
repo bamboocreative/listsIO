@@ -4,13 +4,15 @@ set :stage_dir,     "app/config"
 require 'capistrano/ext/multistage'
 
 set :application, "lists.io"
-set :domain,      "lists.io"
+set :domain,      "72.47.211.211"
 set :deploy_to,   "/var/www/vhosts/#{domain}"
 set :deploy_via,  :rsync_with_remote_cache
 set :app_path,    "app"
 set :web_path,    "web"
 
-set(:password){ Capistrano::CLI.password_prompt("Type your SSH password for user \"#{user}\": ") }
+set(:user) { Capistrano::CLI.ui.ask "Username => " }
+set(:password) { Capistrano::CLI.password_prompt "Password => " }
+default_run_options[:pty] = true
 
 set :writable_dirs,       ["app/cache", "app/logs"]
 set :webserver_user,      "apache"
