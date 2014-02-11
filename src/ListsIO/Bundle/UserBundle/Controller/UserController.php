@@ -11,8 +11,9 @@ class UserController extends Controller
 
     public function viewAction($userId)
     {
-        $user = $this->loadEntityFromId('ListsIO\Bundle\UserBundle\Entity\User', $userId);
-        return $this->render('ListsIOUserBundle:Profile:show.html.twig', array('user' => $user));
+        $user = $this->getUser();
+        $viewUser = $this->loadEntityFromId('ListsIO\Bundle\UserBundle\Entity\User', $userId);
+        return $this->render('ListsIOUserBundle:Profile:show.html.twig', array('view_user' => $viewUser, 'user' => $user));
     }
 
     public function loadEntityFromId($entity_name, $id)
