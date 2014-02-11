@@ -52,7 +52,8 @@ class ListsController extends Controller
         $list_user = $list->getUser();
         $user = $this->getUser();
         $data = array(
-            'user' => $list_user,
+            'user'  => $user,
+            'list_user' => $list_user,
             'list' => ($format === 'html') ? $list : $this->serializer->serialize($list, $format)
         );
         // If list belongs to user, render edit template, otherwise render view template.
@@ -84,7 +85,6 @@ class ListsController extends Controller
     public function saveListAction(Request $request, $userId)
     {
         $this->requireXmlHttpRequest($request);
-        $format = $request->getRequestFormat();
         $data = $request->request->all();
         $user = $this->loadEntityFromId('ListsIOUserBundle:User', $userId);
         if (empty($user)) {
@@ -107,7 +107,6 @@ class ListsController extends Controller
     {
         $this->requireXmlHttpRequest($request);
         $this->_initDoctrine();
-        $format = $request->getRequestFormat();
         $data = $request->request->all();
         $list = $this->loadEntityFromId('ListsIOListBundle:LIOList', $listId);
         if (empty($list)) {
@@ -136,7 +135,6 @@ class ListsController extends Controller
     public function removeListItemAction(Request $request, $itemId)
     {
         $this->requireXmlHttpRequest($request);
-        $format = $request->getRequestFormat();
         $listItem = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOListItem', $itemId);
         if (empty($listItem)) {
             throw new EntityNotFoundException("Couldn't find list item to remove it.");
