@@ -9,8 +9,8 @@
         {{ form_row(form.plainPassword, { 'attr': {'placeholder': 'password'} }) }}
     {{ form_end(form) }}
     #}
+    {{ form_rest(form) }}
     {{ form_widget(form) }}
-    {{ form_widget(form._token) }}
     <div>
     	<br>
         <input type="submit" value="{{ 'REGISTER'|trans }}" />
