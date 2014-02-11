@@ -3,6 +3,9 @@
 {% extends "base.html.twig" %}
 
 {% block bgImage %} {{ list.getImageURL() }} {% endblock %}
+
+{% block title %}Lists.io | {{ list.getTitle() }} {% endblock %}
+
 {% block share %}
 <div class="share">
         	<img src='{{ asset('assets/images/sharebuttonwhite.png') }}'><span class="share-text">share</span>
