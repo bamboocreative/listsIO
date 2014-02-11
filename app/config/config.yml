@@ -23,9 +23,6 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
-    # for use with capifony to preserve sessions on deploy.
-    session:
-        save_path: "%kernel.root_dir%/sessions"
 
 # Twig Configuration
 twig:
