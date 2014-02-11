@@ -46,7 +46,7 @@ class ListsController extends Controller
         $list = $this->loadEntityFromId('ListsIOListBundle:LIOList', $id);
 
         if (empty($list)) {
-            throw new ResourceNotFoundException("Unable to find list.");
+            throw new ResourceNotFoundException("Unable to find list with id: " . $id . ".");
         }
 
         $list_user = $list->getUser();
