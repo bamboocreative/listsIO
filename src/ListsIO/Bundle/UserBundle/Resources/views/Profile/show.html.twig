@@ -97,7 +97,7 @@
 		<div class="col-md-6 col-md-offset-3">
 			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 				<div class="list-button-wrapper">
-					<a class="add-list-button" href="list/new">
+					<a class="add-list-button" href="{{ path('lists_io_new_list') }}">
 						<table>
 							<tr>
 								<td class="add-img"><img src="{{ asset('assets/images/list-add.png') }}"></td>
@@ -116,7 +116,7 @@
 							<h3 class="list-title">{{ list.title }}</h3>
 							<span class="list-subtitle">{{ list.subtitle }}</span>
 						</a>
-						<a class="delete-list delete-button" href="javascript:void(0)">X</a>
+						<a class="delete-list delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
 					</li>
 			{% endfor %}
 			</ul>

@@ -9,8 +9,8 @@
         </div>
         <div class="share-buttons">
         	<ul>
-        		<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/lists/{{ list.getId() }}"><span class="icon-facebook"></span></a></li>
-        		<li><a href="http://twitter.com/share?text=Check%20out%20listsIO%20%22{{ list.getTitle() }}%22%20–%20http://lists.io/lists/{{ list.getId() }}"><span class="icon-twitter"></span></a></li>
+        		<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/list/{{ list.getId() }}"><span class="icon-facebook"></span></a></li>
+        		<li><a href="http://twitter.com/share?text=Check%20out%20listsIO%20%22{{ list.getTitle() }}%22%20–%20http://lists.io/list/{{ list.getId() }}"><span class="icon-twitter"></span></a></li>
         		<li><a href="mailto:?subject=Check Out My List on Lists.io &body=Check out my lists.io list: %22{{ list.getTitle() }}%22%0D%0A%0D%0A – http://lists.io/lists/{{ list.getId() }}"><span class="icon-mail"></span></a></li>
         	</ul>
 </div>
@@ -37,7 +37,7 @@
                                 <span class='number'>{{ i }}</span>
 			                    <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
 			                    <textarea placeholder="(Optional) A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
-			                    <a class="delete-list-item delete-button" href="javascript:void(0)">X</a>
+			                    <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></a>
 			                </li>
 			            {% endfor %}
 			            </ol>
@@ -62,7 +62,7 @@
         <span class='number'>{{ i }}</span>
         <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
         <textarea placeholder="(Optional) A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
-        <a class="delete-list-item delete-button" href="javascript:void(0)">X</a>
+        <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></a>
     </li>
 </div>
 {% endblock %}

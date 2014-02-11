@@ -8,6 +8,7 @@
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <meta name="viewport" content="initial-scale=1">
         
         <!-- TypeKit -->
         <script type="text/javascript" src="//use.typekit.net/mjl7zre.js"></script>
@@ -16,7 +17,7 @@
     <body style="background-image:url('{% block bgImage %}{% endblock %}');">        
     	{% block logo %}
     	<div class="logo">
-	    	<a href="">
+	    	<a href="{{ path('lists_io_list_homepage') }}">
 		    	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists_bg.svg') }}">
 		    	<img class="svg-img lists-l" src="{{ asset('assets/images/lists_fg.svg') }}">
 		    	<img class="png-img" src="{{ asset('assets/images/lists.png') }}">
@@ -26,11 +27,12 @@
     	{% endblock %}
     	<div class="body-screen"></div>
     	<!-- Tells you to log in or log out -->
+    	{% block login %}
     	<div class="login-out">
             <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <!-- Link gravitar to profile page -->
-                <a href=""><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
+                <a href="{{ path('lists_io_list_homepage') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
                 <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
                     {{ 'Log out'|trans({}, 'FOSUserBundle') }}
                 </a>
@@ -39,6 +41,7 @@
             {% endif %}
 			</div>
         </div>
+        {% endblock %}
         <!-- End Log in or log out message -->
         {% block share %}
         <div class="share">
