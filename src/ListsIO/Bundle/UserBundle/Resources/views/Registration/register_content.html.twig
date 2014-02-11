@@ -7,10 +7,10 @@
         {{ form_row(form.username, { 'attr': {'placeholder': 'username'} }) }}
         {{ form_row(form.plainPassword.first) }}
         {{ form_row(form.plainPassword.second) }}
+        <div>
+            <br>
+            <input type="submit" value="{{ 'REGISTER'|trans }}" />
+        </div>
     {{ form_end(form) }}
     {#  form_widget(form) #}
-    <div>
-    	<br>
-        <input type="submit" value="{{ 'REGISTER'|trans }}" />
-    </div>
 </form>
