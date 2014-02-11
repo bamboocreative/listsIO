@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-
+	document.addEventListener("touchstart", function(){}, true);
+	
     var $title = $("#title");
 
     var listID = $title.attr('data-id');
@@ -151,9 +152,9 @@ $(document).ready(function(){
 		var imgURL = $('#img').val();
 		
 			if(imgURL){
-				$('body').css('background-image', 'url(' + imgURL + ')');
+				$('.bg-wrapper').css('background-image', 'url(' + imgURL + ')');
 			} else {
-				$('body').css('background-image', 'none');
+				$('.bg-wrapper').css('background-image', 'none');
 			}
 		
 		clearTimeout($.data(this, 'timer'));
