@@ -109,11 +109,10 @@
         {% block intercom %}
         <script id="IntercomSettingsScriptTag">
 		 window.intercomSettings = {
-		    name: "{% if view_user %}{{ view_user.username }}{% elseif user %}{{ user.username }}{% endif %}" ,
-		    email: "{% if view_user %}{{ view_user.email }}{% elseif user %}{{ user.email }}{% endif %}" ,
-		    user_id: "{% if view_user %}{{ view_user.getID() }}{% elseif user %}{{ user.getID() }}{% endif %}",
-		    //TO DO Jesse: Add Real Unix Time Stamp
-		    created_at: 1392185179,
+		    name: "{% if user %}{{ user.getUsername() }}{% endif %}" ,
+		    email: "{% if user %}{{ user.getEmail() }}{% endif %}" ,
+		    user_id: "{% if user %}{{ user.getID() }}{% endif %}",
+		    created_at: "{% if user %}{{ user.getCreatedAt() }}{% endif %}",
 		    app_id: "3a229973bc2047e738665e8b856f61c399a7a0dd"
 		  };
 		</script>
