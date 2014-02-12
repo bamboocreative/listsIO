@@ -5341,8 +5341,7 @@ body {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    z-index: -2;
-    background-attachment: fixed; }
+    z-index: -2; }
 
 .edit-list-head-wrapper {
   margin-top: 110px;
@@ -5498,7 +5497,8 @@ div#subtitle {
 div#author {
   font-size: 1.3em;
   padding-left: 3px;
-  font-weight: 300; }
+  font-weight: 300;
+  display: inline-block; }
   div#author a {
     display: inline-block;
     padding: 13px 17px 13px 15px;
@@ -5614,7 +5614,8 @@ div#author {
 .share {
   position: fixed;
   right: 50px;
-  bottom: 30px; }
+  bottom: 30px;
+  z-index: 9999; }
   .share img {
     width: 30px;
     margin-bottom: 12px; }
@@ -5640,7 +5641,8 @@ div#author {
     right: -250px;
     bottom: 40px;
     display: inline;
-    font-size: 1.5em; }
+    font-size: 1.5em;
+    z-index: 9999; }
     .share-buttons ul li:nth-child(1) {
       -webkit-transition-delay: 0.1s;
       transition-delay: 0.1s;
@@ -5671,9 +5673,9 @@ div#author {
   transition: all 0.5s ease-in;
   -webkit-transition-delay: 0.2s;
   transition-delay: 0.2s;
-  -webkit-transform: translate(200px, 0);
-  -ms-transform: translate(200px, 0);
-  transform: translate(200px, 0);
+  -webkit-transform: translate(1000px, 0);
+  -ms-transform: translate(1000px, 0);
+  transform: translate(1000px, 0);
   opacity: .3; }
 
 footer.footer {
@@ -5721,3 +5723,28 @@ footer.footer {
   .list-item .item {
     line-height: 1em !important;
     font-size: 25px !important; } }
+@media (max-width: 768px) and (max-width: 991px) {
+  .share-wrapper {
+    background: #333333;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 45px;
+    z-index: 9999; }
+    .share-wrapper .share {
+      display: none; }
+    .share-wrapper .share-buttons ul {
+      padding-left: 0; }
+      .share-wrapper .share-buttons ul li {
+        position: relative;
+        bottom: 0;
+        top: 5px;
+        right: auto;
+        left: 50%;
+        z-index: 9999; }
+        .share-wrapper .share-buttons ul li:nth-child(1) {
+          margin: 0 30px 0 -70px; }
+        .share-wrapper .share-buttons ul li:nth-child(2) {
+          margin: 0 30px 0 0; }
+        .share-wrapper .share-buttons ul li:nth-child(3) {
+          margin: 0 30px 0 0; } }

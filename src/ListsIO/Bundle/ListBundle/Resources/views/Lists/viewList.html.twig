@@ -7,15 +7,17 @@
 {% block title %}Lists.io | {{ list.getTitle() }} {% endblock %}
 
 {% block share %}
-<div class="share">
-        	<img src='{{ asset('assets/images/sharebuttonwhite.png') }}'><span class="share-text">share</span>
-        </div>
-        <div class="share-buttons">
-        	<ul>
-        		<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/list/{{ list.getId() }}"><span class="icon-facebook"></span></a></li>
-        		<li><a href="http://twitter.com/share?text=Check%20out%20listsIO%20%22{{ list.getTitle() }}%22%20–%20http://lists.io/list/{{ list.getId() }}"><span class="icon-twitter"></span></a></li>
-        		<li><a href="mailto:?subject=Check Out My List on Lists.io &body=Check out my lists.io list: %22{{ list.getTitle() }}%22%0D%0A%0D%0A – http://lists.io/lists/{{ list.getId() }}"><span class="icon-mail"></span></a></li>
-        	</ul>
+<div class="share-wrapper">
+	<div class="share">
+		<img src='{{ asset('assets/images/sharebuttonwhite.png') }}'><span class="share-text">share</span>
+	</div>
+	<div class="share-buttons">
+		<ul>
+			<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/list/{{ list.getId() }}"><span class="icon-facebook"></span></a></li>
+			<li><a href="http://twitter.com/share?text=Check%20out%20this%20list%20on%20@listIO:%20%22{{ list.getTitle() }}%22%20–%20http://lists.io/list/{{ list.getId() }}"><span class="icon-twitter"></span></a></li>
+			<li><a href="mailto:?subject=Check Out This List on Lists.io &body=Check out this list: %22{{ list.getTitle() }}%22 – http://lists.io/list/{{ list.getId() }}"><span class="icon-mail"></span></a></li>
+		</ul>
+	</div>
 </div>
 {% endblock %}
 {% block body %}

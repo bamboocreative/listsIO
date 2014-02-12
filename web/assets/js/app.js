@@ -24,8 +24,7 @@ $(document).ready(function(){
 		$('.share-buttons ul li').addClass('move-left');
 		
 	});
-	
-	
+		
 	
 	/*
 	*
