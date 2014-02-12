@@ -112,7 +112,7 @@
 		    name: "{% if user %}{{ user.getUsername() }}{% endif %}" ,
 		    email: "{% if user %}{{ user.getEmail() }}{% endif %}" ,
 		    user_id: "{% if user %}{{ user.getID() }}{% endif %}",
-		    created_at: "{% if user %}{{ user.getCreatedAt() }}{% endif %}",
+		    created_at: "{% if user %}{{ user.getCreatedAt().format('Y-m-d H:i:s') }}{% endif %}",
 		    app_id: "3a229973bc2047e738665e8b856f61c399a7a0dd"
 		  };
 		</script>
