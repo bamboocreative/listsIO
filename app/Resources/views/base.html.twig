@@ -106,5 +106,18 @@
         <script src="{{ asset('assets/js/bootstrap/tooltip.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap/popover.js') }}"></script>
         {% endblock %}
+        {% block intercom %}
+        <script id="IntercomSettingsScriptTag">
+		 window.intercomSettings = {
+		    name: "{% if view_user %}{{ view_user.username }}{% elseif user %}{{ user.username }}{% endif %}" ,
+		    email: "{% if view_user %}{{ view_user.email }}{% elseif user %}{{ user.email }}{% endif %}" ,
+		    user_id: "{% if view_user %}{{ view_user.getID() }}{% elseif user %}{{ user.getID() }}{% endif %}",
+		    //TO DO Jesse: Add Real Unix Time Stamp
+		    created_at: 1392185179,
+		    app_id: "3a229973bc2047e738665e8b856f61c399a7a0dd"
+		  };
+		</script>
+		<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://static.intercomcdn.com/intercom.v1.js';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+		{% endblock %} 
     </body>
 </html>
