@@ -7,9 +7,16 @@ ListsIO\Bundle\UserBundle\Entity\User:
             id: true
             generator:
                 strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
     oneToMany:
         lists:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
             mappedBy: user
             cascade: ["remove"]
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+            prePersist: [prePersistTimestamp]
+            preUpdate: [prePersistTimestamp]

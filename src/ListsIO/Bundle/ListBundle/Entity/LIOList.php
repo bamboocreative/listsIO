@@ -33,6 +33,16 @@ class LIOList implements JsonSerializable
     private $imageURL;
 
     /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $listItems;
@@ -200,4 +210,33 @@ class LIOList implements JsonSerializable
         );
     }
 
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersistTimestamp()
+    {
+        $this->updatedAt = new \DateTime(date('Y-m-d H:i:s'));
+        if (empty($this->createdAt)) {
+            $this->createdAt = new \DateTime(date('Y-m-d H:i:s'));
+        }
+    }
 }

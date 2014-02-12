@@ -17,6 +17,10 @@ ListsIO\Bundle\ListBundle\Entity\LIOList:
         imageURL:
             type: string
             length: 255
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
     manyToOne:
         user:
           targetEntity: ListsIO\Bundle\UserBundle\Entity\User
@@ -26,4 +30,6 @@ ListsIO\Bundle\ListBundle\Entity\LIOList:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListItem
             mappedBy: list
             cascade: ["remove"]
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [prePersistTimestamp]
+        preUpdate: [prePersistTimestamp]

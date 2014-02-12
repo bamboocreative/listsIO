@@ -13,9 +13,15 @@ ListsIO\Bundle\ListBundle\Entity\LIOListItem:
             length: 255
         description:
             type: string
-            length: '1024'
+            length: 1024
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
     manyToOne:
         list:
           targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
           inversedBy: listItems
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+            prePersist: [prePersistTimestamp]
+            preUpdate: [prePersistTimestamp]
