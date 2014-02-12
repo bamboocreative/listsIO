@@ -5684,6 +5684,9 @@ footer.footer {
   padding: 4px 0px;
   font-size: .9em; }
 
+#IntercomDefaultWidget {
+  display: none !important; }
+
 @media (max-width: 767px) {
   body .bg-wrapper {
     background-size: auto 100%;
