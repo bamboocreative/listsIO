@@ -1,5 +1,11 @@
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 
+//Custom Normalize
+*, *:before, *:after,  *:active,  *:link{
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+	outline: none !important;
+}
+
 //
 // 1. Set default font family to sans-serif.
 // 2. Prevent iOS text size adjust after orientation change, without disabling
