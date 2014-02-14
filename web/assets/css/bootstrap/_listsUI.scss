@@ -770,8 +770,9 @@ footer.footer{
 	display: none !important;
 }
 
+
+// Less than 768px!
 @media (max-width: $screen-xs-max) {
-	
 	body{
 		.bg-wrapper{
 			background-size: auto 100%;
@@ -827,7 +828,6 @@ footer.footer{
 		}
 	}
 }
-
 
 
 @media (max-width: $screen-sm-min) and (max-width: $screen-sm-max){
