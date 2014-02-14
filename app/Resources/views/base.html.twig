@@ -76,20 +76,15 @@
 	        {% block body %}
 	        {% endblock %}
         </div>
-        <footer class="footer">
-	        <div class="container">
-		        &copy 2014 <a href="mailto:info@lists.io">info@lists.io</a>
-	        </div>
-        </footer>
         
         {% block javascripts %}
-        <!-- Uncompressed DEV JQuery -->
+        <!-- Compressed Prod JQuery -->
         <script src="{{ asset('assets/js/jquery-2.1.0.js') }}"></script>
         
         <!-- Custom JS -->
         <script src="{{ asset('assets/js/app.js') }}"></script>
         
-        <!-- Uncompressed DEV Modernizr-->
+        <!-- Compressed Prod Modernizr-->
         <script src="{{ asset('assets/js/modernizr.js') }}"></script>
         {% endblock %}
         {% block intercom %}

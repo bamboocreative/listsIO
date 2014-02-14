@@ -2,6 +2,13 @@
 
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block title %}Lists.io |
+	{% if view_user %}
+		{{ view_user.username }}
+	{% elseif user %}
+		{{ user.username }}
+	{% endif %}
+{% endblock %}
 {% block bgImage %}
 {% spaceless %} 
 {% set imgURL = [
@@ -58,6 +65,7 @@
 {{ asset(random(imgURL)) }} 
 {% endspaceless %}
 {% endblock %}
+
 {% block share %}
 <div class="share-wrapper">
 	<div class="share">
@@ -78,9 +86,9 @@
 	</div>
 </div>	
 {% endblock %}
+
 {% block fos_user_content %}
 <div class="profile-wrapper">
-
 	<!-- Error: Getting current user's info, not author info -->
 	<div class="gravatar-image">
 		<div class="gravatar-inner">
@@ -98,29 +106,16 @@
 	<h1 class="profile-name">
 		{% if view_user %}
 			{{ view_user.username }}
-			{% elseif user %}
+		{% elseif user %}
 			{{ user.username }}
-			{% endif %}
+		{% endif %}
 	</h1>
+	{#}
 	<div class="profile-email">
-		<a href="mailto:
-		{% if view_user %}
-			{{ view_user.email }}
-			{% elseif user %}
-			{{ user.email }}
-			{% endif %}
-		">
-		{% if view_user %}
-			{{ view_user.email }}
-			{% elseif user %}
-			{{ user.email }}
-			{% endif %}
-		</a>
 	</div>
+	#}
 </div>
-
 <div class="divider"></div>
-
 <div class="container profile-lists-wrapper">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
@@ -137,16 +132,13 @@
 				</div>
 			{% endif %}
 			<ul>
-			
 			{% if view_user %}
 			{% set listUser = view_user %}
 			{% elseif user %}
 			{% set listUser = user %}
 			{% endif %}
-			
 			{% for list in listUser.getLists() if list.title %}
 					<li data-id="{{ list.id }}"> 
-						
 						<a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
 						<!-- <a href="list/{{ list.id }}"> -->
 							<h3 class="list-title">{{ list.title }}</h3>
@@ -161,8 +153,6 @@
 		</div>
 	</div>
 </div>
-
 <!-- Need an array of a user's lists here -->
-
 {% include "FOSUserBundle:Profile:show_content.html.twig" %}
 {% endblock fos_user_content %}
