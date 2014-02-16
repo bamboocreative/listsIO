@@ -9,19 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Doctrine\Bundle\DoctrineBundle\Registry as Registry;
 use Symfony\Component\HttpFoundation\Response as Response;
 
 class ListsController extends Controller
 {
-    /**
-     * @var Serializer
-     */
-    protected $serializer;
 
     /**
      * @var Registry
@@ -41,7 +33,6 @@ class ListsController extends Controller
 
     public function viewListAction(Request $request, $id)
     {
-        $this->_initSerializer();
         $format = $request->getRequestFormat();
         $list = $this->loadEntityFromId('ListsIOListBundle:LIOList', $id);
 
@@ -54,7 +45,7 @@ class ListsController extends Controller
         $data = array(
             'user'  => $user,
             'list_user' => $list_user,
-            'list' => ($format === 'html') ? $list : $this->serializer->serialize($list, $format)
+            'list' => $list
         );
         // If list belongs to user, render edit template, otherwise render view template.
         if ( empty($user) || ! ($list_user->getId() === $user->getId())) {

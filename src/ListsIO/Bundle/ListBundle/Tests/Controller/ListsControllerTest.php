@@ -4,13 +4,13 @@ namespace ListsIO\Bundle\ListBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class ListsControllerTest extends WebTestCase
 {
     public function testIndex()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/hello/Fabien');
+        $crawler = $client->request('GET', '/list/1');
 
         $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
     }
