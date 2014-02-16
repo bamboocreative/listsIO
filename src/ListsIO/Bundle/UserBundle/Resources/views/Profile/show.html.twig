@@ -65,11 +65,11 @@
 	</div>
 	<div class="share-buttons">
 		<ul>
-	    {% if view_user %}
+	    {% if view_user is defined %}
 			<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/user/view/{{ view_user.getId() }}"><span class="icon-facebook"></span></a></li>
 			<li><a href="http://twitter.com/share?text=Check%20out%20my%20lists%20on%20@listIO%20–%20http://lists.io/user/view/{{ view_user.getId() }}"><span class="icon-twitter"></span></a></li>
 			<li><a href="mailto:?subject=Check Out My Lists on Lists.io &body=Check out my lists on Lists.io – http://lists.io/user/view/{{ view_user.getId() }}"><span class="icon-mail"></span></a></li>
-			{% elseif user %}
+        {% elseif user is defined %}
 			<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/user/view/{{ user.getId() }}"><span class="icon-facebook"></span></a></li>
 			<li><a href="http://twitter.com/share?text=Check%20out%20my%20lists%20on%20@listIO%20–%20http://lists.io/user/view/{{ user.getId() }}"><span class="icon-twitter"></span></a></li>
 			<li><a href="mailto:?subject=Check Out My Lists on Lists.io &body=Check out my lists on Lists.io – http://lists.io/user/view/{{ user.getId() }}"><span class="icon-mail"></span></a></li>
@@ -86,35 +86,35 @@
 		<div class="gravatar-inner">
 		<a href="http://en.gravatar.com/">
 			<img src="
-			{% if view_user %}
-			{{ view_user.getGravatarURL }}
-			{% elseif user %}
-			{{ user.getGravatarURL }}
+			{% if view_user is defined %}
+			    {{ view_user.getGravatarURL() }}
+			{% elseif user is defined %}
+			    {{ user.getGravatarURL }}
 			{% endif %}
 			">
 		</a>
 		</div>
 	</div>
 	<h1 class="profile-name">
-		{% if view_user %}
-			{{ view_user.username }}
-			{% elseif user %}
-			{{ user.username }}
-			{% endif %}
+		{% if view_user is defined %}
+            {{ view_user.username }}
+        {% elseif user is defined %}
+            {{ user.username }}
+        {% endif %}
 	</h1>
 	<div class="profile-email">
 		<a href="mailto:
-		{% if view_user %}
+		{% if view_user is defined %}
 			{{ view_user.email }}
-			{% elseif user %}
+        {% elseif user is defined %}
 			{{ user.email }}
-			{% endif %}
+        {% endif %}
 		">
-		{% if view_user %}
+		{% if view_user is defined%}
 			{{ view_user.email }}
-			{% elseif user %}
+        {% elseif user is defined %}
 			{{ user.email }}
-			{% endif %}
+        {% endif %}
 		</a>
 	</div>
 </div>
@@ -138,10 +138,10 @@
 			{% endif %}
 			<ul>
 			
-			{% if view_user %}
-			{% set listUser = view_user %}
-			{% elseif user %}
-			{% set listUser = user %}
+			{% if view_user is defined %}
+			    {% set listUser = view_user %}
+			{% elseif user is defined %}
+			    {% set listUser = user %}
 			{% endif %}
 			
 			{% for list in listUser.getLists() if list.title %}

@@ -1,5 +1,12 @@
-lists_io_user_view:
-    pattern:  /view/{userId}.{_format}
+lists_io_user_view_by_id:
+    pattern:  /id/{userId}.{_format}
     requirements:
-      userId: \d+
-    defaults: { _controller: ListsIOUserBundle:User:view, _format: html }
+        userId: \d+
+        _format: (html|json)
+    defaults: { _controller: ListsIOUserBundle:User:viewById, _format: html }
+lists_io_user_view_by_username:
+    pattern:  /{username}.{_format}
+    requirements:
+        username: .+
+        _format: (html|json)
+    defaults: { _controller: ListsIOUserBundle:User:viewByUsername, _format: html }

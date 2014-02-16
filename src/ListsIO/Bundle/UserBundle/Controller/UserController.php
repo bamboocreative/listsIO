@@ -2,32 +2,33 @@
 
 namespace ListsIO\Bundle\UserBundle\Controller;
 
+use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UserController extends Controller
 {
 
-    protected $doctrine;
-
-    public function viewAction($userId)
+    public function viewByIdAction($userId)
     {
         $user = $this->getUser();
-        $viewUser = $this->loadEntityFromId('ListsIO\Bundle\UserBundle\Entity\User', $userId);
+        $viewUser = $this->getDoctrine()
+            ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')
+            ->find($userId);
+        if (empty($viewUser)) {
+            throw new EntityNotFoundException("Could not find user by ID.");
+        }
         return $this->render('ListsIOUserBundle:Profile:show.html.twig', array('view_user' => $viewUser, 'user' => $user));
     }
 
-    public function loadEntityFromId($entity_name, $id)
+    public function viewByUsernameAction($username)
     {
-        $this->_initDoctrine();
-        return $this->doctrine
-            ->getRepository($entity_name)
-            ->find($id);
-    }
-
-    protected function _initDoctrine()
-    {
-        if (empty($this->doctrine)) {
-            $this->doctrine = $this->getDoctrine();
+        $user = $this->getUser();
+        $viewUser = $this->getDoctrine()
+            ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')
+            ->findOneBy(array('username' => $username));
+        if (empty($viewUser)) {
+            throw new EntityNotFoundException("Could not find user by username.");
         }
+        return $this->render('ListsIOUserBundle:Profile:show.html.twig', array('view_user' => $viewUser, 'user' => $user));
     }
 }
