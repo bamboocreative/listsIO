@@ -1,5 +1,5 @@
 lists_io_user_view_by_id:
-    pattern:  /id/{userId}.{_format}
+    pattern:  /user/{userId}.{_format}
     requirements:
         userId: \d+
         _format: (html|json)

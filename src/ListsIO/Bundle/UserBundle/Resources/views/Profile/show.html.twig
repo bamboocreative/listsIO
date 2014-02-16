@@ -95,9 +95,9 @@
 		<a href="http://en.gravatar.com/">
 			<img src="
 			{% if view_user is defined %}
-			    {{ view_user.getGravatarURL() }}
+			    {{ view_user.gravatarURL }}
 			{% elseif user is defined %}
-			    {{ user.getGravatarURL }}
+			    {{ user.gravatarURL }}
 			{% endif %}
 			">
 		</a>
@@ -137,7 +137,7 @@
 			{% elseif user is defined %}
 			    {% set listUser = user %}
 			{% endif %}
-			{% for list in listUser.getLists() if list.title %}
+			{% for list in listUser.lists if list.title %}
 					<li data-id="{{ list.id }}"> 
 						<a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
 						<!-- <a href="list/{{ list.id }}"> -->
@@ -145,7 +145,7 @@
 							<span class="list-subtitle">{{ list.subtitle }}</span>
 						</a>
 						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and view_user == false %}
-						<a class="delete-list delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
+						    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
 						{% endif %}
 					</li>
 			{% endfor %}
@@ -153,6 +153,5 @@
 		</div>
 	</div>
 </div>
-<!-- Need an array of a user's lists here -->
 {% include "FOSUserBundle:Profile:show_content.html.twig" %}
 {% endblock fos_user_content %}

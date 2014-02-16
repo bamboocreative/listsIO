@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * User
  */
-class User extends BaseUser
+class User extends BaseUser implements \JsonSerializable
 {
     /**
      * @var integer
@@ -127,9 +127,7 @@ class User extends BaseUser
     {
         return $this->updatedAt;
     }
-    /**
-     * @ORM\PrePersist
-     */
+
     public function prePersistTimestamp()
     {
         $this->updatedAt = new \DateTime(date('Y-m-d H:i:s'));
@@ -137,4 +135,23 @@ class User extends BaseUser
             $this->createdAt = new \DateTime(date('Y-m-d H:i:s'));
         }
     }
+
+    public function jsonSerialize()
+    {
+        $lists = array();
+        foreach( $this->lists as $list ) {
+            $lists[] = $list->jsonSerialize();
+        }
+
+        return array(
+            'id'            => $this->id,
+            'username'      => $this->username,
+            'email'         => $this->email,
+            'gravatarURL'   => $this->getGravatarURL(),
+            'createdAt'     => $this->createdAt,
+            'updatedAt'     => $this->updatedAt,
+            'lists'         => $lists
+        );
+    }
+
 }
