@@ -1,0 +1,126 @@
+// User Profile
+.profile-wrapper{
+	text-align: center;
+	
+	.gravatar-image{
+		padding-top: 5em;
+		padding-bottom: 0em;
+		
+		.gravatar-inner{
+			max-width: 140px;
+			margin: 0 auto;
+			@include border-radius(99999px);
+			overflow: hidden;
+			
+			img{
+				max-width: 100%;
+			}
+			
+		}
+	}
+	
+	.profile-name{
+		font-size: 3em;
+		font-weight: 900;
+		padding-bottom: .5em;
+	}
+	
+	.profile-email{
+		a{
+			color: white;
+		}
+		
+		font-weight: 300;
+	}
+}
+
+// User profile Lists
+.profile-lists-wrapper{
+	
+	.no-list{
+		text-align: center;
+		font-weight: 100;
+		margin-bottom: 4em;
+	}
+	
+	ul{
+		margin: 0;
+		padding: 0;
+			
+			li{
+				&:hover{
+					.delete-button{
+						opacity: 1;
+					}
+				}
+				position: relative;
+				list-style-type: none;
+				padding-bottom: 4em;
+				a{
+					color: white;
+					text-decoration: none;
+
+				.list-title{
+						font-weight: 900;
+						margin-bottom: 8px;
+				}
+					
+				.list-subtitle{
+						font-weight: 100;
+				}
+			}
+		
+		}
+	}
+	
+}
+
+// Smaller than 480px
+@media (max-width: $screen-xs) {
+	.profile-wrapper{
+		.profile-name{
+			font-size: 1.5em;
+		}
+		.gravatar-image{
+			padding-top: 10em;
+		}
+		.divider{
+			margin-top: .3em;
+			margin-bottom: .3em;
+		}
+
+	}
+	
+	.profile-lists-wrapper{
+		ul{
+			margin-bottom: 3em;
+			li{
+				padding-bottom: 2em;
+			}
+		}
+	}	  		
+}
+
+// Profile page divider
+.divider{
+	border-top: 1px solid #fff;
+	margin: 2.8em;
+	opacity: .7;
+}
+
+// Smaller than 767px
+@media (max-width: $screen-sm){
+}
+
+
+// 768px - 1999px
+@media (min-width: $screen-md) and (max-width: $screen-lg) {
+  
+}
+
+// Larger than 1200px
+@media (min-width: $screen-lg) {
+  
+}
+
+

@@ -1,0 +1,155 @@
+// Home Page Styles (Register Page)
+.register-form{
+	margin-bottom: 5em;
+	form{
+		label{
+			//display: none;
+			margin-bottom: 0px;
+			margin-top: 5px;
+		}
+		input{
+			width: 100%;
+			
+			
+		}
+	}
+}
+
+.home-header{
+	
+	background-attachment: fixed !important;
+	background-size: cover;
+	background-position: center center;
+	
+	h1{
+		margin: 0px;
+		text-align: center;
+		padding: 1em 0 1em;
+		font-weight: 100;
+		line-height: 1.2em;
+	}
+}
+
+.home-content{
+	position: relative;
+	background-size: cover !important;
+	background-repeat: no-repeat !important;
+	padding: 3% 0 3% 0;
+	background: white;
+	color: darken($gray-darker, 15%);
+	min-height: 400px;
+
+	h1{
+		text-align: left;
+		font-weight: 100;
+		line-height: 1.7em;
+		&.home-title{
+			text-align: center;
+			color: #fff;
+		}
+	}
+
+	ol {
+		list-style: none;
+		margin: 2em 5.5em;
+		
+		li{
+			margin-bottom: 1.5em;
+			
+			.item{
+				margin-left: 0px;
+			}
+		}
+	}
+}
+
+.how-to-section{
+	background: #f2d118;
+	padding: 3em 0 3em 0;
+	color: $brand-primary;
+
+	h2{
+		text-align: center;
+		font-weight: 100;
+		line-height: 1.3em;
+	}
+
+	.how-to-wrapper {
+
+		padding: 3em 0 2em 0;
+
+		.how-to {
+			text-align: center;
+
+			img{
+				display: block;
+				margin: 0 auto;
+				max-width: 50%;
+				margin-bottom: 10px;
+			}
+		}
+	}
+
+	.home-cta{
+		padding: 3% 0 3% 0;
+		text-align: center;
+
+		a {
+			display: inline-block ;
+			min-width: 40%;
+			padding: 30px;
+			font-size: 1.3em;
+			min-height: 60px;
+		}
+	}
+}
+
+.sign-up-wrapper{
+	margin: 0 auto 6em;
+	text-align: center;
+	button.sign-up{
+		color: #fff;
+		font-weight: 900;
+		@include border-radius(10px);
+		font-size: 2em;
+		max-width: 100%;
+		padding: 20px 60px !important;
+		line-height: 1em;
+		@include transition(.3s all);
+		&:hover{
+			background: darken($brand-success, 10%);
+			border: 1px solid darken($brand-success, 10%);
+		}
+		
+	}
+
+}
+
+// Smaller than 480px
+@media (max-width: $screen-xs) {
+	.home-content{
+		h1{
+			line-height: 1em;
+		}
+		ol{
+			margin: 2em 0;
+			padding-left: 0px;
+			li{}
+		}
+	}
+}
+
+// Smaller than 767px
+@media (max-width: $screen-sm){
+}
+
+
+// 768px - 1999px
+@media (min-width: $screen-md) and (max-width: $screen-lg) {
+  
+}
+
+// Larger than 1200px
+@media (min-width: $screen-lg) {
+  
+}
