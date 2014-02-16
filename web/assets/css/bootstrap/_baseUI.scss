@@ -1,0 +1,36 @@
+// Resets inputs
+input, textarea{
+	min-width: 0px !important;
+}
+
+// Here's the document, y'all
+html{
+	height: 100%;
+
+	// Sets up the body for full screen BGs
+	body {
+		background: $brand-primary;
+		height: 100%;
+		
+		#site_wrapper{
+			min-height: 100%;
+		}
+		
+		// Images get added to this element inline for full screen BGs
+		.bg-wrapper{
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			z-index: -2;
+		}
+		
+	}
+}
+
+#IntercomDefaultWidget {
+	display: none !important;
+}
+
