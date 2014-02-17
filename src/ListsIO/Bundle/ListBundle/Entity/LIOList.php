@@ -201,8 +201,9 @@ class LIOList implements JsonSerializable
         foreach($this->listItems as $item) {
             $listItems[] = $item->jsonSerialize();
         }
+        $user = $this->getUser();
         return array(
-            'userID'    => $this->getUser()->getId(),
+            'userID'    => $user ? $user->getId  : null,
             'id'        => $this->getId(),
             'title'     => $this->getTitle(),
             'subtitle'  => $this->getSubtitle(),

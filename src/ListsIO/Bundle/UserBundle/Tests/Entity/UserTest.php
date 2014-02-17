@@ -51,16 +51,19 @@ class UserTest extends WebTestCase {
         $this->assertEquals(0, count($this->user->getLists()));
     }
 
-    public function testPrePersistTimestamp()
+    public function testTimestamping()
     {
         $this->user->prePersistTimestamp();
         $this->assertInstanceOf('\DateTime', $this->user->getCreatedAt());
+        $this->assertInstanceOf('\DateTime', $this->user->getUpdatedAt());
         $this->assertGreaterThanOrEqual($this->createdAfter->getTimestamp(),$this->user->getCreatedAt()->getTimestamp());
+        $this->assertGreaterThanOrEqual($this->createdAfter->getTimestamp(), $this->user->getUpdatedAt()->getTimestamp());
     }
 
     public function testJsonSerialize()
     {
         $data = $this->user->jsonSerialize();
+        $this->assertArrayHasKey('email', $data);
         $this->assertEquals('test@example.com', $data['email']);
     }
 } 
