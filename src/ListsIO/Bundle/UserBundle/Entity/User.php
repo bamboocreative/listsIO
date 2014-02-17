@@ -49,29 +49,19 @@ class User extends BaseUser implements \JsonSerializable
     private $lists;
 
     /**
-     * Get gravatarURL
+     * Get user's gravatar URL
+     * http://gravatar.com
      *
-     * @return string 
+     * @param int $size Size in pixels, defaults to 80px [ 1 - 2048 ]
+     * @param string $defaultImageset Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+     * @param string $maximumRating Maximum rating (inclusive) [ g | pg | r | x ]
+     * @return string
      */
-    public function getGravatarURL()
+    public function getGravatarURL($size = 240, $defaultImageset = 'mm', $maximumRating = 'x')
     {
-        return $this->createGravatarURL();
-    }
-
-    /**
-     * Get either a Gravatar URL or complete image tag for a specified email address.
-     * string $s Size in pixels, defaults to 80px [ 1 - 2048 ]
-     * string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-     * string $r Maximum rating (inclusive) [ g | pg | r | x ]
-     * @return String containing either just a URL or a complete image tag
-     */
-    public function createGravatarURL() {
-        $s = 240;
-        $d = 'mm';
-        $r = 'x';
         $url = 'http://www.gravatar.com/avatar/';
         $url .= md5(strtolower(trim($this->getEmail())));
-        $url .= "?s=$s&d=$d&r=$r";
+        $url .= "?s=$size&d=$defaultImageset&r=$maximumRating";
         return $url;
     }
 
