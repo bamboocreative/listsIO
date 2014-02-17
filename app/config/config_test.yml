@@ -1,5 +1,6 @@
 imports:
     - { resource: config_dev.yml }
+    - { resource: parameters_test.yml }
 
 framework:
     test: ~
@@ -8,9 +9,21 @@ framework:
     profiler:
         collect: false
 
+security:
+    firewalls:
+        main:
+            http_basic: ~
+
 web_profiler:
     toolbar: false
     intercept_redirects: false
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+        host:     %database_host%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%

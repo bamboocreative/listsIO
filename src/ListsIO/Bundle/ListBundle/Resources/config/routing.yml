@@ -1,6 +1,3 @@
-lists_io_list_homepage:
-    pattern:  /
-    defaults: { _controller: ListsIOListBundle:Lists:index }
 lists_io_view_list:
     pattern: /list/{id}.{_format}
     defaults:  { _controller: ListsIOListBundle:Lists:viewList, _format: html }

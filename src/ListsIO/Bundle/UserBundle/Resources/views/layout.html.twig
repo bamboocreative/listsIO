@@ -7,9 +7,9 @@
 {% block login %}
 		<div class="login-out">
             <div>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                 <!-- Link gravitar to profile page -->
-                <a href="{{ path('lists_io_list_homepage') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
+                <a href="{{ path('lists_io_home') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
                 <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
                     {{ 'Log out'|trans({}, 'FOSUserBundle') }}
                 </a>

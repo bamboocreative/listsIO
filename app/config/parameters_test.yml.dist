@@ -1,0 +1,5 @@
+parameters:
+  database_host:      localhost
+  database_name:      <yourdbname>
+  database_user:      <yourdbuser>
+  database_password:  <yourdbpassword>

@@ -2,34 +2,15 @@
 
 namespace ListsIO\Bundle\ListBundle\Controller;
 
-use Doctrine\ORM\EntityNotFoundException;
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use ListsIO\Bundle\ListBundle\Entity\LIOListItem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Doctrine\Bundle\DoctrineBundle\Registry as Registry;
 use Symfony\Component\HttpFoundation\Response as Response;
 
 class ListsController extends Controller
 {
-
-    /**
-     * @var Registry
-     */
-    protected $doctrine;
-
-    public function indexAction()
-    {
-        // If the user's not logged in, send them to registration.
-        $securityContext = $this->container->get('security.context');
-        if( ! $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-            return $this->redirect($this->generateUrl('fos_user_registration_register'));
-        }
-        // Otherwise, send them to their profile page.
-        return $this->render('ListsIOUserBundle:Profile:show.html.twig', array( 'user' => $this->getUser()));
-    }
 
     public function viewListAction(Request $request, $id)
     {
@@ -37,7 +18,7 @@ class ListsController extends Controller
         $list = $this->loadEntityFromId('ListsIOListBundle:LIOList', $id);
 
         if (empty($list)) {
-            throw new ResourceNotFoundException("Unable to find list with id: " . $id . ".");
+            throw $this->createNotFoundException("Unable to find list with id: " . $id . ".");
         }
 
         $list_user = $list->getUser();
@@ -56,7 +37,6 @@ class ListsController extends Controller
 
     public function newListAction()
     {
-        $this->_initDoctrine();
         $list = new LIOList();
         $list->setUser($this->getUser());
         $this->newListItem($list);
@@ -79,11 +59,11 @@ class ListsController extends Controller
         $data = $request->request->all();
         $user = $this->loadEntityFromId('ListsIOUserBundle:User', $userId);
         if (empty($user)) {
-            throw new EntityNotFoundException("Unable to load user to save list.");
+            throw $this->createNotFoundException("Unable to load user to save list.");
         }
         $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $data['id']);
         if (empty($list)) {
-            throw new EntityNotFoundException("Unable to find list by ID.");
+            throw $this->createNotFoundException("Unable to find list by ID.");
         }
         $list->setTitle($data['title']);
         $list->setSubtitle($data['subtitle']);
@@ -97,11 +77,10 @@ class ListsController extends Controller
     {
         $this->requireXmlHttpRequest($request);
         $format = $request->getRequestFormat();
-        $this->_initDoctrine();
         $data = $request->request->all();
         $list = $this->loadEntityFromId('ListsIOListBundle:LIOList', $listId);
         if (empty($list)) {
-            throw new EntityNotFoundException("Unable to load list to save list item.");
+            throw $this->createNotFoundException("Unable to load list to save list item.");
         }
         $listItem = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOListItem', $data['id']);
         $listItem->setTitle($data['title']);
@@ -115,7 +94,7 @@ class ListsController extends Controller
         $this->requireXmlHttpRequest($request);
         $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $listId);
         if (empty($list)) {
-            throw new EntityNotFoundException("Couldn't find list to remove it.");
+            throw $this->createNotFoundException("Couldn't find list to remove it.");
         }
         $this->removeEntity($list);
         $response = json_encode(array('success' => TRUE));
@@ -127,7 +106,7 @@ class ListsController extends Controller
         $this->requireXmlHttpRequest($request);
         $listItem = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOListItem', $itemId);
         if (empty($listItem)) {
-            throw new EntityNotFoundException("Couldn't find list item to remove it.");
+            throw $this->createNotFoundException("Couldn't find list item to remove it.");
         }
         $this->removeEntity($listItem);
         $response = json_encode(array('success' => TRUE));
@@ -137,7 +116,7 @@ class ListsController extends Controller
     public function requireXmlHttpRequest(Request $request)
     {
         if (! $request->isXmlHttpRequest()) {
-            throw new AccessDeniedException('Lists can only be saved via XmlHttpRequest.');
+            throw new AccessDeniedException('The route you are attempting to access is not available externally.');
         }
     }
 

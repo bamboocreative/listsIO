@@ -10,6 +10,19 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class UserController extends Controller
 {
 
+    public function indexAction()
+    {
+        // If the user's not logged in, send them to registration.
+        $securityContext = $this->container->get('security.context');
+        if( ! $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+            $url = $this->generateUrl('fos_user_registration_register');
+        } else {
+            // Otherwise, send them to their profile page.
+            $url = $this->generateUrl('lists_io_user_view_by_username',  array('username' => $this->getUser()->getUsername()));
+        }
+        return $this->redirect($url);
+    }
+
     public function viewByIdAction(Request $request, $userId)
     {
         $format = $request->getRequestFormat();

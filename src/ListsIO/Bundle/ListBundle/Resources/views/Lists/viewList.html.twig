@@ -31,7 +31,7 @@
 				<div class="col-md-8 col-md-offset-2 edit-list-head-wrapper">
 					<div id="title" data-id="{{ list.getId() }}">{{ list.getTitle() }}</div>
 					<div id="subtitle">{{ list.getSubtitle() }}</div>
-					<div id="author"><a href="{{ path('lists_io_user_view', {'userId': list_user.id}) }}"><img class="loggedin" src="{{ list_user.getGravatarURL }}">{{ list_user.username }}</a></div>
+					<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list_user.username}) }}"><img class="loggedin" src="{{ list_user.getGravatarURL }}">{{ list_user.username }}</a></div>
 				</div>
 			</div>
 			<div class="row">

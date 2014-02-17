@@ -35,7 +35,7 @@
 	    	<div class="bg-wrapper" style="background-image: url('{{ block('bgImage') }}');"></div>
 	    	{% block logo %}
 	    	<div class="logo">
-		    	<a href="{{ path('lists_io_list_homepage') }}">
+		    	<a href="{{ path('lists_io_home') }}">
 			    	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists_bg.svg') }}">
 			    	<img class="svg-img lists-l" src="{{ asset('assets/images/lists_fg.svg') }}">
 			    	<img class="png-img" src="{{ asset('assets/images/lists.png') }}">
@@ -50,7 +50,7 @@
 	            <div>
 	            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	                <!-- Link gravitar to profile page -->
-	                <a href="{{ path('lists_io_list_homepage') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
+	                <a href="{{ path('lists_io_home') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
 	                <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
 	                    {{ 'Log out'|trans({}, 'FOSUserBundle') }}
 	                </a>
@@ -90,10 +90,10 @@
         {% block intercom %}
         <script id="IntercomSettingsScriptTag">
 		 window.intercomSettings = {
-		    name: "{% if user is defined %}{{ user.getUsername() }}{% endif %}" ,
-		    email: "{% if user is defined %}{{ user.getEmail() }}{% endif %}" ,
-		    user_id: "{% if user is defined %}{{ user.getID() }}{% endif %}",
-		    created_at: "{% if user is defined %}{{ user.getCreatedAt().format('Y-m-d H:i:s') }}{% endif %}",
+		    name: "{% if user is defined and user is not null %}{{ user.getUsername() }}{% endif %}" ,
+		    email: "{% if user is defined and user is not null %}{{ user.getEmail() }}{% endif %}" ,
+		    user_id: "{% if user is defined and user is not null %}{{ user.getID() }}{% endif %}",
+		    created_at: "{% if user is defined and user is not null %}{{ user.getCreatedAt().format('Y-m-d H:i:s') }}{% endif %}",
 		    app_id: "3a229973bc2047e738665e8b856f61c399a7a0dd"
 		  };
 		</script>

@@ -1,3 +1,7 @@
+lists_io_home:
+    pattern:  /
+    defaults: { _controller: ListsIOUserBundle:User:index }
+
 lists_io_lists:
   resource: "@ListsIOListBundle/Resources/config/routing.yml"
   prefix: /
