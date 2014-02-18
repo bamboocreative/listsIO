@@ -44,7 +44,7 @@ class UserController extends Controller
             ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')
             ->findOneBy(array('username' => $username));
         if (empty($viewUser)) {
-            throw new HttpException(404, "No route or username found.");
+            throw new HttpException(404, "No route or username found for username: " . htmlspecialchars($username));
         }
         return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('view_user' => $viewUser, 'user' => $user));
     }
