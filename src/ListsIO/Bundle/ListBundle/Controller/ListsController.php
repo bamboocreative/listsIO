@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
 
+// TODO: Move API routes to actual REST API (INCLUDING AUTHENTICATION!)
 class ListsController extends Controller
 {
 
@@ -18,7 +19,7 @@ class ListsController extends Controller
         $list = $this->loadEntityFromId('ListsIOListBundle:LIOList', $id);
 
         if (empty($list)) {
-            throw $this->createNotFoundException("Unable to find list with id: " . $id . ".");
+            throw $this->createNotFoundException("Unable to find list.");
         }
 
         $list_user = $list->getUser();
@@ -28,7 +29,7 @@ class ListsController extends Controller
             'list_user' => $list_user,
             'list' => $list
         );
-        // If list belongs to user, render edit template, otherwise render view template.
+        // If list does not belong to user, render view template, otherwise render edit template.
         if ( empty($user) || ! ($list_user->getId() === $user->getId())) {
             return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $data);
         }
@@ -65,12 +66,16 @@ class ListsController extends Controller
         if (empty($list)) {
             throw $this->createNotFoundException("Unable to find list by ID.");
         }
-        $list->setTitle($data['title']);
-        $list->setSubtitle($data['subtitle']);
-        $list->setImageURL($data['imageURL']);
+        // TODO: Create base entity and DRY this function as bindDataArray(), see saveListItemAction. - Jesse Rosato 2/17/14
+        foreach($data as $key => $value) {
+            $funct = 'set'.ucfirst($key);
+            if (method_exists($list, $funct)) {
+                $list->$funct($value);
+            }
+        }
         $list->setUser($user);
         $this->saveEntity($list);
-        return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $list);
+        return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', array('list' => $list));
     }
 
     public function saveListItemAction(Request $request, $listId)
@@ -83,8 +88,15 @@ class ListsController extends Controller
             throw $this->createNotFoundException("Unable to load list to save list item.");
         }
         $listItem = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOListItem', $data['id']);
-        $listItem->setTitle($data['title']);
-        $listItem->setDescription($data['description']);
+        if (empty($listItem)) {
+            throw $this->createNotFoundException("Unable to load list item to save it.");
+        }
+        foreach($data as $key => $value) {
+            $funct = 'set'.ucfirst($key);
+            if (method_exists($listItem, $funct)) {
+                $listItem->$funct($value);
+            }
+        }
         $this->saveEntity($listItem);
         return $this->render('ListsIOListBundle:Lists:viewListItem.'.$format.'.twig', array('listItem' => $listItem));
     }
@@ -97,7 +109,7 @@ class ListsController extends Controller
             throw $this->createNotFoundException("Couldn't find list to remove it.");
         }
         $this->removeEntity($list);
-        $response = json_encode(array('success' => TRUE));
+        $response = json_encode(array('success' => TRUE, 'id' => $listId));
         return new Response($response);
     }
 
@@ -109,7 +121,7 @@ class ListsController extends Controller
             throw $this->createNotFoundException("Couldn't find list item to remove it.");
         }
         $this->removeEntity($listItem);
-        $response = json_encode(array('success' => TRUE));
+        $response = json_encode(array('success' => TRUE, 'id' => $itemId));
         return new Response($response);
     }
 
@@ -148,9 +160,8 @@ class ListsController extends Controller
         if (empty($list)) {
             throw new EntityNotFoundException("Unable to load list to create new list item.");
         }
-        $listItem->setList($list);
+        $list->addListItem($listItem);
         $em->persist($list);
-        $em->persist($listItem);
         $em->flush();
         return $listItem;
     }

@@ -148,6 +148,7 @@ class LIOList implements JsonSerializable
     public function addListItem(LIOListItem $listItem)
     {
         $this->listItems[] = $listItem;
+        $listItem->setList($this);
 
         return $this;
     }
@@ -181,6 +182,7 @@ class LIOList implements JsonSerializable
     public function setUser(User $user = null)
     {
         $this->user = $user;
+        $user->addList($this);
 
         return $this;
     }
@@ -203,7 +205,7 @@ class LIOList implements JsonSerializable
         }
         $user = $this->getUser();
         return array(
-            'userID'    => $user ? $user->getId  : null,
+            'userID'    => $user ? $user->getId() : null,
             'id'        => $this->getId(),
             'title'     => $this->getTitle(),
             'subtitle'  => $this->getSubtitle(),

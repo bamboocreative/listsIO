@@ -12,21 +12,20 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
+use ListsIO\Bundle\ListBundle\Entity\LIOListItem;
 
-class LoadListData extends AbstractFixture implements OrderedFixtureInterface
+class LoadListItemData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager)
     {
-        $list = new LIOList();
-        $list->setTitle("Test title");
-        $user = $this->getReference('user1');
-        $list->setUser($user);
+        $list = $this->getReference('list1');
+        $listItem = new LIOListItem();
+        $list->addListItem($listItem);
         $manager->persist($list);
         $manager->flush();
-        $this->addReference('list1', $list);
     }
 
     /**
@@ -34,6 +33,6 @@ class LoadListData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 2; // the order in which fixtures will be loaded
+        return 3; // the order in which fixtures will be loaded
     }
 }

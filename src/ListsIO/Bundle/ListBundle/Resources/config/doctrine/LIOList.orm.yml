@@ -29,7 +29,7 @@ ListsIO\Bundle\ListBundle\Entity\LIOList:
         listItems:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListItem
             mappedBy: list
-            cascade: ["remove"]
+            cascade: ["remove", "persist"]
     lifecycleCallbacks:
         prePersist: [prePersistTimestamp]
         preUpdate: [prePersistTimestamp]

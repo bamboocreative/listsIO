@@ -22,6 +22,7 @@ ListsIO\Bundle\ListBundle\Entity\LIOListItem:
         list:
           targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
           inversedBy: listItems
+          cascade: ["persist"]
     lifecycleCallbacks:
             prePersist: [prePersistTimestamp]
             preUpdate: [prePersistTimestamp]

@@ -36,13 +36,16 @@
 			        <div class="col-md-8 col-md-offset-2">
 			            <ol>
                         {%  set i = 0 %}
-			            {% for item in list.getListItems() %}
+			            {% for item in list.listItems %}
                             {%  set i = i+1 %}
+                            {%  set id = item.id %}
+                            {%  set title = item.title %}
+                            {%  set description = item.description %}
 			                <li class="list-item">
                                 <span class='number'>{{ i }}</span>
-			                    <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
-			                    <textarea placeholder="(Optional) A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
-			                    <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></a>
+			                    <input type="text" placeholder="List item title" data-id="{{ id }}" class="item" value="{{ title }}"/>
+                                <textarea placeholder="(Optional) A short description of this list item." class="description">{{ description }}</textarea>
+			                    <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
 			                </li>
 			            {% endfor %}
 			            </ol>
@@ -64,10 +67,10 @@
 </div>
 <div style="display: none !important" hidden id="item-template">
 	<li class="list-item">
-        <span class='number'>{{ i }}</span>
-        <input type="text" placeholder="List item title" data-id="{{ item.getId() }}" class="item" value="{{ item.getTitle() }}"/>
-        <textarea placeholder="(Optional) A short description of this list item." class="description">{{ item.getDescription() }}</textarea>
-        <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></a>
+        <span class='number'></span>
+        <input type="text" placeholder="List item title" data-id="" class="item" value=""/>
+        <textarea placeholder="(Optional) A short description of this list item." class="description"></textarea>
+        <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
     </li>
 </div>
 {% endblock %}

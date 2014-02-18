@@ -16,7 +16,7 @@ ListsIO\Bundle\UserBundle\Entity\User:
         lists:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
             mappedBy: user
-            cascade: ["remove"]
+            cascade: ["remove", "persist"]
     lifecycleCallbacks:
             prePersist: [prePersistTimestamp]
             preUpdate: [prePersistTimestamp]

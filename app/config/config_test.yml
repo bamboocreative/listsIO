@@ -9,11 +9,6 @@ framework:
     profiler:
         collect: false
 
-security:
-    firewalls:
-        main:
-            http_basic: ~
-
 web_profiler:
     toolbar: false
     intercept_redirects: false

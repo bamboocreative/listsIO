@@ -48,7 +48,7 @@
 	    	{% block login %}
 	    	<div class="login-out">
 	            <div>
-	            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	            {% if user is defined and user is not empty %}
 	                <!-- Link gravitar to profile page -->
 	                <a href="{{ path('lists_io_home') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
 	                <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
@@ -90,10 +90,10 @@
         {% block intercom %}
         <script id="IntercomSettingsScriptTag">
 		 window.intercomSettings = {
-		    name: "{% if user is defined and user is not null %}{{ user.getUsername() }}{% endif %}" ,
-		    email: "{% if user is defined and user is not null %}{{ user.getEmail() }}{% endif %}" ,
-		    user_id: "{% if user is defined and user is not null %}{{ user.getID() }}{% endif %}",
-		    created_at: "{% if user is defined and user is not null %}{{ user.getCreatedAt().format('Y-m-d H:i:s') }}{% endif %}",
+		    name: "{% if user is defined and user is not empty %}{{ user.getUsername() }}{% endif %}" ,
+		    email: "{% if user is defined and user is not empty %}{{ user.getEmail() }}{% endif %}" ,
+		    user_id: "{% if user is defined and user is not empty %}{{ user.getID() }}{% endif %}",
+		    created_at: "{% if user is defined and user is not empty %}{{ user.getCreatedAt().format('Y-m-d H:i:s') }}{% endif %}",
 		    app_id: "3a229973bc2047e738665e8b856f61c399a7a0dd"
 		  };
 		</script>

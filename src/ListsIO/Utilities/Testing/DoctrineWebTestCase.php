@@ -11,6 +11,9 @@ namespace ListsIO\Utilities\Testing;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
+use ListsIO\Bundle\UserBundle\Entity\User;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\BrowserKit\Cookie;
 
 // Code adapted from http://dev4theweb.blogspot.com/2012/07/yet-another-look-at-isolated-symfony2.html
 class DoctrineWebTestCase extends WebTestCase
@@ -72,4 +75,30 @@ class DoctrineWebTestCase extends WebTestCase
         $options = array_merge($options, array('command' => $command));
         return static::$application->run(new ArrayInput($options));
     }
+
+    protected function logIn(User $user)
+    {
+        $session = static::$client->getContainer()->get('session');
+
+        $firewall = 'main';
+        $token = new UsernamePasswordToken($user, $user->getPlainPassword(), $firewall, $user->getRoles());
+        $session->set('_security_'.$firewall, serialize($token));
+        $session->save();
+
+        $cookie = new Cookie($session->getName(), $session->getId());
+        static::$client->getCookieJar()->set($cookie);
+    }
+
+    protected function assertJsonResponse($response, $statusCode = 200)
+    {
+        $this->assertEquals(
+            $statusCode, $response->getStatusCode(),
+            $response->getContent()
+        );
+        $this->assertTrue(
+            $response->headers->contains('Content-Type', 'application/json'),
+            $response->headers
+        );
+    }
+
 }
