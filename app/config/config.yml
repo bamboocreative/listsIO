@@ -73,3 +73,6 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: ListsIO\Bundle\UserBundle\Entity\User
+    from_email:
+        address: info@lists.io
+        sender_name: Lists.IO
