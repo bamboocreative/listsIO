@@ -1,31 +1,56 @@
 #! /bin/bash
 
+usage()
+{
+cat << EOF
+usage: $0 options
+
+This script deploys code to the elastic beanstalk environment associated with this git branch.
+
+OPTIONS:
+   -h      Show this message
+   -u      Update vendors via composer
+EOF
+}
+
 GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [[ $GIT_BRANCH =~ production ]]
 then
-    echo "You're about to deploy to a branch that has 'production' in the name, are you sure? (yes/no)"
+    echo "You're about to deploy from a production git branch: $GIT_BRANCH are you sure? (yes/no)"
     read CONFIRMATION
     if [[ $CONFIRMATION =~ n ]]
     then
+        echo "Deployment cancelled."
         exit
     fi
 fi
 
-composer update
-COMPOSER_STATUS=$?
+# BASH switch syntax is absolutely ridiculous
+while getopts u OPTION;
+do
+    case $OPTION in
+        u)
+            composer update
+            COMPOSER_STATUS=$?
 
-if [[ $COMPOSER_STATUS -gt 0 ]]
-then
-    php composer.phar update
-    COMPOSER_STATUS=$?
-    if [[ $COMPOSER_STATUS -gt 0 ]]
-    then
-       echo "Unable to update vendors. Make sure 'composer update' or 'php composer.phar update' works."
-        exit
-    fi
-fi
+            if [[ $COMPOSER_STATUS -gt 0 ]]
+            then
+                php composer.phar update
+                COMPOSER_STATUS=$?
+                if [[ $COMPOSER_STATUS -gt 0 ]]
+                then
+                    echo "Unable to update vendors. Make sure 'composer update' or 'php composer.phar update' works."
+                    exit
+                fi
+            fi
+            ;;
+        ?)
+            ;;
+    esac
+done
 
+echo "Beginning PHPUnit testing."
 PHPUNIT_OUTPUT=$(bin/phpunit -c app)
 PHPUNIT_STATUS=$?
 
@@ -40,5 +65,5 @@ then
         git aws.push
     fi
 else
-    echo "Unable to initialize PHPUnit."
+    echo "Unable to initialize PHPUnit.  Make sure that '/bin/phpunit -c app' works."
 fi
