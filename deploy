@@ -1,18 +1,29 @@
 #! /bin/bash
 
+GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+if [[ $GIT_BRANCH =~ production ]]
+then
+    echo "You're about to deploy to a branch that has 'production' in the name, are you sure? (yes/no)"
+    read CONFIRMATION
+    if [[ $CONFIRMATION =~ n ]]
+    then
+        exit
+    fi
+fi
+
 composer update
 COMPOSER_STATUS=$?
 
-if [[ $COMPOSER_STATUS -eq 1 ]]
+if [[ $COMPOSER_STATUS -gt 0 ]]
 then
     php composer.phar update
     COMPOSER_STATUS=$?
-fi
-
-if [[ $COMPOSER_STATUS -eq 1 ]]
-then
-   echo "Unable to update vendors. Make sure 'composer update' or 'php composer.phar update' works."
-    exit
+    if [[ $COMPOSER_STATUS -gt 0 ]]
+    then
+       echo "Unable to update vendors. Make sure 'composer update' or 'php composer.phar update' works."
+        exit
+    fi
 fi
 
 PHPUNIT_OUTPUT=$(bin/phpunit -c app)
