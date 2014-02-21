@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new ListsIO\Bundle\UserBundle\ListsIOUserBundle(),
             new ListsIO\Bundle\ListBundle\ListsIOListBundle(),
+            new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
