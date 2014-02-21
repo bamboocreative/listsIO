@@ -319,6 +319,7 @@ $(document).ready(function(){
 	* Convert URLs in descriptions
 	*
 	*/
+    /*
 	function convert_urls(){
 		
 		descriptions = $(document).find('.description').each(function(){
@@ -344,6 +345,6 @@ $(document).ready(function(){
 	}	
 
 	convert_urls();
-	
+	*/
 	
 });
