@@ -250,7 +250,6 @@ $(document).ready(function(){
 		  	'description' : desc
 		  },
 		  success: function(){
-		  	console.log(resp);
 		  }
 		});	
 		
@@ -313,5 +312,38 @@ $(document).ready(function(){
 			hide_save();
 		}	
 	});
+	
+
+	/*
+	*
+	* Convert URLs in descriptions
+	*
+	*/
+	function convert_urls(){
+		
+		descriptions = $(document).find('.description').each(function(){
+			
+			$this = $(this);
+			
+			
+			if($this.is(':input')){
+				return false;
+			} else {
+				text = $this.text().replace(/\(?(?:(http|https|ftp):\/\/)?(?:((?:[^\W\s]|\.|-|[:]{1})+)@{1})?((?:www.)?(?:[^\W\s]|\.|-)+[\.][^\W\s]{2,4}|localhost(?=\/)|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::(\d*))?([\/]?[^\s\?]*[\/]{1})*(?:\/?([^\s\n\?\[\]\{\}\#]*(?:(?=\.)){1}|[^\s\n\?\[\]\{\}\.\#]*)?([\.]{1}[^\s\?\#]*)?)?(?:\?{1}([^\s\n\#\[\]]*))?([\#][^\s\n]*)?\)?/gi, function(url){
+									
+		                var full_url = url;
+		                if (!full_url.match('^https?:\/\/')) {
+		                    full_url = 'http://' + full_url;
+		                }
+		                return '<a href="' + full_url + '">' + url + '</a>';
+		            }
+		        );  
+			$this.html(text);	
+			}
+		});		
+	}	
+
+	convert_urls();
+	
 	
 });
