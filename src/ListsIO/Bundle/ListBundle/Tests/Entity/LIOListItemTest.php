@@ -94,10 +94,4 @@ class LIOListItemTest extends \PHPUnit_Framework_TestCase {
         $this->assertGreaterThanOrEqual($this->createdAfter->getTimestamp(), $this->listItem->getUpdatedAt()->getTimestamp());
     }
 
-    public function testDescriptionNewLineToBr()
-    {
-        $this->listItem->setDescription("This is text\nWith a new line.");
-        $this->assertEquals("This is text<br />\nWith a new line.", $this->listItem->getDescription());
-    }
-
 } 

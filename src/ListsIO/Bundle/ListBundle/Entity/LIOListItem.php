@@ -87,7 +87,7 @@ class LIOListItem implements JsonSerializable
      */
     public function setDescription($description)
     {
-        $this->description = nl2br($description);
+        $this->description = $description;
 
         return $this;
     }
