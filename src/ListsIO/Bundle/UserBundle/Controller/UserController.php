@@ -31,7 +31,7 @@ class UserController extends Controller
             ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')
             ->find($userId);
         if (empty($viewUser)) {
-            throw new EntityNotFoundException("Could not find user by ID.");
+            throw new HttpException(404, "Could not find user by ID: " . htmlspecialchars($userId));
         }
         return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('view_user' => $viewUser, 'user' => $user));
     }
@@ -39,7 +39,6 @@ class UserController extends Controller
     public function viewByUsernameAction(Request $request, $username)
     {
         $format = $request->getRequestFormat();
-        $securityContext = $this->container->get('security.context');
         $user = $this->getUser();
         $viewUser = $this->getDoctrine()
             ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')

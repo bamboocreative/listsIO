@@ -14,12 +14,24 @@ use Symfony\Component\Console\Input\ArrayInput;
 use ListsIO\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\BrowserKit\Cookie;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\BrowserKit\Client;
 
 // Code adapted from http://dev4theweb.blogspot.com/2012/07/yet-another-look-at-isolated-symfony2.html
 class DoctrineWebTestCase extends WebTestCase
 {
+
+    /**
+     * @var EntityManager
+     */
     protected static $entityManager;
+    /**
+     * @var Client
+     */
     protected static $client;
+    /**
+     * @var Application
+     */
     protected static $application;
 
     /**
