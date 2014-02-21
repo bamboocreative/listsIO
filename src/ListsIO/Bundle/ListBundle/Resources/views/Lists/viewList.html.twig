@@ -46,7 +46,7 @@
 			                <li class="list-item">
                                 <span class='number'>{{ i }}</span>
 			                    <div data-id="{{ item.getId() }}" class="item">{{ title ? title : "Untitled"  }}</div>
-			                    <div class="description">{{ description }}</div>
+			                    <div class="description">{{ description|converturls }}</div>
 			                </li>
 			            {% endfor %}
 			            </ol>
