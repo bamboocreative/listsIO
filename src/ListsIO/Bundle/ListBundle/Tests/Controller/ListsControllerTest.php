@@ -3,17 +3,32 @@
 namespace ListsIO\Bundle\ListBundle\Tests\Controller;
 
 use ListsIO\Utilities\Testing\DoctrineWebTestCase;
+use ListsIO\Bundle\UserBundle\Entity\User;
 
 class ListsControllerTest extends DoctrineWebTestCase
 {
     // protected static $entityManager;
     // protected static $client;
     // protected static $application;
+    /**
+     * @var User
+     */
+    protected $user;
 
-    public function testViewListThrowsNotFoundHttpExceptionForNonexistentList()
+    /**
+     * {@inheritDoc}
+     */
+    public function setUp()
     {
-        $this->getExpectedException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
+        parent::setUp();
+        $this->user = static::$entityManager->getRepository('ListsIOUserBundle:User')
+            ->find(1);
+    }
+
+    public function testViewListThrows404ForNonexistentList()
+    {
         static::$client->request('GET', '/list/108');
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
 
     public function testViewListDoesNotThrowExceptionForListThatShouldExist()
@@ -25,9 +40,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testViewListByOwnerRendersEditTemplate()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         $crawler = static::$client->request('GET', '/list/1');
         // Only the owner template has the title input
         $this->assertGreaterThan(0, $crawler->filter('input#title')->count());
@@ -57,9 +70,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testNewListCreatesList()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request('GET', '/list/new');
         $newList = static::$entityManager->getRepository('ListsIOListBundle:LIOList')
             ->find(2);
@@ -68,18 +79,14 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testNewListRedirect()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request('GET', '/list/new');
         $this->assertTrue(static::$client->getResponse()->isRedirect('/list/2'));
     }
 
     public function testNewListItemCreatesListItem()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request('GET', '/list/new_item/1', array(), array(), array(
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ));
@@ -90,9 +97,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testNewListItemJsonResponse()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request('GET', '/list/new_item/1', array(), array(), array(
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ));
@@ -101,9 +106,8 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testNewListItemJsonHasAppropriateId()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+
+        $this->logIn($this->user);
         static::$client->request('GET', '/list/new_item/1', array(), array(), array(
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ));
@@ -113,12 +117,9 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->assertEquals(2, $data->id);
     }
 
-    public function testSaveListThrowsNotFoundHttpExceptionForNonexistentUser()
+    public function testSaveListThrows404ForNonexistentUser()
     {
-        $this->getExpectedException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save/108',
@@ -128,14 +129,12 @@ class ListsControllerTest extends DoctrineWebTestCase
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
 
-    public function testSaveListThrowsNotFoundHttpExceptionForNonexistentList()
+    public function testSaveListThrows404ForNonexistentList()
     {
-        $this->getExpectedException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save/1',
@@ -147,13 +146,12 @@ class ListsControllerTest extends DoctrineWebTestCase
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
 
     public function testSaveListSavesTitle()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save/1',
@@ -173,9 +171,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testSaveListJsonResponse()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save/1',
@@ -193,9 +189,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testSaveListJsonResponseContainsSavedTitle()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save/1',
@@ -215,12 +209,9 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->assertEquals("New test title", $data->title);
     }
 
-    public function testSaveListItemThrowsNotFoundHttpExceptionForNonexistentList()
+    public function testSaveListItemThrows404ForNonexistentList()
     {
-        $this->getExpectedException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save_item/108',
@@ -230,14 +221,12 @@ class ListsControllerTest extends DoctrineWebTestCase
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
 
-    public function testSaveListItemThrowsNotFoundHttpExceptionForNonexistentListItem()
+    public function testSaveListItemThrows404ForNonexistentListItem()
     {
-        $this->getExpectedException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save_item/1',
@@ -249,13 +238,12 @@ class ListsControllerTest extends DoctrineWebTestCase
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
 
     public function testSaveListItemSavesTitle()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save_item/1',
@@ -275,9 +263,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testSaveListItemJsonResponse()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save_item/1',
@@ -295,9 +281,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testSaveListItemJsonResponseContainsSavedTitle()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/save_item/1',
@@ -317,12 +301,9 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->assertEquals("New test title", $data->title);
     }
 
-    public function testRemoveListThrowsNotFoundHttpExceptionForNonexistentList()
+    public function testRemoveListThrows404ForNonexistentList()
     {
-        $this->getExpectedException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove/108',
@@ -332,13 +313,12 @@ class ListsControllerTest extends DoctrineWebTestCase
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
 
     public function testRemoveListRemovesList()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove/1',
@@ -354,9 +334,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testRemoveListJsonResponse()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove/1',
@@ -371,9 +349,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testRemoveListJsonResponseContainsSuccessMessage()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove/1',
@@ -392,9 +368,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testRemoveListJsonResponseContainsRemovedId()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove/1',
@@ -411,12 +385,9 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->assertEquals(1, $data->id);
     }
 
-    public function testRemoveListItemThrowsNotFoundHttpExceptionForNonexistentListItem()
+    public function testRemoveListItemThrows404ForNonexistentListItem()
     {
-        $this->getExpectedException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove_item/108',
@@ -426,13 +397,12 @@ class ListsControllerTest extends DoctrineWebTestCase
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
 
     public function testRemoveListItemRemovesListItem()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove_item/1',
@@ -449,9 +419,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testRemoveListItemJsonResponse()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove_item/1',
@@ -466,9 +434,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testRemoveListItemJsonResponseContainsSuccessMessage()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove_item/1',
@@ -487,9 +453,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testRemoveListItemJsonResponseContainsRemovedId()
     {
-        $user = static::$entityManager->getRepository('ListsIOUserBundle:User')
-            ->find(1);
-        $this->logIn($user);
+        $this->logIn($this->user);
         static::$client->request(
             'POST',
             '/list/remove_item/1',
