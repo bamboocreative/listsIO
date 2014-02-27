@@ -18,6 +18,26 @@ class User extends BaseUser implements \JsonSerializable
     protected $id;
 
     /**
+     * @var string
+     */
+    protected $twitterId;
+
+    /**
+     * @var string
+     */
+    protected $twitterAccessToken;
+
+    /**
+     * @var string
+     */
+    protected $twitterUsername;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $lists;
+
+    /**
      * @var \DateTime
      */
     private $createdAt;
@@ -44,9 +64,64 @@ class User extends BaseUser implements \JsonSerializable
     }
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * Set the user's Twitter ID
+     *
+     * @param $twitterId
      */
-    private $lists;
+    public function setTwitterId($twitterId)
+    {
+        $this->twitterId = $twitterId;
+    }
+
+    /**
+     * Get the user's Twitter ID
+     *
+     * @return string
+     */
+    public function getTwitterId()
+    {
+        return $this->twitterId;
+    }
+
+    /**
+     * Set the user's Twitter Access Token
+     *
+     * @param $twitterAccessToken
+     */
+    public function setTwitterAccessToken($twitterAccessToken)
+    {
+        $this->twitterAccessToken = $twitterAccessToken;
+    }
+
+    /**
+     * Get the user's Twitter Access Token
+     *
+     * @return string
+     */
+    public function getTwitterAccessToken()
+    {
+        return $this->twitterAccessToken;
+    }
+
+    /**
+     * Set the user's Twitter username
+     *
+     * @param $twitterUsername
+     */
+    public function setTwitterUsername($twitterUsername)
+    {
+        $this->twitterUsername = $twitterUsername;
+    }
+
+    /**
+     * Get the user's Twitter username
+     *
+     * @return string
+     */
+    public function getTwitterUsername()
+    {
+        return $this->twitterUsername;
+    }
 
     /**
      * Get user's gravatar URL

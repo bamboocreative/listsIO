@@ -6,8 +6,17 @@ lists_io_lists:
   resource: "@ListsIOListBundle/Resources/config/routing.yml"
   prefix: /
 
-fos_user_security:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+fos_user_security_login:
+    defaults: { _controller: ListsIOUserBundle:Security:login }
+    pattern: /user/login
+
+fos_user_security_check:
+    pattern: /user/login_check
+    defaults: { _controller: ListsIOUserBundle:Security:check }
+
+fos_user_security_logout:
+    pattern: /user/logout
+    defaults: { _controller: ListsIOUserBundle:Security:logout }
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
@@ -24,6 +33,22 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+#HWIOAuthBundle routes
+hwi_oauth_security:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix: /user/login
+
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix: /user/login
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /user/login
+
+twitter_login:
+    pattern: /user/login/check-twitter
 
 # !THIS ROUTE MUST GO LAST!  (lowest precedence)
 lists_io_user:
