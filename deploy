@@ -65,5 +65,5 @@ then
         git aws.push
     fi
 else
-    echo "Unable to initialize PHPUnit.  Make sure that '/bin/phpunit -c app' works."
+    echo "Unable to initialize PHPUnit.  Make sure that 'bin/phpunit -c app' works."
 fi
