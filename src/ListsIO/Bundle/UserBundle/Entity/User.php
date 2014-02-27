@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * User
  */
-class User extends BaseUser implements \JsonSerializable
+class User extends BaseUser implements \JsonSerializable, TwitterUserInterface
 {
     /**
      * @var integer

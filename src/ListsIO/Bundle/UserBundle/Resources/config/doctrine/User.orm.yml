@@ -9,13 +9,17 @@ ListsIO\Bundle\UserBundle\Entity\User:
                 strategy: AUTO
     fields:
         twitterId:
-            type: integer
+            type: string
+            length: 255
+            nullable: true
         twitterUsername:
             type: string
             length: 255
+            nullable: true
         twitterAccessToken:
             type: string
             length: 255
+            nullable: true
         createdAt:
             type: datetime
         updatedAt:

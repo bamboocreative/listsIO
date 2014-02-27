@@ -96,4 +96,3 @@ hwi_oauth:
             type:                twitter
             client_id:           "%twitter.key%"
             client_secret:       "%twitter.secret%"
-            scope:

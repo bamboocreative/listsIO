@@ -10,3 +10,6 @@ lists_io_user_view_by_username:
         username: .+
         _format: (html|json)
     defaults: { _controller: ListsIOUserBundle:User:viewByUsername, _format: html }
+twitter_login:
+    pattern: /user/login/check-twitter
+    defaults: { _controller: ListsIOUserBundle:User:registerTwitterUser }

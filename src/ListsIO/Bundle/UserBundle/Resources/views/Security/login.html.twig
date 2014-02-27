@@ -36,7 +36,7 @@
     <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
     <label class="checkbox-label" for="remember_me">{{ 'Remember Me'|trans }}</label>
     <input type="submit" id="_submit" name="_submit" value="Login" />
-    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" alt="Sign in with Twitter">Sign in with Twitter</a>
+    <a href="{{ hwi_oauth_login_url("twitter") }}">Sign in with Twitter</a>
 </form>
 </div>
 </div>

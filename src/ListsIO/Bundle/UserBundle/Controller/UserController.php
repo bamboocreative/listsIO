@@ -48,6 +48,30 @@ class UserController extends Controller
         }
 
         return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('view_user' => $viewUser, 'user' => $user));
-
     }
+
+    public function registerTwitterUser(Request $request)
+    {
+        $user = $this->getUser();
+        if ( ! $user->getEnabled() ) {
+            return $this->render('ListsIOUserBundle:Registration:social.html.twig', array('user' => $user, 'enabled' => "NOPE!"));
+        } else {
+            return $this->render('ListsIOUserBundle:Registration:social.html.twig', array('user' => $user, 'enabled' => "YEP!"));
+        }
+        /*
+        $form = $this->createForm($user)
+            ->add('email', 'text')
+            ->add('password', 'password')
+            ->add('confirm_password', 'password');
+
+        $form->handleRequest($request);
+
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->createUser();
+        $user->setUsername($login);
+        $user->setPlainPassword($pass);
+        $userManager->updateUser($user);
+        */
+    }
+
 }

@@ -47,9 +47,6 @@ hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /user/login
 
-twitter_login:
-    pattern: /user/login/check-twitter
-
 # !THIS ROUTE MUST GO LAST!  (lowest precedence)
 lists_io_user:
   resource: "@ListsIOUserBundle/Resources/config/routing.yml"
