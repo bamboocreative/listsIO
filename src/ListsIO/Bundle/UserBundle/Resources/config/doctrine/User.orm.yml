@@ -8,6 +8,14 @@ ListsIO\Bundle\UserBundle\Entity\User:
             generator:
                 strategy: AUTO
     fields:
+        twitterId:
+            type: integer
+        twitterUsername:
+            type: string
+            length: 255
+        twitterAccessToken:
+            type: string
+            length: 255
         createdAt:
             type: datetime
         updatedAt:
