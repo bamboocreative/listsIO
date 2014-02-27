@@ -1,0 +1,66 @@
+#! /bin/bash
+
+usage()
+{
+cat << EOF
+usage: $0 options
+
+This script deploys code to the elastic beanstalk environment associated with this git branch.
+
+OPTIONS:
+   -h      Show this message
+   -u      Update vendors via composer
+EOF
+}
+
+# Get the current git branch
+GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Get confirmation before deploying to a production branch.
+if [[ $GIT_BRANCH =~ production ]]
+then
+    echo "The 'stage' command cannot be run from a production branch, your current branch is: $GIT_BRANCH."
+    exit.
+fi
+
+# BASH switch syntax is absolutely ridiculous
+while getopts u OPTION;
+do
+    case $OPTION in
+        u)
+            composer update
+            COMPOSER_STATUS=$?
+
+            if [[ $COMPOSER_STATUS -gt 0 ]]
+            then
+                php composer.phar update
+                COMPOSER_STATUS=$?
+                if [[ $COMPOSER_STATUS -gt 0 ]]
+                then
+                    echo "Unable to update vendors. Make sure 'composer update' or 'php composer.phar update' works."
+                    exit
+                fi
+            fi
+            ;;
+        ?)
+            ;;
+    esac
+done
+
+echo "Beginning PHPUnit testing."
+PHPUNIT_OUTPUT=$(bin/phpunit -c app)
+PHPUNIT_STATUS=$?
+
+if [[ $PHPUNIT_STATUS -eq 0 ]]
+then
+    echo "$PHPUNIT_OUTPUT"
+    if [[ $PHPUNIT_OUTPUT =~ FAILURES ]]
+    then
+        echo "PHPUnit testing failed.  Please review the output and try again"
+    else
+        echo "No PHPUnit failures detected.  Deploying to Elastic Beanstalk."
+        git aws.push
+    fi
+else
+    echo "Unable to initialize PHPUnit.  Make sure that 'bin/phpunit -c app' works."
+fi
