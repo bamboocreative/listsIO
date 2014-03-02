@@ -184,6 +184,26 @@ textarea{
 	}
 }
 
+.login-wrapper{
+	padding-bottom: 60px;
+	input[type="text"], input[type="password"], input[type="submit"]{
+		width: 100% !important;
+		padding-left: 15px;
+		padding-top: 2px;
+		@include placeholder(rgba(255,255,255,0.9));
+	}
+	
+	input[type="checkbox"]{
+		padding: 10px 0px;
+	}
+	
+	.checkbox-label{
+		padding: 10px 0px;
+		font-weight: 100;
+		margin-bottom: 0px;
+	}
+}
+
 // The login/logout fixed button
 .login-out{
 	position: fixed;

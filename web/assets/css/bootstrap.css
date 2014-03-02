@@ -3663,6 +3663,28 @@ textarea {
   min-height: 70px;
   padding: 0px 15px 5px; }
 
+.login-wrapper {
+  padding-bottom: 60px; }
+  .login-wrapper input[type="text"], .login-wrapper textarea[type="text"], .login-wrapper input[type="password"], .login-wrapper textarea[type="password"], .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"] {
+    width: 100% !important;
+    padding-left: 15px;
+    padding-top: 2px; }
+    .login-wrapper input[type="text"]:-moz-placeholder, .login-wrapper textarea[type="text"]:-moz-placeholder, .login-wrapper input[type="password"]:-moz-placeholder, .login-wrapper textarea[type="password"]:-moz-placeholder, .login-wrapper input[type="submit"]:-moz-placeholder, .login-wrapper textarea[type="submit"]:-moz-placeholder {
+      color: rgba(255, 255, 255, 0.9); }
+    .login-wrapper input[type="text"]::-moz-placeholder, .login-wrapper textarea[type="text"]::-moz-placeholder, .login-wrapper input[type="password"]::-moz-placeholder, .login-wrapper textarea[type="password"]::-moz-placeholder, .login-wrapper input[type="submit"]::-moz-placeholder, .login-wrapper textarea[type="submit"]::-moz-placeholder {
+      color: rgba(255, 255, 255, 0.9);
+      opacity: 1; }
+    .login-wrapper input[type="text"]:-ms-input-placeholder, .login-wrapper textarea[type="text"]:-ms-input-placeholder, .login-wrapper input[type="password"]:-ms-input-placeholder, .login-wrapper textarea[type="password"]:-ms-input-placeholder, .login-wrapper input[type="submit"]:-ms-input-placeholder, .login-wrapper textarea[type="submit"]:-ms-input-placeholder {
+      color: rgba(255, 255, 255, 0.9); }
+    .login-wrapper input[type="text"]::-webkit-input-placeholder, .login-wrapper textarea[type="text"]::-webkit-input-placeholder, .login-wrapper input[type="password"]::-webkit-input-placeholder, .login-wrapper textarea[type="password"]::-webkit-input-placeholder, .login-wrapper input[type="submit"]::-webkit-input-placeholder, .login-wrapper textarea[type="submit"]::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.9); }
+  .login-wrapper input[type="checkbox"], .login-wrapper textarea[type="checkbox"] {
+    padding: 10px 0px; }
+  .login-wrapper .checkbox-label {
+    padding: 10px 0px;
+    font-weight: 100;
+    margin-bottom: 0px; }
+
 .login-out {
   position: fixed;
   top: 40px;
@@ -3808,28 +3830,6 @@ div#title {
 div#subtitle {
   line-height: 1.3em;
   margin: 0px 0px 40px; }
-
-.login-wrapper {
-  padding-bottom: 60px; }
-  .login-wrapper input[type="text"], .login-wrapper textarea[type="text"], .login-wrapper input[type="password"], .login-wrapper textarea[type="password"], .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"] {
-    width: 100% !important;
-    padding-left: 15px;
-    padding-top: 2px; }
-    .login-wrapper input[type="text"]:-moz-placeholder, .login-wrapper textarea[type="text"]:-moz-placeholder, .login-wrapper input[type="password"]:-moz-placeholder, .login-wrapper textarea[type="password"]:-moz-placeholder, .login-wrapper input[type="submit"]:-moz-placeholder, .login-wrapper textarea[type="submit"]:-moz-placeholder {
-      color: rgba(255, 255, 255, 0.9); }
-    .login-wrapper input[type="text"]::-moz-placeholder, .login-wrapper textarea[type="text"]::-moz-placeholder, .login-wrapper input[type="password"]::-moz-placeholder, .login-wrapper textarea[type="password"]::-moz-placeholder, .login-wrapper input[type="submit"]::-moz-placeholder, .login-wrapper textarea[type="submit"]::-moz-placeholder {
-      color: rgba(255, 255, 255, 0.9);
-      opacity: 1; }
-    .login-wrapper input[type="text"]:-ms-input-placeholder, .login-wrapper textarea[type="text"]:-ms-input-placeholder, .login-wrapper input[type="password"]:-ms-input-placeholder, .login-wrapper textarea[type="password"]:-ms-input-placeholder, .login-wrapper input[type="submit"]:-ms-input-placeholder, .login-wrapper textarea[type="submit"]:-ms-input-placeholder {
-      color: rgba(255, 255, 255, 0.9); }
-    .login-wrapper input[type="text"]::-webkit-input-placeholder, .login-wrapper textarea[type="text"]::-webkit-input-placeholder, .login-wrapper input[type="password"]::-webkit-input-placeholder, .login-wrapper textarea[type="password"]::-webkit-input-placeholder, .login-wrapper input[type="submit"]::-webkit-input-placeholder, .login-wrapper textarea[type="submit"]::-webkit-input-placeholder {
-      color: rgba(255, 255, 255, 0.9); }
-  .login-wrapper input[type="checkbox"], .login-wrapper textarea[type="checkbox"] {
-    padding: 10px 0px; }
-  .login-wrapper .checkbox-label {
-    padding: 10px 0px;
-    font-weight: 100;
-    margin-bottom: 0px; }
 
 div#author {
   font-size: 1.3em;
