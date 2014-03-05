@@ -27,6 +27,7 @@ security:
             oauth:
                 resource_owners:
                     twitter: "/user/login/check-twitter"
+                    facebook: "/login/check-facebook"
                 login_path: /user/login
                 failure_path: /user/login
                 oauth_user_provider:

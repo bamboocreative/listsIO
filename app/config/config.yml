@@ -97,3 +97,8 @@ hwi_oauth:
             client_id:           "%twitter.key%"
             client_secret:       "%twitter.secret%"
             scope:
+        facebook:
+            type:                facebook
+            client_id:           "%facebook.api_id%"
+            client_secret:       "%facebook.api_secret%"
+            scope:               ""

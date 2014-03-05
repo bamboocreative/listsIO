@@ -98,6 +98,17 @@ class FOSUBUserProvider extends BaseClass {
     }
 
     /**
+     * Bind Facebook user by OAuth response data.
+     * @param UserResponseInterface $response
+     * @param FacebookUserInterface $user
+     */
+    protected function bindFacebookUserByOAuthResponse(UserResponseInterface $response, FacebookUserInterface $user)
+    {
+        $data = $response->getResponse();
+        $this->logger->debug(print_r($data, TRUE));
+    }
+
+    /**
      * Load user by Twitter ID by OAUTH response.
      * @param UserResponseInterface $response
      * @return \FOS\UserBundle\Model\UserInterface
@@ -109,6 +120,15 @@ class FOSUBUserProvider extends BaseClass {
     }
 
     /**
+     * Load user by Facebook ID by OAUTH response.
+     * @param UserResponseInterface $response
+     * @return \FOS\UserBundle\Model\UserInterface
+     */
+    protected function loadFacebookUserByOAuthResponse(UserResponseInterface $response)
+    {
+    }
+
+    /**
      * Retrieve Twitter ID by OAUTH response.
      * @param UserResponseInterface $response
      * @return null
@@ -117,5 +137,14 @@ class FOSUBUserProvider extends BaseClass {
     {
         $data = $response->getResponse();
         return empty($data['id']) ? null : $data['id'];
+    }
+
+    /**
+     * Retrieve Facebook ID by OAUTH response.
+     * @param UserResponseInterface $response
+     * @return null
+     */
+    protected function getFacebookIdByOAuthResponse(UserResponseInterface $response)
+    {
     }
 }
