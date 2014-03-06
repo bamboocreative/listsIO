@@ -8,44 +8,70 @@
 namespace ListsIO\Bundle\UserBundle\Security\Core\User;
 
 use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\Validator\Validator;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
 use Symfony\Component\Security\Core\User\UserInterface;
-use ListsIO\Bundle\UserBundle\Entity\TwitterUserInterface;
+use ListsIO\Bundle\UserBundle\Model\TwitterUserInterface;
+use ListsIO\Bundle\UserBundle\Model\FacebookUserInterface;
+use ListsIO\Bundle\UserBundle\Security\Core\Exception\AccountValidationException;
+use Symfony\Component\Translation\Translator;
 
 class FOSUBUserProvider extends BaseClass {
 
+    /**
+     * @var Validator
+     */
+    protected $validator;
+
+    /**
+     * @var Translator
+     */
+    protected $translator;
+
     protected $logger;
 
-    public function __construct(UserManagerInterface $userManager, array $properties, $logger)
+    /**
+     * Constructor
+     * @param UserManagerInterface $userManager
+     * @param array $properties
+     * @param Validator $validator
+     * @param Translator $translator
+     */
+    public function __construct(UserManagerInterface $userManager,
+                                array $properties,
+                                Validator $validator,
+                                Translator $translator,
+                                $logger
+    )
     {
         parent::__construct($userManager, $properties);
+        $this->validator = $validator;
+        $this->translator = $translator;
         $this->logger = $logger;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function connect(UserInterface $user, UserResponseInterface $response)
-    {
+    public function connect(UserInterface $user, UserResponseInterface $response) {
         $serviceName = ucfirst($response->getResourceOwner()->getName());
         $setter = 'set'.$serviceName;
         $idSetter = $setter.'Id';
-        $idGetter = 'get'.$serviceName.'Id';
-        $userLoader = 'load'.$serviceName.'UserByOAuthResponse';
         $tokenSetter = $setter.'AccessToken';
+        $usernameSetter = $setter.'Username';
 
         // "Disconnect" previously connected users.
-        $previousUser = $this->$userLoader($response);
+        $previousUser = $this->loadServiceUserByOAuthResponse($response);
         if (null != $previousUser) {
             $previousUser->$idSetter(null);
             $previousUser->$tokenSetter(null);
             $this->userManager->updateUser($previousUser);
         }
 
-        $user->$idSetter($this->$idGetter($response));
+        $user->$idSetter($this->getServiceIdByOAuthResponse($response));
+        $user->$usernameSetter($response->getUsername());
         $user->$tokenSetter($response->getAccessToken());
-
         $this->userManager->updateUser($user);
     }
 
@@ -55,27 +81,46 @@ class FOSUBUserProvider extends BaseClass {
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $serviceName = ucfirst($response->getResourceOwner()->getName());
-        $userLoader = 'load'.$serviceName.'UserByOAuthResponse';
-        $dataBinder = 'bind'.$serviceName.'UserByOAuthResponse';
         $tokenSetter = 'set'.$serviceName.'AccessToken';
-
-        $user = $this->$userLoader($response);
+        $user = $this->loadServiceUserByOAuthResponse($response);
 
         // Check for new user
         if (null === $user) {
-            $user = $this->userManager->createUser();
-            $this->$dataBinder($response, $user);
-            // Update access token
-            $user->$tokenSetter($response->getAccessToken());
-            $this->userManager->updateUser($user);
-            return $user;
+            $user = $this->createServiceUserByOAuthResponse($response);
+        } else {
+            // If user exists - go with the HWIOAuth way
+            $user = parent::loadUserByOAuthUserResponse($response);
         }
-
-        // If user exists - go with the HWIOAuth way
-        $user = parent::loadUserByOAuthUserResponse($response);
 
         // Update access token
         $user->$tokenSetter($response->getAccessToken());
+
+        $this->userManager->updateUser($user);
+        return $user;
+    }
+
+    /**
+     * @param UserResponseInterface $response
+     * @return \FOS\UserBundle\Model\UserInterface|Response
+     * @throws AccountValidationException
+     */
+    protected function createServiceUserByOAuthResponse(UserResponseInterface $response)
+    {
+        $serviceName = ucfirst($response->getResourceOwner()->getName());
+        $user = $this->userManager->createUser();
+        $dataBinder = 'bind'.$serviceName.'UserByOAuthResponse';
+        $this->$dataBinder($response, $user);
+
+        $errors = $this->validator->validate($user);
+
+        if (count($errors) > 0) {
+            $errorMsgs = array();
+            foreach ($errors as $error) {
+                $errorMsgs[] = $this->translator->trans($error->getMessage(), array("%resource_owner%" => $serviceName));
+            }
+
+           throw new AccountValidationException(implode("\n", $errorMsgs));
+        }
 
         return $user;
     }
@@ -89,7 +134,7 @@ class FOSUBUserProvider extends BaseClass {
     {
         $data = $response->getResponse();
         $username = $data['screen_name'];
-        $id = $this->getTwitterIdByOAuthResponse($response);
+        $id = $this->getServiceIdByOAuthResponse($response);
         $user->setTwitterId($id);
         $user->setTwitterUsername($username);
         $user->setUsername($username);
@@ -105,46 +150,37 @@ class FOSUBUserProvider extends BaseClass {
     protected function bindFacebookUserByOAuthResponse(UserResponseInterface $response, FacebookUserInterface $user)
     {
         $data = $response->getResponse();
-        $this->logger->debug(print_r($data, TRUE));
+        $username = $data['username'];
+        $email = empty($data['email']) ? "" : $data['email'];
+        $id = $this->getServiceIdByOAuthResponse($response);
+        $user->setFacebookId($id);
+        $user->setFacebookUsername($username);
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setPassword($id);
     }
 
     /**
-     * Load user by Twitter ID by OAUTH response.
+     * Load user by service ID by OAUTH response.
      * @param UserResponseInterface $response
      * @return \FOS\UserBundle\Model\UserInterface
      */
-    protected function loadTwitterUserByOAuthResponse(UserResponseInterface $response)
+    protected function loadServiceUserByOAuthResponse(UserResponseInterface $response)
     {
-        $id = $this->getTwitterIdByOAuthResponse($response);
-        return $this->userManager->findUserBy(array('twitterId' => $id));
+        $id = $this->getServiceIdByOAuthResponse($response);
+        $service = $response->getResourceOwner()->getName();
+        return $this->userManager->findUserBy(array($service.'Id' => $id));
     }
 
     /**
-     * Load user by Facebook ID by OAUTH response.
-     * @param UserResponseInterface $response
-     * @return \FOS\UserBundle\Model\UserInterface
-     */
-    protected function loadFacebookUserByOAuthResponse(UserResponseInterface $response)
-    {
-    }
-
-    /**
-     * Retrieve Twitter ID by OAUTH response.
+     * Retrieve Service ID by OAUTH response.
      * @param UserResponseInterface $response
      * @return null
      */
-    protected function getTwitterIdByOAuthResponse(UserResponseInterface $response)
+    protected function getServiceIdByOAuthResponse(UserResponseInterface $response)
     {
         $data = $response->getResponse();
         return empty($data['id']) ? null : $data['id'];
     }
 
-    /**
-     * Retrieve Facebook ID by OAUTH response.
-     * @param UserResponseInterface $response
-     * @return null
-     */
-    protected function getFacebookIdByOAuthResponse(UserResponseInterface $response)
-    {
-    }
 }

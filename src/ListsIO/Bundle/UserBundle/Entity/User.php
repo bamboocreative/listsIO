@@ -5,12 +5,14 @@ namespace ListsIO\Bundle\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use ListsIO\Bundle\ListBundle\Entity\LIOList as LIOList;
+use ListsIO\Bundle\UserBundle\Model\TwitterUserInterface;
+use ListsIO\Bundle\UserBundle\Model\FacebookUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
  */
-class User extends BaseUser implements \JsonSerializable
+class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, FacebookUserInterface
 {
     /**
      * @var integer
@@ -31,6 +33,21 @@ class User extends BaseUser implements \JsonSerializable
      * @var string
      */
     protected $twitterUsername;
+
+    /**
+     * @var string
+     */
+    protected $facebookId;
+
+    /**
+     * @var string
+     */
+    protected $facebookAccessToken;
+
+    /**
+     * @var string
+     */
+    protected $facebookUsername;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -121,6 +138,66 @@ class User extends BaseUser implements \JsonSerializable
     public function getTwitterUsername()
     {
         return $this->twitterUsername;
+    }
+
+    /**
+     * Set the user's Facebook ID
+     *
+     * @param $facebookId
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+    }
+
+    /**
+     * Get the user's Facebook ID
+     *
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+
+    /**
+     * Set the user's Facebook Access Token
+     *
+     * @param $facebookAccessToken
+     */
+    public function setFacebookAccessToken($facebookAccessToken)
+    {
+        $this->facebookAccessToken = $facebookAccessToken;
+    }
+
+    /**
+     * Get the user's Facebook Access Token
+     *
+     * @return string
+     */
+    public function getFacebookAccessToken()
+    {
+        return $this->facebookAccessToken;
+    }
+
+    /**
+     * Set the user's Facebook username
+     *
+     * @param $facebookUsername
+     */
+    public function setFacebookUsername($facebookUsername)
+    {
+        $this->facebookUsername = $facebookUsername;
+    }
+
+    /**
+     * Get the user's Facebook username
+     *
+     * @return string
+     */
+    public function getFacebookUsername()
+    {
+        return $this->facebookUsername;
     }
 
     /**

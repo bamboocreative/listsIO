@@ -5,8 +5,8 @@ imports:
 
 framework:
     #esi:             ~
-    translator: ~
-    secret:          "%secret%"
+    translator:   { fallback: en }
+    secret:       "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
@@ -101,4 +101,4 @@ hwi_oauth:
             type:                facebook
             client_id:           "%facebook.api_id%"
             client_secret:       "%facebook.api_secret%"
-            scope:               ""
+            scope:               "email"

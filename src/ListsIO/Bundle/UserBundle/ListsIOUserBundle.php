@@ -8,6 +8,7 @@ class ListsIOUserBundle extends Bundle
 {
     public function getParent()
     {
+        // return 'HWIOAuthBundle';
         return 'FOSUserBundle';
     }
 }

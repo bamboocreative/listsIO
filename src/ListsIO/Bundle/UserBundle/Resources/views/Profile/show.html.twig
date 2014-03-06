@@ -3,11 +3,7 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block title %}Lists.io |
-	{% if view_user %}
-		{{ view_user.username }}
-	{% elseif user %}
-		{{ user.username }}
-	{% endif %}
+	{{ user.username }}
 {% endblock %}
 {% block bgImage %}
 {% spaceless %} 
@@ -73,15 +69,9 @@
 	</div>
 	<div class="share-buttons">
 		<ul>
-	    {% if view_user is defined %}
-			<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/user/view/{{ view_user.getId() }}"><span class="icon-facebook"></span></a></li>
-			<li><a href="http://twitter.com/share?text=Check%20out%20my%20lists%20on%20@listsIO%20–%20http://lists.io/user/view/{{ view_user.getId() }}"><span class="icon-twitter"></span></a></li>
-			<li><a href="mailto:?subject=Check Out My Lists on Lists.io &body=Check out my lists on Lists.io – http://lists.io/user/view/{{ view_user.getId() }}"><span class="icon-mail"></span></a></li>
-        {% elseif user is defined %}
-			<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/user/view/{{ user.getId() }}"><span class="icon-facebook"></span></a></li>
-			<li><a href="http://twitter.com/share?text=Check%20out%20my%20lists%20on%20@listsIO%20–%20http://lists.io/user/view/{{ user.getId() }}"><span class="icon-twitter"></span></a></li>
-			<li><a href="mailto:?subject=Check Out My Lists on Lists.io &body=Check out my lists on Lists.io – http://lists.io/user/view/{{ user.getId() }}"><span class="icon-mail"></span></a></li>
-		{% endif %}
+            <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/{{ user.username|url_encode }}"><span class="icon-facebook"></span></a></li>
+            <li><a href="http://twitter.com/share?text=Check%20out%20my%20lists%20on%20@listsIO%20–%20http://lists.io/{{ user.username|url_encode }}"><span class="icon-twitter"></span></a></li>
+            <li><a href="mailto:?subject=Check Out My Lists on Lists.io &body=Check out my lists on Lists.io – http://lists.io/{{ user.username|url_encode }}"><span class="icon-mail"></span></a></li>
 		</ul>	     	
 	</div>
 </div>	
@@ -92,23 +82,11 @@
 	<!-- Error: Getting current user's info, not author info -->
 	<div class="gravatar-image">
 		<div class="gravatar-inner">
-		<a href="http://en.gravatar.com/">
-			<img src="
-			{% if view_user is defined %}
-			    {{ view_user.gravatarURL }}
-			{% elseif user is defined %}
-			    {{ user.gravatarURL }}
-			{% endif %}
-			">
-		</a>
+		    <a href="http://en.gravatar.com/"><img src="{{ user.gravatarURL }}"></a>
 		</div>
 	</div>
 	<h1 class="profile-name">
-		{% if view_user %}
-			{{ view_user.username }}
-		{% elseif user %}
-			{{ user.username }}
-		{% endif %}
+		{{ user.username }}
 	</h1>
 	{#}
 	<div class="profile-email">
@@ -119,7 +97,7 @@
 <div class="container profile-lists-wrapper">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
-			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and view_user.id == user.id %}
+			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
 				<div class="list-button-wrapper">
 					<a class="add-list-button" href="{{ path('lists_io_new_list') }}">
 						<table>
@@ -132,19 +110,14 @@
 				</div>
 			{% endif %}
 			<ul>
-			{% if view_user is defined %}
-			    {% set listUser = view_user %}
-			{% elseif user is defined %}
-			    {% set listUser = user %}
-			{% endif %}
-			{% for list in listUser.lists if list.title %}
+			{% for list in user.lists if list.title %}
 					<li data-id="{{ list.id }}"> 
 						<a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
 						<!-- <a href="list/{{ list.id }}"> -->
 							<h3 class="list-title">{{ list.title }}</h3>
 							<span class="list-subtitle">{{ list.subtitle }}</span>
 						</a>
-						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and view_user.id == user.id %}
+						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
 						    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
 						{% endif %}
 					</li>

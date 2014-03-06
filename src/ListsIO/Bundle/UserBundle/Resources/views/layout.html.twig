@@ -1,7 +1,5 @@
 {# Extends the base layout #}
-
 {% extends "base.html.twig" %}
- 
 {% block share %}
 {% endblock %}
 {% block login %}
@@ -21,6 +19,7 @@
 {% endblock %}
 {% block body %}
 		{% block fos_user_content %}{% endblock %}
+        {% block hwi_oauth_content %}{% endblock hwi_oauth_content %}
         {% for type, messages in app.session.flashbag.all() %}
             {% for message in messages %}
                 <div class="flash-{{ type }}">
