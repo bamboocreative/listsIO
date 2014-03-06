@@ -3551,6 +3551,20 @@ input[type="submit"], textarea[type="submit"], button {
     text-decoration: none; }
   .button:focus, .logout-link:focus {
     outline: none; }
+  .button.register-social, .logout-link.register-social {
+    display: block;
+    height: auto;
+    padding: 16px 20px;
+    font-size: 20px;
+    margin: 20px 0 0 0; }
+    .button.register-social.twitter, .logout-link.register-social.twitter {
+      background: #55ACEE; }
+    .button.register-social.facebook, .logout-link.register-social.facebook {
+      background: #3B5998; }
+    .button.register-social .register-social-icons, .button.register-social .icon-twitter, .button.register-social .icon-facebook, .logout-link.register-social .register-social-icons, .logout-link.register-social .icon-twitter, .logout-link.register-social .icon-facebook {
+      font-size: 35px;
+      vertical-align: middle;
+      margin-right: 10px; }
 
 input, textarea {
   background: rgba(255, 255, 255, 0.3);

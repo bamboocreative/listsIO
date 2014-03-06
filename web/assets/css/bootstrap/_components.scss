@@ -35,6 +35,36 @@ input[type="submit"], button{
 	&:focus{
 		outline: none;
 	}
+	
+	&.register-social{
+		display: block;
+		height: auto;
+		padding: 16px 20px;
+		font-size: 20px;
+		margin: 20px 0 0 0;		
+		
+		&.twitter{
+			background: #55ACEE;
+		}
+		
+		&.facebook{
+			background: #3B5998; 
+		}
+		
+		.register-social-icons{
+			font-size: 35px;
+			vertical-align: middle;
+			margin-right: 10px;
+		}
+		
+		.icon-twitter{
+			@extend .register-social-icons;
+		}
+		
+		.icon-facebook{
+			@extend .register-social-icons;
+		}
+	}
 }
 
 
