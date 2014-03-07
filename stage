@@ -42,25 +42,30 @@ do
                 fi
             fi
             ;;
+        p)
+            echo "Beginning PHPUnit testing."
+            PHPUNIT_OUTPUT=$(bin/phpunit -c app)
+            PHPUNIT_STATUS=$?
+
+            if [[ $PHPUNIT_STATUS -eq 0 ]]
+            then
+                echo "$PHPUNIT_OUTPUT"
+                if [[ $PHPUNIT_OUTPUT =~ FAILURES ]]
+                then
+                    echo "PHPUnit testing failed.  Please review the output and try again"
+                    exit
+                else
+                    echo "No PHPUnit failures detected.  Deploying to Elastic Beanstalk."
+                fi
+            else
+                echo "Unable to initialize PHPUnit.  Make sure that 'bin/phpunit -c app' works."
+                exit
+            fi
+            ;;
         ?)
             ;;
     esac
 done
 
-echo "Beginning PHPUnit testing."
-PHPUNIT_OUTPUT=$(bin/phpunit -c app)
-PHPUNIT_STATUS=$?
-
-if [[ $PHPUNIT_STATUS -eq 0 ]]
-then
-    echo "$PHPUNIT_OUTPUT"
-    if [[ $PHPUNIT_OUTPUT =~ FAILURES ]]
-    then
-        echo "PHPUnit testing failed.  Please review the output and try again"
-    else
-        echo "No PHPUnit failures detected.  Deploying to Elastic Beanstalk."
-        git aws.push
-    fi
-else
-    echo "Unable to initialize PHPUnit.  Make sure that 'bin/phpunit -c app' works."
-fi
+# If we haven't exited yet, push to aws.
+git aws.push
