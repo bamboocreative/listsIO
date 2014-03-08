@@ -28,6 +28,9 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     cache:  false
+    globals:
+        env: "%listsio.env%"
+        prod_env: prod
 
 # Assetic Configuration
 assetic:
