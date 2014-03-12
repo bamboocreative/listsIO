@@ -1,5 +1,23 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block logo %}
+<div class="home-logo">
+	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists.svg') }}"><br>
+	<h3 class="title">Lists.io</h3>
+</div>
+{% endblock %}
+
+{% block bgImage %}{{ asset('assets/images/unsplash_52c470899a2e1_1.jpg') }}{% endblock %}
+
+{# Don't display share #}
+{% block share %}{% endblock %}
+
 {% block fos_user_content %}
-{% include "FOSUserBundle:Resetting:request_content.html.twig" %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 login-wrapper ">
+			{% include "FOSUserBundle:Resetting:request_content.html.twig" %}
+		</div>
+	</div>
+</div>
 {% endblock fos_user_content %}

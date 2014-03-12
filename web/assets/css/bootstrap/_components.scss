@@ -141,7 +141,7 @@ textarea{
 	text-align: center;
 	padding-top: 50px;
 	img{
-		max-width: 150px;
+		max-width: 120px;
 	}
 	
 	.title{
@@ -206,12 +206,53 @@ textarea{
 }
 
 // This is the register/login form button
-.register-form, .login-wrapper{
+.login-wrapper{
+	
+	&.register {
+		padding-top: 0;
+	}
+	
+	padding-bottom: 70px;
+	padding-top: 70px;
+	input[type="text"], input[type="password"], input[type="submit"], input[type="email"]{
+		width: 100% !important;
+		padding-left: 15px;
+		padding-top: 2px;
+		margin: 8px 0;
+		@include placeholder(rgba(255,255,255,0.9));
+	}
+	
+	
+	input[type="checkbox"]{
+		padding: 10px 0px;
+	}
+	
+	.checkbox-label{
+		padding: 10px 0px;
+		font-weight: 100;
+		font-size: .9em;
+		margin-bottom: 0px;
+		visibility: visible;
+	}
+	
+	.forgot-passowrd{
+		font-weight: 100;
+		font-size: .9em;
+		float: right;
+		padding: 10px 0px; 
+	}
+	
 	input[type="submit"]{
 		height: auto;
 		min-height: 70px;
 		padding: 0px 15px 5px;
+		margin: 8px 0;
 	}
+}
+
+.check-email-page{
+	text-align: center;
+	padding-top: 5%;
 }
 
 // The login/logout fixed button

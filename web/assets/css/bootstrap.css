@@ -3630,7 +3630,7 @@ textarea {
   text-align: center;
   padding-top: 50px; }
   .home-logo img {
-    max-width: 150px; }
+    max-width: 120px; }
   .home-logo .title {
     margin: 0px;
     padding: 0px;
@@ -3672,10 +3672,47 @@ textarea {
       font-size: 1.6em;
       font-weight: 100; }
 
-.register-form input[type="submit"], .register-form textarea[type="submit"], .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"] {
-  height: auto;
-  min-height: 70px;
-  padding: 0px 15px 5px; }
+.login-wrapper {
+  padding-bottom: 70px;
+  padding-top: 70px; }
+  .login-wrapper.register {
+    padding-top: 0; }
+  .login-wrapper input[type="text"], .login-wrapper textarea[type="text"], .login-wrapper input[type="password"], .login-wrapper textarea[type="password"], .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"], .login-wrapper input[type="email"], .login-wrapper textarea[type="email"] {
+    width: 100% !important;
+    padding-left: 15px;
+    padding-top: 2px;
+    margin: 8px 0; }
+    .login-wrapper input[type="text"]:-moz-placeholder, .login-wrapper textarea[type="text"]:-moz-placeholder, .login-wrapper input[type="password"]:-moz-placeholder, .login-wrapper textarea[type="password"]:-moz-placeholder, .login-wrapper input[type="submit"]:-moz-placeholder, .login-wrapper textarea[type="submit"]:-moz-placeholder, .login-wrapper input[type="email"]:-moz-placeholder, .login-wrapper textarea[type="email"]:-moz-placeholder {
+      color: rgba(255, 255, 255, 0.9); }
+    .login-wrapper input[type="text"]::-moz-placeholder, .login-wrapper textarea[type="text"]::-moz-placeholder, .login-wrapper input[type="password"]::-moz-placeholder, .login-wrapper textarea[type="password"]::-moz-placeholder, .login-wrapper input[type="submit"]::-moz-placeholder, .login-wrapper textarea[type="submit"]::-moz-placeholder, .login-wrapper input[type="email"]::-moz-placeholder, .login-wrapper textarea[type="email"]::-moz-placeholder {
+      color: rgba(255, 255, 255, 0.9);
+      opacity: 1; }
+    .login-wrapper input[type="text"]:-ms-input-placeholder, .login-wrapper textarea[type="text"]:-ms-input-placeholder, .login-wrapper input[type="password"]:-ms-input-placeholder, .login-wrapper textarea[type="password"]:-ms-input-placeholder, .login-wrapper input[type="submit"]:-ms-input-placeholder, .login-wrapper textarea[type="submit"]:-ms-input-placeholder, .login-wrapper input[type="email"]:-ms-input-placeholder, .login-wrapper textarea[type="email"]:-ms-input-placeholder {
+      color: rgba(255, 255, 255, 0.9); }
+    .login-wrapper input[type="text"]::-webkit-input-placeholder, .login-wrapper textarea[type="text"]::-webkit-input-placeholder, .login-wrapper input[type="password"]::-webkit-input-placeholder, .login-wrapper textarea[type="password"]::-webkit-input-placeholder, .login-wrapper input[type="submit"]::-webkit-input-placeholder, .login-wrapper textarea[type="submit"]::-webkit-input-placeholder, .login-wrapper input[type="email"]::-webkit-input-placeholder, .login-wrapper textarea[type="email"]::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.9); }
+  .login-wrapper input[type="checkbox"], .login-wrapper textarea[type="checkbox"] {
+    padding: 10px 0px; }
+  .login-wrapper .checkbox-label {
+    padding: 10px 0px;
+    font-weight: 100;
+    font-size: .9em;
+    margin-bottom: 0px;
+    visibility: visible; }
+  .login-wrapper .forgot-passowrd {
+    font-weight: 100;
+    font-size: .9em;
+    float: right;
+    padding: 10px 0px; }
+  .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"] {
+    height: auto;
+    min-height: 70px;
+    padding: 0px 15px 5px;
+    margin: 8px 0; }
+
+.check-email-page {
+  text-align: center;
+  padding-top: 5%; }
 
 .login-out {
   position: fixed;
@@ -3823,28 +3860,6 @@ div#subtitle {
   line-height: 1.3em;
   margin: 0px 0px 40px; }
 
-.login-wrapper {
-  padding-bottom: 60px; }
-  .login-wrapper input[type="text"], .login-wrapper textarea[type="text"], .login-wrapper input[type="password"], .login-wrapper textarea[type="password"], .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"] {
-    width: 100% !important;
-    padding-left: 15px;
-    padding-top: 2px; }
-    .login-wrapper input[type="text"]:-moz-placeholder, .login-wrapper textarea[type="text"]:-moz-placeholder, .login-wrapper input[type="password"]:-moz-placeholder, .login-wrapper textarea[type="password"]:-moz-placeholder, .login-wrapper input[type="submit"]:-moz-placeholder, .login-wrapper textarea[type="submit"]:-moz-placeholder {
-      color: rgba(255, 255, 255, 0.9); }
-    .login-wrapper input[type="text"]::-moz-placeholder, .login-wrapper textarea[type="text"]::-moz-placeholder, .login-wrapper input[type="password"]::-moz-placeholder, .login-wrapper textarea[type="password"]::-moz-placeholder, .login-wrapper input[type="submit"]::-moz-placeholder, .login-wrapper textarea[type="submit"]::-moz-placeholder {
-      color: rgba(255, 255, 255, 0.9);
-      opacity: 1; }
-    .login-wrapper input[type="text"]:-ms-input-placeholder, .login-wrapper textarea[type="text"]:-ms-input-placeholder, .login-wrapper input[type="password"]:-ms-input-placeholder, .login-wrapper textarea[type="password"]:-ms-input-placeholder, .login-wrapper input[type="submit"]:-ms-input-placeholder, .login-wrapper textarea[type="submit"]:-ms-input-placeholder {
-      color: rgba(255, 255, 255, 0.9); }
-    .login-wrapper input[type="text"]::-webkit-input-placeholder, .login-wrapper textarea[type="text"]::-webkit-input-placeholder, .login-wrapper input[type="password"]::-webkit-input-placeholder, .login-wrapper textarea[type="password"]::-webkit-input-placeholder, .login-wrapper input[type="submit"]::-webkit-input-placeholder, .login-wrapper textarea[type="submit"]::-webkit-input-placeholder {
-      color: rgba(255, 255, 255, 0.9); }
-  .login-wrapper input[type="checkbox"], .login-wrapper textarea[type="checkbox"] {
-    padding: 10px 0px; }
-  .login-wrapper .checkbox-label {
-    padding: 10px 0px;
-    font-weight: 100;
-    margin-bottom: 0px; }
-
 div#author {
   font-size: 1.3em;
   padding-left: 3px;
@@ -3975,14 +3990,6 @@ div#author {
   .list-item .item {
     line-height: 1em !important;
     font-size: 25px !important; } }
-.register-form {
-  margin-bottom: 5em; }
-  .register-form form label {
-    margin-bottom: 0px;
-    margin-top: 5px; }
-  .register-form form input, .register-form form textarea {
-    width: 100%; }
-
 .home-header {
   background-attachment: fixed !important;
   background-size: cover;
