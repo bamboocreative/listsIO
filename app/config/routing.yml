@@ -18,11 +18,15 @@ fos_user_security_logout:
     pattern: /user/logout
     defaults: { _controller: ListsIOUserBundle:Security:logout }
 
+fos_user_register:
+    pattern: /register/
+    defaults: { _controller: FOSUserBundle:Registration:register }
+
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /user/profile
 
-fos_user_register:
+fos_user_prefixed_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
     prefix: /user/register
 
