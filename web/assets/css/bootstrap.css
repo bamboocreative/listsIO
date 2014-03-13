@@ -4031,6 +4031,10 @@ div#author {
     margin-top: 5px; }
   .register-form form input, .register-form form textarea {
     width: 100%; }
+  .register-form .tos {
+    text-align: center;
+    font-size: .6em;
+    margin-top: 15px; }
 
 .home-header {
   background-attachment: fixed !important;
