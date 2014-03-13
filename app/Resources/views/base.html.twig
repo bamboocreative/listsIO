@@ -77,6 +77,58 @@
 	        {% endblock %}
 	        {% block body %}
 	        {% endblock %}
+	        {% block featured %}
+	        <div class="featured-lists">
+				<h3>Featured Lists:</h3>
+				<div class="row">
+				<!--Featured Item 1 -->
+					<a href="/list/44">
+						<div class="col-sm-4 col-md-4 col-lg-4 featured-item-wrapper" style="background-image: url('http://www.wmagazine.com/wp-content/uploads/2013/12/HER-10145.jpg')">
+							<div class="featured-item">
+								<h3 class="featured-item-title">Best Movies of 2013</h3>
+								<p class="featured-item-username">garrettboatman</p>
+							</div>
+						</div>
+					</a>
+					<!--Featured Item 2 -->
+					<a href="/list/106">
+						<div class="col-sm-4 col-md-4 col-lg-4 featured-item-wrapper" style="background-image: url('http://www.accurateonlinepsychics.com/wp-content/uploads/2011/11/inspiring-redwoods_10984073513M8K651.jpg')">
+							<div class="featured-item">
+								<h3 class="featured-item-title">Top 10 Redwood Parks</h3>
+								<p class="featured-item-username">jacqueboatman</p>
+							</div>
+						</div>
+					</a>
+					<!--Featured Item 3 -->
+					<a href="/list/10">
+						<div class="col-sm-4 col-md-4 col-lg-4 featured-item-wrapper" style="background-image: url('http://d13pix9kaak6wt.cloudfront.net/background/broadacrecoffee_1352533900_89.jpeg')">
+							<div class="featured-item">
+								<h3 class="featured-item-title">Coffee Shops in SF</h3>
+								<p class="featured-item-username">leylandjacob</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+	        {% endblock %}
+	        {% block footer %}
+	        <div class="footer-cta">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6 col-lg-offset-1 col-sm-8 col-xs-12 footer-cta-msg">
+							<h3>Make and Share Your Own List.</h3>
+						</div>
+						<div class="col-lg-4 col-sm-4 col-xs-12 footer-cta-button">
+							{% if user is defined and user is not empty %}
+							<a href="{{ path('lists_io_new_list') }}" class="button">Create a List</a>
+							{% else %}
+							<a href="{{ path('lists_io_home') }}" class="button">Signup Now</a
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+	        {% endblock %}
         </div>
         
         {% block javascripts %}
