@@ -63,6 +63,7 @@ then
     else
         echo "No PHPUnit failures detected.  Deploying to Elastic Beanstalk."
         git aws.push
+        git push origin $GIT_BRANCH
     fi
 else
     echo "Unable to initialize PHPUnit.  Make sure that 'bin/phpunit -c app' works."
