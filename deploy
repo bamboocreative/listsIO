@@ -61,9 +61,17 @@ then
     then
         echo "PHPUnit testing failed.  Please review the output and try again"
     else
-        echo "No PHPUnit failures detected.  Deploying to Elastic Beanstalk."
-        git aws.push
-        git push origin $GIT_BRANCH
+        echo "No PHPUnit failures detected.  Pushing to origin branch $GIT_BRANCH"
+        ORIGIN_PUSH_STATUS=$(git push origin $GIT_BRANCH)
+        if [[ $ORIGIN_PUSH_STATUS -eq 0 ]]
+        then
+            echo "Push to origin branch $GIT_BRANCH successful.  Deploying to Elastic Beanstalk."
+            git aws.push
+        else
+            echo "Unable to push to origin branch $GIT_BRANCH:"
+            echo "$ORIGIN_PUSH_STATUS"
+            exit
+        fi
     fi
 else
     echo "Unable to initialize PHPUnit.  Make sure that 'bin/phpunit -c app' works."
