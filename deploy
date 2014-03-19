@@ -42,7 +42,7 @@ then
 fi
 
 echo "Beginning PHPUnit testing."
-PHPUNIT_OUTPUT=$(bin/phpunit -c app)
+bin/phpunit -c app
 PHPUNIT_STATUS=$?
 
 echo "$PHPUNIT_OUTPUT"
