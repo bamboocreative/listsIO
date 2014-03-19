@@ -3699,7 +3699,7 @@ textarea {
     font-size: .9em;
     margin-bottom: 0px;
     visibility: visible; }
-  .login-wrapper .forgot-passowrd {
+  .login-wrapper .forgot-password {
     font-weight: 100;
     font-size: .9em;
     float: right;
@@ -4060,7 +4060,7 @@ div#author {
     margin-top: 5px; }
   .register-form form input, .register-form form textarea {
     width: 100%; }
-  .register-form .tos {
+  .register .tos {
     text-align: center;
     font-size: .6em;
     margin-top: 15px; }
