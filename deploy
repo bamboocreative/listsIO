@@ -41,6 +41,9 @@ then
     fi
 fi
 
+echo "Clearing test environment cache."
+php app/console --env=test cache:clear
+
 echo "Beginning PHPUnit testing."
 bin/phpunit -c app
 PHPUNIT_STATUS=$?
