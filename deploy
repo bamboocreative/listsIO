@@ -19,9 +19,8 @@ if [[ $GIT_BRANCH =~ production ]]
 then
     echo "You're about to deploy from a production git branch: $GIT_BRANCH are you sure? (yes/no)"
     read CONFIRMATION
-    if [[ $CONFIRMATION =~ yes ]]
+    if [[ $CONFIRMATION != yes ]]
     then
-    else
         echo "Deployment cancelled."
         exit
     fi
@@ -56,7 +55,7 @@ fi
 
 echo "Please review the test results.  Would you like to continue deployment? (yes/no)"
 read CONFIRMATION
-if [[ $CONFIRMATION =~ yes ]]
+if [[ $CONFIRMATION != yes ]]
 then
 else
     echo "Deployment cancelled."
