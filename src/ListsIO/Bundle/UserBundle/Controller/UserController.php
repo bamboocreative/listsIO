@@ -47,6 +47,5 @@ class UserController extends Controller
         }
 
         return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('user' => $viewUser));
-
     }
 }

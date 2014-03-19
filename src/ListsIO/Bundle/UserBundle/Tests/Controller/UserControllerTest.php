@@ -30,7 +30,7 @@ class UserControllerTest extends DoctrineWebTestCase
     public function testIndexRedirectsAnonymousUserToRegister()
     {
         static::$client->request('GET', '/');
-        $this->assertTrue(static::$client->getResponse()->isRedirect('/register/'));
+        $this->assertTrue(static::$client->getResponse()->isRedirect('/user/register/'));
     }
 
     public function testIndexRedirectsAuthenticatedUserToOwnProfile()
