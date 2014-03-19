@@ -39,7 +39,6 @@ class UserController extends Controller
     public function viewByUsernameAction(Request $request, $username)
     {
         $format = $request->getRequestFormat();
-        $user = $this->getUser();
         $viewUser = $this->getDoctrine()
             ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')
             ->findOneBy(array('username' => $username));
@@ -47,7 +46,7 @@ class UserController extends Controller
             throw new HttpException(404, "No route or username found for username: " . htmlspecialchars($username));
         }
 
-        return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('view_user' => $viewUser, 'user' => $user));
+        return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('user' => $viewUser));
 
     }
 }

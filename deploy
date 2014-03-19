@@ -53,7 +53,7 @@ then
     exit
 fi
 
-if [[ $PHPUNIT_OUTPUT =~ FAILURES ]]
+if [[ $PHPUNIT_OUTPUT =~ FAILURES || $PHPUNIT_OUTPUT =~ error ]]
 then
     echo "PHPUnit testing failed.  Please review the output and try again"
     exit
