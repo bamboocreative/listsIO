@@ -21,7 +21,8 @@
         "sensio/generator-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "liip/url-auto-converter-bundle": "dev-master"
+        "liip/url-auto-converter-bundle": "dev-master",
+        "hwi/oauth-bundle": "0.4.*@dev"
     },
     "require-dev": {
         "phpunit/phpunit": ">=3.7.0"

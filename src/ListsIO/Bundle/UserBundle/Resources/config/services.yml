@@ -1,4 +1,7 @@
 parameters:
-#    lists_io_user.example.class: ListsIO\Bundle\UserBundle\Example
+    listsio_user_provider.class: ListsIO\Bundle\UserBundle\Security\Core\User\FOSUBUserProvider
 
 services:
+    listsio_user_provider:
+        class: "%listsio_user_provider.class%"
+        arguments: [@fos_user.user_manager, {twitter: twitterId, facebook: facebookId}, @validator, @translator, @logger]

@@ -1,3 +1,7 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: parameters.php }
+
 security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
@@ -16,8 +20,25 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
-            logout:       true
-            anonymous:    true
+                login_path: /user/login
+                use_forward: false
+                check_path: /user/login_check
+                failure_path: /user/login
+            oauth:
+                resource_owners:
+                    twitter: "/user/login/check-twitter"
+                    facebook: "/login/check-facebook"
+                login_path: /user/login
+                failure_path: /user/login
+                oauth_user_provider:
+                    service: listsio_user_provider
+
+            logout:
+                path: /user/logout
+            anonymous:    ~
+            remember_me:
+                key: "%secret%"
+                lifetime: 4147200
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

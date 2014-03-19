@@ -26,44 +26,47 @@ then
     fi
 fi
 
-# BASH switch syntax is absolutely ridiculous
-while getopts u OPTION;
-do
-    case $OPTION in
-        u)
-            composer update
-            COMPOSER_STATUS=$?
 
-            if [[ $COMPOSER_STATUS -gt 0 ]]
-            then
-                php composer.phar update
-                COMPOSER_STATUS=$?
-                if [[ $COMPOSER_STATUS -gt 0 ]]
-                then
-                    echo "Unable to update vendors. Make sure 'composer update' or 'php composer.phar update' works."
-                    exit
-                fi
-            fi
-            ;;
-        ?)
-            ;;
-    esac
-done
+composer install
+COMPOSER_STATUS=$?
+
+if [[ $COMPOSER_STATUS -gt 0 ]]
+then
+    php composer.phar install
+    COMPOSER_STATUS=$?
+    if [[ $COMPOSER_STATUS -gt 0 ]]
+    then
+        echo "Unable to update vendors. Make sure one of 'composer install' or 'php composer.phar install' works."
+        exit
+    fi
+fi
 
 echo "Beginning PHPUnit testing."
 PHPUNIT_OUTPUT=$(bin/phpunit -c app)
 PHPUNIT_STATUS=$?
 
-if [[ $PHPUNIT_STATUS -eq 0 ]]
+echo "$PHPUNIT_OUTPUT"
+
+if [[ $PHPUNIT_STATUS -le 0 ]]
 then
-    echo "$PHPUNIT_OUTPUT"
-    if [[ $PHPUNIT_OUTPUT =~ FAILURES ]]
-    then
-        echo "PHPUnit testing failed.  Please review the output and try again"
-    else
-        echo "No PHPUnit failures detected.  Deploying to Elastic Beanstalk."
-        git aws.push
-    fi
+    echo "Unable to initialize PHPUnit.  Make sure that 'bin/phpunit -c app' works."
+    exit
+fi
+
+if [[ $PHPUNIT_OUTPUT =~ FAILURES ]]
+then
+    echo "PHPUnit testing failed.  Please review the output and try again"
+    exit
+fi
+
+echo "No PHPUnit failures detected.  Pushing to origin branch $GIT_BRANCH"
+git push origin $GIT_BRANCH
+ORIGIN_PUSH_STATUS=$?
+if [[ $ORIGIN_PUSH_STATUS -eq 0 ]]
+then
+    echo "Push to origin branch $GIT_BRANCH successful.  Deploying to Elastic Beanstalk."
+    git aws.push
 else
-    echo "Unable to initialize PHPUnit.  Make sure that '/bin/phpunit -c app' works."
+    echo "Unable to push to origin branch $GIT_BRANCH:"
+    exit
 fi

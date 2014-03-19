@@ -1,0 +1,33 @@
+#!/bin/bash
+
+usage()
+{
+cat << EOF
+usage: $0 options
+
+This command uses Composer to install vendor dependencies (see composer.json), runs a forced update on the database specified in config.yml, and clears all caches.
+
+EOF
+}
+
+COMPOSER_STATUS=$(composer install)
+
+echo "$COMPOSER_STATUS"
+
+if [[ $COMPOSER_STATUS -le 0 ]]
+then
+    COMPOSER_STATUS=$(php composer.phar install)
+    echo "$COMPOSER_STATUS"
+fi
+
+if [[ $COMPOSER_STATUS -le 0 ]]
+then
+    echo "Unable to run composer install.  Make sure one of 'composer install' or 'php composer.phar install' works."
+    exit
+fi
+
+php app/console doctrine:schema:update --force
+php app/console cache:clear
+php app/console --env=prod cache:clear
+php app/console --env=test cache:clear
+

@@ -1,0 +1,9 @@
+ListsIO\Bundle\UserBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [email, twitterId]
+            message: "listsio.user.oauth.account.unique.email"
+            ignoreNull: false
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: username
+            message: "listsio.user.oauth.account.unique.username"

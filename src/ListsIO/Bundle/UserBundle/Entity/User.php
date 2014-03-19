@@ -5,17 +5,54 @@ namespace ListsIO\Bundle\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use ListsIO\Bundle\ListBundle\Entity\LIOList as LIOList;
+use ListsIO\Bundle\UserBundle\Model\TwitterUserInterface;
+use ListsIO\Bundle\UserBundle\Model\FacebookUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
  */
-class User extends BaseUser implements \JsonSerializable
+class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, FacebookUserInterface
 {
     /**
      * @var integer
      */
     protected $id;
+
+    /**
+     * @var string
+     */
+    protected $twitterId;
+
+    /**
+     * @var string
+     */
+    protected $twitterAccessToken;
+
+    /**
+     * @var string
+     */
+    protected $twitterUsername;
+
+    /**
+     * @var string
+     */
+    protected $facebookId;
+
+    /**
+     * @var string
+     */
+    protected $facebookAccessToken;
+
+    /**
+     * @var string
+     */
+    protected $facebookUsername;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $lists;
 
     /**
      * @var \DateTime
@@ -44,9 +81,124 @@ class User extends BaseUser implements \JsonSerializable
     }
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * Set the user's Twitter ID
+     *
+     * @param $twitterId
      */
-    private $lists;
+    public function setTwitterId($twitterId)
+    {
+        $this->twitterId = $twitterId;
+    }
+
+    /**
+     * Get the user's Twitter ID
+     *
+     * @return string
+     */
+    public function getTwitterId()
+    {
+        return $this->twitterId;
+    }
+
+    /**
+     * Set the user's Twitter Access Token
+     *
+     * @param $twitterAccessToken
+     */
+    public function setTwitterAccessToken($twitterAccessToken)
+    {
+        $this->twitterAccessToken = $twitterAccessToken;
+    }
+
+    /**
+     * Get the user's Twitter Access Token
+     *
+     * @return string
+     */
+    public function getTwitterAccessToken()
+    {
+        return $this->twitterAccessToken;
+    }
+
+    /**
+     * Set the user's Twitter username
+     *
+     * @param $twitterUsername
+     */
+    public function setTwitterUsername($twitterUsername)
+    {
+        $this->twitterUsername = $twitterUsername;
+    }
+
+    /**
+     * Get the user's Twitter username
+     *
+     * @return string
+     */
+    public function getTwitterUsername()
+    {
+        return $this->twitterUsername;
+    }
+
+    /**
+     * Set the user's Facebook ID
+     *
+     * @param $facebookId
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+    }
+
+    /**
+     * Get the user's Facebook ID
+     *
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+
+    /**
+     * Set the user's Facebook Access Token
+     *
+     * @param $facebookAccessToken
+     */
+    public function setFacebookAccessToken($facebookAccessToken)
+    {
+        $this->facebookAccessToken = $facebookAccessToken;
+    }
+
+    /**
+     * Get the user's Facebook Access Token
+     *
+     * @return string
+     */
+    public function getFacebookAccessToken()
+    {
+        return $this->facebookAccessToken;
+    }
+
+    /**
+     * Set the user's Facebook username
+     *
+     * @param $facebookUsername
+     */
+    public function setFacebookUsername($facebookUsername)
+    {
+        $this->facebookUsername = $facebookUsername;
+    }
+
+    /**
+     * Get the user's Facebook username
+     *
+     * @return string
+     */
+    public function getFacebookUsername()
+    {
+        return $this->facebookUsername;
+    }
 
     /**
      * Get user's gravatar URL

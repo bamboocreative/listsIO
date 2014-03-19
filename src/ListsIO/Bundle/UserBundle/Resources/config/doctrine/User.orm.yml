@@ -1,13 +1,43 @@
 ListsIO\Bundle\UserBundle\Entity\User:
     type: entity
-    table: null
+    table: User
     id:
         id:
             type: integer
             id: true
             generator:
                 strategy: AUTO
+    attributeOverride:
+        emailCanonical:
+            column: email_canonical
+            type: string
+            length: 255
+            unique: false
     fields:
+        twitterId:
+            type: string
+            length: 255
+            nullable: true
+        twitterUsername:
+            type: string
+            length: 255
+            nullable: true
+        twitterAccessToken:
+            type: string
+            length: 255
+            nullable: true
+        facebookId:
+            type: string
+            length: 255
+            nullable: true
+        facebookUsername:
+            type: string
+            length: 255
+            nullable: true
+        facebookAccessToken:
+            type: string
+            length: 255
+            nullable: true
         createdAt:
             type: datetime
         updatedAt:
