@@ -19,8 +19,9 @@ if [[ $GIT_BRANCH =~ production ]]
 then
     echo "You're about to deploy from a production git branch: $GIT_BRANCH are you sure? (yes/no)"
     read CONFIRMATION
-    if [[ $CONFIRMATION =~ n ]]
+    if [[ $CONFIRMATION =~ yes ]]
     then
+    else
         echo "Deployment cancelled."
         exit
     fi
@@ -53,13 +54,16 @@ then
     exit
 fi
 
-if [[ $PHPUNIT_OUTPUT =~ FAILURES || $PHPUNIT_OUTPUT =~ error ]]
+echo "Please review the test results.  Would you like to continue deployment? (yes/no)"
+read CONFIRMATION
+if [[ $CONFIRMATION =~ yes ]]
 then
-    echo "PHPUnit testing failed.  Please review the output and try again"
+else
+    echo "Deployment cancelled."
     exit
 fi
 
-echo "No PHPUnit failures detected.  Pushing to origin branch $GIT_BRANCH"
+echo "PHPUnit results accepted.  Pushing to origin branch $GIT_BRANCH"
 git push origin $GIT_BRANCH
 ORIGIN_PUSH_STATUS=$?
 if [[ $ORIGIN_PUSH_STATUS -eq 0 ]]
