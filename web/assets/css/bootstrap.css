@@ -3736,6 +3736,69 @@ textarea {
   background: rgba(0, 0, 0, 0.4);
   z-index: -1; }
 
+.featured-lists {
+  background: #194854;
+  text-align: center; }
+  .featured-lists h3 {
+    margin-top: 0;
+    padding: 4% 0; }
+  .featured-lists .row {
+    margin: 0;
+    position: relative; }
+    .featured-lists .row a:hover {
+      text-decoration: none; }
+    .featured-lists .row .col-sm-4 {
+      padding: 0; }
+      .featured-lists .row .col-sm-4.featured-item-wrapper {
+        text-align: center;
+        color: #FFFFFF;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        position: relative;
+        min-height: 300px; }
+        .featured-lists .row .col-sm-4.featured-item-wrapper:after {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background: rgba(0, 0, 0, 0.4);
+          z-index: 0; }
+        .featured-lists .row .col-sm-4.featured-item-wrapper .featured-item {
+          position: relative;
+          z-index: 10;
+          padding: 23% 3% 20% 3%;
+          -webkit-transition: opacity 0.5s ease;
+          transition: opacity 0.5s ease;
+          -webkit-backface-visibility: hidden; }
+          .featured-lists .row .col-sm-4.featured-item-wrapper .featured-item .featured-item-title {
+            margin-bottom: 5px; }
+          .featured-lists .row .col-sm-4.featured-item-wrapper .featured-item .featured-item-username {
+            font-weight: 300; }
+          .featured-lists .row .col-sm-4.featured-item-wrapper .featured-item:hover {
+            opacity: .7; }
+
+.footer-cta {
+  background: #f2d118;
+  padding: 7% 0;
+  color: #194854; }
+  .footer-cta .footer-cta-msg {
+    text-align: center; }
+    .footer-cta .footer-cta-msg h3 {
+      margin: 20px 0 20px 0; }
+  .footer-cta .footer-cta-button {
+    text-align: center; }
+    .footer-cta .footer-cta-button .button {
+      font-size: 23px;
+      padding: 20px 20px;
+      vertical-align: middle;
+      display: block;
+      min-height: 0;
+      max-width: 300px;
+      margin: 0 auto; }
+
 @media (max-width: 480px) {
   body .bg-wrapper {
     background-size: auto 100%;
@@ -3990,6 +4053,18 @@ div#author {
   .list-item .item {
     line-height: 1em !important;
     font-size: 25px !important; } }
+.register-form {
+  margin-bottom: 5em; }
+  .register-form form label {
+    margin-bottom: 0px;
+    margin-top: 5px; }
+  .register-form form input, .register-form form textarea {
+    width: 100%; }
+  .register-form .tos {
+    text-align: center;
+    font-size: .6em;
+    margin-top: 15px; }
+
 .home-header {
   background-attachment: fixed !important;
   background-size: cover;

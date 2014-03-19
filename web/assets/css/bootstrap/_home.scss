@@ -1,4 +1,24 @@
 // Home Page Styles (Register Page)
+.register-form{
+	margin-bottom: 5em;
+	form{
+		label{
+			//display: none;
+			margin-bottom: 0px;
+			margin-top: 5px;
+		}
+		input{
+			width: 100%;
+	
+		}
+	}
+	.tos{
+		text-align: center;
+		font-size: .6em;
+		margin-top: 15px;
+	}
+}
+
 .home-header{
 	
 	background-attachment: fixed !important;
