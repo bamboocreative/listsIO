@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
 	document.addEventListener("touchstart", function(){}, true);
+
+    var self = this;
 	
     var $title = $("#title");
 
@@ -11,13 +13,24 @@ $(document).ready(function(){
     var $saveIndicator = $('#save_indicator');
     
     var $item_template = $('#item-template');
+
+    var list = document.getElementById('editable-list');
+
+    var sortableList = new Sortable(list, {
+        handle: ".number", // Restricts sort start click/touch to the specified element
+        onUpdate: function (evt){
+
+            reorder_list_items();
+            save_list_item(listID, $(evt.item));
+
+        }
+    });
 	
 	/*
 	*
 	* Show Share
 	*
 	*/
-	
 	$('.share').on('mouseover', function(e){
 	
 		$(this).addClass('move-right');	
@@ -55,7 +68,6 @@ $(document).ready(function(){
 	* Add a list item and save it to the DB
 	*
 	*/
-	
 	var listCount = $('.list-item').length;
 	
 	$('#add').on('click', function(e){
@@ -208,22 +220,12 @@ $(document).ready(function(){
 	*
 	*/
 	$('.list').on('keyup', '.list-item', function(e){
-	
-		$this = $(this);
-
-        $item = $this.find('.item');
-	
-		var dataID = $item.attr('data-id');
-	
-		var item = $item.val();
-		
-		var desc = $this.find('.description').val();
 				
 		clearTimeout($.data(this, 'timer'));
 		
 		$(this).data('timer', setTimeout(function(){
 		
-			save_list_item(listID, dataID, item, desc);
+			save_list_item(listID, $(this));
 		
 		}, 300));
 		
@@ -237,7 +239,17 @@ $(document).ready(function(){
 	* Communicate saved
 	*
 	*/
-	function save_list_item(listID, dataID, item, desc){
+	function save_list_item(listID, $item){
+
+        var $title = $item.find('.item');
+
+        var dataID = $title.attr('data-id');
+
+        var item = $title.val();
+
+        var desc = $item.find('.description').val();
+
+        var orderIndex = $item.find('.number').html();
 
 		show_save('Saved.');
 		
@@ -247,7 +259,8 @@ $(document).ready(function(){
 		  data: {
 		  	'id': dataID,
 		  	'title' : item,
-		  	'description' : desc
+		  	'description' : desc,
+            'orderIndex' : orderIndex
 		  },
 		  success: function(){
 		  }

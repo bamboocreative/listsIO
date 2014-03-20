@@ -4,6 +4,7 @@ namespace ListsIO\Bundle\ListBundle\Entity;
 
 use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
 
 /**
  * ListItem
@@ -18,32 +19,38 @@ class LIOListItem implements JsonSerializable
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
+
+    /**
+     * @var int
+     */
+    protected $orderIndex;
 
     /**
      * @var \ListsIO\Bundle\ListBundle\Entity\LIOList
      */
-    private $list;
+    protected $list;
 
     /**
      * @var \DateTime
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var \DateTime
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     public function __construct()
     {
         $this->title = "";
         $this->description = "";
+        $this->orderIndex = 1 + $this->list->getListItems()->last()->getOrderIndex();
     }
 
     /**
@@ -100,6 +107,17 @@ class LIOListItem implements JsonSerializable
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param $index int
+     */
+    public function setOrderIndex($index) {
+        $this->orderIndex = $index;
+    }
+
+    public function getOrderIndex() {
+        return $this->orderIndex;
     }
 
     /**
