@@ -29,6 +29,7 @@ ListsIO\Bundle\ListBundle\Entity\LIOList:
         listItems:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListItem
             mappedBy: list
+            orderBy: { 'orderIndex': 'ASC' }
             cascade: ["remove", "persist"]
     lifecycleCallbacks:
         prePersist: [prePersistTimestamp]

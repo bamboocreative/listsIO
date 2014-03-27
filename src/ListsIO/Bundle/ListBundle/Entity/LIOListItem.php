@@ -50,7 +50,6 @@ class LIOListItem implements JsonSerializable
     {
         $this->title = "";
         $this->description = "";
-        $this->orderIndex = 1 + $this->list->getListItems()->last()->getOrderIndex();
     }
 
     /**

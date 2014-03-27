@@ -1,82 +1,86 @@
-#title{
-	background: none;
-	border: none;
-	font-size: 3.5em;
-	font-weight: 600;
-	line-height: 1em;
-	min-width: 100%;
-	padding: 0px;
-	@include placeholder(rgba(255,255,255,0.5));
-	
-	//Not needed 
-	display: block;
-	margin: 0 auto;
-}
+.list-head {
 
-div#title{
-	line-height: 1.1em;
-}
+  .list-title{
+      background: none;
+      border: none;
+      font-size: 3.5em;
+      font-weight: 600;
+      line-height: 1em;
+      min-width: 100%;
+      padding: 0px;
+      @include placeholder(rgba(255,255,255,0.5));
 
-#subtitle{
-	background: none;
-	border: none;
-	font-size: 1.3em;
-	font-weight: 300;
-	min-width: 100%;
-	width: 100%;
-	padding: 0px;
-	padding-left: 3px;
-	@include placeholder(rgba(255,255,255,0.5));
-	
-}
+      //Not needed
+      display: block;
+      margin: 0 auto;
+  }
 
-div#subtitle{
-	line-height: 1.3em;
-	margin: 0px 0px 40px;
-}
+  div.list-title{
+      line-height: 1.1em;
+  }
 
-div#author{
-	font-size: 1.3em;
-	padding-left: 3px;
-	font-weight: 300;
-	display: inline-block;
-	a{
-		display: inline-block;
-		padding: 13px 17px 13px 15px;
-		line-height: 1em;
-		border: 1px solid #fff;
-		@include border-radius(999px);
-		@include transition(background, .4s);
-		
-		color: white;
-		&:hover{
-			color: white;
-			text-decoration: none;
-			background: rgba(255,255,255,.3);
-		}
-		img{
-			margin-right: 10px;
-		}
-	}
-}
+  .list-subtitle{
+      background: none;
+      border: none;
+      font-size: 1.3em;
+      font-weight: 300;
+      min-width: 100%;
+      width: 100%;
+      padding: 0px;
+      padding-left: 3px;
+      @include placeholder(rgba(255,255,255,0.5));
 
-#img{
-	background: none;
-	border: none;
-	border-bottom: 2px dotted rgba(255,255,255, 0.5) !important;
-	width: 100%;
-	min-width: auto;
-	font-size: 1em;
-	margin-left: 3px;
-	font-weight: 300;
-	margin-top: 10px;
-	padding-left: 0px;
-	padding-right: 20px;
-	color: rgba(255,255,255,1);
-	
-	@include border-radius(0px);
+  }
 
-	@include placeholder(rgba(255,255,255,0.5));
+  div.list-subtitle{
+      line-height: 1.3em;
+      margin: 0px 0px 40px;
+  }
+
+  div#author{
+      font-size: 1.3em;
+      padding-left: 3px;
+      font-weight: 300;
+      display: inline-block;
+      a{
+          display: inline-block;
+          padding: 13px 17px 13px 15px;
+          line-height: 1em;
+          border: 1px solid #fff;
+          @include border-radius(999px);
+          @include transition(background, .4s);
+
+          color: white;
+          &:hover{
+              color: white;
+              text-decoration: none;
+              background: rgba(255,255,255,.3);
+          }
+          img{
+              margin-right: 10px;
+          }
+      }
+  }
+
+  .list-img{
+      background: none;
+      border: none;
+      border-bottom: 2px dotted rgba(255,255,255, 0.5) !important;
+      width: 100%;
+      min-width: auto;
+      font-size: 1em;
+      margin-left: 3px;
+      font-weight: 300;
+      margin-top: 10px;
+      padding-left: 0px;
+      padding-right: 20px;
+      color: rgba(255,255,255,1);
+
+      @include border-radius(0px);
+
+      @include placeholder(rgba(255,255,255,0.5));
+
+  }
 
 }
 
@@ -144,8 +148,12 @@ div#author{
 	}
 }
 
+.editable-list .number {
+  cursor: move;
+}
+
 // List Edit
-.edit-list-head-wrapper{
+.list-head{
 	margin-top: 110px;
 	margin-bottom: 40px;
 	input{
@@ -155,7 +163,7 @@ div#author{
 
 // Smaller than 480px
 @media (max-width: $screen-xs) {
-	.list-title{
+	li .list-title{
 		font-size: 25px;		  
 	}
 	

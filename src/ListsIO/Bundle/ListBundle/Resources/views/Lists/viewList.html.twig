@@ -2,9 +2,11 @@
 
 {% extends "base.html.twig" %}
 
-{% block bgImage %} {{ list.getImageURL() }} {% endblock %}
+{% set title = list.title ? list.title : "Untitled" %}
 
-{% block title %}Lists.io | {{ list.getTitle() }} {% endblock %}
+{% block bgImage %} {{ list.imageURL }} {% endblock %}
+
+{% block title %}Lists.io | {{ title }}{% endblock %}
 
 {% block share %}
 <div class="share-wrapper">
@@ -14,8 +16,8 @@
 	<div class="share-buttons">
 		<ul>
 			<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/list/{{ list.getId() }}"><span class="icon-facebook"></span></a></li>
-			<li><a href="http://twitter.com/share?text=Check%20out%20this%20list%20on%20@listsIO:%20%22{{ list.getTitle() }}%22%20–%20http://lists.io/list/{{ list.getId() }}"><span class="icon-twitter"></span></a></li>
-			<li><a href="mailto:?subject=Check Out This List on Lists.io &body=Check out this list: %22{{ list.getTitle() }}%22 – http://lists.io/list/{{ list.getId() }}"><span class="icon-mail"></span></a></li>
+			<li><a href="http://twitter.com/share?text=Check%20out%20this%20list%20on%20@listsIO:%20%22{{ list.title }}%22%20–%20http://lists.io/list/{{ list.getId() }}"><span class="icon-twitter"></span></a></li>
+			<li><a href="mailto:?subject=Check Out This List on Lists.io &body=Check out this list: %22{{ list.title }}%22 – http://lists.io/list/{{ list.getId() }}"><span class="icon-mail"></span></a></li>
 		</ul>
 	</div>
 </div>
@@ -23,15 +25,13 @@
 {% block body %}
 
 <div class="background" style="min-height: 100%; min-width: 100%;">
-	
-	
 	<div class="items">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2 edit-list-head-wrapper">
-					<div id="title" data-id="{{ list.getId() }}">{{ list.getTitle() }}</div>
-					<div id="subtitle">{{ list.getSubtitle() }}</div>
-					<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list_user.username}) }}"><img class="loggedin" src="{{ list_user.getGravatarURL }}">{{ list_user.username }}</a></div>
+				<div class="col-md-8 col-md-offset-2 view-list-head-wrapper list-head" id="list-{{ list.id }}">
+					<div class="list-title" data-id="{{ list.id }}">{{ title }}</div>
+					<div class="list-subtitle">{{ list.subtitle }}</div>
+					<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list_user.username}) }}"><img class="loggedin" src="{{ list_user.gravatarURL }}">{{ list_user.username }}</a></div>
 				</div>
 			</div>
 			<div class="row">
@@ -39,13 +39,13 @@
 			        <div class="col-md-8 col-md-offset-2">
 			            <ol>
                         {%  set i = 0 %}
-			            {% for item in list.getListItems() %}
+			            {% for item in list.listItems %}
                             {%  set i = i+1 %}
-                            {%  set title = item.getTitle() %}
-                            {%  set description = item.getDescription() %}
-			                <li class="list-item">
-                                <span class='number'>{{ i }}</span>
-			                    <div data-id="{{ item.getId() }}" class="item">{{ title ? title : "Untitled"  }}</div>
+                            {%  set title = item.title %}
+                            {%  set description = item.description %}
+			                <li class="list-item" data-order_index="{{ item.orderIndex }}">
+                                <span class='number'>{{ item.orderIndex }}</span>
+			                    <div data-id="{{ item.id }}" class="item">{{ title ? title : "Untitled"  }}</div>
 			                    <div class="description">{{ description|converturls|nl2br }}</div>
 			                </li>
 			            {% endfor %}

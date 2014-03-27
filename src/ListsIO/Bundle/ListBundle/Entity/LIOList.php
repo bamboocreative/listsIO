@@ -149,6 +149,7 @@ class LIOList implements JsonSerializable
     {
         $this->listItems[] = $listItem;
         $listItem->setList($this);
+        $listItem->setOrderIndex($this->listItems->last()->getOrderIndex() + 1);
 
         return $this;
     }

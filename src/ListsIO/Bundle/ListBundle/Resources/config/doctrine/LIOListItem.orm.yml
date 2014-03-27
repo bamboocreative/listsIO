@@ -15,7 +15,7 @@ ListsIO\Bundle\ListBundle\Entity\LIOListItem:
             type: string
             length: 1024
         orderIndex:
-            type: int
+            type: integer
         createdAt:
             type: datetime
         updatedAt:

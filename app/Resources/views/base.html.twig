@@ -132,17 +132,20 @@
         </div>
         
         {% block javascripts %}
-        <!-- Compressed Prod JQuery -->
-        <script src="{{ asset('assets/js/jquery-2.1.0.js') }}"></script>
+            <!-- Compressed Prod JQuery -->
+            <script src="{{ asset('assets/js/jquery-2.1.0.js') }}"></script>
 
-        <!-- Compressed Sortable Plugin: https://github.com/RubaXa/Sortable -->
-        <script src="{{ asset('assets/js/sortable.min.js') }}"></script>
-        
-        <!-- Custom JS -->
-        <script src="{{ asset('assets/js/app.js') }}"></script>
-        
-        <!-- Compressed Prod Modernizr-->
-        <script src="{{ asset('assets/js/modernizr.js') }}"></script>
+            <!-- Compressed textarea Autosize plugin: http://www.jacklmoore.com/autosize/ -->
+            <script src="{{ asset('assets/js/jquery.autosize.min.js') }}"></script>
+
+            <!-- Compressed Sortable Plugin: https://github.com/RubaXa/Sortable -->
+            <script src="{{ asset('assets/js/sortable.min.js') }}"></script>
+
+            <!-- Custom JS -->
+            <script src="{{ asset('assets/js/app.js') }}"></script>
+
+            <!-- Compressed Prod Modernizr-->
+            <script src="{{ asset('assets/js/modernizr.js') }}"></script>
         {% endblock %}
         {% block intercom %}
             {% if env == prod_env %}

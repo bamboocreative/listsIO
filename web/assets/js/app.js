@@ -3,27 +3,35 @@ $(document).ready(function(){
 	document.addEventListener("touchstart", function(){}, true);
 
     var self = this;
+
+    var $list = $(".editable-list");
 	
-    var $title = $("#title");
+    var $title = $(".list-title");
 
-    var listID = $title.attr('data-id');
+    var listID = $list.data('id');
 
-    var userID = $title.attr('data-user_id');
+    var userID = $list.data('user_id');
 
     var $saveIndicator = $('#save_indicator');
     
     var $item_template = $('#item-template');
 
-    var list = document.getElementById('editable-list');
+    var list = document.getElementById('editable-list-'+listID);
 
-    var sortableList = new Sortable(list, {
-        handle: ".number", // Restricts sort start click/touch to the specified element
-        onUpdate: function (evt){
+    var saving_msg = "Saving...";
+    var saved_msg = "Saved.";
 
-            reorder_list_items();
-            save_list_item(listID, $(evt.item));
+    if (list) {
+        var sortableList = new Sortable(list, {
+            handle: ".number", // Restricts sort start click/touch to the specified element
+            onUpdate: function (evt){
+                reorder_list_items();
+            }
+        });
+    }
 
-        }
+    $(document).ready(function(){
+        $('textarea.description').autosize();
     });
 	
 	/*
@@ -58,8 +66,9 @@ $(document).ready(function(){
 	function hide_save(){
 
 		setTimeout(function(){
-				$saveIndicator.fadeOut();
-			}, 1200)	
+			$saveIndicator.fadeOut();
+		}, 1200);
+
 	}
 	
 	
@@ -82,13 +91,12 @@ $(document).ready(function(){
 		  data : {},
 		  success: function(data){
 
-              var dataID = data.id;
-              
-              $item_template.find('.item').attr('data-id', dataID);
+              var $item = $item_template.find('li.list-item');
 
+              $item.data('id', data.id)
+              $item.data('orderIndex', data.orderIndex);
+              $item.find('.number').html(data.orderIndex);
               $('ol', '.list').append($item_template.html());
-              
-              reorder_list_items()
 
 		  }
 
@@ -108,7 +116,7 @@ $(document).ready(function(){
         $this = $(this);
 
         var $container = $this.parents('li');
-        var listID = $container.attr('data-id');
+        var listID = $container.data('id');
 
         var url = '/list/remove/'+listID;
         
@@ -139,34 +147,26 @@ $(document).ready(function(){
 	
 	/*
 	*
-	* Listen for stop in typing on items and then call save_list_item()
-	*
-	*
-	*/
-	$(document).on('keydown', '.list-item, #title, #subtitle, #img', function(e){
-		show_save('Saving...')
-	});
-
-	
-	
-	/*
-	*
 	* Listen for stop in typing on title and subtitle and then call save_list()
 	*
 	*/
-	$('#title, #subtitle, #img').on('keyup', function(e) {
+	$('.edit-list-head-wrapper').on('keyup', function(e) {
+
+        var $this = $(this);
+
+        console.log($this);
+
+		var title = $this.find('.list-title').val();
 		
-		var title = $title.val();
+		var subtitle = $this.find('.list-subtitle').val();
 		
-		var subtitle = $('#subtitle').val(); 
+		var imgURL = $this.find('.list-img').val();
 		
-		var imgURL = $('#img').val();
-		
-			if(imgURL){
-				$('.bg-wrapper').css('background-image', 'url(' + imgURL + ')');
-			} else {
-				$('.bg-wrapper').css('background-image', 'none');
-			}
+        if(imgURL){
+            $('.bg-wrapper').css('background-image', 'url(' + imgURL + ')');
+        } else {
+            $('.bg-wrapper').css('background-image', 'none');
+        }
 		
 		clearTimeout($.data(this, 'timer'));
 		
@@ -190,9 +190,12 @@ $(document).ready(function(){
 	*/
 	function save_list(userID, dataID, title, subtitle, imgURL){
 		
-		show_save('Saved.');
-		
+		show_save(saving_msg);
+
+        console.log(userID + " " + dataID + " " + title + " " + subtitle + " " + imgURL);
+
 		$.ajax({
+
 		  type: "POST",
 		  url: '/list/save/'+userID,
 		  data: {
@@ -201,13 +204,16 @@ $(document).ready(function(){
 		  	'subtitle' : subtitle,
 		  	'imageURL' : imgURL
 		  },
-		  success: function(){
-		  	console.log(resp);
+		  success: function(data) {
+
+              console.log(data);
+              show_save(saved_msg);
+              hide_save();
+
 		  }
+
 		});
-		
-		hide_save();	
-		
+
 	}
 	
 	
@@ -220,16 +226,21 @@ $(document).ready(function(){
 	*
 	*/
 	$('.list').on('keyup', '.list-item', function(e){
-				
+
+        var $this = $(this);
+
 		clearTimeout($.data(this, 'timer'));
-		
 		$(this).data('timer', setTimeout(function(){
-		
-			save_list_item(listID, $(this));
-		
-		}, 300));
+
+            save_list_item(listID, $this);
+
+        }, 300));
 		
 	});
+
+    $('.list').on('keyup', '.description', function(e) {
+        $(this).trigger('autosize.resize');
+    } );
 	
 	
 	/*
@@ -241,32 +252,35 @@ $(document).ready(function(){
 	*/
 	function save_list_item(listID, $item){
 
-        var $title = $item.find('.item');
+        var title = $item.find('.item').val();
 
-        var dataID = $title.attr('data-id');
-
-        var item = $title.val();
+        var dataID = $item.data('id');
 
         var desc = $item.find('.description').val();
 
-        var orderIndex = $item.find('.number').html();
+        var orderIndex = $item.data('order_index');
 
-		show_save('Saved.');
+		show_save(saving_msg);
 		
 		$.ajax({
 		  type: "POST",
 		  url: 'save_item/'+listID,
 		  data: {
 		  	'id': dataID,
-		  	'title' : item,
+		  	'title' : title,
 		  	'description' : desc,
             'orderIndex' : orderIndex
 		  },
 		  success: function(){
+
+              show_save(saved_msg);
+              hide_save();
+
 		  }
+
 		});	
 		
-		hide_save();	
+
 	}
 
 	/*
@@ -278,7 +292,14 @@ $(document).ready(function(){
     {
         $('.list-item').each(function(index, object) {
 
-            $(this).find('.number').html(""+(index + 1));
+            var $this = $(this);
+            var newNum = index + 1;
+            var oldNum = parseInt($this.data('order_index'));
+            if (oldNum != newNum) {
+                $(this).find('.number').html(""+newNum);
+                $(this).data('order_index', newNum);
+                save_list_item(listID, $this);
+            }
 
         });
     }
@@ -296,27 +317,30 @@ $(document).ready(function(){
         
         $this = $(this);
         
-        var itemID = $this.siblings('input.item').attr('data-id');
+        var itemID = $this.data('id');
         var url = '/list/remove_item/'+itemID;
         
         var confirmation = confirm("Are you sure you want to delete this item?");
 
 		if(confirmation == true){
 		
-			show_save("Item deleted.");
+			show_save("Deleting item...");
 			
 			$.ajax({
 			  type: "POST",
 			  url: url,
 			  data : {},
 			  success: function(data) {
+
 	              $container = $this.parents('li');
 				  $container.fadeOut();
 	              $container.remove();
 	
-	               hide_save();
-	
 	              reorder_list_items();
+
+                  show_save("Item deleted.");
+                  hide_save();
+
 			  }
 	
 			});	

@@ -4,6 +4,7 @@ namespace ListsIO\Bundle\ListBundle\Controller;
 
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use ListsIO\Bundle\ListBundle\Entity\LIOListItem;
+use ListsIO\Bundle\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,10 @@ class ListsController extends Controller
     public function viewListAction(Request $request, $id)
     {
         $format = $request->getRequestFormat();
+
+        /**
+         * @var $list LIOList
+         */
         $list = $this->loadEntityFromId('ListsIOListBundle:LIOList', $id);
 
         if (empty($list)) {
@@ -29,10 +34,22 @@ class ListsController extends Controller
             'list_user' => $list_user,
             'list' => $list
         );
+
+        // Add order index to old list items.
+        $i = 1;
+        foreach($list->getListItems() as $list_item) {
+            if (! $list_item->getOrderIndex()) {
+                $list_item->setOrderIndex($i);
+                $this->saveEntity($list_item);
+            }
+            $i++;
+        }
+
         // If list does not belong to user, render view template, otherwise render edit template.
         if ( empty($user) || ! ($list_user->getId() === $user->getId())) {
             return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $data);
         }
+
         return $this->render('ListsIOListBundle:Lists:editList.html.twig', $data);
     }
 
@@ -53,20 +70,24 @@ class ListsController extends Controller
         return $this->render('ListsIOListBundle:Lists:viewListItem.'.$format.'.twig', array('listItem' => $listItem));
     }
 
-    public function saveListAction(Request $request, $userId)
+    /**
+     * @param Request $request
+     * @return Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function saveListAction(Request $request)
     {
         $this->requireXmlHttpRequest($request);
         $format = $request->getRequestFormat();
         $data = $request->request->all();
-        $user = $this->loadEntityFromId('ListsIOUserBundle:User', $userId);
-        if (empty($user)) {
-            throw $this->createNotFoundException("Unable to load user to save list.");
-        }
+        $user = $this->getUser();
         $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $data['id']);
         if (empty($list)) {
             throw $this->createNotFoundException("Unable to find list by ID.");
         }
-        // TODO: Create base entity and DRY this function as bindDataArray(), see saveListItemAction. - Jesse Rosato 2/17/14
+        // TODO: Use Voters or ACL, see all non-idempotent functions. - Jesse Rosato 3/27/14
+        $this->requireUserIsListOwner($list);
+        // TODO: Use serializer, see saveListItemAction. - Jesse Rosato 3/27/14
         foreach($data as $key => $value) {
             $funct = 'set'.ucfirst($key);
             if (method_exists($list, $funct)) {
@@ -78,6 +99,12 @@ class ListsController extends Controller
         return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', array('list' => $list));
     }
 
+    /**
+     * @param Request $request
+     * @param $listId
+     * @return Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function saveListItemAction(Request $request, $listId)
     {
         $this->requireXmlHttpRequest($request);
@@ -87,6 +114,7 @@ class ListsController extends Controller
         if (empty($list)) {
             throw $this->createNotFoundException("Unable to load list to save list item.");
         }
+        $this->requireUserIsListOwner($list);
         $listItem = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOListItem', $data['id']);
         if (empty($listItem)) {
             throw $this->createNotFoundException("Unable to load list item to save it.");
@@ -101,6 +129,12 @@ class ListsController extends Controller
         return $this->render('ListsIOListBundle:Lists:viewListItem.'.$format.'.twig', array('listItem' => $listItem));
     }
 
+    /**
+     * @param Request $request
+     * @param $listId
+     * @return Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function removeListAction(Request $request, $listId)
     {
         $this->requireXmlHttpRequest($request);
@@ -108,11 +142,18 @@ class ListsController extends Controller
         if (empty($list)) {
             throw $this->createNotFoundException("Couldn't find list to remove it.");
         }
+        $this->requireUserIsListOwner($list);
         $this->removeEntity($list);
         $response = json_encode(array('success' => TRUE, 'id' => $listId));
         return new Response($response);
     }
 
+    /**
+     * @param Request $request
+     * @param $itemId
+     * @return Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function removeListItemAction(Request $request, $itemId)
     {
         $this->requireXmlHttpRequest($request);
@@ -120,11 +161,16 @@ class ListsController extends Controller
         if (empty($listItem)) {
             throw $this->createNotFoundException("Couldn't find list item to remove it.");
         }
+        $this->requireUserIsListOwner($listItem->getList());
         $this->removeEntity($listItem);
         $response = json_encode(array('success' => TRUE, 'id' => $itemId));
         return new Response($response);
     }
 
+    /**
+     * @param Request $request
+     * @throws \Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException
+     */
     public function requireXmlHttpRequest(Request $request)
     {
         if (! $request->isXmlHttpRequest()) {
@@ -132,6 +178,19 @@ class ListsController extends Controller
         }
     }
 
+    /**
+     * @param LIOList $list
+     * @throws \Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException
+     */
+    protected function requireUserIsListOwner(LIOList $list) {
+        if ($this->getUser()->getId() != $list->getUser()->getId()) {
+            throw new AccessDeniedException("You must be authenticated as the list owner to save the list.");
+        }
+    }
+
+    /**
+     * @param $entity
+     */
     public function saveEntity($entity) {
         $em = $this->getDoctrine()
             ->getManager();
@@ -139,6 +198,11 @@ class ListsController extends Controller
         $em->flush();
     }
 
+    /**
+     * @param string $entity_name
+     * @param string $id
+     * @return mixed
+     */
     public function loadEntityFromId($entity_name, $id)
     {
         return $this->getDoctrine()
@@ -146,6 +210,9 @@ class ListsController extends Controller
             ->find($id);
     }
 
+    /**
+     * @param $entity
+     */
     public function removeEntity($entity)
     {
         $em = $this->getDoctrine()->getManager();
@@ -153,7 +220,12 @@ class ListsController extends Controller
         $em->flush();
     }
 
-    public function newListItem($list)
+    /**
+     * @param LIOList $list
+     * @return LIOListItem
+     * @throws EntityNotFoundException
+     */
+    public function newListItem(LIOList $list)
     {
         $em = $this->getDoctrine()->getManager();
         $listItem = new LIOListItem();

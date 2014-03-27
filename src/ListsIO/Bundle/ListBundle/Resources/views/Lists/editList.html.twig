@@ -25,26 +25,21 @@
 	<div class="items">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2 edit-list-head-wrapper">
-                    <input type="text" id="title" data-id="{{ list.getId() }}" data-user_id="{{ list_user.getId() }}" placeholder="List title" value="{{ list.getTitle() }}"/>
-                    <input type="text" id="subtitle" placeholder="subtitle" value="{{ list.getSubtitle() }}"/>
-                    <input type="text" id="img" placeholder="http://site.com/MyCustomImage" value="{{ list.getImageURL() }}"/>
+				<div class="col-md-8 col-md-offset-2 edit-list-head-wrapper list-head" id="list-{{ list.id }}">
+                    <input type="text" class="list-title" placeholder="List title" value="{{ list.title }}"/>
+                    <input type="text" class="list-subtitle" placeholder="subtitle" value="{{ list.subtitle }}"/>
+                    <input type="text" class="list-img" placeholder="http://site.com/MyCustomImage" value="{{ list.imageURL }}"/>
 				</div>
 			</div>
 			<div class="row">
 		        <div class="list">
 			        <div class="col-md-8 col-md-offset-2">
-			            <ol id="editable-list">
-                        {%  set i = 0 %}
+			            <ol id="editable-list-{{ list.id }}" class="editable-list" data-id="{{ list.getId() }}" data-user_id="{{ list_user.getId() }}">
 			            {% for item in list.listItems %}
-                            {%  set i = i+1 %}
-                            {%  set id = item.id %}
-                            {%  set title = item.title %}
-                            {%  set description = item.description %}
-			                <li class="list-item">
-                                <span class='number'>{{ i }}</span>
-			                    <input type="text" placeholder="List item title" data-id="{{ id }}" class="item" value="{{ title }}"/>
-                                <textarea placeholder="(Optional) A short description of this list item." class="description">{{ description }}</textarea>
+			                <li class="list-item" data-order_index="{{ item.orderIndex }}" data-id="{{ item.id }}">
+                                <span class='number'>{{ item.orderIndex }}</span>
+			                    <input type="text" placeholder="List item title"  class="item" value="{{ item.title }}"/>
+                                <textarea placeholder="(Optional) A short description of this list item." class="description" maxlength="1024">{{ item.description }}</textarea>
 			                    <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
 			                </li>
 			            {% endfor %}
