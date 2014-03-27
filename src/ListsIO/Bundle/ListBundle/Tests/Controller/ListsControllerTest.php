@@ -16,6 +16,11 @@ class ListsControllerTest extends DoctrineWebTestCase
     protected $user;
 
     /**
+     * @var User
+     */
+    protected $notOwner;
+
+    /**
      * {@inheritDoc}
      */
     public function setUp()
@@ -23,6 +28,8 @@ class ListsControllerTest extends DoctrineWebTestCase
         parent::setUp();
         $this->user = static::$entityManager->getRepository('ListsIOUserBundle:User')
             ->find(1);
+        $this->notOwner = static::$entityManager->getRepository('ListsIOUserBundle:User')
+            ->find(2);
     }
 
     public function testViewListThrows404ForNonexistentList()
@@ -43,14 +50,14 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         $crawler = static::$client->request('GET', '/list/1');
         // Only the owner template has the title input
-        $this->assertGreaterThan(0, $crawler->filter('input#title')->count());
+        $this->assertGreaterThan(0, $crawler->filter('input.list-title')->count());
     }
 
     public function testViewListByNonOwnerDoesNotRenderEditTemplate()
     {
         $crawler = static::$client->request('GET', '/list/1');
         // Only the owner template has the title input
-        $this->assertEquals(0, $crawler->filter('input#title')->count());
+        $this->assertEquals(0, $crawler->filter('input.list-title')->count());
     }
 
     public function testViewListJsonResponse()
@@ -117,19 +124,21 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->assertEquals(2, $data->id);
     }
 
-    public function testSaveListThrows404ForNonexistentUser()
+    public function testSaveListThrows403ForNotOwner()
     {
-        $this->logIn($this->user);
+        $this->logIn($this->notOwner);
         static::$client->request(
             'POST',
-            '/list/save/108',
-            array(),
+            '/list/save',
+            array(
+                "id"    => 1
+            ),
             array(),
             array(
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
-        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+        $this->assertEquals(403, static::$client->getResponse()->getStatusCode());
     }
 
     public function testSaveListThrows404ForNonexistentList()
@@ -137,7 +146,7 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            '/list/save/1',
+            '/list/save',
             array(
                 'id' => 108
             ),
@@ -154,7 +163,7 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            '/list/save/1',
+            '/list/save',
             array(
                 'id' => 1,
                 'title' => "New test title"
@@ -174,7 +183,7 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            '/list/save/1',
+            '/list/save',
             array(
                 'id' => 1,
                 'title' => "New test title"
@@ -192,7 +201,7 @@ class ListsControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            '/list/save/1',
+            '/list/save',
             array(
                 'id' => 1,
                 'title' => "New test title"

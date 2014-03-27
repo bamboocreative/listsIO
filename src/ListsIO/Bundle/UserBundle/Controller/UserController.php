@@ -26,14 +26,13 @@ class UserController extends Controller
     public function viewByIdAction(Request $request, $userId)
     {
         $format = $request->getRequestFormat();
-        $user = $this->getUser();
         $viewUser = $this->getDoctrine()
             ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')
             ->find($userId);
         if (empty($viewUser)) {
             throw new HttpException(404, "Could not find user by ID: " . htmlspecialchars($userId));
         }
-        return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('view_user' => $viewUser, 'user' => $user));
+        return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('user' => $viewUser));
     }
 
     public function viewByUsernameAction(Request $request, $username)

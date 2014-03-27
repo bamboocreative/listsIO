@@ -4,13 +4,12 @@ namespace ListsIO\Bundle\ListBundle\Controller;
 
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use ListsIO\Bundle\ListBundle\Entity\LIOListItem;
-use ListsIO\Bundle\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-// TODO: Move API routes to actual REST API (INCLUDING AUTHENTICATION!)
+// TODO: REST API (INCLUDING AUTHENTICATION!)
 class ListsController extends Controller
 {
 
@@ -169,22 +168,22 @@ class ListsController extends Controller
 
     /**
      * @param Request $request
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
     public function requireXmlHttpRequest(Request $request)
     {
         if (! $request->isXmlHttpRequest()) {
-            throw new AccessDeniedException('The route you are attempting to access is not available externally.');
+            throw new AccessDeniedHttpException('The route you are attempting to access is not available externally.');
         }
     }
 
     /**
      * @param LIOList $list
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
     protected function requireUserIsListOwner(LIOList $list) {
         if ($this->getUser()->getId() != $list->getUser()->getId()) {
-            throw new AccessDeniedException("You must be authenticated as the list owner to save the list.");
+            throw new AccessDeniedHttpException("You must be authenticated as the list owner to save the list.");
         }
     }
 

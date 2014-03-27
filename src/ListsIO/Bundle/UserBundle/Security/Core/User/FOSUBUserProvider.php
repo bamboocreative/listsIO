@@ -29,8 +29,6 @@ class FOSUBUserProvider extends BaseClass {
      */
     protected $translator;
 
-    protected $logger;
-
     /**
      * Constructor
      * @param UserManagerInterface $userManager
@@ -41,14 +39,12 @@ class FOSUBUserProvider extends BaseClass {
     public function __construct(UserManagerInterface $userManager,
                                 array $properties,
                                 Validator $validator,
-                                Translator $translator,
-                                $logger
+                                Translator $translator
     )
     {
         parent::__construct($userManager, $properties);
         $this->validator = $validator;
         $this->translator = $translator;
-        $this->logger = $logger;
     }
 
     /**

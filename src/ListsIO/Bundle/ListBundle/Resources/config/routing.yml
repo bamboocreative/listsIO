@@ -16,7 +16,7 @@ lists_io_new_list_item:
         _format: json
     defaults: { _controller: ListsIOListBundle:Lists:newListItem, _format: json }
 lists_io_save_list:
-    pattern: /list/save/{userId}.{_format}
+    pattern: /list/save.{_format}
     requirements:
         userId: \d+
         _format: json

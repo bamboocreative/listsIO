@@ -197,7 +197,7 @@ $(document).ready(function(){
 		$.ajax({
 
 		  type: "POST",
-		  url: '/list/save/'+userID,
+		  url: '/list/save',
 		  data: {
 		  	'id': dataID,
 		  	'title' : title,
@@ -206,7 +206,6 @@ $(document).ready(function(){
 		  },
 		  success: function(data) {
 
-              console.log(data);
               show_save(saved_msg);
               hide_save();
 
