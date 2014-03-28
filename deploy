@@ -44,20 +44,13 @@ echo "Clearing test environment cache."
 php app/console --env=test cache:clear
 
 echo "Beginning PHPUnit testing."
-bin/phpunit -c app -d memory_limit=2048M --log-json phpunitoutput.json
+bin/phpunit -c app -d memory_limit=2048M
 PHPUNIT_STATUS=$?
 
 if [[ $PHPUNIT_STATUS -ne 0 ]]
 then
-    echo "Unable to initialize PHPUnit.  Make sure that 'bin/phpunit -c app' works."
-    exit
-fi
-
-PHPUNIT_OUTPUT=$(<phpunitoutput.json)
-
-if [[ PHPUNIT_OUTPUT =~ fail || PHPUNIT_OUTPUT =~ error ]]
-then
     echo "PHPUnit failures or errors detected."
+    echo "(Or PHPUnit initialization failed.  Make sure that 'bin/phpunit -c app' works.)"
     exit
 fi
 

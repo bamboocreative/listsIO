@@ -34,6 +34,7 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testViewListThrows404ForNonexistentList()
     {
+        $this->fail();
         static::$client->request('GET', '/list/108');
         $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
