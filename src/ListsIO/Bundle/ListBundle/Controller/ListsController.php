@@ -109,6 +109,7 @@ class ListsController extends Controller
         $this->requireXmlHttpRequest($request);
         $format = $request->getRequestFormat();
         $data = $request->request->all();
+        $this->get('logger')->error(print_r($data, true));
         $list = $this->loadEntityFromId('ListsIOListBundle:LIOList', $listId);
         if (empty($list)) {
             throw $this->createNotFoundException("Unable to load list to save list item.");
@@ -160,8 +161,11 @@ class ListsController extends Controller
         if (empty($listItem)) {
             throw $this->createNotFoundException("Couldn't find list item to remove it.");
         }
-        $this->requireUserIsListOwner($listItem->getList());
+        $list = $listItem->getList();
+        $this->requireUserIsListOwner($list);
+        $list->removeListItem($listItem);
         $this->removeEntity($listItem);
+        $this->saveEntity($list);
         $response = json_encode(array('success' => TRUE, 'id' => $itemId));
         return new Response($response);
     }

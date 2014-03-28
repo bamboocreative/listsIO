@@ -97,7 +97,7 @@
 
 .list-item{
 	position: relative;
-	margin: 0 auto;
+	margin: 0 auto 60px auto;
 	list-style-type: none;
 
 	&:hover{
@@ -137,15 +137,23 @@
 		font-size: 1em;
 		resize:none;
 		margin-left: 6%;
-		width: 100%;
+        width: 94%;
+        box-sizing: border-box;
 		font-weight: 100;
 		@include placeholder(rgba(255,255,255,0.5));
 		max-height: 200px;
 		padding-left: 31px;
 		padding-right: 20px;
-		margin-bottom: 60px;
 		min-height: inherit;
 	}
+}
+
+.list-item.dragging {
+  opacity: .5;
+  border: 1px dotted #ffffff;
+  .delete-button{
+    opacity: 0;
+  }
 }
 
 .editable-list .number {

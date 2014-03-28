@@ -286,13 +286,17 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
         }
 
         return array(
-            'id'            => $this->id,
-            'username'      => $this->username,
-            'email'         => $this->email,
-            'gravatarURL'   => $this->getGravatarURL(),
-            'createdAt'     => $this->createdAt,
-            'updatedAt'     => $this->updatedAt,
-            'lists'         => $lists
+            'id'                => $this->id,
+            'username'          => $this->username,
+            'email'             => $this->email,
+            'twitterId'         => $this->twitterId,
+            'twitterUsername'   => $this->twitterUsername,
+            'facebookId'        => $this->facebookId,
+            'facebookUsername'  => $this->facebookUsername,
+            'gravatarURL'       => $this->getGravatarURL(),
+            'createdAt'         => $this->createdAt,
+            'updatedAt'         => $this->updatedAt,
+            'lists'             => $lists
         );
     }
 

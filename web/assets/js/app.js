@@ -2,15 +2,11 @@ $(document).ready(function(){
 
 	document.addEventListener("touchstart", function(){}, true);
 
-    var self = this;
-
     var $list = $(".editable-list");
-	
-    var $title = $(".list-title");
 
-    var listID = $list.data('id');
+    var listID = $list.attr('data-id');
 
-    var userID = $list.data('user_id');
+    var userID = $list.attr('data-user_id');
 
     var $saveIndicator = $('#save_indicator');
     
@@ -24,6 +20,7 @@ $(document).ready(function(){
     if (list) {
         var sortableList = new Sortable(list, {
             handle: ".number", // Restricts sort start click/touch to the specified element
+            ghostClass: "dragging",
             onUpdate: function (evt){
                 reorder_list_items();
             }
@@ -31,7 +28,7 @@ $(document).ready(function(){
     }
 
     $(document).ready(function(){
-        $('textarea.description').autosize();
+        $('textarea.description', '.editable-list').autosize();
     });
 	
 	/*
@@ -91,12 +88,15 @@ $(document).ready(function(){
 		  data : {},
 		  success: function(data){
 
-              var $item = $item_template.find('li.list-item');
-
-              $item.data('id', data.id)
-              $item.data('orderIndex', data.orderIndex);
-              $item.find('.number').html(data.orderIndex);
-              $('ol', '.list').append($item_template.html());
+              var $template = $item_template.clone();
+              var $item = $template.find('li.list-item');
+              var $number = $item.find('.number');
+              var $description = $item.find('.description');
+              $description.autosize();
+              $number.html(data.orderIndex);
+              $item.attr('data-id', data.id)
+              $item.attr('data-order_index', data.orderIndex);
+              $('.editable-list').append($item);
 
 		  }
 
@@ -116,7 +116,7 @@ $(document).ready(function(){
         $this = $(this);
 
         var $container = $this.parents('li');
-        var listID = $container.data('id');
+        var listID = $container.attr('data-id');
 
         var url = '/list/remove/'+listID;
         
@@ -154,8 +154,6 @@ $(document).ready(function(){
 
         var $this = $(this);
 
-        console.log($this);
-
 		var title = $this.find('.list-title').val();
 		
 		var subtitle = $this.find('.list-subtitle').val();
@@ -191,8 +189,6 @@ $(document).ready(function(){
 	function save_list(userID, dataID, title, subtitle, imgURL){
 		
 		show_save(saving_msg);
-
-        console.log(userID + " " + dataID + " " + title + " " + subtitle + " " + imgURL);
 
 		$.ajax({
 
@@ -253,11 +249,11 @@ $(document).ready(function(){
 
         var title = $item.find('.item').val();
 
-        var dataID = $item.data('id');
+        var dataID = $item.attr('data-id');
 
         var desc = $item.find('.description').val();
 
-        var orderIndex = $item.data('order_index');
+        var orderIndex = $item.attr('data-order_index');
 
 		show_save(saving_msg);
 		
@@ -270,15 +266,11 @@ $(document).ready(function(){
 		  	'description' : desc,
             'orderIndex' : orderIndex
 		  },
-		  success: function(){
-
+		  success: function(data){
               show_save(saved_msg);
               hide_save();
-
 		  }
-
 		});	
-		
 
 	}
 
@@ -289,14 +281,14 @@ $(document).ready(function(){
 	*/
     function reorder_list_items()
     {
-        $('.list-item').each(function(index, object) {
+        $('.list-item', '.editable-list').each(function(index, object) {
 
             var $this = $(this);
             var newNum = index + 1;
-            var oldNum = parseInt($this.data('order_index'));
+            var oldNum = $this.attr('data-order_index');
             if (oldNum != newNum) {
-                $(this).find('.number').html(""+newNum);
-                $(this).data('order_index', newNum);
+                $this.find('.number').html(""+newNum);
+                $this.attr('data-order_index', newNum);
                 save_list_item(listID, $this);
             }
 
@@ -313,10 +305,10 @@ $(document).ready(function(){
 	$('.list').on('click', '.delete-list-item', function(e){
 
         e.preventDefault();
+
+        $container = $(this).parents('li.list-item');
         
-        $this = $(this);
-        
-        var itemID = $this.data('id');
+        var itemID = $container.attr('data-id');
         var url = '/list/remove_item/'+itemID;
         
         var confirmation = confirm("Are you sure you want to delete this item?");
@@ -330,19 +322,14 @@ $(document).ready(function(){
 			  url: url,
 			  data : {},
 			  success: function(data) {
-
-	              $container = $this.parents('li');
 				  $container.fadeOut();
-	              $container.remove();
-	
-	              reorder_list_items();
+                  $container.remove();
+                  reorder_list_items();
 
                   show_save("Item deleted.");
                   hide_save();
-
 			  }
-	
-			});	
+			});
 		} else {
 			show_save("Good choice!");
 			hide_save();

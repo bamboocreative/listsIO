@@ -148,6 +148,7 @@ class LIOListItem implements JsonSerializable
         $listId = empty($list) ? null : $list->getId();
         return array(
             'id'            => $this->id,
+            'orderIndex'    => $this->orderIndex,
             'title'         => $this->title,
             'description'   => $this->description,
             'listID'        => $listId

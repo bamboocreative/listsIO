@@ -148,9 +148,8 @@ class LIOList implements JsonSerializable
     public function addListItem(LIOListItem $listItem)
     {
         $this->listItems[] = $listItem;
+        $listItem->setOrderIndex(count($this->listItems));
         $listItem->setList($this);
-        $listItem->setOrderIndex($this->listItems->last()->getOrderIndex() + 1);
-
         return $this;
     }
 
