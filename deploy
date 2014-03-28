@@ -44,14 +44,20 @@ echo "Clearing test environment cache."
 php app/console --env=test cache:clear
 
 echo "Beginning PHPUnit testing."
-bin/phpunit -c app -d memory_limit=2048M
+bin/phpunit -c app -d memory_limit=2048M --log-json phpunitoutput.json
 PHPUNIT_STATUS=$?
 
-echo "$PHPUNIT_OUTPUT"
-
-if [[ $PHPUNIT_STATUS -le 0 ]]
+if [[ $PHPUNIT_STATUS -ne 0 ]]
 then
     echo "Unable to initialize PHPUnit.  Make sure that 'bin/phpunit -c app' works."
+    exit
+fi
+
+PHPUNIT_OUTPUT=$(<phpunitoutput.json)
+
+if [[ PHPUNIT_OUTPUT =~ fail || PHPUNIT_OUTPUT =~ error ]]
+then
+    echo "PHPUnit failures or errors detected."
     exit
 fi
 
@@ -66,11 +72,12 @@ fi
 echo "PHPUnit results accepted.  Pushing to origin branch $GIT_BRANCH"
 git push origin $GIT_BRANCH
 ORIGIN_PUSH_STATUS=$?
-if [[ $ORIGIN_PUSH_STATUS -eq 0 ]]
+if [[ $ORIGIN_PUSH_STATUS -ne 0 ]]
 then
-    echo "Push to origin branch $GIT_BRANCH successful.  Deploying to Elastic Beanstalk."
-    git aws.push
-else
     echo "Unable to push to origin branch $GIT_BRANCH:"
     exit
+else
+    echo "Push to origin branch $GIT_BRANCH successful.  Deploying to Elastic Beanstalk."
+    git aws.push
+    echo "BOOM!  Deployed!"
 fi
