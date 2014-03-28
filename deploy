@@ -61,7 +61,7 @@ then
     exit
 fi
 
-echo "Please review the test results.  Would you like to continue deployment? (yes/no)"
+echo "No PHPUnit failures or errors detected. Please review the test results.  Would you like to continue deployment? (yes/no)"
 read CONFIRMATION
 if [[ $CONFIRMATION != yes ]]
 then
