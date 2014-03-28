@@ -9,7 +9,6 @@ This script deploys code to the elastic beanstalk environment associated with th
 
 OPTIONS:
    -h      Show this message
-   -u      Update vendors via composer
 EOF
 }
 
@@ -45,7 +44,7 @@ echo "Clearing test environment cache."
 php app/console --env=test cache:clear
 
 echo "Beginning PHPUnit testing."
-bin/phpunit -c app
+bin/phpunit -c app -d memory_limit=2048M
 PHPUNIT_STATUS=$?
 
 echo "$PHPUNIT_OUTPUT"
