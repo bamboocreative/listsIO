@@ -203,13 +203,19 @@ class LIOList implements JsonSerializable
         foreach($this->listItems as $item) {
             $listItems[] = $item->jsonSerialize();
         }
+        $listViews = array();
+        // TODO: Use appropriate serialization/HATEOAS, Jesse Rosato, 4/4/14
+        foreach($this->listViews as $listView) {
+            $listViews[] = $listView->getUser()->getUserId();
+        }
         $user = $this->getUser();
         return array(
             'userID'    => $user ? $user->getId() : null,
             'id'        => $this->getId(),
             'title'     => $this->getTitle(),
             'subtitle'  => $this->getSubtitle(),
-            'listItems' => $listItems
+            'listItems' => $listItems,
+            'listViews' => $listViews
         );
     }
 

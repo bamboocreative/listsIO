@@ -4,6 +4,7 @@ namespace ListsIO\Bundle\ListBundle\Controller;
 
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use ListsIO\Bundle\ListBundle\Entity\LIOListItem;
+use ListsIO\Bundle\ListBundle\Entity\LIOListView;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -34,18 +35,18 @@ class ListsController extends Controller
             'list' => $list
         );
 
-        // Add order index to old list items.
-        $i = 1;
-        foreach($list->getListItems() as $list_item) {
-            if (! $list_item->getOrderIndex()) {
-                $list_item->setOrderIndex($i);
-                $this->saveEntity($list_item);
-            }
-            $i++;
+        /*
+         * Save view list only for logged-in users.
+         */
+        if (! empty($user) && $list_user->getId() != $user->getId()) {
+            $listView = new LIOListView();
+            $listView->setUserId($user->getId());
+            $listView->setListId($list->getId());
+            $this->saveEntity($listView);
         }
 
         // If list does not belong to user, render view template, otherwise render edit template.
-        if ( empty($user) || ! ($list_user->getId() === $user->getId())) {
+        if (empty($user) || $list_user->getId() != $user->getId()) {
             return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $data);
         }
 

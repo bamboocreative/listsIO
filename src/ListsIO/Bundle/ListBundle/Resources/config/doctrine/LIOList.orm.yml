@@ -31,6 +31,10 @@ ListsIO\Bundle\ListBundle\Entity\LIOList:
             mappedBy: list
             orderBy: { 'orderIndex': 'ASC' }
             cascade: ["remove", "persist"]
+        listViews:
+            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListView
+            mappedBy: list
+            cascade: ["remove", "persist"]
     lifecycleCallbacks:
         prePersist: [prePersistTimestamp]
         preUpdate: [prePersistTimestamp]
