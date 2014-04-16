@@ -50,9 +50,9 @@
 	    	{% block login %}
 	    	<div class="login-out">
 	            <div>
-	            {% if user is defined and user is not empty %}
+	            {% if app.user %}
 	                <!-- Link gravitar to profile page -->
-	                <a href="{{ path('lists_io_home') }}"><img class="loggedin" src="{{ user.getGravatarURL }}"></a>
+	                <a href="{{ path('lists_io_home') }}"><img class="loggedin" src="{{ app.user.gravatarURL }}"></a>
 	                <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
 	                    {{ 'Log out'|trans({}, 'FOSUserBundle') }}
 	                </a>
@@ -119,7 +119,7 @@
 							<h3>Make and Share Your Own List.</h3>
 						</div>
 						<div class="col-lg-4 col-sm-4 col-xs-12 footer-cta-button">
-							{% if user is defined and user is not empty %}
+							{% if app.user %}
 							<a href="{{ path('lists_io_new_list') }}" class="button">Create a List</a>
 							{% else %}
 							<a href="{{ path('lists_io_home') }}" class="button">Signup Now</a
@@ -148,13 +148,13 @@
             <script src="{{ asset('assets/js/modernizr.js') }}"></script>
         {% endblock %}
         {% block intercom %}
-            {% if env == prod_env %}
+            {% if env == prod_env and app.user %}
                 <script id="IntercomSettingsScriptTag">
                  window.intercomSettings = {
-                    name: "{% if user is defined and user is not empty %}{{ user.getUsername() }}{% endif %}" ,
-                    email: "{% if user is defined and user is not empty %}{{ user.getEmail() }}{% endif %}" ,
-                    user_id: "{% if user is defined and user is not empty %}{{ user.getID() }}{% endif %}",
-                    created_at: "{% if user is defined and user is not empty %}{{ user.getCreatedAt().format('Y-m-d H:i:s') }}{% endif %}",
+                    name: "{{ app.user.username }}" ,
+                    email: "{{ app.user.email }}" ,
+                    user_id: "{{ app.user.id }}",
+                    created_at: "{{ app.user.getCreatedAt().format('Y-m-d H:i:s') }}",
                     app_id: "3a229973bc2047e738665e8b856f61c399a7a0dd"
                   };
                 </script>
