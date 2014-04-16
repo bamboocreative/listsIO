@@ -40,8 +40,8 @@ class ListsController extends Controller
          */
         if (! empty($user) && $list_user->getId() != $user->getId()) {
             $listView = new LIOListView();
-            $listView->setUserId($user->getId());
-            $listView->setListId($list->getId());
+            $listView->setUser($user);
+            $listView->setList($list);
             $this->saveEntity($listView);
         }
 

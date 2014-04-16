@@ -50,7 +50,7 @@ ListsIO\Bundle\UserBundle\Entity\User:
         listViews:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListView
             mappedBy: user
-            cascade: ["remove", "persist"]
+            cascade: ["remove"]
     lifecycleCallbacks:
             prePersist: [prePersistTimestamp]
             preUpdate: [prePersistTimestamp]

@@ -10,7 +10,7 @@ namespace ListsIO\Bundle\ListBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User;
+use ListsIO\Bundle\UserBundle\Entity\User;
 
 class LIOListView {
 
@@ -45,7 +45,7 @@ class LIOListView {
     /**
      * @param User $user
      */
-    public function setUserId(User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
     }

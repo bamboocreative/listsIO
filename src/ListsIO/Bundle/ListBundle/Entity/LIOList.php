@@ -33,6 +33,11 @@ class LIOList implements JsonSerializable
     private $imageURL;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $listViews;
+
+    /**
      * @var \DateTime
      */
     private $createdAt;
@@ -55,6 +60,7 @@ class LIOList implements JsonSerializable
     public function __construct()
     {
         $this->listItems = new ArrayCollection();
+        $this->listViews = new ArrayCollection();
         $this->title = "";
         $this->subtitle = "";
         $this->imageURL = "";
@@ -195,6 +201,39 @@ class LIOList implements JsonSerializable
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add listView
+     *
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListView $listView
+     * @return LIOList
+     */
+    public function addListView(LIOListView $listView)
+    {
+        $this->listViews[] = $listView;
+
+        return $this;
+    }
+
+    /**
+     * Remove listView
+     *
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListView $listView
+     */
+    public function removeListView(LIOListView $listView)
+    {
+        $this->listViews->removeElement($listView);
+    }
+
+    /**
+     * Get listViews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getListViews()
+    {
+        return $this->listViews;
     }
 
     public function jsonSerialize()

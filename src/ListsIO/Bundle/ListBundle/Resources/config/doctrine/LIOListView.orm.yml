@@ -10,12 +10,12 @@ ListsIO\Bundle\ListBundle\Entity\LIOListView:
     fields:
         createdAt:
             type: datetime
-        manyToOne:
-            user:
-                targetEntity: ListsIO\Bundle\UserBundle\Entity\User
-                inversedBy: listViews
-            list:
-                targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
-                inversedBy: listViews
+    manyToOne:
+        user:
+            targetEntity: ListsIO\Bundle\UserBundle\Entity\User
+            inversedBy: listViews
+        list:
+            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
+            inversedBy: listViews
     lifecycleCallbacks:
         prePersist: [prePersistTimestamp]

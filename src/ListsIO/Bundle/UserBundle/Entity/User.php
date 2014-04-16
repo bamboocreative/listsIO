@@ -324,6 +324,7 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
         foreach($this->lists as $list) {
             $lists[] = $list->jsonSerialize();
         }
+        // TODO: Use appropriate serialization/HATEOAS, Jesse Rosato, 4/4/14
         $listViews = array();
         foreach($this->listViews as $listView) {
             $listViews[] = $listView->getList()->getId();
