@@ -1,0 +1,3 @@
+lists_io_search_homepage:
+    pattern:  /
+    defaults: { _controller: ListsIOSearchBundle:Search:index }

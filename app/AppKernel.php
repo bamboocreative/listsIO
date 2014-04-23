@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new ListsIO\Bundle\ListBundle\ListsIOListBundle(),
             new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new ListsIO\Bundle\SearchBundle\ListsIOSearchBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
