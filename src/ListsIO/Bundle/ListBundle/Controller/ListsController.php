@@ -18,6 +18,8 @@ class ListsController extends Controller
     {
         $format = $request->getRequestFormat();
 
+        $this->get('logger')->debug("IN LIST VIEW.");
+
         /**
          * @var $list LIOList
          */
@@ -42,6 +44,7 @@ class ListsController extends Controller
             $listView = new LIOListView();
             $listView->setUser($user);
             $listView->setList($list);
+            $this->get('logger')->debug("SAVING LIST VIEW.");
             $this->saveEntity($listView);
         }
 
