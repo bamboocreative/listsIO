@@ -39,3 +39,6 @@ lists_io_remove_list_item:
         itemId: \d+
         _format: json
     defaults: { _controller: ListsIOListBundle:Lists:removeListItem, _format: json }
+lists_io_like_list:
+    pattern: /list/like
+    defaults:  { _controller: ListsIOListBundle:Lists:likeList }

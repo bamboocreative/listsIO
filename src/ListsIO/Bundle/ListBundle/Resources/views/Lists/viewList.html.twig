@@ -20,6 +20,9 @@
 					<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list_user.username}) }}"><img class="loggedin" src="{{ list_user.gravatarURL }}">{{ list_user.username }}</a></div>
 				</div>
 			</div>
+            <div class="row">
+                <a href="#" class="like-btn {{ likedClass }}">Like this list.</a>
+            </div>
 			<div class="row">
 		        <div class="list">
 			        <div class="col-md-8 col-md-offset-2">

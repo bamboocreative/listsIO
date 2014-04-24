@@ -4,6 +4,7 @@ namespace ListsIO\Bundle\ListBundle\Controller;
 
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use ListsIO\Bundle\ListBundle\Entity\LIOListItem;
+use ListsIO\Bundle\ListBundle\Entity\LIOListLike;
 use ListsIO\Bundle\ListBundle\Entity\LIOListView;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +19,6 @@ class ListsController extends Controller
     {
         $format = $request->getRequestFormat();
 
-        $this->get('logger')->debug("IN LIST VIEW.");
-
         /**
          * @var $list LIOList
          */
@@ -32,24 +31,37 @@ class ListsController extends Controller
         $list_user = $list->getUser();
         $user = $this->getUser();
         $data = array(
-            'user'  => $user,
-            'list_user' => $list_user,
-            'list' => $list
+            'user'          => $user,
+            'list_user'     => $list_user,
+            'list'          => $list,
+            'likedClass'    => 'not-liked'
         );
 
-        /*
-         * Save view list only for logged-in users.
-         */
-        if (! empty($user) && $list_user->getId() != $user->getId()) {
-            $listView = new LIOListView();
-            $listView->setUser($user);
-            $listView->setList($list);
-            $this->get('logger')->debug("SAVING LIST VIEW.");
-            $this->saveEntity($listView);
+
+        if (! empty($user)) {
+            if ($list_user->getId() != $user->getId()) {
+                // Save view list only for logged-in users.
+                $listView = new LIOListView();
+                $listView->setUser($user);
+                $listView->setList($list);
+                $this->saveEntity($listView);
+            }
+            // Figure out whether the user has liked this list before.
+            $repo = $this->getDoctrine()->getRepository('ListsIO\Bundle\ListBundle\Entity\LIOListLike');
+            $listLikes = $repo->findOneBy(
+                array(
+                    'list'   => $list,
+                    'user'   => $user
+                )
+            );
+            if (count($listLikes)) {
+                $data['likedClass'] = 'liked';
+            }
         }
 
         // If list does not belong to user, render view template, otherwise render edit template.
         if (empty($user) || $list_user->getId() != $user->getId()) {
+
             return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $data);
         }
 
@@ -171,6 +183,26 @@ class ListsController extends Controller
         $this->removeEntity($listItem);
         $this->saveEntity($list);
         $response = json_encode(array('success' => TRUE, 'id' => $itemId));
+        return new Response($response);
+    }
+
+    public function likeListAction(Request $request)
+    {
+        $this->requireXmlHttpRequest($request);
+        $listId = $request->get('listId');
+        $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $listId);
+        if (empty($list)) {
+            throw $this->createNotFoundException("Couldn't find list to like it.");
+        }
+        $user = $this->getUser();
+        if (empty($user)) {
+            throw new AccessDeniedHttpException("You must be logged-in to like a list.");
+        }
+        $like = new LIOListLike();
+        $like->setList($list);
+        $like->setUser($user);
+        $this->saveEntity($like);
+        $response = json_encode(array('success' => TRUE, 'id' => $like->getId()));
         return new Response($response);
     }
 

@@ -42,6 +42,28 @@ $(document).ready(function(){
 		$('.share-buttons ul li').addClass('move-left');
 		
 	});
+
+    $('.like-btn').on('click', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.hasClass('liked')) {
+            return false;
+        }
+        show_save('Liking...');
+        $.ajax({
+            type: "POST",
+            url: '/list/like',
+            data : {
+                listId: listID
+            },
+            success: function(data){
+                if (data.success) {
+                    $this.removeClass('not-liked').addClass('liked');
+                }
+                hide_save();
+            }
+        });
+    });
 		
 	
 	/*

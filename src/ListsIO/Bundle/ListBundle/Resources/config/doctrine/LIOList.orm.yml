@@ -35,6 +35,10 @@ ListsIO\Bundle\ListBundle\Entity\LIOList:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListView
             mappedBy: list
             cascade: ["remove"]
+        listLikes:
+            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListLike
+            mappedBy: list
+            cascade: ["remove"]
     lifecycleCallbacks:
         prePersist: [prePersistTimestamp]
         preUpdate: [prePersistTimestamp]
