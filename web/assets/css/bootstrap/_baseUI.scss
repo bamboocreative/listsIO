@@ -14,6 +14,7 @@ html{
 		
 		#site_wrapper{
 			min-height: 100%;
+			@include transition(all .5s ease);
 		}
 		
 		// Images get added to this element inline for full screen BGs
@@ -21,6 +22,7 @@ html{
 			width: 100%;
 			height: 100%;
 			position: fixed;
+			background-attachment: fixed;
 			background-size: cover;
 			background-position: center center;
 			background-repeat: no-repeat;
@@ -30,7 +32,59 @@ html{
 	}
 }
 
+.center{
+	text-align: center;
+	margin: 0 auto;
+}
+
 #IntercomDefaultWidget {
 	display: none !important;
 }
+// Smaller than 480px
+@media (max-width: $screen-xs) {
 
+	h1 {
+		font-size: 34px
+	}
+	h2 {
+		font-size: 26px;
+	}
+	h3 {
+		font-size: 24px;
+	}
+	body{
+		// Makes the fixed BG work on mobile.
+		/*.bg-wrapper{
+			max-height: 300px;
+			background-size: auto 100%;
+			//height: 1500px;
+			top: 0;
+		}*/
+	}
+	
+	.body-screen{
+		height: 1300px;
+	}
+
+}
+
+
+// Smaller than 768px
+@media (max-width: $screen-sm){
+	.bg-wrapper{
+		&.list-background{
+			display: none;
+		}
+	}
+}
+
+
+// 769px - 1999px
+@media (min-width: $screen-md) and (max-width: $screen-lg) {
+  
+}
+
+// Larger than 1200px
+@media (min-width: $screen-lg) {
+  
+}

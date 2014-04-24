@@ -58,8 +58,8 @@
 ,"assets/images/bg/bg-img-48.jpg"
 ,"assets/images/bg/bg-img-49.jpg"
 ] %}
-{{ asset(random(imgURL)) }} 
 {% endspaceless %}
+<div class="bg-wrapper" style="background-image: url('{{ asset(random(imgURL)) }} ');"></div>  	
 {% endblock %}
 
 {% block share %}
@@ -88,10 +88,6 @@
 	<h1 class="profile-name">
 		{{ user.username }}
 	</h1>
-	{#}
-	<div class="profile-email">
-	</div>
-	#}
 </div>
 <div class="divider"></div>
 <div class="container profile-lists-wrapper">

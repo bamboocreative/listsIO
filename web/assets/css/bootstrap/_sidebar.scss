@@ -1,0 +1,162 @@
+nav {
+	@include transition(all .5s ease);
+	&.sidebar{
+		position: fixed;
+		z-index: 999;
+		top: 0;
+		bottom: 0;
+		left: -280px;
+		width: 280px;
+		min-height: 100%;
+		background: #191918;
+		padding: 40px 15px;
+		
+		//Logo and save dialog outside of actualy sidebar
+		.logo{
+			position: fixed;
+			left: 25px;
+			top:25px;
+			z-index: 999;
+			cursor: pointer;			
+			
+			a{
+				&:hover{
+					text-decoration: none;
+				}
+			}
+			img{
+				width: 50px;	
+				
+			}
+			#save_indicator{
+				font-size: .7em;
+				font-weight: 100;
+				padding-left: 15px;
+			}
+		}
+
+
+		//User profile image 
+		.loggedin-user {
+			text-align: center;
+			
+			.loggedin-user-img {
+				@extend .user-profile-image;
+				width: 60px;
+				margin-bottom: 10px;
+			}
+		}
+		
+		a{
+			color: rgba(255,255,255,0.5);
+			text-decoration: none;
+			@include transition(all .3s ease);
+			
+			&:hover{
+				color: white;
+				
+			}
+		}
+		
+		ul {
+			list-style: none;
+			padding-left: 0;
+			text-align: center;
+			font-size: 14px;
+			padding-top: 10px;
+			li{
+				padding: 15px 0;
+				border-bottom: 1px dotted rgba(255,255,255,0.3);
+				
+				img {
+					max-width: 25px;
+				}
+			}
+		}
+		
+		
+		//If no user logged in we show login options
+		.login-wrapper{
+			padding-bottom: 20px;
+			padding-top: 0px;
+			font-size: 16px;
+			a{
+				color: white;
+			}
+				
+			.sidebar-home{
+				a{
+					color: white;
+					text-decoration: underline;
+				}
+			}
+			
+			input[type="text"], input[type="password"], input[type="submit"], input[type="email"]{
+				font-size: 16px;
+			}
+			
+			.button {
+				font-size: 16px;
+			}
+		}
+		
+		.register-social{
+			padding: 16px 20px;
+			font-size: 16px;
+			margin: 20px 0;
+			
+			.register-social-icons{
+				font-size: 25px;
+			}
+		}
+	}
+}
+
+.sidebar-transition-open{
+	@include transition(all .5s ease);
+	@include translate(280px, 0);
+}
+.sidebar-transition-closed{
+	@include transition(all .3s ease);
+	@include translate(0px, 0);
+}
+
+// Smaller than 480px
+@media (max-width: $screen-xs) {
+	
+	
+
+}
+// Smaller than 767px
+@media (max-width: $screen-sm){
+	
+		nav {
+	@include transition(all .5s ease);
+		&.sidebar{
+
+			//Logo and save dialog outside of actualy sidebar
+			.logo{
+				position: fixed;
+				left: 25px;
+				top:8px;
+
+				img{
+					width: 25px;	
+					
+				}
+			}
+		}
+	}
+	
+}
+
+
+// 768px - 1999px
+@media (min-width: $screen-md) and (max-width: $screen-lg) {
+  
+}
+
+// Larger than 1200px
+@media (min-width: $screen-lg) {
+  
+}

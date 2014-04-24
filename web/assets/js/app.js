@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
 	document.addEventListener("touchstart", function(){}, true);
+	
+	var $site = $('#site_wrapper');
 
     var $list = $(".editable-list");
 
@@ -13,6 +15,10 @@ $(document).ready(function(){
     var $item_template = $('#item-template');
 
     var list = document.getElementById('editable-list-'+listID);
+    
+    var $sidebar = $('.sidebar');
+	
+	var $sidebarbtn = $('.logo');
 
     var saving_msg = "Saving...";
     var saved_msg = "Saved.";
@@ -30,16 +36,94 @@ $(document).ready(function(){
     $(document).ready(function(){
         $('textarea.description', '.editable-list').autosize();
     });
+    
+    
+    /*
+	*
+	* Toggle Register Form
+	*
+	*/
+	$('#register-form-button').on('click', function(e){
+		
+		e.preventDefault();
+		
+		$button = $(this);
+		
+		$button.fadeOut();
+		
+		$form = $('#register-form');
+		
+		$form.slideDown();
+		
+		$( document ).on( 'click', function(e){
+			
+			var target = $(e.target)
+			
+			if( !target.parents('#register-form').length && target.attr('id') != 'register-form-button' ){
+			
+					$form.slideUp();
+					$button.fadeIn();
+			}
+		});
+	});
+	
+	 /*
+	*
+	* Sidebar
+	*
+	*/
+
+	$sidebarbtn.on('click', function(e){
+		
+		$this = $(this);
+		$this.hide();
+		$sidebar.addClass('sidebar-transition-open');
+		$site.addClass('sidebar-transition-open');
+		
+		$( 'html' ).off('click.outside_sidebar').on( 'click.outside_sidebar', function(e){
+			
+			var $target = $( e.target );
+			
+			if ( ! $target.is( $sidebar ) && ! $target.parents().is( $sidebar )) {
+					$( 'html' ).off( 'click.outside_sidebar' );
+					$sidebar.removeClass('sidebar-transition-open').addClass('sidebar-transition-close');
+					$site.removeClass('sidebar-transition-open').addClass('sidebar-transition-close');
+					
+					setTimeout(function(){
+						$this.fadeIn();
+					}, 500)
+					
+				}
+		
+		});
+		
+	});
+    
 	
 	/*
 	*
 	* Show Share
 	*
 	*/
-	$('.share').on('mouseover', function(e){
-	
-		$(this).addClass('move-right');	
-		$('.share-buttons ul li').addClass('move-left');
+	$('.share').on('click', function(e){
+				
+		var $share = $(this);
+		var $shareBtns = $('.share-buttons ul li');
+		
+		$share.removeClass('move-left').addClass('move-right');	
+		$shareBtns.removeClass('move-right').addClass('move-left');
+		
+		$( document ).on( 'click', function(e){
+			
+			var $target = $(e.target)
+			
+			if( ! $target.is( $shareBtns ) && ! $target.parents().is( '.share-wrapper' ) ){
+			
+					$share.removeClass('move-right').addClass('move-left');
+					$shareBtns.removeClass('move-left').addClass('move-right')
+			}
+			
+		});
 		
 	});
 		

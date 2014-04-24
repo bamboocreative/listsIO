@@ -3,19 +3,35 @@
 	margin-bottom: 5em;
 	form{
 		label{
-			//display: none;
 			margin-bottom: 0px;
 			margin-top: 5px;
 		}
 		input{
 			width: 100%;
-	
 		}
+		
 	}
 	.tos{
 		text-align: center;
 		font-size: .6em;
 		margin-top: 15px;
+	}
+}
+
+// Logo Styles - Home and sub pages
+
+.home-logo{
+	text-align: center;
+	padding-top: 50px;
+	
+	img{
+		max-width: 80px;
+	}
+	
+	.title{
+		margin: 0px;
+		padding: 0px;
+		font-weight: 900;
 	}
 }
 
@@ -106,27 +122,6 @@
 			min-height: 60px;
 		}
 	}
-}
-
-.sign-up-wrapper{
-	margin: 0 auto 6em;
-	text-align: center;
-	button.sign-up{
-		color: #fff;
-		font-weight: 900;
-		@include border-radius(10px);
-		font-size: 2em;
-		max-width: 100%;
-		padding: 20px 60px !important;
-		line-height: 1em;
-		@include transition(.3s all);
-		&:hover{
-			background: darken($brand-success, 10%);
-			border: 1px solid darken($brand-success, 10%);
-		}
-		
-	}
-
 }
 
 // Smaller than 480px

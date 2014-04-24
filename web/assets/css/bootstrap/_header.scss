@@ -1,0 +1,51 @@
+header {	
+	// The login/logout fixed button
+	.login{
+		position: absolute;
+		top: 40px;
+		right: 30px;
+		z-index: 20;
+	}
+	
+	&.mobile-header{
+		display: none;
+		position: fixed;
+		z-index: 98;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		height: 45px;
+		background: #151515;
+	}
+}
+
+
+// Smaller than 480px
+@media (max-width: $screen-xs) {
+
+}
+// Smaller than 767px
+@media (max-width: $screen-sm){
+	header {
+		.login{
+			display: none;
+		}
+					
+		&.mobile-header{
+			display: block;
+		}
+	}
+
+}
+
+
+// 768px - 1999px
+@media (min-width: $screen-md) and (max-width: $screen-lg) {
+  
+}
+
+// Larger than 1200px
+@media (min-width: $screen-lg) {
+  
+}
