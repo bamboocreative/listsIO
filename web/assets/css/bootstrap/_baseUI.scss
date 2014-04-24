@@ -11,10 +11,11 @@ html{
 	body {
 		background: $brand-primary;
 		height: 100%;
+		@include transition(all .5s ease);
 		
 		#site_wrapper{
 			min-height: 100%;
-			@include transition(all .5s ease);
+			
 		}
 		
 		// Images get added to this element inline for full screen BGs

@@ -3505,11 +3505,11 @@ html {
   height: 100%; }
   html body {
     background: #184b54;
-    height: 100%; }
+    height: 100%;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease; }
     html body #site_wrapper {
-      min-height: 100%;
-      -webkit-transition: all 0.5s ease;
-      transition: all 0.5s ease; }
+      min-height: 100%; }
     html body .bg-wrapper {
       width: 100%;
       height: 100%;
@@ -3620,6 +3620,7 @@ input, textarea {
   padding: 5px 30px;
   min-height: 50px;
   min-width: 300px;
+  max-width: 100% !important;
   color: #ffffff;
   font-weight: 300;
   font-size: 23px; }
@@ -4044,6 +4045,8 @@ textarea {
 @media (max-width: 480px) {
   .list-head .list-title {
     font-size: 2em !important; }
+  .list-head .list-subtitle {
+    font-size: 1.2em !important; }
 
   .list-item .number {
     font-size: 2em !important;
@@ -4307,13 +4310,13 @@ nav {
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease; }
   nav.sidebar {
-    position: fixed;
+    position: absolute;
     z-index: 999;
     top: 0;
     bottom: 0;
     left: -280px;
     width: 280px;
-    min-height: 100%;
+    height: 100%;
     background: #191918;
     padding: 40px 15px; }
     nav.sidebar .logo {
@@ -4372,6 +4375,10 @@ nav {
       margin: 20px 0; }
       nav.sidebar .register-social .register-social-icons, nav.sidebar .button.register-social .icon-twitter, nav.sidebar .register-social.button-full .icon-twitter, nav.sidebar .login-wrapper input.register-social[type="submit"] .icon-twitter, .login-wrapper nav.sidebar input.register-social[type="submit"] .icon-twitter, nav.sidebar .login-wrapper textarea.register-social[type="submit"] .icon-twitter, .login-wrapper nav.sidebar textarea.register-social[type="submit"] .icon-twitter, nav.sidebar .login-wrapper button.register-social .icon-twitter, .login-wrapper nav.sidebar button.register-social .icon-twitter, nav.sidebar .button.register-social .icon-facebook, nav.sidebar .register-social.button-full .icon-facebook, nav.sidebar .login-wrapper input.register-social[type="submit"] .icon-facebook, .login-wrapper nav.sidebar input.register-social[type="submit"] .icon-facebook, nav.sidebar .login-wrapper textarea.register-social[type="submit"] .icon-facebook, .login-wrapper nav.sidebar textarea.register-social[type="submit"] .icon-facebook, nav.sidebar .login-wrapper button.register-social .icon-facebook, .login-wrapper nav.sidebar button.register-social .icon-facebook {
         font-size: 25px; }
+
+.sidebar-open {
+  height: 100%;
+  overflow: hidden; }
 
 .sidebar-transition-open {
   -webkit-transition: all 0.5s ease;

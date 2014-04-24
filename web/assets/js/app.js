@@ -2,7 +2,9 @@ $(document).ready(function(){
 
 	document.addEventListener("touchstart", function(){}, true);
 	
-	var $site = $('#site_wrapper');
+	var $body = $('body');
+	
+	var $siteWrapper = $('#site_wrapper');
 
     var $list = $(".editable-list");
 
@@ -77,8 +79,8 @@ $(document).ready(function(){
 		
 		$this = $(this);
 		$this.hide();
-		$sidebar.addClass('sidebar-transition-open');
-		$site.addClass('sidebar-transition-open');
+		$body.addClass('sidebar-transition-open');
+		$siteWrapper.addClass('sidebar-open');
 		
 		$( 'html' ).off('click.outside_sidebar').on( 'click.outside_sidebar', function(e){
 			
@@ -86,8 +88,8 @@ $(document).ready(function(){
 			
 			if ( ! $target.is( $sidebar ) && ! $target.parents().is( $sidebar )) {
 					$( 'html' ).off( 'click.outside_sidebar' );
-					$sidebar.removeClass('sidebar-transition-open').addClass('sidebar-transition-close');
-					$site.removeClass('sidebar-transition-open').addClass('sidebar-transition-close');
+					$body.removeClass('sidebar-transition-open').addClass('sidebar-transition-close');
+					$siteWrapper.removeClass('sidebar-open');
 					
 					setTimeout(function(){
 						$this.fadeIn();

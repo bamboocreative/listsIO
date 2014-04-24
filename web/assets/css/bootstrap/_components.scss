@@ -99,6 +99,7 @@ input {
 	padding: 5px 30px;
 	min-height: 50px;
 	min-width: 300px;
+	max-width: 100% !important;
 	color: #ffffff;
 	font-weight: 300;
 	font-size: $font-size-large;
