@@ -258,6 +258,7 @@ $(document).ready(function(){
 		
         if(imgURL){
             $('.bg-wrapper').css('background-image', 'url(' + imgURL + ')');
+            $('.mobile-background').css('background-image', 'url(' + imgURL + ')');
         } else {
             $('.bg-wrapper').css('background-image', 'none');
         }
