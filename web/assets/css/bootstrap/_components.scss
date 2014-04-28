@@ -147,6 +147,8 @@ textarea{
 	
 	input[type="checkbox"]{
 		padding: 10px 0px;
+		vertical-align: middle;
+		display: inline-block;
 	}
 	
 	.checkbox-label{
@@ -155,13 +157,19 @@ textarea{
 		font-size: .9em;
 		margin-bottom: 0px;
 		visibility: visible;
+		vertical-align: middle;
+		display: inline-block;
+		width: 40%;
 	}
 	
 	.forgot-password{
 		font-weight: 100;
 		font-size: .9em;
-		float: right;
+		display: inline-block;
+		text-align: right;
 		padding: 10px 0px; 
+		vertical-align: middle;
+		width: 50%;
 	}
 	
 	input[type="submit"], button{
@@ -290,11 +298,15 @@ textarea{
 @media (max-width: $screen-xs) {
 
 	.login-wrapper{
+		padding-top: 40px;
+		padding-bottom: 40px;
+		
 		.button {
 			font-size: 14px;
 		}
 		.checkbox-label{
 			font-size: .6em;
+			width: 35%;
 		}
 		
 		.forgot-password{

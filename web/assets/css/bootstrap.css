@@ -3548,7 +3548,7 @@ html {
   .body-screen {
     height: 1300px; } }
 @media (max-width: 768px) {
-  .bg-wrapper.list-background {
+  .bg-wrapper {
     display: none; } }
 input[type="submit"], textarea[type="submit"], button {
   background: #75a960;
@@ -3667,18 +3667,26 @@ textarea {
     .login-wrapper input[type="text"]::-webkit-input-placeholder, .login-wrapper textarea[type="text"]::-webkit-input-placeholder, .login-wrapper input[type="password"]::-webkit-input-placeholder, .login-wrapper textarea[type="password"]::-webkit-input-placeholder, .login-wrapper input[type="email"]::-webkit-input-placeholder, .login-wrapper textarea[type="email"]::-webkit-input-placeholder {
       color: rgba(255, 255, 255, 0.9); }
   .login-wrapper input[type="checkbox"], .login-wrapper textarea[type="checkbox"] {
-    padding: 10px 0px; }
+    padding: 10px 0px;
+    vertical-align: middle;
+    display: inline-block; }
   .login-wrapper .checkbox-label {
     padding: 10px 0px;
     font-weight: 100;
     font-size: .9em;
     margin-bottom: 0px;
-    visibility: visible; }
+    visibility: visible;
+    vertical-align: middle;
+    display: inline-block;
+    width: 40%; }
   .login-wrapper .forgot-password {
     font-weight: 100;
     font-size: .9em;
-    float: right;
-    padding: 10px 0px; }
+    display: inline-block;
+    text-align: right;
+    padding: 10px 0px;
+    vertical-align: middle;
+    width: 50%; }
 
 .check-email-page {
   text-align: center;
@@ -3765,12 +3773,16 @@ textarea {
     width: 25px; }
 
 @media (max-width: 480px) {
-  .login-wrapper .button, .login-wrapper .button-full, .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"], .login-wrapper button {
-    font-size: 14px; }
-  .login-wrapper .checkbox-label {
-    font-size: .6em; }
-  .login-wrapper .forgot-password {
-    font-size: .6em; } }
+  .login-wrapper {
+    padding-top: 40px;
+    padding-bottom: 40px; }
+    .login-wrapper .button, .login-wrapper .button-full, .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"], .login-wrapper button {
+      font-size: 14px; }
+    .login-wrapper .checkbox-label {
+      font-size: .6em;
+      width: 35%; }
+    .login-wrapper .forgot-password {
+      font-size: .6em; } }
 @media (max-width: 768px) {
   .footer-cta {
     padding: 7% 0 20% 0; } }
@@ -4008,7 +4020,7 @@ textarea {
     margin-left: 6%;
     width: 94%;
     box-sizing: border-box;
-    font-weight: 100;
+    font-weight: 300;
     padding-left: 31px;
     padding-right: 20px;
     min-height: inherit; }

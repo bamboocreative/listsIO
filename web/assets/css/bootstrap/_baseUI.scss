@@ -73,9 +73,7 @@ html{
 // Smaller than 768px
 @media (max-width: $screen-sm){
 	.bg-wrapper{
-		&.list-background{
-			display: none;
-		}
+		display: none;
 	}
 }
 
