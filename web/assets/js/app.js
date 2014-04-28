@@ -21,6 +21,10 @@ $(document).ready(function(){
     var $sidebar = $('.sidebar');
 	
 	var $sidebarbtn = $('.logo');
+	
+	var $share = $('.share');
+	
+	var $shareBtns = $('.share-buttons ul li');
 
     var saving_msg = "Saving...";
     var saved_msg = "Saved.";
@@ -74,7 +78,24 @@ $(document).ready(function(){
 	* Sidebar
 	*
 	*/
-
+	bodyClick = function(e){
+		
+		var $target = $( e.target );
+				
+		//Check if the sidebar is open and if so hide it		
+		if ( ! $target.is( $sidebar ) && ! $target.parents().is( $sidebar )) {
+			$body.removeClass('sidebar-transition-open').addClass('sidebar-transition-close');
+			$siteWrapper.removeClass('sidebar-open');
+			
+			//Remove the bodyClick listener
+			$siteWrapper.off( 'click', bodyClick);
+			
+			setTimeout(function(){
+				$this.fadeIn();
+			}, 500)
+		};
+	};
+	 
 	$sidebarbtn.on('click', function(e){
 		
 		$this = $(this);
@@ -82,22 +103,8 @@ $(document).ready(function(){
 		$body.addClass('sidebar-transition-open');
 		$siteWrapper.addClass('sidebar-open');
 		
-		$( 'html' ).off('click.outside_sidebar').on( 'click.outside_sidebar', function(e){
-			
-			var $target = $( e.target );
-			
-			if ( ! $target.is( $sidebar ) && ! $target.parents().is( $sidebar )) {
-					$( 'html' ).off( 'click.outside_sidebar' );
-					$body.removeClass('sidebar-transition-open').addClass('sidebar-transition-close');
-					$siteWrapper.removeClass('sidebar-open');
-					
-					setTimeout(function(){
-						$this.fadeIn();
-					}, 500)
-					
-				}
-		
-		});
+		//Attach a listener to close this
+		$siteWrapper.on( 'click', bodyClick);
 		
 	});
     
@@ -107,25 +114,26 @@ $(document).ready(function(){
 	* Show Share
 	*
 	*/
-	$('.share').on('click', function(e){
-				
-		var $share = $(this);
-		var $shareBtns = $('.share-buttons ul li');
-		
+	
+	$share.on('click', function(e){
+					
 		$share.removeClass('move-left').addClass('move-right');	
 		$shareBtns.removeClass('move-right').addClass('move-left');
 		
-		$( document ).on( 'click', function(e){
+		//Attach a listener to close this
+		$siteWrapper.on( 'click' , function(e){;
 			
-			var $target = $(e.target)
+			var $target = $( e.target );
 			
-			if( ! $target.is( $shareBtns ) && ! $target.parents().is( '.share-wrapper' ) ){
-			
-					$share.removeClass('move-right').addClass('move-left');
-					$shareBtns.removeClass('move-left').addClass('move-right')
-			}
-			
-		});
+			//Check if we are showing share buttons and if so hide them
+			if ( ! $target.is( $shareBtns ) && ! $target.parents().is( '.share-wrapper' ) ){
+				$share.removeClass('move-right').addClass('move-left');
+				$shareBtns.removeClass('move-left').addClass('move-right');
+				
+				//Remove the bodyClick listener
+				$siteWrapper.off( 'click', bodyClick);
+			};
+		})
 		
 	});
 		
@@ -183,6 +191,8 @@ $(document).ready(function(){
               $item.attr('data-id', data.id)
               $item.attr('data-order_index', data.orderIndex);
               $('.editable-list').append($item);
+              
+              $item.find('.item').focus();
 
 		  }
 
