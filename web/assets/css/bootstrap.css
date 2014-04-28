@@ -350,8 +350,8 @@ hr {
 
 @font-face {
   font-family: 'lists_iconfont';
-  src: url("/assets/fonts/ico/lists_iconfont.eot?-3yy6vr");
-  src: url("/assets/fonts/ico/lists_iconfont.eot?#iefix-3yy6vr") format("embedded-opentype"), url("/assets/fonts/ico/lists_iconfont.woff?-3yy6vr") format("woff"), url("/assets/fonts/ico/lists_iconfont.ttf?-3yy6vr") format("truetype"), url("/assets/fonts/ico/lists_iconfont.svg?-3yy6vr#lists_iconfont") format("svg");
+  src: url("/assets/fonts/ico/lists_iconfont.eot?-nc6195");
+  src: url("/assets/fonts/ico/lists_iconfont.eot?#iefix-nc6195") format("embedded-opentype"), url("/assets/fonts/ico/lists_iconfont.woff?-nc6195") format("woff"), url("/assets/fonts/ico/lists_iconfont.ttf?-nc6195") format("truetype"), url("/assets/fonts/ico/lists_iconfont.svg?-nc6195#lists_iconfont") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -374,17 +374,8 @@ hr {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-[class^="icon2-"], [class*=" icon2-"] {
-  font-family: 'icomoon-menu';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
+.icon-cancel:before {
+  content: "\e605"; }
 
 .icon-facebook:before {
   content: "\e600"; }
@@ -398,11 +389,11 @@ hr {
 .icon-link:before {
   content: "\e603"; }
 
-.icon-add_bgimage:before {
+.icon-add-background:before {
   content: "\e604"; }
 
-.icon2-cancel:before {
-  content: "\e601"; }
+.icon-add-list:before {
+  content: "\e60b"; }
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -3861,10 +3852,8 @@ textarea {
     .list-button-wrapper .add-list-button:hover {
       opacity: .7; }
     .list-button-wrapper .add-list-button table tr td.add-img {
-      width: 80px; }
-      .list-button-wrapper .add-list-button table tr td.add-img img {
-        max-width: 100%;
-        padding-right: 15px; }
+      width: 80px;
+      font-size: 4em; }
     .list-button-wrapper .add-list-button table tr td.add-txt {
       font-size: 1.6em;
       font-weight: 100; }
@@ -3880,7 +3869,7 @@ textarea {
   text-decoration: none; }
   .delete-button:hover {
     text-decoration: none; }
-  .delete-button .icon2-cancel {
+  .delete-button .icon-cancel {
     font-size: 1.3em;
     color: #fff;
     text-decoration: none; }
@@ -4366,8 +4355,9 @@ nav {
       nav.sidebar ul li {
         padding: 15px 0;
         border-bottom: 1px dotted rgba(255, 255, 255, 0.3); }
-        nav.sidebar ul li img {
-          max-width: 25px; }
+        nav.sidebar ul li .icon-add-list {
+          font-size: 1.2em;
+          vertical-align: middle; }
     nav.sidebar .login-wrapper {
       padding-bottom: 20px;
       padding-top: 0px;

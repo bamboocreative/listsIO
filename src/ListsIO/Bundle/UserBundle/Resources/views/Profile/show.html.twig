@@ -104,7 +104,7 @@
 					<a class="add-list-button" href="{{ path('lists_io_new_list') }}">
 						<table>
 							<tr>
-								<td class="add-img"><img src="{{ asset('assets/images/list-add.svg') }}"></td>
+								<td class="add-img"><span class="icon-add-list"></span></td>
 								<td class="add-txt">Create a List</td>
 							</tr>
 						</table>
@@ -121,7 +121,7 @@
 							<span class="list-subtitle">{{ list.subtitle }}</span>
 						</a>
 						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
-						    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
+						    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
 						{% endif %}
 					</li>
                 {% endif %}

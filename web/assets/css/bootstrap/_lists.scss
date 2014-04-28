@@ -16,10 +16,7 @@
 			tr{
 				td.add-img{
 					width: 80px;
-					img{
-						max-width: 100%;
-						padding-right: 15px;
-					}
+					font-size: 4em;
 				}	
 				td.add-txt{
 				font-size: 1.6em;
@@ -43,7 +40,7 @@
 		text-decoration: none;
 	}
 	
-	.icon2-cancel{
+	.icon-cancel{
 		font-size: 1.3em;
 		color: #fff;
 		text-decoration: none;

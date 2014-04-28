@@ -28,7 +28,7 @@
                                 <span class='number'>{{ item.orderIndex }}</span>
 			                    <input type="text" placeholder="List item title"  class="item" value="{{ item.title }}"/>
                                 <textarea placeholder="(Optional) A short description of this list item." class="description" maxlength="1024">{{ item.description }}</textarea>
-			                    <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
+			                    <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
 			                </li>
 			            {% endfor %}
 			            </ol>
@@ -36,7 +36,7 @@
 							<a id="add" class="add-list-button" href="#">
 								<table>
 									<tr>
-										<td class="add-img"><img src="{{ asset('assets/images/list-add.svg') }}"></td>
+										<td class="add-img"><span class="icon-add-list"></span></td>
 										<td class="add-txt">Add an Item</td>
 									</tr>
 								</table>
@@ -53,7 +53,7 @@
         <span class='number'></span>
         <input type="text" placeholder="List item title"  class="item" value=""/>
         <textarea placeholder="(Optional) A short description of this list item." class="description" maxlength="1024"></textarea>
-        <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
+        <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
     </li>
 </div>
 {% endblock %}
