@@ -32,7 +32,10 @@ class ListsController extends Controller
         $author = $list->getUser();
         $user = $this->getUser();
 
-        // Save view
+        $listView = new LIOListView();
+        $listView->setList($list);
+
+        // Prep template data.
         $data = array(
             'user'          => $user,
             'list_user'     => $author,
@@ -40,15 +43,12 @@ class ListsController extends Controller
             'liked'         => false
         );
 
-        if ($author->getId() != $user->getId()) {
-            // Save view list only for logged-in users.
-            $listView = new LIOListView();
-            $listView->setUser($user);
-            $listView->setList($list);
-            $this->saveEntity($listView);
-        }
-
         if ( ! empty($user)) {
+            // Author views should not count towards list views.
+            if ($author->getId() != $user->getId()) {
+                $listView->setUser($user);
+                $this->saveEntity($listView);
+            }
             // Figure out whether the user has liked this list before.
             $repo = $this->getDoctrine()->getRepository('ListsIO\Bundle\ListBundle\Entity\LIOListLike');
             $listLikes = $repo->findOneBy(
@@ -58,10 +58,12 @@ class ListsController extends Controller
                 )
             );
             $data['liked'] = !! (count($listLikes));
+        } else {
+            $this->saveEntity($listView);
         }
 
         // If list does not belong to user, render view template, otherwise render edit template.
-        if (empty($user) || $list_user->getId() != $user->getId()) {
+        if (empty($user) || $author->getId() != $user->getId()) {
 
             return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $data);
         }
