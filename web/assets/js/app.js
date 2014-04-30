@@ -336,4 +336,78 @@ $(document).ready(function(){
 		}	
 	});
 	
+	
+	/* 
+	*
+	* Search
+	*
+	*/
+	$peopleResults = $('#people-results ul');
+	$listResults = $('#list-results ul');
+	$search =  $('#search');
+	
+	/*
+	*
+	* Listen for stop in typing on search
+	*
+	*
+	*/
+	
+	$search.on('keyup', function(e){
+
+        var $this = $(this);
+        var keyword = $search.val();
+        
+		if( !$search.val() ){
+			$peopleResults.empty();
+			$listResults.empty();
+			return;
+		}
+
+		clearTimeout($.data(this, 'timer'));
+		$(this).data('timer', setTimeout(function(){
+			
+			$peopleResults.empty();
+			$listResults.empty();
+
+	        $.ajax({
+				url: 'http://localhost:8888/search/find?all=' + keyword,
+				type: 'GET',
+			}).done(function(response){
+				console.log(response);
+				var users = response.users;
+				var lists = response.lists;
+				
+				if(!users.length && !lists.length){
+					var html = "<li><h3>Nothing Found...</h3></li>";
+					$listResults.append(html);
+				} else {
+									
+					for(i = 0; i < users.length && i < 6; i++){
+						var user = users[i];
+						search_print_user(user, false);
+					}
+					
+					for(i = 0; i < lists.length && i < 12; i++){
+						var list = lists[i];
+						search_print_list(list, false);
+					}
+				}
+				
+			})
+
+        }, 300));
+		
+	});
+	
+	function search_print_user(user, empty){
+		var html = "<li> <a href='/" + user.username + "'> <h3>" + user.username + "</h3> </a> </li";
+		$peopleResults.append(html);
+	}
+	
+	function search_print_list(list){
+		var html = "<li> <a href='/list/" + list.id + "'> <h3>" + list.title + "</h3> <p>" + list.subtitle + "</p> </a> </li>";
+		$listResults.append(html);
+	}
+	
 });

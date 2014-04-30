@@ -4,19 +4,32 @@ namespace ListsIO\Bundle\SearchBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityRepository;
 
 class SearchController extends Controller
 {
-    public function indexAction(Request $request)
+
+	public function indexAction(Request $request)
     {
-        $format = $request->getRequestFormat();
+    	  return $this->render('ListsIOSearchBundle:Search:search.html.twig');
+    }
+    
+    public function findAction(Request $request)
+    {
+        //$format = $request->getRequestFormat();
         $term = urldecode($request->query->get('all'));
         // Search lists.
         $lists = $this->searchLists($term);
         // Search users
         $users = $this->searchUsers($term);
-        return $this->render('ListsIOSearchBundle:Search:results.'.$format.'.twig', array('term' => $term, 'users' => $users, 'lists' => $lists));
+        //return $this->render('ListsIOSearchBundle:Search:results.'.$format.'.twig', array('term' => $term, 'users' => $users, 'lists' => $lists));
+        $response = new JsonResponse();
+		$response->setData(array(
+		    'users' => $users,
+		    'lists' => $lists
+		));
+		return $response;
     }
 
     public function searchLists($title) {
