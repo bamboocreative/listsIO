@@ -17,5 +17,5 @@ ListsIO\Bundle\ListBundle\Entity\LIOListLike:
         list:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
             inversedBy: listLikes
-    llifecycleCallbacks:
+    lifecycleCallbacks:
          prePersist: [prePersistTimestamp]

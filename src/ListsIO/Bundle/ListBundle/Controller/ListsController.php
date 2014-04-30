@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 // TODO: REST API (INCLUDING AUTHENTICATION!)
 class ListsController extends Controller
@@ -194,17 +195,21 @@ class ListsController extends Controller
         if (empty($list)) {
             throw $this->createNotFoundException("Couldn't find list to like it.");
         }
+
         $user = $this->getUser();
-        $securityContext = $this->container->get('security.context');
-        if ( ! $securityContext->isGranted(IS_AUTHENTICATED_FULLY)) {
-            throw new AccessDeniedHttpException("You must be logged in to like this list.");
+
+        $repo = $this->getDoctrine()->getRepository('ListsIO\Bundle\ListBundle\Entity\LIOListLike');
+        $likes = $repo->findOneBy(array('list' => $list, 'user' => $user));
+        if (count($likes)) {
+            throw new HttpException(409, 'You already liked this list.');
         }
+
         $like = new LIOListLike();
         $like->setList($list);
         $like->setUser($user);
         $this->saveEntity($like);
-        $response = json_encode(array('success' => TRUE, 'id' => $like->getId()));
-        return new Response($response);
+        $response = json_encode(array('id' => $like->getId(), 'listId' => $list->getId()));
+        return new Response($response, 201);
     }
 
     /**

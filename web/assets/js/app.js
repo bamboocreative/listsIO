@@ -17,6 +17,7 @@ $(document).ready(function(){
     var saving_msg = "Saving...";
     var saved_msg = "Saved.";
     var error_msg = "Please try again later.";
+    var login_to_like_msg = 'Please <a href="/register">sign up</a> or <a href="/login">login</a> to like.';
 
     if (list) {
         var sortableList = new Sortable(list, {
@@ -45,9 +46,11 @@ $(document).ready(function(){
     $('.like-btn').on('click', function(e) {
         e.preventDefault();
         var $this = $(this);
+        /*
         if ($this.hasClass('liked')) {
             return false;
         }
+        */
         show_save('Liking...');
         $.ajax({
             type: "POST",
@@ -55,15 +58,23 @@ $(document).ready(function(){
             data : {
                 listId: listID
             },
-            success: function(data){
-                console.log(data);
-                $this.removeClass('not-liked').addClass('liked');
-                show_save("Liked.");
-                hide_save();
+            success: function(data, textStatus, jqXHR){
+                console.log(jqXHR.status);
+                // 201 indicates new like created.
+                // 409 indicates like already exists.
+                // Otherwise = redirect to login (user is not logged in).
+                if (jqXHR.status == 201) {
+                    $this.removeClass('not-liked').addClass('liked');
+                    show_save("Liked.");
+                    hide_save();
+                } else {
+                    show_save(login_to_like_msg);
+                }
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status == 403) {
-                    show_save('Please <a href="/register">Sign up</a> or <a href="/login">login</a> to like.');
+                if (jqXHR.status == 409) {
+                    $this.addClass('liked');
+                    show_save("Already liked.");
                 } else {
                     show_save(error_msg);
                 }
@@ -71,7 +82,6 @@ $(document).ready(function(){
             }
         });
     });
-		
 	
 	/*
 	*
