@@ -32,7 +32,7 @@
 		    </script>
         {% endif %}
     </head>
-    <body>        
+    <body data-user_id="{{ app.user ? app.user.id : '' }}">
     	<div id="site_wrapper">
 	    	<div class="bg-wrapper" style="background-image: url('{{ block('bgImage') }}');"></div>
 	    	{% block logo %}

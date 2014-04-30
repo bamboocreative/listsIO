@@ -2,11 +2,11 @@ $(document).ready(function(){
 
 	document.addEventListener("touchstart", function(){}, true);
 
-    var $list = $(".editable-list");
+    var $list = $(".editable-list, .non-editable-list");
 
     var listID = $list.attr('data-id');
 
-    var userID = $list.attr('data-user_id');
+    var userID = $('body').attr('data-user_id');
 
     var $saveIndicator = $('#save_indicator');
     
@@ -16,6 +16,7 @@ $(document).ready(function(){
 
     var saving_msg = "Saving...";
     var saved_msg = "Saved.";
+    var error_msg = "Please try again later.";
 
     if (list) {
         var sortableList = new Sortable(list, {
@@ -37,10 +38,8 @@ $(document).ready(function(){
 	*
 	*/
 	$('.share').on('mouseover', function(e){
-	
 		$(this).addClass('move-right');	
 		$('.share-buttons ul li').addClass('move-left');
-		
 	});
 
     $('.like-btn').on('click', function(e) {
@@ -57,8 +56,16 @@ $(document).ready(function(){
                 listId: listID
             },
             success: function(data){
-                if (data.success) {
-                    $this.removeClass('not-liked').addClass('liked');
+                console.log(data);
+                $this.removeClass('not-liked').addClass('liked');
+                show_save("Liked.");
+                hide_save();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 403) {
+                    show_save('Please <a href="/register">Sign up</a> or <a href="/login">login</a> to like.');
+                } else {
+                    show_save(error_msg);
                 }
                 hide_save();
             }
@@ -73,7 +80,7 @@ $(document).ready(function(){
 	*/
 	function show_save(msg){
 
-		$saveIndicator.fadeIn().text(msg);
+		$saveIndicator.fadeIn().html(msg);
 
 	}
 	

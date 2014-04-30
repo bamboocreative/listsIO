@@ -195,8 +195,9 @@ class ListsController extends Controller
             throw $this->createNotFoundException("Couldn't find list to like it.");
         }
         $user = $this->getUser();
-        if (empty($user)) {
-            throw new AccessDeniedHttpException("You must be logged-in to like a list.");
+        $securityContext = $this->container->get('security.context');
+        if ( ! $securityContext->isGranted(IS_AUTHENTICATED_FULLY)) {
+            throw new AccessDeniedHttpException("You must be logged in to like this list.");
         }
         $like = new LIOListLike();
         $like->setList($list);
