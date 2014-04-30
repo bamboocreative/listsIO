@@ -371,7 +371,7 @@ $(document).ready(function(){
 			$listResults.empty();
 
 	        $.ajax({
-				url: 'http://localhost:8888/search/find?all=' + keyword,
+				url: '/search/find?all=' + keyword,
 				type: 'GET',
 			}).done(function(response){
 				console.log(response);

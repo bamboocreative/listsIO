@@ -282,7 +282,7 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
     {
         $lists = array();
         foreach( $this->lists as $list ) {
-            $lists[] = $list->jsonSerialize();
+            $lists[] = $list->getId();
         }
 
         return array(
