@@ -29,24 +29,26 @@ class ListsController extends Controller
             throw $this->createNotFoundException("Unable to find list.");
         }
 
-        $list_user = $list->getUser();
+        $author = $list->getUser();
         $user = $this->getUser();
+
+        // Save view
         $data = array(
             'user'          => $user,
-            'list_user'     => $list_user,
+            'list_user'     => $author,
             'list'          => $list,
-            'likedClass'    => 'not-liked'
+            'liked'         => false
         );
 
+        if ($author->getId() != $user->getId()) {
+            // Save view list only for logged-in users.
+            $listView = new LIOListView();
+            $listView->setUser($user);
+            $listView->setList($list);
+            $this->saveEntity($listView);
+        }
 
-        if (! empty($user)) {
-            if ($list_user->getId() != $user->getId()) {
-                // Save view list only for logged-in users.
-                $listView = new LIOListView();
-                $listView->setUser($user);
-                $listView->setList($list);
-                $this->saveEntity($listView);
-            }
+        if ( ! empty($user)) {
             // Figure out whether the user has liked this list before.
             $repo = $this->getDoctrine()->getRepository('ListsIO\Bundle\ListBundle\Entity\LIOListLike');
             $listLikes = $repo->findOneBy(
@@ -55,9 +57,7 @@ class ListsController extends Controller
                     'user'   => $user
                 )
             );
-            if (count($listLikes)) {
-                $data['likedClass'] = 'liked';
-            }
+            $data['liked'] = !! (count($listLikes));
         }
 
         // If list does not belong to user, render view template, otherwise render edit template.
