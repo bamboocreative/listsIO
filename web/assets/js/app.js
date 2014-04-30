@@ -401,7 +401,7 @@ $(document).ready(function(){
 	});
 	
 	function search_print_user(user, empty){
-		var html = "<li> <a href='/" + user.username + "'> <h3>" + user.username + "</h3> </a> </li";
+		var html = "<li> <a href='/" + user.username + "'><img src='" + user.gravatarURL +"'/>  <h3>" + user.username + "</h3> </a> </li";
 		$peopleResults.append(html);
 	}
 	
