@@ -5,7 +5,7 @@
 {% block title %}Lists.io |
 	{{ user.username }}
 {% endblock %}
-{% block bgImage %}
+
 {% spaceless %} 
 {% set imgURL = [
  "assets/images/bg/bg-img-01.jpg"
@@ -58,8 +58,12 @@
 ,"assets/images/bg/bg-img-48.jpg"
 ,"assets/images/bg/bg-img-49.jpg"
 ] %}
-{{ asset(random(imgURL)) }} 
+
+{% set randomImgURL = asset(random(imgURL)) %}
 {% endspaceless %}
+
+{% block bgImage %}
+<div class="bg-wrapper" style="background-image: url(' {{randomImgURL}} ');"></div>  	
 {% endblock %}
 
 {% block share %}
@@ -78,22 +82,20 @@
 {% endblock %}
 
 {% block fos_user_content %}
-<div class="profile-wrapper">
-	<!-- Error: Getting current user's info, not author info -->
-	<div class="gravatar-image">
-		<div class="gravatar-inner">
-		    <a href="http://en.gravatar.com/"><img src="{{ user.gravatarURL }}"></a>
+<div class="row mobile-background"  style="background-image: url(' {{randomImgURL}} ');">
+	<div class="profile-wrapper">
+		<!-- Error: Getting current user's info, not author info -->
+		<div class="gravatar-image">
+			<div class="gravatar-inner">
+			    <a href="http://en.gravatar.com/"><img src="{{ user.gravatarURL }}"></a>
+			</div>
 		</div>
+		<h1 class="profile-name">
+			{{ user.username }}
+		</h1>
 	</div>
-	<h1 class="profile-name">
-		{{ user.username }}
-	</h1>
-	{#}
-	<div class="profile-email">
-	</div>
-	#}
+	<div class="divider"></div>
 </div>
-<div class="divider"></div>
 <div class="container profile-lists-wrapper">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
@@ -102,7 +104,7 @@
 					<a class="add-list-button" href="{{ path('lists_io_new_list') }}">
 						<table>
 							<tr>
-								<td class="add-img"><img src="{{ asset('assets/images/list-add.png') }}"></td>
+								<td class="add-img"><span class="icon-add-list"></span></td>
 								<td class="add-txt">Create a List</td>
 							</tr>
 						</table>
@@ -119,7 +121,7 @@
 							<span class="list-subtitle">{{ list.subtitle }}</span>
 						</a>
 						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
-						    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
+						    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
 						{% endif %}
 					</li>
                 {% endif %}

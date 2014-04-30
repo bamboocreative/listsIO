@@ -2,86 +2,116 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Lists.io | Create and share lists with your friends. {% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="" />
-        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}"><!-- Major Browsers -->
-		<!--[if IE]><link rel="SHORTCUT ICON" href="{{ asset('favicon.ico') }}"/><![endif]--><!-- Internet Explorer-->
-        
-        
-        <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
-        <meta name="viewport" content="initial-scale=1, user-scalable=no">
-        
-        <!-- TypeKit -->
-        <script type="text/javascript" src="//use.typekit.net/mjl7zre.js"></script>
-		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	<head>
+		<meta charset="UTF-8" />
+		<title>{% block title %}Lists.io | Create and share lists with your friends. {% endblock %}</title>
 		
+		{% block stylesheets %}{% endblock %}
+	
+		<link rel="icon" type="image/x-icon" href="" />
+		<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}"><!-- Major Browsers -->
+		<!--[if IE]><link rel="SHORTCUT ICON" href="{{ asset('favicon.ico') }}"/><![endif]--><!-- Internet Explorer-->
+	
+		<link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
+		<meta name="viewport" content="initial-scale=1, user-scalable=no">
+	
+		<!-- TypeKit -->
+		<script type="text/javascript" src="//use.typekit.net/mjl7zre.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	
 		<!-- Google Analytics -->
-        {% if env == prod_env %}
-            <script>
-              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-              ga('create', 'UA-47958167-1', 'lists.io');
-              ga('send', 'pageview');
-
-		    </script>
-        {% endif %}
-    </head>
-    <body data-user_id="{{ app.user ? app.user.id : '' }}">
-    	<div id="site_wrapper">
-	    	<div class="bg-wrapper" style="background-image: url('{{ block('bgImage') }}');"></div>
-	    	{% block logo %}
-	    	<div class="logo">
-		    	<a href="{{ path('lists_io_home') }}">
-			    	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists_bg.svg') }}">
-			    	<img class="svg-img lists-l" src="{{ asset('assets/images/lists_fg.svg') }}">
-			    	<img class="png-img" src="{{ asset('assets/images/lists.png') }}">
-		    	</a>
-	    	<span id="save_indicator"></span>
-	    	</div>
-	    	{% endblock %}
-	    	<div class="body-screen"></div>
-	    	<!-- Tells you to log in or log out -->
-	    	{% block login %}
-	    	<div class="login-out">
-	            <div>
-	            {% if app.user %}
-	                <!-- Link gravitar to profile page -->
-	                <a href="{{ path('lists_io_home') }}"><img class="loggedin" src="{{ app.user.gravatarURL }}"></a>
-	                <a class="logout-link" href="{{ path('fos_user_security_logout') }}">
-	                    {{ 'Log out'|trans({}, 'FOSUserBundle') }}
-	                </a>
-	            {% else %}
-	                <a class="logout-link" href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
-	            {% endif %}
+		{% if env == prod_env %}
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-47958167-1', 'lists.io');
+			ga('send', 'pageview');
+		</script>
+		{% endif %}
+	</head>
+	
+	<body>
+		{% block sidebar %}
+			<nav class="sidebar">
+				<div class="logo">
+					<img class="png-img" src="{{ asset('assets/images/lists.png') }}">
+					<span id="save_indicator"></span>
 				</div>
-	        </div>
-	        {% endblock %}
-	        <!-- End Log in or log out message -->
-	        {% block share %}
-	        <div class="share">
-	        	<img src='{{ asset('assets/images/sharebuttonwhite.png') }}'><span class="share-text">share</span>
-	        </div>
-	        <div class="share-buttons">
-	        	<ul>
-	        		<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/"><span class="icon-facebook"></span></a></li>
-	        		<li><a href="http://twitter.com/share?text=Check%20out%20@listsIO:%20Create,%20share%20and%20discover%20lists.%20http://lists.io"><span class="icon-twitter"></span></a></li>
-	        		<li><a href="mailto:?subject=Check out Lists.io&body=Check out Lists.io: Create, share, and discover lists. %22%0D%0A%0D%0A – http://lists.io/"><span class="icon-mail"></span></a></li>
-	        	</ul>
-	        </div>
-	        {% endblock %}
-	        {% block body %}
-	        {% endblock %}
-	        {% block featured %}
-	        <div class="featured-lists">
+			
+				{% if app.user %}
+				<a href="/">
+					<div class="loggedin-user">
+						<img class="loggedin-user-img" src="{{ app.user.gravatarURL }}">
+						<p>{{app.user.username}}</p>
+					</div>
+				</a>
+				<ul>
+					<a href="/list/new"><li><span class="icon-add-list"></span>  Create a List</li></a>
+					<a href="{{ path('fos_user_security_logout') }}"><li>{{ 'logout'|trans({}, 'FOSUserBundle') }}</li></a>
+				</ul>
+				
+				{% else %}
+			
+				<!-- Show the sidebar login options -->
+				<div class="login-wrapper">
+					<p class="center">Create a List &rarr;</p>
+					<a class="button register-social twitter" href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" alt="Sign in with Twitter"><span class="icon-twitter"></span> Login with Twitter</a>
+					<a class="button register-social facebook" href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" alt="Sign in with Facebook"><span class="icon-facebook"></span>  Login with Facebook</a>
+					<a class="button button-full" href="/user/login" alt="Sign in with Email">Login with Email</a>
+					<br/>
+					<br/>
+					<p class="center sidebar-home">or <a href="/">head home</a>.</p>
+				</div>
+				{% endif %}
+			</nav>
+		{% endblock %} 
+		<div id="site_wrapper">
+
+	
+		{% block bgImage %}
+			<div class="bg-wrapper" style="background-image: url('{{ asset('assets/images/unsplash_52c470899a2e1_1.jpg') }}');"></div>  	
+		{% endblock %}
+	
+		{% block header %}
+			<header>
+				{% if app.user == false %}
+					<div class="login">
+						<a class="button" href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
+					</div>
+				{% endif %}
+			</header>
+			<header class="mobile-header"></header>
+		{% endblock %}
+	
+		{% block logo %}{% endblock %}
+	
+		<div class="body-screen"></div>
+	
+		{% block share %}
+			<div class="share-wrapper">
+				<div class="share">
+					<img src='{{ asset('assets/images/sharebuttonwhite.png') }}'><span class="share-text">share</span>
+				</div>
+				<div class="share-buttons">
+					<ul>
+						<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://lists.io/"><span class="icon-facebook"></span></a></li>
+						<li><a href="http://twitter.com/share?text=Check%20out%20@listsIO:%20Create,%20share%20and%20discover%20lists.%20http://lists.io"><span class="icon-twitter"></span></a></li>
+						<li><a href="mailto:?subject=Check out Lists.io&body=Check out Lists.io: Create, share, and discover lists. %22%0D%0A%0D%0A – http://lists.io/"><span class="icon-mail"></span></a></li>
+					</ul>
+				</div>
+			</div>
+		{% endblock %}
+		
+		{% block body %}{% endblock %}
+		
+		{% block featured %}
+			<div class="featured-lists">
 				<h3>Featured Lists:</h3>
 				<div class="row">
-				<!--Featured Item 1 -->
+					<!--Featured Item 1 -->
 					<a href="/list/44">
 						<div class="col-sm-4 col-md-4 col-lg-4 featured-item-wrapper" style="background-image: url('http://www.wmagazine.com/wp-content/uploads/2013/12/HER-10145.jpg')">
 							<div class="featured-item">
@@ -110,9 +140,10 @@
 					</a>
 				</div>
 			</div>
-	        {% endblock %}
-	        {% block footer %}
-	        <div class="footer-cta">
+			{% endblock %}
+			
+			{% block footer %}
+			<div class="footer-cta">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-6 col-lg-offset-1 col-sm-8 col-xs-12 footer-cta-msg">
@@ -120,46 +151,50 @@
 						</div>
 						<div class="col-lg-4 col-sm-4 col-xs-12 footer-cta-button">
 							{% if app.user %}
-							<a href="{{ path('lists_io_new_list') }}" class="button">Create a List</a>
+								<a href="{{ path('lists_io_new_list') }}" class="button">Create a List</a>
 							{% else %}
-							<a href="{{ path('lists_io_home') }}" class="button">Signup Now</a
+								<a href="{{ path('lists_io_home') }}" class="button">Signup Now</a
 							{% endif %}
 						</div>
 					</div>
 				</div>
 			</div>
-	        {% endblock %}
-        </div>
-        
-        {% block javascripts %}
-            <!-- Compressed Prod JQuery -->
-            <script src="{{ asset('assets/js/jquery-2.1.0.js') }}"></script>
-
-            <!-- Compressed textarea Autosize plugin: http://www.jacklmoore.com/autosize/ -->
-            <script src="{{ asset('assets/js/jquery.autosize.min.js') }}"></script>
-
-            <!-- Compressed Sortable Plugin: https://github.com/RubaXa/Sortable -->
-            <script src="{{ asset('assets/js/sortable.min.js') }}"></script>
-
-            <!-- Custom JS -->
-            <script src="{{ asset('assets/js/app.js') }}"></script>
-
-            <!-- Compressed Prod Modernizr-->
-            <script src="{{ asset('assets/js/modernizr.js') }}"></script>
-        {% endblock %}
-        {% block intercom %}
-            {% if env == prod_env and app.user %}
-                <script id="IntercomSettingsScriptTag">
-                 window.intercomSettings = {
-                    name: "{{ app.user.username }}" ,
-                    email: "{{ app.user.email }}" ,
-                    user_id: "{{ app.user.id }}",
-                    created_at: "{{ app.user.getCreatedAt().format('Y-m-d H:i:s') }}",
-                    app_id: "3a229973bc2047e738665e8b856f61c399a7a0dd"
-                  };
-                </script>
-                <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://static.intercomcdn.com/intercom.v1.js';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
-		    {% endif %}
-        {% endblock %}
-    </body>
+			{% endblock %}
+			
+		</div>
+		<!--end .site-wrapper -->
+	
+		{% block javascripts %}
+			<!-- Compressed Prod JQuery -->
+			<script src="{{ asset('assets/js/jquery-2.1.0.js') }}"></script>
+			
+			<!-- Compressed textarea Autosize plugin: http://www.jacklmoore.com/autosize/ -->
+			<script src="{{ asset('assets/js/jquery.autosize.min.js') }}"></script>
+			
+			<!-- Compressed Sortable Plugin: https://github.com/RubaXa/Sortable -->
+			<script src="{{ asset('assets/js/sortable.min.js') }}"></script>
+			
+			<!-- Custom JS -->
+			<script src="{{ asset('assets/js/app.js') }}"></script>
+			
+			<!-- Compressed Prod Modernizr-->
+			<script src="{{ asset('assets/js/modernizr.js') }}"></script>
+		{% endblock %}
+	
+		{% block intercom %}
+		{% if env == prod_env and app.user %}
+			<script id="IntercomSettingsScriptTag">
+				window.intercomSettings = {
+				name: "{{ app.user.username }}" ,
+				email: "{{ app.user.email }}" ,
+				user_id: "{{ app.user.id }}",
+				created_at: "{{ app.user.getCreatedAt().format('Y-m-d H:i:s') }}",
+				app_id: "3a229973bc2047e738665e8b856f61c399a7a0dd"
+				};
+			</script>
+			<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://static.intercomcdn.com/intercom.v1.js';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+		{% endif %}
+		{% endblock %}
+		
+	</body>
 </html>

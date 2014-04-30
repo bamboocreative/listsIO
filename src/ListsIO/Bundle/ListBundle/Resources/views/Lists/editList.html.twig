@@ -2,15 +2,17 @@
 
 {% extends "::base.html.twig" %}
 
-{% block bgImage %} {{ list.getImageURL() }} {% endblock %}
+{% block bgImage %} 
+<div class="bg-wrapper list-background" style="background-image: url(' {{ list.getImageURL() }} ');"></div> 
+{% endblock %}
 
 {% block title %}Lists.io | {{ list.getTitle() }} {% endblock %}
 
 {% block body %}
-<div class="background" style="min-height: 100%; min-width: 100%;">
+<div class="background background-mobile" style="min-height: 100%; min-width: 100%;">
 	<div class="items">
 		<div class="container">
-			<div class="row">
+			<div class="row mobile-background"  style="background-image: url(' {{ list.getImageURL() }} ');">
 				<div class="col-md-8 col-md-offset-2 edit-list-head-wrapper list-head" id="list-{{ list.id }}">
                     <input type="text" class="list-title" placeholder="List title" value="{{ list.title }}"/>
                     <input type="text" class="list-subtitle" placeholder="subtitle" value="{{ list.subtitle }}"/>
@@ -26,7 +28,7 @@
                                 <span class='number'>{{ item.orderIndex }}</span>
 			                    <input type="text" placeholder="List item title"  class="item" value="{{ item.title }}"/>
                                 <textarea placeholder="(Optional) A short description of this list item." class="description" maxlength="1024">{{ item.description }}</textarea>
-			                    <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
+			                    <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
 			                </li>
 			            {% endfor %}
 			            </ol>
@@ -34,7 +36,7 @@
 							<a id="add" class="add-list-button" href="#">
 								<table>
 									<tr>
-										<td class="add-img"><img src="{{ asset('assets/images/list-add.png') }}"></td>
+										<td class="add-img"><span class="icon-add-list"></span></td>
 										<td class="add-txt">Add an Item</td>
 									</tr>
 								</table>
@@ -51,7 +53,7 @@
         <span class='number'></span>
         <input type="text" placeholder="List item title"  class="item" value=""/>
         <textarea placeholder="(Optional) A short description of this list item." class="description" maxlength="1024"></textarea>
-        <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon2-cancel"></span></a>
+        <a class="delete-list-item delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
     </li>
 </div>
 {% endblock %}

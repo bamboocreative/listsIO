@@ -2,7 +2,7 @@
 input[type="submit"], button{
 	background: $brand-success;
 	border: 1px solid $brand-success;
-	padding: 7px 30px 7px 30px;
+	padding: 7px 30px;
 	@include transition(background .3s, border .3s);
 	
 	&:hover{
@@ -12,14 +12,13 @@ input[type="submit"], button{
 }
 
 //Button
-.button, .logout-link{
+.button {
 	background: $brand-success;
 	@include border-radius(8px);
 	box-shadow: none;
 	border: none;
-	min-height: 50px;
 	color: #ffffff;
-	padding: 5px 20px 7px;
+	padding: 10px 20px 10px 20px;
 	font-weight: 100;
 	line-height: 1em;
 	text-align: center;
@@ -38,17 +37,23 @@ input[type="submit"], button{
 	
 	&.register-social{
 		display: block;
-		height: auto;
-		padding: 16px 20px;
+		padding: 15px 20px;
 		font-size: 20px;
-		margin: 20px 0 0 0;		
+		margin: 20px 0;
+		@include transition(background .3s, border .3s);		
 		
 		&.twitter{
 			background: #55ACEE;
+			&:hover{
+				background: darken(#55ACEE, 10%);
+			}
 		}
 		
 		&.facebook{
-			background: #3B5998; 
+			background: #3B5998;
+			&:hover{
+				background: darken(#3B5998, 10%);
+			} 
 		}
 		
 		.register-social-icons{
@@ -67,16 +72,34 @@ input[type="submit"], button{
 	}
 }
 
+a {
+	&.button{
+		display: inline-block;
+	}
+}
+
+.button-full {
+	@extend .button;
+	height: auto;
+	width: 100%;
+	padding: 20px;
+	font-size: 20px;
+}
+
 
 
 // Form Styles
 input {
 	background: rgba(255,255,255,0.3);
-	border: 1px solid #ffffff;
+	//border: 1px solid #ffffff;
+	border: none;
+	outline: none;
+	box-shadow: none;
 	@include border-radius(8px);
-	padding: 5px 30px 5px 30px;
+	padding: 5px 30px;
 	min-height: 50px;
 	min-width: 300px;
+	max-width: 100% !important;
 	color: #ffffff;
 	font-weight: 300;
 	font-size: $font-size-large;
@@ -89,77 +112,6 @@ textarea{
 	border: none;
 }
 
-// Delete Button styles - Lists and list items
-.delete-button{
-	position: absolute;
-	top:-5px;
-	right: -10px;
-	padding: 10px;
-	opacity: 0;
-	@include transition(opacity .2s);
-	text-decoration: none;
-	&:hover{
-		text-decoration: none;
-	}
-	
-	.icon2-cancel{
-		font-size: 1.3em;
-		color: #fff;
-		text-decoration: none;
-	}
-}
-
-// Logo Styles - Home and sub pages
-.logo{
-	position: fixed;
-	left: 20px;
-	top:15px;
-	z-index: 20;
-	
-	a{
-		&:hover{
-			text-decoration: none;
-		}
-	}
-	img{
-		width: 80px;	
-		
-		&.lists-l{
-			position: absolute;
-			left: 2px;
-			top: 0;
-		}
-		
-	}
-	#save_indicator{
-		font-size: .7em;
-		font-weight: 100;
-		padding-left: 15px;
-	}
-}
-.home-logo{
-	text-align: center;
-	padding-top: 50px;
-	img{
-		max-width: 120px;
-	}
-	
-	.title{
-		margin: 0px;
-		padding: 0px;
-		font-weight: 900;
-	}
-}
-
-// Custom support for legacy no-svg browsers
-.svg{
-	.png-img{
-		display: none;
-	}
-	.svg-img{
-		display: inline;
-	}
-}
 
 // This fixes the "Success" page after registration
 .confirmed{
@@ -173,38 +125,8 @@ textarea{
 	display: none;
 }
 
-// This is the "Create a new list" or "add a list" button
-.list-button-wrapper{
-	text-align: center;
-	margin-top: 1em;
-	margin-bottom: 3em;
-	.add-list-button{
-		color: white;
-		text-decoration: none;
-		display: inline-block;
-		margin-left: -30px;
-		@include transition(.4s opacity);	
-		&:hover{
-			opacity: .7;
-		}
-		table{
-			tr{
-				td.add-img{
-					width: 80px;
-					img{
-						max-width: 100%;
-						padding-right: 15px;
-					}
-				}	
-				td.add-txt{
-				font-size: 1.6em;
-				font-weight: 100;	
-				}
-			}
-		}
-	}
-}
 
+//This may be moved to a login or register scss
 // This is the register/login form button
 .login-wrapper{
 	
@@ -214,7 +136,7 @@ textarea{
 	
 	padding-bottom: 70px;
 	padding-top: 70px;
-	input[type="text"], input[type="password"], input[type="submit"], input[type="email"]{
+	input[type="text"], input[type="password"], input[type="email"]{
 		width: 100% !important;
 		padding-left: 15px;
 		padding-top: 2px;
@@ -225,6 +147,8 @@ textarea{
 	
 	input[type="checkbox"]{
 		padding: 10px 0px;
+		vertical-align: middle;
+		display: inline-block;
 	}
 	
 	.checkbox-label{
@@ -233,20 +157,23 @@ textarea{
 		font-size: .9em;
 		margin-bottom: 0px;
 		visibility: visible;
+		vertical-align: middle;
+		display: inline-block;
+		width: 40%;
 	}
 	
 	.forgot-password{
 		font-weight: 100;
 		font-size: .9em;
-		float: right;
+		display: inline-block;
+		text-align: right;
 		padding: 10px 0px; 
+		vertical-align: middle;
+		width: 50%;
 	}
 	
-	input[type="submit"]{
-		height: auto;
-		min-height: 70px;
-		padding: 0px 15px 5px;
-		margin: 8px 0;
+	input[type="submit"], button{
+		@extend .button-full;
 	}
 }
 
@@ -255,20 +182,6 @@ textarea{
 	padding-top: 5%;
 }
 
-// The login/logout fixed button
-.login-out{
-	position: fixed;
-	top: 40px;
-	right: 30px;
-	z-index: 20;
-}
-
-// Loggedin Graviter Image
-.loggedin{
-	@include border-radius(100%);
-	width: 40px;
-	margin-right: 5px;
-}
 
 // This darkens the BG photos.
 .body-screen{
@@ -281,11 +194,14 @@ textarea{
 	z-index: -1;
 }
 
+
+//This may be moved to a search, recommended or featured.scss
 .featured-lists{
 	background: #194854;
 	text-align: center;	
 	h3 {
 		margin-top: 0;
+		margin-bottom: 0;
 		padding: 4% 0;
 	}
 	.row{
@@ -308,6 +224,7 @@ textarea{
 				position: relative;
 				min-height: 300px;
 				
+				
 				&:after{
 					content: '';
 					position: absolute;
@@ -317,13 +234,12 @@ textarea{
 					left: 0;
 					background: rgba(0,0,0,0.4);
 					z-index: 0;
+					@include transition(background .5s ease);
 				}
 				.featured-item{
 					position: relative;
 					z-index: 10;
-					padding: 23% 3% 20% 3%;
-					@include transition(opacity .5s ease);
-					-webkit-backface-visibility: hidden;
+					padding: 23% 3% 20% 3%;					
 					
 					.featured-item-title{
 						margin-bottom: 5px;
@@ -331,16 +247,19 @@ textarea{
 					.featured-item-username{
 						font-weight: 300;
 					}
-					
-					&:hover {
-						opacity: .7;
-					}
+				}
+				&:hover {
+					&:after{
+						background: rgba(0,0,0,0.5);
+					}	
 				}
 			}
 		}
 	}
 }
 
+
+//This may be moved to a footer.scss
 .footer-cta{
 	background: #f2d118;
 	padding: 7% 0;
@@ -365,35 +284,43 @@ textarea{
 	}
 }
 
+.user-profile-image {
+	@include border-radius(100%);
+	
+	&.small {
+		height: 25px;
+		width: 25px;
+	}
+}
+
 
 // Smaller than 480px
 @media (max-width: $screen-xs) {
-	body{
+
+	.login-wrapper{
+		padding-top: 40px;
+		padding-bottom: 40px;
 		
-		// Makes the fixed BG work on mobile.
-		.bg-wrapper{
-			background-size: auto 100%;
-			height: 1500px;
-			top: 0;
+		.button {
+			font-size: 14px;
 		}
-	}
-	
-	.body-screen{
-		height: 1300px;
-	}
-	
-	.login-out{
-		top: 20px;
-		right: 15px;
-	}
-	.login-out, .logo, .logo img{
-		position: absolute !important;
+		.checkbox-label{
+			font-size: .6em;
+			width: 35%;
+		}
+		
+		.forgot-password{
+			font-size: .6em;
+		}
 	}
 }
 
 
 // Smaller than 768px
 @media (max-width: $screen-sm){
+	.footer-cta{
+		padding: 7% 0 20% 0;
+	}
 }
 
 

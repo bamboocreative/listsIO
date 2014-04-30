@@ -2,23 +2,22 @@
 
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{# Don't display header with login #}
+{% block header %}
+{% endblock %}
+
 {% block logo %}
 <div class="home-logo">
+	<a href="/">
 	<img class="svg-img lists-bg" src="{{ asset('assets/images/lists.svg') }}"><br>
+	</a>
 	<h3 class="title">Lists.io</h3>
 </div>
 {% endblock %}
 
 
-
-
-{% block bgImage %}{{ asset('assets/images/unsplash_52c470899a2e1_1.jpg') }}{% endblock %}
-
 {# Don't display share #}
 {% block share %}{% endblock %}
-
-{# Don't display login #}
-{% block login %}{% endblock %}
 
 {# Don't display featured #}
 {% block featured %}

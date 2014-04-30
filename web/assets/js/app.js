@@ -1,6 +1,10 @@
 $(document).ready(function(){
 
 	document.addEventListener("touchstart", function(){}, true);
+	
+	var $body = $('body');
+	
+	var $siteWrapper = $('#site_wrapper');
 
     var $list = $(".editable-list, .non-editable-list");
 
@@ -13,6 +17,14 @@ $(document).ready(function(){
     var $item_template = $('#item-template');
 
     var list = document.getElementById('editable-list-'+listID);
+    
+    var $sidebar = $('.sidebar');
+	
+	var $sidebarbtn = $('.logo');
+	
+	var $share = $('.share');
+	
+	var $shareBtns = $('.share-buttons ul li');
 
     var saving_msg = "Saving...";
     var saved_msg = "Saved.";
@@ -32,15 +44,99 @@ $(document).ready(function(){
     $(document).ready(function(){
         $('textarea.description', '.editable-list').autosize();
     });
+    
+    
+    /*
+	*
+	* Toggle Register Form
+	*
+	*/
+	$('#register-form-button').on('click', function(e){
+		
+		e.preventDefault();
+		
+		$button = $(this);
+		
+		$button.fadeOut();
+		
+		$form = $('#register-form');
+		
+		$form.slideDown();
+		
+		$( document ).on( 'click', function(e){
+			
+			var target = $(e.target)
+			
+			if( !target.parents('#register-form').length && target.attr('id') != 'register-form-button' ){
+			
+					$form.slideUp();
+					$button.fadeIn();
+			}
+		});
+	});
+	
+	 /*
+	*
+	* Sidebar
+	*
+	*/
+	bodyClick = function(e){
+		
+		var $target = $( e.target );
+				
+		//Check if the sidebar is open and if so hide it		
+		if ( ! $target.is( $sidebar ) && ! $target.parents().is( $sidebar )) {
+			$body.removeClass('sidebar-transition-open').addClass('sidebar-transition-close');
+			$siteWrapper.removeClass('sidebar-open');
+			
+			//Remove the bodyClick listener
+			$siteWrapper.off( 'click', bodyClick);
+			
+			setTimeout(function(){
+				$this.fadeIn();
+			}, 500)
+		};
+	};
+	 
+	$sidebarbtn.on('click', function(e){
+		
+		$this = $(this);
+		$this.hide();
+		$body.addClass('sidebar-transition-open');
+		$siteWrapper.addClass('sidebar-open');
+		
+		//Attach a listener to close this
+		$siteWrapper.on( 'click', bodyClick);
+		
+	});
+    
 	
 	/*
 	*
 	* Show Share
 	*
 	*/
-	$('.share').on('mouseover', function(e){
-		$(this).addClass('move-right');	
-		$('.share-buttons ul li').addClass('move-left');
+	
+	$share.on('click', function(e){
+					
+		$share.removeClass('move-left').addClass('move-right');	
+		$shareBtns.removeClass('move-right').addClass('move-left');
+		
+		//Attach a listener to close this
+		$siteWrapper.on( 'click' , function(e){;
+			
+			var $target = $( e.target );
+			
+			//Check if we are showing share buttons and if so hide them
+			if ( ! $target.is( $shareBtns ) && ! $target.parents().is( '.share-wrapper' ) ){
+				$share.removeClass('move-right').addClass('move-left');
+				$shareBtns.removeClass('move-left').addClass('move-right');
+				
+				//Remove the bodyClick listener
+				$siteWrapper.off( 'click', bodyClick);
+			};
+		})
+		
 	});
 
     $('.like-btn').on('click', function(e) {
@@ -136,6 +232,8 @@ $(document).ready(function(){
               $item.attr('data-id', data.id)
               $item.attr('data-order_index', data.orderIndex);
               $('.editable-list').append($item);
+              
+              $item.find('.item').focus();
 
 		  }
 
@@ -201,6 +299,7 @@ $(document).ready(function(){
 		
         if(imgURL){
             $('.bg-wrapper').css('background-image', 'url(' + imgURL + ')');
+            $('.mobile-background').css('background-image', 'url(' + imgURL + ')');
         } else {
             $('.bg-wrapper').css('background-image', 'none');
         }

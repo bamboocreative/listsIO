@@ -1,3 +1,52 @@
+// This is the "Create a new list" or "add a list" button
+.list-button-wrapper{
+	text-align: center;
+	margin-top: 1em;
+	margin-bottom: 3em;
+	.add-list-button{
+		color: white;
+		text-decoration: none;
+		display: inline-block;
+		margin-left: -30px;
+		@include transition(.4s opacity);	
+		&:hover{
+			opacity: .7;
+		}
+		table{
+			tr{
+				td.add-img{
+					width: 80px;
+					font-size: 4em;
+				}	
+				td.add-txt{
+				font-size: 1.6em;
+				font-weight: 100;	
+				}
+			}
+		}
+	}
+}
+
+// Delete Button styles - Lists and list items
+.delete-button{
+	position: absolute;
+	top:-5px;
+	right: -10px;
+	padding: 10px;
+	opacity: 0;
+	@include transition(opacity .2s);
+	text-decoration: none;
+	&:hover{
+		text-decoration: none;
+	}
+	
+	.icon-cancel{
+		font-size: 1.3em;
+		color: #fff;
+		text-decoration: none;
+	}
+}
+
 .list-head {
 
   .list-title{
@@ -28,6 +77,7 @@
       width: 100%;
       padding: 0px;
       padding-left: 3px;
+      padding-top: 15px;
       @include placeholder(rgba(255,255,255,0.5));
 
   }
@@ -38,26 +88,26 @@
   }
 
   div#author{
-      font-size: 1.3em;
+      font-size: .9em;
       padding-left: 3px;
       font-weight: 300;
       display: inline-block;
       a{
           display: inline-block;
-          padding: 13px 17px 13px 15px;
           line-height: 1em;
-          border: 1px solid #fff;
-          @include border-radius(999px);
-          @include transition(background, .4s);
-
-          color: white;
+          @include transition(background, .3s);
+          color: rgba(255,255,255,.3);
+          
           &:hover{
               color: white;
               text-decoration: none;
-              background: rgba(255,255,255,.3);
+             
           }
           img{
-              margin-right: 10px;
+          	@extend .user-profile-image;
+          	height: 40px;
+          	width: 40px;
+            margin-right: 10px;
           }
       }
   }
@@ -127,7 +177,7 @@
 		padding-top: 0px;
 		color: #fff;
 		text-decoration: none;
-		width: 100%;
+		//width: 100%;
 		@include placeholder(rgba(255,255,255,0.5));
 	}	
 	div.item{
@@ -139,9 +189,8 @@
 		margin-left: 6%;
         width: 94%;
         box-sizing: border-box;
-		font-weight: 100;
+		font-weight: 300;
 		@include placeholder(rgba(255,255,255,0.5));
-		max-height: 200px;
 		padding-left: 31px;
 		padding-right: 20px;
 		min-height: inherit;
@@ -150,7 +199,9 @@
 
 .list-item.dragging {
   opacity: .5;
-  border: 1px dotted #ffffff;
+  background: rgba(255,255,255,0.3);
+  @include border-radius(5px);
+  padding: 10px;
   .delete-button{
     opacity: 0;
   }
@@ -162,8 +213,9 @@
 
 // List Edit
 .list-head{
-	margin-top: 110px;
-	margin-bottom: 40px;
+	padding-top: 4em;
+	padding-bottom: 2em;
+	margin-bottom: 2em;
 	input{
 		max-width: 100%;
 	}
@@ -171,8 +223,14 @@
 
 // Smaller than 480px
 @media (max-width: $screen-xs) {
-	li .list-title{
-		font-size: 25px;		  
+
+	.list-head{		
+		.list-title{
+			font-size: 2em !important;		  
+		}
+		.list-subtitle{
+			font-size: 1.2em !important;
+		}
 	}
 	
 	.list-item {
@@ -191,15 +249,63 @@
 
 // Smaller than 767px
 @media (max-width: $screen-sm){
+	.list-head{
+		text-align: center;
+		.list-title{
+			font-size: 2.5em;		  
+		}
+	}
+	
+	.list{
+		margin-top: 2em;
+	}
+	
+	.mobile-background {
+		background-size: cover;
+		background-repeat: no-repeat;
+		position: relative;
+		background-color: #194854;
+		
+		&:before{
+			content: '';
+			display: block;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 100%;
+			width: 100%;
+			background: rgba(0,0,0,0.3);
+			
+		}
+	}
+	.background-mobile{
+		background: #FFFFFF;
+		
+		.list *{
+			color: #666;
+			@include placeholder( lighten(#666, 50%) );
+			
+			a{
+				color: #f2d118;
+			}
+		}
+		
+	}
 }
 
 
 // 768px - 1999px
-@media (min-width: $screen-md) and (max-width: $screen-lg) {
-  
+@media (min-width: $screen-sm) and (max-width: $screen-lg) {
+  	.mobile-background {
+		background: transparent !important;	
+	}
 }
 
 // Larger than 1200px
 @media (min-width: $screen-lg) {
-  
+  .mobile-background {
+		background: transparent !important;	
+	}
 }
