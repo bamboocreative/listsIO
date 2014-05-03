@@ -2179,8 +2179,8 @@ textarea[type="button"].btn-block {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("bootstrap/glyphicons-halflings-regular.eot");
-  src: url("bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+  src: url("/assets/fonts/bootstrap/glyphicons-halflings-regular.eot");
+  src: url("/assets/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("/assets/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 
 .glyphicon {
   position: relative;
@@ -3600,6 +3600,26 @@ a.button, a.button-full {
   padding: 20px;
   font-size: 20px; }
 
+.like-btn {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  font-size: 2em;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+  .like-btn:hover {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+    color: red; }
+  .like-btn:active {
+    -webkit-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    transform: scale(1.3); }
+  .like-btn.liked {
+    color: red; }
+
 input, textarea {
   background: rgba(255, 255, 255, 0.3);
   border: none;
@@ -3775,6 +3795,13 @@ textarea {
     .login-wrapper .forgot-password {
       font-size: .6em; } }
 @media (max-width: 768px) {
+  .like-btn {
+    position: absolute;
+    top: 10px;
+    z-index: 99;
+    right: 110px;
+    font-size: 1.1em; }
+
   .footer-cta {
     padding: 7% 0 20% 0; } }
 .profile-wrapper {
@@ -4281,16 +4308,11 @@ textarea {
         z-index: 99;
         font-size: 1.1em; }
         .share-wrapper .share-buttons ul li:nth-child(1).move-left {
-          right: 25px; }
+          right: 15px; }
         .share-wrapper .share-buttons ul li:nth-child(2).move-left {
-          right: 75px; }
+          right: 47px; }
         .share-wrapper .share-buttons ul li:nth-child(3).move-left {
-          right: 125px; } }
-header .login {
-  position: absolute;
-  top: 40px;
-  right: 30px;
-  z-index: 20; }
+          right: 80px; } }
 header.mobile-header {
   display: none;
   position: fixed;

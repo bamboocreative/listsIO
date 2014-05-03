@@ -76,13 +76,6 @@
 		{% endblock %}
 	
 		{% block header %}
-			<header>
-				{% if app.user == false %}
-					<div class="login">
-						<a class="button" href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
-					</div>
-				{% endif %}
-			</header>
 			<header class="mobile-header"></header>
 		{% endblock %}
 	
