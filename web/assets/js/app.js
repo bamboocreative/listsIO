@@ -342,7 +342,7 @@ $(document).ready(function(){
 	* Search
 	*
 	*/
-	$peopleResults = $('#people-results ul');
+	$userResults = $('#user-results ul');
 	$listResults = $('#list-results ul');
 	$search =  $('#search');
 	
@@ -359,7 +359,7 @@ $(document).ready(function(){
         var keyword = $search.val();
         
 		if( !$search.val() ){
-			$peopleResults.empty();
+			$userResults.empty();
 			$listResults.empty();
 			return;
 		}
@@ -367,33 +367,48 @@ $(document).ready(function(){
 		clearTimeout($.data(this, 'timer'));
 		$(this).data('timer', setTimeout(function(){
 			
-			$peopleResults.empty();
+			$userResults.empty();
 			$listResults.empty();
 
 	        $.ajax({
 				url: '/search/find?all=' + keyword,
 				type: 'GET',
 			}).done(function(response){
-				console.log(response);
+			
 				var users = response.users;
 				var lists = response.lists;
 				
+				var usersEmpty = false;
+				var listsEmpty = false;
+				
 				if(!users.length && !lists.length){
-					var html = "<li><h3>Nothing Found...</h3></li>";
+					var html = "<li><h3 class='nothing-found'>Nothing Found...</h3></li>";
 					$listResults.append(html);
+					return;
+				} 
+				
+				if (!users.length){
+					var usersEmpty = true;
+					search_print_user(user, usersEmpty);
+					
 				} else {
-									
 					for(i = 0; i < users.length && i < 6; i++){
 						var user = users[i];
-						search_print_user(user, false);
-					}
-					
-					for(i = 0; i < lists.length && i < 12; i++){
-						var list = lists[i];
-						search_print_list(list, false);
+						search_print_user(user, usersEmpty);
 					}
 				}
 				
+				
+				if (!lists.length){
+					var listsEmpty = true;
+					search_print_list(list, listsEmpty);
+				} else {
+					for(i = 0; i < lists.length && i < 8; i++){
+						var list = lists[i];
+						search_print_list(list, listsEmpty);
+					}
+				}
+																	
 			})
 
         }, 300));
@@ -401,12 +416,21 @@ $(document).ready(function(){
 	});
 	
 	function search_print_user(user, empty){
-		var html = "<li> <a href='/" + user.username + "'><img src='" + user.gravatarURL +"'/>  <h3>" + user.username + "</h3> </a> </li";
-		$peopleResults.append(html);
+		if(empty){
+			var html = "<li><p class='nothing-found'>No user found...</p></li>";
+		} else {
+			var html = "<li> <a href='/" + user.username + "'><div class='search-user'><img src='" + user.gravatarURL +"'/>  <span class='search-user-username'>" + user.username + "</span> </div> </a> </li";
+		}
+		$userResults.append(html);
 	}
 	
-	function search_print_list(list){
-		var html = "<li> <a href='/list/" + list.id + "'> <h3>" + list.title + "</h3> <p>" + list.subtitle + "</p> </a> </li>";
+	function search_print_list(list, empty){
+		if(empty){
+			var html = "<li><p class='nothing-found'>No lists found...</p></li>";
+		} else {
+			var html = "<li> <a href='/list/" + list.id + "'> <div class='search-list'> <h3 class='search-title'>" + list.title + "</h3> <p class='search-subtitle'>" + list.subtitle + "</p></a> </div> <a href=/'" + list.user.username + "'><div class='search-list-profile'><img src='" + list.user.gravatarURL +"' /><span class='search-list-username'>by " + list.user.username + "</span> </div> </a></li>";
+		}
+		
 		$listResults.append(html);
 	}
 	

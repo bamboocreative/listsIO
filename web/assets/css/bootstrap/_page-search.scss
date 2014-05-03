@@ -1,3 +1,105 @@
 .search-wrapper{
 	padding-top: 75px;
+	
+	#search{
+		border: none;
+		border-bottom: 2px solid white;
+		background: none;
+		@include border-radius(0);
+		width: 100%;
+		font-size: 3em;
+		padding-left: 0;
+	}
+	
+	ul {
+		list-style: none;
+		padding-left: 0;
+		margin-left: 0;
+		margin-top: 40px;
+		
+		li {
+			
+			border-bottom: 1px solid  rgba(255,255,255,0.2);
+			
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+			
+			.nothing-found{
+				color: rgba(255,255,255,0.5);
+			}
+			
+			&:last-child{
+				border-bottom: none;
+			}
+		
+			//Search user profiles
+			.search-user{
+				img{
+					width: 70px;
+					@include border-radius(100%);
+				}
+				
+				.search-user-username{
+					padding-left: 10px
+				}
+			}
+			
+			//Search lists
+			.search-list {
+				color: rgba(255,255,255,0.7);
+				@include transition(all .3s ease);
+				
+				.search-title{
+					font-weight: 600;
+					font-size: 2em;
+					margin-bottom: 5px;
+				}
+				.search-subtitle{
+					font-weight: 100;
+					font-style: italic;
+					font-size: 1.2em;
+				}
+				&:hover{
+					color: white;
+				}
+			}
+			.search-list-profile{
+				color: rgba(255,255,255,0.7);
+				@include transition(all .3s ease);
+				
+				img{
+					width: 30px;
+					@include border-radius(100%);
+				}
+				.search-list-username{
+					font-size: .9em;
+					padding-left: 10px;
+				}
+					
+				&:hover{
+					color: white;
+				}
+			}		
+		}// end li
+	}//end ul
+}//end search-wrapper
+
+// Smaller than 480px
+@media (max-width: $screen-xs) {
+}
+
+// Smaller than 767px
+@media (max-width: $screen-sm){
+	#search {
+		font-size: 2em !important;
+	}
+}
+// 768px - 1999px
+@media (min-width: $screen-md) and (max-width: $screen-lg) {
+}
+
+// Larger than 1200px
+@media (min-width: $screen-lg) {
 }
