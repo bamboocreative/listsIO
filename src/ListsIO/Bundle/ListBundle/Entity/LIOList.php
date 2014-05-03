@@ -38,6 +38,11 @@ class LIOList implements JsonSerializable
     private $user;
 
     /**
+     * @var null|LIOList
+     */
+    private $nextList;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $listItems;
@@ -70,6 +75,7 @@ class LIOList implements JsonSerializable
         $this->title = "";
         $this->subtitle = "";
         $this->imageURL = "";
+        $this->nextList = NULL;
     }
 
     /**
@@ -173,6 +179,22 @@ class LIOList implements JsonSerializable
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @return \ListsIO\Bundle\ListBundle\Entity\LIOList|null
+     */
+    public function getNextList()
+    {
+        return $this->nextList;
+    }
+
+    /**
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOList|null $nextList
+     */
+    public function setNextList($nextList)
+    {
+        $this->nextList = $nextList;
     }
 
     /**
@@ -331,4 +353,5 @@ class LIOList implements JsonSerializable
             $this->createdAt = new \DateTime(date('Y-m-d H:i:s'));
         }
     }
+
 }

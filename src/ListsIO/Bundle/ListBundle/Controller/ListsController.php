@@ -6,6 +6,7 @@ use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use ListsIO\Bundle\ListBundle\Entity\LIOListItem;
 use ListsIO\Bundle\ListBundle\Entity\LIOListLike;
 use ListsIO\Bundle\ListBundle\Entity\LIOListView;
+use ListsIO\Bundle\ListBundle\Services\Recommender;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -40,7 +41,7 @@ class ListsController extends Controller
             'user'          => $user,
             'list_user'     => $author,
             'list'          => $list,
-            'liked'         => false
+            'liked'         => false,
         );
 
         if ( ! empty($user)) {

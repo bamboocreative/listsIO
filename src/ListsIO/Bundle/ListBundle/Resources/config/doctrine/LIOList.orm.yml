@@ -25,6 +25,8 @@ ListsIO\Bundle\ListBundle\Entity\LIOList:
         user:
           targetEntity: ListsIO\Bundle\UserBundle\Entity\User
           inversedBy: lists
+        nextList:
+          targetEntity: LIOList
     oneToMany:
         listItems:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListItem

@@ -23,7 +23,7 @@
 				</div>
 			</div>
             <div class="row">
-                <a href="#" class="like-btn class="{{ liked ? 'liked' : 'not-liked' }}">Like this list.</a>
+                <a href="#" class="like-btn {{ liked ? 'liked' : 'not-liked' }}">Like this list.</a>
             </div>
 			<div class="row">
 		        <div class="list">
@@ -44,6 +44,11 @@
 			        </div>
 		        </div>
 			</div>
+            {% if list.nextList %}
+                <div class="row">
+                    Next Up: <a href="{{ path('lists_io_view_list', {'id': list.nextList.id}) }}">{{ list.nextList.title }}</a>
+                </div>
+            {% endif %}
 			<br /><br />
 		</div>
 	</div>

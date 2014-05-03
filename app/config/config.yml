@@ -105,3 +105,8 @@ hwi_oauth:
             client_id:           "%facebook.api_id%"
             client_secret:       "%facebook.api_secret%"
             scope:               "email"
+
+services:
+  listsio_recommender:
+    class: ListsIO\Bundle\ListBundle\Services\Recommender
+    arguments: [@doctrine.orm.entity_manager]
