@@ -142,11 +142,7 @@ $(document).ready(function(){
     $('.like-btn').on('click', function(e) {
         e.preventDefault();
         var $this = $(this);
-        /*
-        if ($this.hasClass('liked')) {
-            return false;
-        }
-        */
+
         show_save('Liking...');
         $.ajax({
             type: "POST",

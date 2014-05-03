@@ -11,7 +11,7 @@
 {% block title %}Lists.io | {{ title }}{% endblock %}
 
 {% block body %}
-
+<a href="#" class="like-btn {{ liked ? 'liked' : 'not-liked' }}"><span class="glyphicon glyphicon-heart"></span></a>
 <div class="background background-mobile" style="min-height: 100%; min-width: 100%;">
 	<div class="items">
 		<div class="container">
@@ -23,7 +23,6 @@
 				</div>
 			</div>
             <div class="row">
-                <a href="#" class="like-btn class="{{ liked ? 'liked' : 'not-liked' }}">Like this list.</a>
             </div>
 			<div class="row">
 		        <div class="list">
