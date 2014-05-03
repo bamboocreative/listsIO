@@ -428,7 +428,7 @@ $(document).ready(function(){
 		if(empty){
 			var html = "<li><p class='nothing-found'>No lists found...</p></li>";
 		} else {
-			var html = "<li> <a href='/list/" + list.id + "'> <div class='search-list'> <h3 class='search-title'>" + list.title + "</h3> <p class='search-subtitle'>" + list.subtitle + "</p></a> </div> <a href=/'" + list.user.username + "'><div class='search-list-profile'><img src='" + list.user.gravatarURL +"' /><span class='search-list-username'>by " + list.user.username + "</span> </div> </a></li>";
+			var html = "<li> <a href='/list/" + list.id + "'> <div class='search-list'> <h3 class='search-title'>" + list.title + "</h3> <p class='search-subtitle'>" + list.subtitle + "</p></a> </div> <a href=/" + list.user.username + "><div class='search-list-profile'><img src='" + list.user.gravatarURL + "' /><span class='search-list-username'>by " + list.user.username + "</span> </div> </a></li>";
 		}
 		
 		$listResults.append(html);
