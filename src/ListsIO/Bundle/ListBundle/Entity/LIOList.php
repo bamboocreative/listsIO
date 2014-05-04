@@ -119,7 +119,7 @@ class LIOList implements JsonSerializable
     /**
      * Set image
      *
-     * @param string $image
+     * @param string $imageURL
      * @return LIOList
      */
     public function setImageURL($imageURL)
@@ -203,9 +203,11 @@ class LIOList implements JsonSerializable
         foreach($this->listItems as $item) {
             $listItems[] = $item->jsonSerialize();
         }
+        /** @var  $user \ListsIO\Bundle\UserBundle\Entity\User */
         $user = $this->getUser();
         return array(
             'userID'    => $user ? $user->getId() : null,
+            'user'      => $user ? $user->jsonSerialize() : null,
             'id'        => $this->getId(),
             'title'     => $this->getTitle(),
             'subtitle'  => $this->getSubtitle(),

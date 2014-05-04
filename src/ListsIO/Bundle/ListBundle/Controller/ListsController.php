@@ -34,16 +34,6 @@ class ListsController extends Controller
             'list' => $list
         );
 
-        // Add order index to old list items.
-        $i = 1;
-        foreach($list->getListItems() as $list_item) {
-            if (! $list_item->getOrderIndex()) {
-                $list_item->setOrderIndex($i);
-                $this->saveEntity($list_item);
-            }
-            $i++;
-        }
-
         // If list does not belong to user, render view template, otherwise render edit template.
         if ( empty($user) || ! ($list_user->getId() === $user->getId())) {
             return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $data);

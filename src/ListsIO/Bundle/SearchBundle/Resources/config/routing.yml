@@ -1,0 +1,7 @@
+lists_io_search_homepage:
+    pattern:  /
+    defaults: { _controller: ListsIOSearchBundle:Search:index }
+
+lists_io_search_find:
+    pattern:  /find
+    defaults: { _controller: ListsIOSearchBundle:Search:find }
