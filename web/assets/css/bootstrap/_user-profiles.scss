@@ -1,6 +1,7 @@
 // User Profile
 .profile-wrapper{
 	text-align: center;
+	position: relative;
 	
 	.gravatar-image{
 		padding-top: 5em;
@@ -75,6 +76,13 @@
 	
 }
 
+// Profile page divider
+.divider{
+	border-top: 1px solid #fff;
+	margin: 2.8em;
+	opacity: .7;
+}
+
 // Smaller than 480px
 @media (max-width: $screen-xs) {
 	.profile-wrapper{
@@ -84,11 +92,12 @@
 		.gravatar-image{
 		//	padding-top: 10em;
 		}
-		.divider{
-			margin-top: .3em;
-			margin-bottom: .3em;
-		}
-
+	}
+	
+	.divider{
+		padding-bottom: 1em;
+		margin-top: .3em !important;
+		margin-bottom: .3em !important;
 	}
 	
 	.profile-lists-wrapper{
@@ -101,15 +110,14 @@
 	}	  		
 }
 
-// Profile page divider
-.divider{
-	border-top: 1px solid #fff;
-	margin: 2.8em;
-	opacity: .7;
-}
-
 // Smaller than 767px
 @media (max-width: $screen-sm){
+	
+	.divider{
+		padding-bottom: 1em;
+		margin-top: .3em !important;
+		margin-bottom: .3em !important;
+	}
 }
 
 

@@ -2179,8 +2179,8 @@ textarea[type="button"].btn-block {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("bootstrap/glyphicons-halflings-regular.eot");
-  src: url("bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+  src: url("/assets/fonts/bootstrap/glyphicons-halflings-regular.eot");
+  src: url("/assets/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("/assets/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 
 .glyphicon {
   position: relative;
@@ -3768,7 +3768,7 @@ textarea {
     padding-top: 40px;
     padding-bottom: 40px; }
     .login-wrapper .button, .login-wrapper .button-full, .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"], .login-wrapper button {
-      font-size: 14px; }
+      font-size: 13px; }
     .login-wrapper .checkbox-label {
       font-size: .6em;
       width: 35%; }
@@ -3778,7 +3778,8 @@ textarea {
   .footer-cta {
     padding: 7% 0 20% 0; } }
 .profile-wrapper {
-  text-align: center; }
+  text-align: center;
+  position: relative; }
   .profile-wrapper .gravatar-image {
     padding-top: 5em;
     padding-bottom: 0em; }
@@ -3822,22 +3823,29 @@ textarea {
       .profile-lists-wrapper ul li a .list-subtitle {
         font-weight: 100; }
 
-@media (max-width: 480px) {
-  .profile-wrapper .profile-name {
-    font-size: 1.5em; }
-  .profile-wrapper .divider {
-    margin-top: .3em;
-    margin-bottom: .3em; }
-
-  .profile-lists-wrapper ul {
-    margin-bottom: 3em; }
-    .profile-lists-wrapper ul li {
-      padding-bottom: 2em; } }
 .divider {
   border-top: 1px solid #fff;
   margin: 2.8em;
   opacity: .7; }
 
+@media (max-width: 480px) {
+  .profile-wrapper .profile-name {
+    font-size: 1.5em; }
+
+  .divider {
+    padding-bottom: 1em;
+    margin-top: .3em !important;
+    margin-bottom: .3em !important; }
+
+  .profile-lists-wrapper ul {
+    margin-bottom: 3em; }
+    .profile-lists-wrapper ul li {
+      padding-bottom: 2em; } }
+@media (max-width: 768px) {
+  .divider {
+    padding-bottom: 1em;
+    margin-top: .3em !important;
+    margin-bottom: .3em !important; } }
 .list-button-wrapper {
   text-align: center;
   margin-top: 1em;
