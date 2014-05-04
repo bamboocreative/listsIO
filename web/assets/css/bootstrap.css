@@ -4265,6 +4265,7 @@ textarea {
     margin-left: 0;
     margin-top: 40px; }
     .search-wrapper ul li {
+      padding: 20px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
       .search-wrapper ul li a {
         color: inherit;
