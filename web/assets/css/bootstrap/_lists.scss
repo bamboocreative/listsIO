@@ -96,7 +96,7 @@
           display: inline-block;
           line-height: 1em;
           @include transition(background, .3s);
-          color: rgba(255,255,255,.3);
+          color: rgba(255,255,255,.7);
           
           &:hover{
               color: white;

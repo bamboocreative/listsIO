@@ -3950,7 +3950,7 @@ textarea {
     line-height: 1em;
     -webkit-transition: background, 0.3s;
     transition: background, 0.3s;
-    color: rgba(255, 255, 255, 0.3); }
+    color: rgba(255, 255, 255, 0.7); }
     .list-head div#author a:hover {
       color: white;
       text-decoration: none; }
