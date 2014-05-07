@@ -24,16 +24,32 @@ class Recommender {
 
     private $em;
 
-    const PREF_SCORE_AUTHOR = 8; // Preference score for being the owner of a list.
-    const PREF_SCORE_LIKE = 8; // Preference score for liking a list.
+    const PREF_SCORE_AUTHOR = 2; // Preference score for being the owner of a list.
+    const PREF_SCORE_LIKE = 2; // Preference score for liking a list.
     const PREF_SCORE_VIEW = 1; // Preference score for viewing a list (per view).
     const DEFAULT_SIM_FUNC = 'similarityPearson';
 
+    /**
+     * Default Constructor
+     *
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
+    /**
+     * Get the $numLists most similar to the given lists:
+     * - Ignore lists in $ignore
+     * - Use the similarity function named in $similarityFunction
+     *
+     * @param LIOList $list
+     * @param int $numLists
+     * @param array $ignore
+     * @param string $similarityFunction
+     * @return array|null
+     */
     public function mostSimilarLists(LIOList $list,
                                      $numLists = 1,
                                      array $ignore = array(),
@@ -53,12 +69,17 @@ class Recommender {
             // 1. Not the given list.
             // 2. Not in the "ignore" list.
             // 3. Have a title.
-            if ( $otherList->getId() != $list->getId()
+            if ($otherList->getId() != $list->getId()
                 && ! in_array($otherList, $ignore)
                 && $otherList->getTitle()) {
                 $otherListPrefs = $this->preferencesByList($otherList);
                 $prefs[$otherList->getId()] = $otherListPrefs;
-                $otherListScore = $this->$similarityFunction($prefs, $list, $otherList);
+                if (method_exists($this, $similarityFunction)) {
+                    $otherListScore = $this->$similarityFunction($prefs, $list, $otherList);
+                } else {
+                    $sim_func = self::DEFAULT_SIM_FUNC;
+                    $otherListScore = $this-$sim_func($prefs, $list, $otherList);
+                }
                 if ($otherListScore >= -1) {
                     $scores[$otherList->getId()] = $otherListScore;
                     $scoredLists[$otherList->getId()] = $otherList;
@@ -76,6 +97,14 @@ class Recommender {
         return array_intersect_key($scoredLists, $result);
     }
 
+    /**
+     * Determine Pearson correlation coefficient for $entity1 and $entity2, using scores in $prefs.
+     *
+     * @param $prefs
+     * @param $entity1
+     * @param $entity2
+     * @return float
+     */
     public function similarityPearson($prefs, $entity1, $entity2)
     {
         $entity1Id = $entity1->getId();
@@ -89,9 +118,8 @@ class Recommender {
         }
 
         $n = count($similarities);
-
         if ( ! $n) {
-            return -2;
+            return floatval(-2);
         }
 
         // Sum scores, sum squares of scores, and sum of products of scores.
@@ -115,20 +143,31 @@ class Recommender {
         $den = sqrt(($sumSq1 - $sum1 * $sum1 / $n) * ($sumSq2 - $sum2 * $sum2 / $n));
         // Avoid division by zero
         if ($den == 0) {
-            return 0;
+            return floatval(0);
         }
         return $num/$den;
     }
 
+    /**
+     * Generate an array of user preferences (keyed by user ID) for a given List.
+     *
+     * @param LIOList $list
+     * @return array
+     */
     public function preferencesByList(LIOList $list)
     {
         $prefs = array();
         $prefs[$list->getUser()->getId()] = self::PREF_SCORE_AUTHOR;
+
         foreach($list->getListViews() as $listView) {
             // ListView user can be null.
             $user = $listView->getUser();
-            if ( ! empty($user)) {
+            if ( empty($user)) {
+                $userId = $listView->getAnonymousIdentifier();
+            } else {
                 $userId = $user->getId();
+            }
+            if ( ! empty($userId)) {
                 if (empty($prefs[$userId])) {
                     $prefs[$userId] = self::PREF_SCORE_VIEW;
                 } else {
@@ -136,6 +175,7 @@ class Recommender {
                 }
             }
         }
+
         foreach($list->getListLikes() as $listLike) {
             // ListLike always has a user.
             $userId = $listLike->getUser()->getId();
@@ -145,23 +185,40 @@ class Recommender {
                 $prefs[$userId] += self::PREF_SCORE_LIKE;
             }
         }
+
         return $prefs;
     }
 
-    public function preferencesByUser(LIOList $list) {
+    /**
+     * Generate an array of user preferences (keyed by List ID) for a given user.
+     *
+     * @param User $user
+     * @return array
+     */
+    public function preferencesByUser(User $user) {
         $prefs = array();
-        $authorId = $list->getUser()->getId();
-        $prefs[$authorId] = self::PREF_SCORE_AUTHOR;
-
-        foreach($list->getListViews() as $view) {
-            // Author views are not recorded in list views, so we don't have to worry about overriding the author score.
-            $prefs[$like->getUser()->getId()] = self::PREF_SCORE_VIEW;
+        foreach($user->getLists() as $list) {
+            $listId = $list->getId();
+            $prefs[$listId] = self::PREF_SCORE_AUTHOR;
         }
 
-        foreach($list->getListLikes() as $like) {
+        foreach($user->getListViews() as $view) {
+            $list = $view->getList();
+            $listId = $list->getId();
+            if (empty($prefs[$listId])) {
+                $prefs[$listId] = self::PREF_SCORE_VIEW;
+            } else {
+                $prefs[$listId] += self::PREF_SCORE_VIEW;
+            }
+        }
+
+        foreach($user->getListLikes() as $like) {
+            $list = $like->getLike();
+            $listId = $list->getId();
             // You have to view a list to like it, so we can just add here.
-            $prefs[$like->getUser()->getId()] += self::PREF_SCORE_LIKE;
+            $prefs[$listId] += self::PREF_SCORE_LIKE;
         }
+        return $prefs;
     }
 
 } 

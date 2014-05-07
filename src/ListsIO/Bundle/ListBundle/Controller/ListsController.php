@@ -30,6 +30,8 @@ class ListsController extends Controller
             throw $this->createNotFoundException("Unable to find list.");
         }
 
+        $this->get('session')->set('target_path', $this->get('router')->generate('lists_io_view_list', array('id' => $id)));
+
         $author = $list->getUser();
         $user = $this->getUser();
 
@@ -60,6 +62,7 @@ class ListsController extends Controller
             );
             $data['liked'] = !! (count($listLikes));
         } else {
+            $listView->setAnonymousIdentifier($request->headers->get('User-Agent'), $request->getClientIp());
             $this->saveEntity($listView);
         }
 

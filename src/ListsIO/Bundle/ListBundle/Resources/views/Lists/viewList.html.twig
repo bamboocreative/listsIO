@@ -18,7 +18,7 @@
 			<div class="row mobile-background"  style="background-image: url('{{ list.imageURL }}');">
 				<div class="col-md-8 col-md-offset-2 view-list-head-wrapper list-head" id="list-{{ list.id }}">
 					<div class="list-title" data-id="{{ list.id }}">{{ title }}</div>
-					<div class="list-subtitle">{{ list.subtitle }}</div>
+					<div class="list-subtitle">{{ list.subtitle|converturls|nl2br }}</div>
 					<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list_user.username}) }}"><img class="loggedin" src="{{ list_user.gravatarURL }}"> by {{ list_user.username }}</a></div>
 				</div>
 			</div>
@@ -44,8 +44,21 @@
 		        </div>
 			</div>
             {% if list.nextList %}
+                <hr>
                 <div class="row">
-                    Next Up: <a href="{{ path('lists_io_view_list', {'id': list.nextList.id}) }}">{{ list.nextList.title }}</a>
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="next-list">
+                            Next Up
+                            <a href="{{ path('lists_io_view_list', {'id': list.nextList.id}) }}">
+                                <h3>{{ list.nextList.title }}</h3>
+                                <p>{{ list.nextList.subtitle }}</p>
+                            </a>
+                            <a href="{{ path('lists_io_user_view_by_username', {'username': list.nextList.user.username}) }}">
+                                <img src="{{ list.nextList.user.gravatarURL }}">
+                                <span>by {{ list.nextList.user.username }}</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             {% endif %}
 			<br /><br />

@@ -8,14 +8,14 @@ ListsIO\Bundle\ListBundle\Entity\LIOListLike:
             generator:
                 strategy: AUTO
     fields:
-        createdAt:
-            type: datetime
+      createdAt:
+        type: datetime
     manyToOne:
-        user:
-            targetEntity: ListsIO\Bundle\UserBundle\Entity\User
-            inversedBy: listLikes
-        list:
-            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
-            inversedBy: listLikes
+      user:
+        targetEntity: ListsIO\Bundle\UserBundle\Entity\User
+        inversedBy: listLikes
+      list:
+        targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
+        inversedBy: listLikes
     lifecycleCallbacks:
-         prePersist: [prePersistTimestamp]
+      prePersist: [prePersistTimestamp]

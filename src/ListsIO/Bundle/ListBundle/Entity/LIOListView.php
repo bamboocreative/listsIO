@@ -11,6 +11,7 @@ namespace ListsIO\Bundle\ListBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use ListsIO\Bundle\UserBundle\Entity\User;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 class LIOListView {
 
@@ -28,6 +29,13 @@ class LIOListView {
      * @var LIOList
      */
     protected $list;
+
+    /**
+     * Used for tracking views by anonymous users.
+     *
+     * @var string
+     */
+    protected $anonymousIdentifier;
 
     /**
      * @var DateTime
@@ -59,6 +67,31 @@ class LIOListView {
     }
 
     /**
+     * @param string $userAgent
+     * @param string $userIP
+     */
+    public function setAnonymousIdentifier($userAgent, $userIP)
+    {
+        // Only generate an anonymous identifier if:
+        // 1. The user agent exists.
+        // 2. The user IP address exists.
+        if ( empty($userAgent) || empty($userIP)) {
+            $this->anonymousIdentifier = null;
+        }
+        // Max anonymous identifier length is 512 (arbitrary limitation on entity config).
+        $userAgent = substr($userAgent, 0, (511 - strlen($userIP)));
+        $this->anonymousIdentifer = $userAgent . $userIP;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAnonymousIdentifier()
+    {
+        return $this->anonymousIdentifier;
+    }
+
+    /**
      * @param LIOList $list
      */
     public function setList(LIOList $list)
@@ -83,7 +116,7 @@ class LIOListView {
     }
 
     /**
-     * @ORM\PrePersist
+     * Timestamp the object before saving.
      */
     public function prePersistTimestamp()
     {

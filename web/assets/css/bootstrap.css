@@ -275,7 +275,7 @@ th {
 
 html {
   font-size: 62.5%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+  -webkit-tap-highlight-color: transparent; }
 
 body {
   font-family: "open-sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -354,14 +354,12 @@ hr {
   src: url("/assets/fonts/ico/lists_iconfont.eot?#iefix-nc6195") format("embedded-opentype"), url("/assets/fonts/ico/lists_iconfont.woff?-nc6195") format("woff"), url("/assets/fonts/ico/lists_iconfont.ttf?-nc6195") format("truetype"), url("/assets/fonts/ico/lists_iconfont.svg?-nc6195#lists_iconfont") format("svg");
   font-weight: normal;
   font-style: normal; }
-
 @font-face {
   font-family: 'icomoon-menu';
   src: url("/assets/fonts/ico/icomoon-menu.eot?-8lcszq");
   src: url("/assets/fonts/ico/icomoon-menu.eot?#iefix-8lcszq") format("embedded-opentype"), url("/assets/fonts/ico/icomoon-menu.woff?-8lcszq") format("woff"), url("/assets/fonts/ico/icomoon-menu.ttf?-8lcszq") format("truetype"), url("/assets/fonts/ico/icomoon-menu.svg?-8lcszq#icomoon-menu") format("svg");
   font-weight: normal;
   font-style: normal; }
-
 [class^="icon-"], [class*=" icon-"] {
   font-family: 'lists_iconfont';
   speak: none;
@@ -2181,7 +2179,6 @@ textarea[type="button"].btn-block {
   font-family: 'Glyphicons Halflings';
   src: url("/assets/fonts/bootstrap/glyphicons-halflings-regular.eot");
   src: url("/assets/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("/assets/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
-
 .glyphicon {
   position: relative;
   top: 1px;
@@ -3402,7 +3399,6 @@ button.close {
 
 @-ms-viewport {
   width: device-width; }
-
 .visible-xs, .visible-sm, .visible-md, .visible-lg {
   display: none !important; }
 
@@ -3993,6 +3989,30 @@ textarea {
   .list ol {
     margin: 0;
     padding: 0; }
+
+.next-list a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7); }
+.next-list a:hover {
+  color: white; }
+.next-list h3 {
+  font-weight: 600;
+  margin-bottom: 5px; }
+.next-list p {
+  font-weight: 100;
+  font-style: italic;
+  font-size: 1.2em; }
+.next-list p.heading {
+  font-style: normal;
+  font-weight: bold; }
+.next-list img {
+  width: 30px;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  border-radius: 100%; }
+.next-list span {
+  font-size: .9em;
+  padding-left: 10px; }
 
 .list-item {
   position: relative;

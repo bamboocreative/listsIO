@@ -107,6 +107,9 @@ hwi_oauth:
             scope:               "email"
 
 services:
-  listsio_recommender:
+  listsio.recommender:
     class: ListsIO\Bundle\ListBundle\Services\Recommender
     arguments: [@doctrine.orm.entity_manager]
+  listsio.security.component.authentication.handler.login_success_handler:
+    class: ListsIO\Bundle\UserBundle\Component\Authentication\Handler\LoginSuccessHandler
+    arguments: [@service_container, @router]

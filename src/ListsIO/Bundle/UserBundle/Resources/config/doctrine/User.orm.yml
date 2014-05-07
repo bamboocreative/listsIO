@@ -45,6 +45,8 @@ ListsIO\Bundle\UserBundle\Entity\User:
     oneToMany:
         lists:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
+            orderBy:
+              createdAt: DESC
             mappedBy: user
             cascade: ["remove", "persist"]
         listViews:

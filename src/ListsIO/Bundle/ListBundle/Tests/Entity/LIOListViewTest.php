@@ -50,6 +50,12 @@ class LIOListViewTest extends \PHPUnit_Framework_TestCase {
         assertInstanceOf('ListsIO\Bundle\UserBundle\Entity\User', $this->listView->getUser());
     }
 
+    public function testAnonymousIdentifierAccessors()
+    {
+        $this->listViews->setAnonymousIdentifier("user-agent-string", "1234.1234.1234.1234");
+        assertEquals("user-agent-string1234.1234.1234.1234", $this->listView->getAnonymousIdentifier());
+    }
+
     public function testEmptyList()
     {
         $this->assertNull($this->listView->getList());

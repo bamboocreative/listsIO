@@ -25,7 +25,7 @@ class UpdateListRecommendationsCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $recommender = $this->getContainer()->get('listsio_recommender');
+        $recommender = $this->getContainer()->get('listsio.recommender');
         $qb = $em->getRepository('ListsIO\Bundle\ListBundle\Entity\LIOList')->createQueryBuilder('l');
         $query = $qb->getQuery();
         $lists = $query->getResult();

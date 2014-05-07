@@ -304,23 +304,29 @@ class LIOList implements JsonSerializable
             $listItems[] = $item->jsonSerialize();
         }
         $listViews = array();
+        $totalViewsCount = count($this->listViews);
         // TODO: Use appropriate serialization/HATEOAS, Jesse Rosato, 4/4/14
         foreach($this->listViews as $listView) {
-            $listViews[] = $listView->getUser()->getUserId();
+            $viewer = $listView->getUser();
+            if ($viewer) {
+                $listViews[] = $viewer->getId();
+            }
         }
+
         $listLikes = array();
         foreach($this->listLikes as $listLike) {
-            $listLikes[] = $listLike->getUser()->getUserId();
+            $listLikes[] = $listLike->getUser()->getId();
         }
         $user = $this->getUser();
         return array(
-            'userID'    => $user ? $user->getId() : null,
-            'id'        => $this->getId(),
-            'title'     => $this->getTitle(),
-            'subtitle'  => $this->getSubtitle(),
-            'listItems' => $listItems,
-            'listLikes' => $listLikes,
-            'listViews' => $listViews
+            'userID'            => $user ? $user->getId() : null,
+            'id'                => $this->getId(),
+            'title'             => $this->getTitle(),
+            'subtitle'          => $this->getSubtitle(),
+            'listItems'         => $listItems,
+            'likedBy'           => $listLikes,
+            'viewedBy'          => $listViews,          // Logged-in users who viewed this list.
+            'viewedCount'       => $totalViewsCount     // Number of list views (anonymous views included).
         );
     }
 

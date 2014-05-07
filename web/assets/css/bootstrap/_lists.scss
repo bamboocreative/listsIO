@@ -145,6 +145,47 @@
 	}
 }
 
+.next-list{
+
+  a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, .7);
+  }
+
+  a:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  h3 {
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  p {
+    font-weight: 100;
+    font-style: italic;
+    font-size: 1.2em;
+  }
+
+  p.heading {
+    font-style: normal;
+    font-weight: bold;
+  }
+
+  img {
+    width: 30px;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+  }
+
+  span {
+    font-size: .9em;
+    padding-left: 10px;
+  }
+
+}
+
 .list-item{
 	position: relative;
 	margin: 0 auto 60px auto;

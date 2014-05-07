@@ -8,6 +8,10 @@ ListsIO\Bundle\ListBundle\Entity\LIOListView:
             generator:
                 strategy: AUTO
     fields:
+        anonymousIdentifier:
+            type: string
+            length: 512
+            nullable: true
         createdAt:
             type: datetime
     manyToOne:

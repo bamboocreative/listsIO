@@ -1,0 +1,2 @@
+MAILTO="jesse.rosato@gmail.com"
+5 * * * * php app/console /var/app/current/app/console listsio:updatelistrecs > /dev/null

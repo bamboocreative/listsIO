@@ -228,9 +228,7 @@ $(document).ready(function(){
               $item.attr('data-id', data.id)
               $item.attr('data-order_index', data.orderIndex);
               $('.editable-list').append($item);
-              
               $item.find('.item').focus();
-
 		  }
 
 		});
