@@ -95,6 +95,31 @@ class LIOListTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(0, count($this->list->getListItems()));
     }
 
+    public function testEmptyListViews()
+    {
+        $this->assertEquals(0, count($this->list->getListViews()));
+    }
+
+    public function testAddListView()
+    {
+        $listView = $this->getMockBuilder('ListsIO\Bundle\ListBundle\Entity\LIOListView')
+            ->getMock();
+
+        $this->list->addListView($listView);
+        $this->assertEquals(1, count($this->list->getListViews()));
+    }
+
+    public function testRemoveListView()
+    {
+        $listView = $this->getMockBuilder('ListsIO\Bundle\ListBundle\Entity\LIOListView')
+            ->getMock();
+
+        $this->list->addListView($listView);
+        $this->assertEquals(1, count($this->list->getListViews()));
+        $this->list->removeListView($listView);
+        $this->assertEquals(0, count($this->list->getListViews()));
+    }
+
     public function testUserAccessors()
     {
         $user = $this->getMockBuilder('\ListsIO\Bundle\UserBundle\Entity\User')

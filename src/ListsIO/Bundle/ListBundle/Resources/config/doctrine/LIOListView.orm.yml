@@ -1,0 +1,25 @@
+ListsIO\Bundle\ListBundle\Entity\LIOListView:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        anonymousIdentifier:
+            type: string
+            length: 512
+            nullable: true
+        createdAt:
+            type: datetime
+    manyToOne:
+        user:
+            targetEntity: ListsIO\Bundle\UserBundle\Entity\User
+            inversedBy: listViews
+        list:
+            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
+            inversedBy: listViews
+    lifecycleCallbacks:
+        prePersist: [prePersistTimestamp]

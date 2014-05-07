@@ -96,7 +96,7 @@
           display: inline-block;
           line-height: 1em;
           @include transition(background, .3s);
-          color: rgba(255,255,255,.3);
+          color: rgba(255,255,255,.7);
           
           &:hover{
               color: white;
@@ -145,9 +145,46 @@
 	}
 }
 
+.next-list{
+
+  h3 {
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  h4 {
+    color: #fff;
+    font-weight: 100;
+  }
+
+  p {
+    color: #fff;
+    font-weight: 100;
+    font-size: 1.2em;
+  }
+
+  p.heading {
+    font-style: normal;
+    font-weight: bold;
+  }
+
+  img {
+    width: 30px;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+  }
+
+  span {
+    font-size: .9em;
+    padding-left: 10px;
+  }
+
+}
+
 .list-item{
 	position: relative;
-	margin: 0 auto 60px auto;
+	margin: 0 auto 40px auto;
 	list-style-type: none;
 
 	&:hover{
@@ -293,6 +330,16 @@
 		}
 		
 	}
+
+    .next-list{
+        h4 {
+          color: #666;
+        }
+
+        p {
+          color: #666;
+        }
+    }
 }
 
 

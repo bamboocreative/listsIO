@@ -6,13 +6,15 @@ $(document).ready(function(){
 	
 	var $siteWrapper = $('#site_wrapper');
 
-    var $list = $(".editable-list");
+    var $list = $(".editable-list, .non-editable-list");
 
     var listID = $list.attr('data-id');
 
-    var userID = $list.attr('data-user_id');
+    var userID = $('body').attr('data-user_id');
 
     var $saveIndicator = $('#save_indicator');
+
+    var $statusIndicator = $('#status_indicator');
     
     var $item_template = $('#item-template');
 
@@ -28,6 +30,8 @@ $(document).ready(function(){
 
     var saving_msg = "Saving...";
     var saved_msg = "Saved.";
+    var error_msg = "Please try again later.";
+    var login_to_like_msg = 'Please <a href="/register">sign up</a> or <a href="/login">login</a> to like.';
 
     if (list) {
         var sortableList = new Sortable(list, {
@@ -136,18 +140,61 @@ $(document).ready(function(){
 		})
 		
 	});
-		
+
+    $('.like-btn').on('click', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+
+        show_save('Liking...');
+        $.ajax({
+            type: "POST",
+            url: '/list/like',
+            data : {
+                listId: listID
+            },
+            success: function(data, textStatus, jqXHR){
+                // 201 indicates new like created.
+                // Otherwise = redirect to login (user is not logged in).
+                if (jqXHR.status == 201) {
+                    $this.removeClass('not-liked').addClass('liked');
+                    show_save("Liked.");
+                    hide_save();
+                } else {
+                    hide_save();
+                    show_status(login_to_like_msg);
+                    hide_status();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // 409 indicates like already exists.
+                if (jqXHR.status == 409) {
+                    $this.addClass('liked');
+                    show_status("Already liked.");
+                } else {
+                    show_status(error_msg);
+                }
+                hide_save();
+                hide_status();
+            }
+        });
+    });
 	
 	/*
 	*
 	* Show Save
 	*
 	*/
-	function show_save(msg){
-
-		$saveIndicator.fadeIn().text(msg);
+	function show_save(msg)
+    {
+		$saveIndicator.fadeIn().html(msg);
 
 	}
+
+    function show_status(msg)
+    {
+        $statusIndicator.fadeIn().html(msg);
+    }
+
 	
 	/*
 	*
@@ -155,13 +202,17 @@ $(document).ready(function(){
 	*
 	*/
 	function hide_save(){
-
 		setTimeout(function(){
 			$saveIndicator.fadeOut();
 		}, 1200);
-
 	}
-	
+
+    function hide_status()
+    {
+        setTimeout(function(){
+            $statusIndicator.fadeOut();
+        }, 3000);
+    }
 	
 	/* 
 	*
@@ -191,9 +242,7 @@ $(document).ready(function(){
               $item.attr('data-id', data.id)
               $item.attr('data-order_index', data.orderIndex);
               $('.editable-list').append($item);
-              
               $item.find('.item').focus();
-
 		  }
 
 		});
