@@ -3990,15 +3990,14 @@ textarea {
     margin: 0;
     padding: 0; }
 
-.next-list a {
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.7); }
-.next-list a:hover {
-  color: white; }
 .next-list h3 {
   font-weight: 600;
   margin-bottom: 5px; }
+.next-list h4 {
+  color: #fff;
+  font-weight: 100; }
 .next-list p {
+  color: #fff;
   font-weight: 100;
   font-style: italic;
   font-size: 1.2em; }
@@ -4143,7 +4142,12 @@ textarea {
       .background-mobile .list *::-webkit-input-placeholder {
         color: #e6e6e6; }
       .background-mobile .list * a {
-        color: #f2d118; } }
+        color: #f2d118; }
+
+  .next-list h4 {
+    color: #666; }
+  .next-list p {
+    color: #666; } }
 @media (min-width: 768px) and (max-width: 1200px) {
   .mobile-background {
     background: transparent !important; } }
@@ -4458,9 +4462,80 @@ nav {
 
   #status_indicator {
     top: 40px;
-    padding: 0 0 0 15px;
+    padding: 10px 0 10px 15px;
     display: block;
     width: 100%;
     right: 0;
     left: 0;
+<<<<<<< HEAD
     text-align: center; } }
+=======
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5); } }
+.search-wrapper {
+  padding-top: 75px; }
+  .search-wrapper #search {
+    border: none;
+    border-bottom: 2px solid white;
+    background: none;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    width: 100%;
+    font-size: 3em;
+    padding-left: 0; }
+  .search-wrapper ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+    margin-top: 40px; }
+    .search-wrapper ul li {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+      .search-wrapper ul li a {
+        color: inherit;
+        text-decoration: none; }
+      .search-wrapper ul li .nothing-found {
+        color: rgba(255, 255, 255, 0.5); }
+      .search-wrapper ul li:last-child {
+        border-bottom: none; }
+      .search-wrapper ul li .search-user img {
+        width: 70px;
+        -moz-border-radius: 100%;
+        -webkit-border-radius: 100%;
+        border-radius: 100%; }
+      .search-wrapper ul li .search-user .search-user-username {
+        padding-left: 10px; }
+      .search-wrapper ul li .search-list {
+        color: rgba(255, 255, 255, 0.7);
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease; }
+        .search-wrapper ul li .search-list .search-title {
+          font-weight: 600;
+          font-size: 2em;
+          margin-bottom: 5px; }
+        .search-wrapper ul li .search-list .search-subtitle {
+          font-weight: 100;
+          font-style: italic;
+          font-size: 1.2em; }
+        .search-wrapper ul li .search-list:hover {
+          color: white; }
+      .search-wrapper ul li .search-list-profile {
+        color: rgba(255, 255, 255, 0.7);
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease; }
+        .search-wrapper ul li .search-list-profile img {
+          width: 30px;
+          -moz-border-radius: 100%;
+          -webkit-border-radius: 100%;
+          border-radius: 100%; }
+        .search-wrapper ul li .search-list-profile .search-list-username {
+          font-size: .9em;
+          padding-left: 10px; }
+        .search-wrapper ul li .search-list-profile:hover {
+          color: white; }
+
+@media (max-width: 768px) {
+  #search {
+    font-size: 2em !important; } }
+>>>>>>> 6cf6b02... CSS fixes. California Style Sheets are the worst.

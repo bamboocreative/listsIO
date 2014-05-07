@@ -48,14 +48,14 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="next-list">
-                            Next Up
+                            <h4>Next Up</h4>
                             <a href="{{ path('lists_io_view_list', {'id': list.nextList.id}) }}">
                                 <h3>{{ list.nextList.title }}</h3>
-                                <p>{{ list.nextList.subtitle }}</p>
                             </a>
+                            <p>{{ list.nextList.subtitle }}</p>
                             <a href="{{ path('lists_io_user_view_by_username', {'username': list.nextList.user.username}) }}">
                                 <img src="{{ list.nextList.user.gravatarURL }}">
-                                <span>by {{ list.nextList.user.username }}</span>
+                                <span>{{ list.nextList.user.username }}</span>
                             </a>
                         </div>
                     </div>

@@ -165,12 +165,13 @@ nav {
 
     #status_indicator{
       top: 40px;
-      padding: 0 0 0 15px;
+      padding: 10px 0 10px 15px;
       display: block;
       width: 100%;
       right: 0;
       left: 0;
       text-align: center;
+      background: rgba(0, 0, 0, .5);
     }
 
 }

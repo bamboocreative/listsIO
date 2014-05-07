@@ -147,21 +147,18 @@
 
 .next-list{
 
-  a {
-    text-decoration: none;
-    color: rgba(255, 255, 255, .7);
-  }
-
-  a:hover {
-    color: rgba(255, 255, 255, 1);
-  }
-
   h3 {
     font-weight: 600;
     margin-bottom: 5px;
   }
 
+  h4 {
+    color: #fff;
+    font-weight: 100;
+  }
+
   p {
+    color: #fff;
     font-weight: 100;
     font-style: italic;
     font-size: 1.2em;
@@ -334,6 +331,16 @@
 		}
 		
 	}
+
+    .next-list{
+        h4 {
+          color: #666;
+        }
+
+        p {
+          color: #666;
+        }
+    }
 }
 
 
