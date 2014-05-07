@@ -8,12 +8,20 @@
 
 namespace ListsIO\Bundle\UserBundle\Tests\Entity;
 
+use DateTime;
 use ListsIO\Bundle\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserTest extends WebTestCase {
 
+    /**
+     * @var User
+     */
     protected $user;
+
+    /**
+     * @var DateTime
+     */
     protected $createdAfter;
 
     public function setUp()
@@ -49,6 +57,27 @@ class UserTest extends WebTestCase {
         $this->user->addList($list);
         $this->user->removeList($list);
         $this->assertEquals(0, count($this->user->getLists()));
+    }
+
+    public function testEmptyListViews()
+    {
+        $this->assertEquals(0, count($this->user->getListViews()));
+    }
+
+    public function testAddListView()
+    {
+        $listView = $this->getMock('ListsIO\Bundle\ListBundle\Entity\LIOListView');
+        $this->user->addListView($listView);
+        $this->assertEquals(1, count($this->user->getListViews()));
+    }
+
+    public function testRemoveListView()
+    {
+        $listView = $this->getMock('ListsIO\Bundle\ListBundle\Entity\LIOListView');
+        $this->user->addListView($listView);
+        $this->assertEquals(1, count($this->user->getListViews()));
+        $this->user->removeListView($listView);
+        $this->assertEquals(0, count($this->user->getListViews()));
     }
 
     public function testTimestamping()

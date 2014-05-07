@@ -5,6 +5,8 @@ namespace ListsIO\Bundle\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use ListsIO\Bundle\ListBundle\Entity\LIOList as LIOList;
+use ListsIO\Bundle\ListBundle\Entity\LIOListLike;
+use ListsIO\Bundle\ListBundle\Entity\LIOListView as LIOListView;
 use ListsIO\Bundle\UserBundle\Model\TwitterUserInterface;
 use ListsIO\Bundle\UserBundle\Model\FacebookUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -52,22 +54,34 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $lists;
+    protected $lists;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $listViews;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $listLikes;
 
     /**
      * @var \DateTime
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var \DateTime
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     public function __construct()
     {
         parent::__construct();
         $this->lists = new ArrayCollection();
+        $this->listViews = new ArrayCollection();
+        $this->listLikes = new ArrayCollection();
     }
 
     /**
@@ -220,12 +234,12 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
     /**
      * Add lists
      *
-     * @param \ListsIO\Bundle\ListBundle\Entity\LIOList $lists
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOList $list
      * @return User
      */
-    public function addList(LIOList $lists)
+    public function addList(LIOList $list)
     {
-        $this->lists[] = $lists;
+        $this->lists[] = $list;
 
         return $this;
     }
@@ -233,11 +247,11 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
     /**
      * Remove lists
      *
-     * @param \ListsIO\Bundle\ListBundle\Entity\LIOList $lists
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOList $list
      */
-    public function removeList(LIOList $lists)
+    public function removeList(LIOList $list)
     {
-        $this->lists->removeElement($lists);
+        $this->lists->removeElement($list);
     }
 
     /**
@@ -248,6 +262,70 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
     public function getLists()
     {
         return $this->lists;
+    }
+
+    /**
+     * Add listView
+     *
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListView $listView
+     * @return User
+     */
+    public function addListView(LIOListView $listView)
+    {
+        $this->listViews[] = $listView;
+
+        return $this;
+    }
+
+    /**
+     * Remove listView
+     *
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListView $listView
+     */
+    public function removeListView(LIOListView $listView)
+    {
+        $this->listViews->removeElement($listView);
+    }
+
+    /**
+     * Get listViews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getListViews()
+    {
+        return $this->listViews;
+    }
+
+    /**
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListLike $listLike
+     * @return $this
+     */
+    public function addListLike(LIOListLike $listLike)
+    {
+        $this->listLikes[] = $listLike;
+
+        return $this;
+    }
+
+    /**
+     * Remove listLike
+     *
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListLike $listLike
+     */
+    public function removeListLike(LIOListLike $listLike)
+    {
+        $this->listLikes->removeElement($listLike);
+    }
+
+    /**
+     * Get listLikes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getListLikes()
+    {
+        return $this->listLikes;
     }
 
     /**
@@ -284,6 +362,15 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
         foreach( $this->lists as $list ) {
             $lists[] = $list->getId();
         }
+        // TODO: Use appropriate serialization/HATEOAS, Jesse Rosato, 4/4/14
+        $listViews = array();
+        foreach($this->listViews as $listView) {
+            $listViews[] = $listView->getList()->getId();
+        }
+        $listLikes = array();
+        foreach($this->listLikes as $listLike) {
+            $listLikes[] = $listLike->getList()->getId();
+        }
 
         return array(
             'id'                => $this->id,
@@ -296,7 +383,9 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
             'gravatarURL'       => $this->getGravatarURL(),
             'createdAt'         => $this->createdAt,
             'updatedAt'         => $this->updatedAt,
-            'lists'             => $lists
+            'lists'             => $lists,
+            'listLikes'         => $listLikes,
+            'listViews'         => $listViews
         );
     }
 

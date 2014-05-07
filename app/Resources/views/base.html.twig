@@ -40,7 +40,8 @@
 					<img class="png-img" src="{{ asset('assets/images/lists.png') }}">
 					<span id="save_indicator"></span>
 				</div>
-			
+                <div id="status_indicator" style="display:none;"></div>
+
 				{% if app.user %}
 				<a href="/">
 					<div class="loggedin-user">
@@ -79,13 +80,6 @@
 		{% endblock %}
 	
 		{% block header %}
-			<header>
-				{% if app.user == false %}
-					<div class="login">
-						<a class="button" href="{{ path('fos_user_security_login') }}">{{ 'login'|trans({}, 'FOSUserBundle') }}</a>
-					</div>
-				{% endif %}
-			</header>
 			<header class="mobile-header"></header>
 		{% endblock %}
 	

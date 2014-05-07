@@ -105,3 +105,11 @@ hwi_oauth:
             client_id:           "%facebook.api_id%"
             client_secret:       "%facebook.api_secret%"
             scope:               "email"
+
+services:
+  listsio.recommender:
+    class: ListsIO\Bundle\ListBundle\Services\Recommender
+    arguments: [@doctrine.orm.entity_manager]
+  listsio.security.component.authentication.handler.login_success_handler:
+    class: ListsIO\Bundle\UserBundle\Component\Authentication\Handler\LoginSuccessHandler
+    arguments: [@service_container, @router]

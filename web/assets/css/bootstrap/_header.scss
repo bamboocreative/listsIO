@@ -1,12 +1,4 @@
-header {	
-	// The login/logout fixed button
-	.login{
-		position: absolute;
-		top: 40px;
-		right: 30px;
-		z-index: 20;
-	}
-	
+header {		
 	&.mobile-header{
 		display: none;
 		position: fixed;

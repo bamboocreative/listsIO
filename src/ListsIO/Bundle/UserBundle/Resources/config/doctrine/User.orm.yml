@@ -45,8 +45,18 @@ ListsIO\Bundle\UserBundle\Entity\User:
     oneToMany:
         lists:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
+            orderBy:
+              createdAt: DESC
             mappedBy: user
             cascade: ["remove", "persist"]
+        listViews:
+            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListView
+            mappedBy: user
+            cascade: ["remove"]
+        listLikes:
+            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListLike
+            mappedBy: user
+            cascade: ["remove"]
     lifecycleCallbacks:
-            prePersist: [prePersistTimestamp]
-            preUpdate: [prePersistTimestamp]
+        prePersist: [prePersistTimestamp]
+        preUpdate: [prePersistTimestamp]

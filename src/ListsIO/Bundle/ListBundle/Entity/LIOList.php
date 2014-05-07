@@ -33,6 +33,31 @@ class LIOList implements JsonSerializable
     private $imageURL;
 
     /**
+     * @var \ListsIO\Bundle\UserBundle\Entity\User
+     */
+    private $user;
+
+    /**
+     * @var null|LIOList
+     */
+    private $nextList;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $listItems;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $listViews;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $listLikes;
+
+    /**
      * @var \DateTime
      */
     private $createdAt;
@@ -42,22 +67,15 @@ class LIOList implements JsonSerializable
      */
     private $updatedAt;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $listItems;
-
-    /**
-     * @var \ListsIO\Bundle\UserBundle\Entity\User
-     */
-    private $user;
-
     public function __construct()
     {
         $this->listItems = new ArrayCollection();
+        $this->listViews = new ArrayCollection();
+        $this->listLikes = new ArrayCollection();
         $this->title = "";
         $this->subtitle = "";
         $this->imageURL = "";
+        $this->nextList = NULL;
     }
 
     /**
@@ -140,6 +158,46 @@ class LIOList implements JsonSerializable
     }
 
     /**
+     * Set user
+     *
+     * @param \ListsIO\Bundle\UserBundle\Entity\User $user
+     * @return LIOList
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+        $user->addList($this);
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \ListsIO\Bundle\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return \ListsIO\Bundle\ListBundle\Entity\LIOList|null
+     */
+    public function getNextList()
+    {
+        return $this->nextList;
+    }
+
+    /**
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOList|null $nextList
+     */
+    public function setNextList($nextList)
+    {
+        $this->nextList = $nextList;
+    }
+
+    /**
      * Add listItems
      *
      * @param \ListsIO\Bundle\ListBundle\Entity\LIOListItem $listItem
@@ -174,27 +232,69 @@ class LIOList implements JsonSerializable
     }
 
     /**
-     * Set user
+     * Add listLikes
      *
-     * @param \ListsIO\Bundle\UserBundle\Entity\User $user
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListLike $listLike
      * @return LIOList
      */
-    public function setUser(User $user = null)
+    public function addListLike(LIOListLike $listLike)
     {
-        $this->user = $user;
-        $user->addList($this);
+        $this->listLikes[] = $listLike;
+        $listLike->setList($this);
+        return $this;
+    }
+
+    /**
+     * Remove listLikes
+     *
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListLike $listLike
+     */
+    public function removeListLike(LIOListLike $listLike)
+    {
+        $this->listLikes->removeElement($listLike);
+    }
+
+    /**
+     * Get listLikes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getListLikes()
+    {
+        return $this->listLikes;
+    }
+
+    /**
+     * Add listView
+     *
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListView $listView
+     * @return LIOList
+     */
+    public function addListView(LIOListView $listView)
+    {
+        $this->listViews[] = $listView;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Remove listView
      *
-     * @return \ListsIO\Bundle\UserBundle\Entity\User
+     * @param \ListsIO\Bundle\ListBundle\Entity\LIOListView $listView
      */
-    public function getUser()
+    public function removeListView(LIOListView $listView)
     {
-        return $this->user;
+        $this->listViews->removeElement($listView);
+    }
+
+    /**
+     * Get listViews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getListViews()
+    {
+        return $this->listViews;
     }
 
     public function jsonSerialize()
@@ -203,6 +303,20 @@ class LIOList implements JsonSerializable
         foreach($this->listItems as $item) {
             $listItems[] = $item->jsonSerialize();
         }
+        $listViews = array();
+        $totalViewsCount = count($this->listViews);
+        // TODO: Use appropriate serialization/HATEOAS, Jesse Rosato, 4/4/14
+        foreach($this->listViews as $listView) {
+            $viewer = $listView->getUser();
+            if ($viewer) {
+                $listViews[] = $viewer->getId();
+            }
+        }
+
+        $listLikes = array();
+        foreach($this->listLikes as $listLike) {
+            $listLikes[] = $listLike->getUser()->getId();
+        }
         /** @var  $user \ListsIO\Bundle\UserBundle\Entity\User */
         $user = $this->getUser();
         return array(
@@ -210,8 +324,11 @@ class LIOList implements JsonSerializable
             'user'      => $user ? $user->jsonSerialize() : null,
             'id'        => $this->getId(),
             'title'     => $this->getTitle(),
-            'subtitle'  => $this->getSubtitle(),
-            'listItems' => $listItems
+            'subtitle'          => $this->getSubtitle(),
+            'listItems'         => $listItems,
+            'likedBy'           => $listLikes,
+            'viewedBy'          => $listViews,          // Logged-in users who viewed this list.
+            'viewedCount'       => $totalViewsCount     // Number of list views (anonymous views included).
         );
     }
 
@@ -244,4 +361,5 @@ class LIOList implements JsonSerializable
             $this->createdAt = new \DateTime(date('Y-m-d H:i:s'));
         }
     }
+
 }
