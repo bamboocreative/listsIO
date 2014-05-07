@@ -1,2 +1,1 @@
-MAILTO="jesse.rosato@gmail.com"
 */2 * * * * ec2-user source ~/.bash_profile; php /var/app/current/app/console listsio:updatelistrecs > /dev/null
