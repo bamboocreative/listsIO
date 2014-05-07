@@ -340,7 +340,7 @@ textarea{
 // Smaller than 768px
 @media (max-width: $screen-sm){
 	.like-btn{
-		position: absolute;
+		position: fixed;
 		top: 10px;
 		z-index: 99;
 		right: 110px;

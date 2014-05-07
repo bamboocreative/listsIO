@@ -11,7 +11,7 @@ nav {
 		background: #191918;
 		padding: 40px 15px;
 		
-		//Logo and save dialog outside of actualy sidebar
+		//Logo and save dialog outside of actual sidebar
 		.logo{
 			position: fixed;
 			left: 25px;
@@ -34,6 +34,15 @@ nav {
 				padding-left: 15px;
 			}
 		}
+
+        #status_indicator{
+            position: fixed;
+            right: 50px;
+            font-size: .7em;
+            font-weight: 100;
+            padding-right: 15px;
+            top: 40px;
+        }
 
 
 		//User profile image 
@@ -153,7 +162,17 @@ nav {
 			}
 		}
 	}
-	
+
+    #status_indicator{
+      top: 40px;
+      padding: 0 0 0 15px;
+      display: block;
+      width: 100%;
+      right: 0;
+      left: 0;
+      text-align: center;
+    }
+
 }
 
 

@@ -13,6 +13,8 @@ $(document).ready(function(){
     var userID = $('body').attr('data-user_id');
 
     var $saveIndicator = $('#save_indicator');
+
+    var $statusIndicator = $('#status_indicator');
     
     var $item_template = $('#item-template');
 
@@ -151,26 +153,28 @@ $(document).ready(function(){
                 listId: listID
             },
             success: function(data, textStatus, jqXHR){
-                console.log(jqXHR.status);
                 // 201 indicates new like created.
-                // 409 indicates like already exists.
                 // Otherwise = redirect to login (user is not logged in).
                 if (jqXHR.status == 201) {
                     $this.removeClass('not-liked').addClass('liked');
                     show_save("Liked.");
                     hide_save();
                 } else {
-                    show_save(login_to_like_msg);
+                    hide_save();
+                    show_status(login_to_like_msg);
+                    hide_status();
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
+                // 409 indicates like already exists.
                 if (jqXHR.status == 409) {
                     $this.addClass('liked');
-                    show_save("Already liked.");
+                    show_status("Already liked.");
                 } else {
-                    show_save(error_msg);
+                    show_status(error_msg);
                 }
                 hide_save();
+                hide_status();
             }
         });
     });
@@ -180,11 +184,17 @@ $(document).ready(function(){
 	* Show Save
 	*
 	*/
-	function show_save(msg){
-
+	function show_save(msg)
+    {
 		$saveIndicator.fadeIn().html(msg);
 
 	}
+
+    function show_status(msg)
+    {
+        $statusIndicator.fadeIn().html(msg);
+    }
+
 	
 	/*
 	*
@@ -192,13 +202,17 @@ $(document).ready(function(){
 	*
 	*/
 	function hide_save(){
-
 		setTimeout(function(){
 			$saveIndicator.fadeOut();
 		}, 1200);
-
 	}
-	
+
+    function hide_status()
+    {
+        setTimeout(function(){
+            $statusIndicator.fadeOut();
+        }, 3000);
+    }
 	
 	/* 
 	*

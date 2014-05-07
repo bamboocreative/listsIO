@@ -3792,7 +3792,7 @@ textarea {
       font-size: .6em; } }
 @media (max-width: 768px) {
   .like-btn {
-    position: absolute;
+    position: fixed;
     top: 10px;
     z-index: 99;
     right: 110px;
@@ -4376,6 +4376,13 @@ nav {
         font-size: .7em;
         font-weight: 100;
         padding-left: 15px; }
+    nav.sidebar #status_indicator {
+      position: fixed;
+      right: 50px;
+      font-size: .7em;
+      font-weight: 100;
+      padding-right: 15px;
+      top: 40px; }
     nav.sidebar .loggedin-user {
       text-align: center; }
       nav.sidebar .loggedin-user .loggedin-user-img {
@@ -4447,4 +4454,13 @@ nav {
       left: 25px;
       top: 8px; }
       nav.sidebar .logo img {
-        width: 25px; } }
+        width: 25px; }
+
+  #status_indicator {
+    top: 40px;
+    padding: 0 0 0 15px;
+    display: block;
+    width: 100%;
+    right: 0;
+    left: 0;
+    text-align: center; } }
