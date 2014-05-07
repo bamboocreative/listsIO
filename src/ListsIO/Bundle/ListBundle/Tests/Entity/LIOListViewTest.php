@@ -44,16 +44,16 @@ class LIOListViewTest extends \PHPUnit_Framework_TestCase {
 
     public function testUserAccessors()
     {
-        $user = $this->getMockBuilder('ListsIO\Bundle\UserBundle\Entity\UserList')
+        $user = $this->getMockBuilder('ListsIO\Bundle\UserBundle\Entity\User')
             ->getMock();
         $this->listView->setUser($user);
-        assertInstanceOf('ListsIO\Bundle\UserBundle\Entity\User', $this->listView->getUser());
+        $this->assertInstanceOf('ListsIO\Bundle\UserBundle\Entity\User', $this->listView->getUser());
     }
 
     public function testAnonymousIdentifierAccessors()
     {
-        $this->listViews->setAnonymousIdentifier("user-agent-string", "1234.1234.1234.1234");
-        assertEquals("user-agent-string1234.1234.1234.1234", $this->listView->getAnonymousIdentifier());
+        $this->listView->setAnonymousIdentifier("user-agent-string", "1234.1234.1234.1234");
+        $this->assertEquals("user-agent-string1234.1234.1234.1234", $this->listView->getAnonymousIdentifier());
     }
 
     public function testEmptyList()
@@ -66,7 +66,7 @@ class LIOListViewTest extends \PHPUnit_Framework_TestCase {
         $list = $this->getMockBuilder('ListsIO\Bundle\ListBundle\Entity\LIOList')
             ->getMock();
         $this->listView->setList($list);
-        assertInstanceOf('ListsIO\Bundle\ListBundle\Entity\LIOList', $this->listView->getList());
+        $this->assertInstanceOf('ListsIO\Bundle\ListBundle\Entity\LIOList', $this->listView->getList());
     }
 
     public function testTimestamping()

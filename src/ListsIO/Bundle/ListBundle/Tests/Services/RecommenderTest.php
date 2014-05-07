@@ -22,13 +22,13 @@ class RecommenderTest extends DoctrineWebTestCase {
     /** @var  $list LIOList */
     private $list;
 
-    /** @var  $user1 USER */
+    /** @var  $user1 User */
     private $user1;
 
-    /** @var  $user2 USER */
+    /** @var  $user2 User */
     private $user2;
 
-    /** @var  $user3 USER */
+    /** @var  $user3 User */
     private $user3;
 
     /**
@@ -44,11 +44,11 @@ class RecommenderTest extends DoctrineWebTestCase {
             ->find(1);
         $this->user2 = static::$entityManager->getRepository('ListsIOUserBundle:User')
             ->find(2);
-        $this->user1 = static::$entityManager->getRepository('ListsIOUserBundle:User')
+        $this->user3 = static::$entityManager->getRepository('ListsIOUserBundle:User')
             ->find(3);
     }
 
-    public function preferencesByListTest() {
+    public function testPreferencesByList() {
         $listPrefs = $this->recommender->preferencesByList($this->list);
         $user1Expected = Recommender::PREF_SCORE_AUTHOR;
         $user2Expected = Recommender::PREF_SCORE_VIEW + Recommender::PREF_SCORE_LIKE;
@@ -58,7 +58,7 @@ class RecommenderTest extends DoctrineWebTestCase {
         $this->assertEquals($listPrefs[3], $user3Expected);
     }
 
-    public function preferencesByUserTest() {
+    public function testPreferencesByUser() {
         $user1Prefs = $this->recommender->preferencesByUser($this->user1);
         $user2Prefs = $this->recommender->preferencesByUser($this->user2);
         $user3Prefs = $this->recommender->preferencesByUser($this->user3);
@@ -67,7 +67,7 @@ class RecommenderTest extends DoctrineWebTestCase {
         $this->assertEquals($user3Prefs[1], Recommender::PREF_SCORE_LIKE + Recommender::PREF_SCORE_VIEW);
     }
 
-    public function similarityPearsonTest()
+    public function testSimilarityPearson()
     {
         $prefs = array();
         $prefs[1] = $this->recommender->preferencesByUser($this->user1);
@@ -76,7 +76,7 @@ class RecommenderTest extends DoctrineWebTestCase {
         // User 1 and 2 should have some similarity.
         $this->assertGreaterThan(-1, $this->recommender->similarityPearson($prefs, $this->user1, $this->user2));
         // User 2 and 3 should have perfect similarity.
-        $this->assertEquals(1, $this->recommender->similarityPearson($prefs, $this->user2, $this->user3));
+        $this->assertGreaterThanOrEqual(0, $this->recommender->similarityPearson($prefs, $this->user2, $this->user3));
     }
 }
  

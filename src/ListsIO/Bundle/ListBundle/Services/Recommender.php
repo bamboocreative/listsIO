@@ -213,7 +213,7 @@ class Recommender {
         }
 
         foreach($user->getListLikes() as $like) {
-            $list = $like->getLike();
+            $list = $like->getList();
             $listId = $list->getId();
             // You have to view a list to like it, so we can just add here.
             $prefs[$listId] += self::PREF_SCORE_LIKE;

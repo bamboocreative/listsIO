@@ -44,10 +44,10 @@ class LIOListLikeTest extends \PHPUnit_Framework_TestCase {
 
     public function testUserAccessors()
     {
-        $user = $this->getMockBuilder('ListsIO\Bundle\UserBundle\Entity\UserList')
+        $user = $this->getMockBuilder('ListsIO\Bundle\UserBundle\Entity\User')
             ->getMock();
         $this->listLike->setUser($user);
-        assertInstanceOf('ListsIO\Bundle\UserBundle\Entity\User', $this->listLike->getUser());
+        $this->assertInstanceOf('ListsIO\Bundle\UserBundle\Entity\User', $this->listLike->getUser());
     }
 
     public function testEmptyList()
@@ -60,7 +60,7 @@ class LIOListLikeTest extends \PHPUnit_Framework_TestCase {
         $list = $this->getMockBuilder('ListsIO\Bundle\ListBundle\Entity\LIOList')
             ->getMock();
         $this->listLike->setList($list);
-        assertInstanceOf('ListsIO\Bundle\ListBundle\Entity\LIOList', $this->listLike->getList());
+        $this->assertInstanceOf('ListsIO\Bundle\ListBundle\Entity\LIOList', $this->listLike->getList());
     }
 
     public function testTimestamping()

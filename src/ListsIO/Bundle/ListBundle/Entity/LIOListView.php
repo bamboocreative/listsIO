@@ -80,7 +80,7 @@ class LIOListView {
         }
         // Max anonymous identifier length is 512 (arbitrary limitation on entity config).
         $userAgent = substr($userAgent, 0, (511 - strlen($userIP)));
-        $this->anonymousIdentifer = $userAgent . $userIP;
+        $this->anonymousIdentifier = $userAgent . $userIP;
     }
 
     /**
