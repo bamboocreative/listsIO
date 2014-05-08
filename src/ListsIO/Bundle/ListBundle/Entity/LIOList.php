@@ -211,6 +211,7 @@ class LIOList implements JsonSerializable
             'id'        => $this->getId(),
             'title'     => $this->getTitle(),
             'subtitle'  => $this->getSubtitle(),
+            'imageURL'  => $this->getImageURL(),
             'listItems' => $listItems
         );
     }

@@ -4480,3 +4480,49 @@ nav {
 @media (max-width: 768px) {
   #search {
     font-size: 2em !important; } }
+.feed {
+  background: #194854; }
+  .feed .feed-item-wrapper {
+    padding: 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    cursor: pointer; }
+    .feed .feed-item-wrapper .feed-item-overlay:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+      -webkit-transition: background 0.3s ease;
+      transition: background 0.3s ease; }
+    .feed .feed-item-wrapper .feed-item-overlay:hover:before {
+      background: rgba(0, 0, 0, 0.6); }
+    .feed .feed-item-wrapper .feed-item-overlay .feed-item {
+      min-height: 320px;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 70px 20px;
+      position: relative; }
+      .feed .feed-item-wrapper .feed-item-overlay .feed-item a:hover {
+        text-decoration: none; }
+      .feed .feed-item-wrapper .feed-item-overlay .feed-item .feed-item-profile {
+        color: rgba(255, 255, 255, 0.7);
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease; }
+        .feed .feed-item-wrapper .feed-item-overlay .feed-item .feed-item-profile img {
+          width: 30px;
+          -moz-border-radius: 100%;
+          -webkit-border-radius: 100%;
+          border-radius: 100%; }
+        .feed .feed-item-wrapper .feed-item-overlay .feed-item .feed-item-profile .search-item-username {
+          font-size: .9em;
+          padding-left: 10px; }
+        .feed .feed-item-wrapper .feed-item-overlay .feed-item .feed-item-profile:hover {
+          color: white; }
+  .feed #feed-cta a:hover {
+    text-decoration: none; }
