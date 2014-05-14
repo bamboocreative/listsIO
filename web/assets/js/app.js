@@ -565,7 +565,19 @@ $(document).ready(function(){
 	* Listen to the feed scroll and if we hit the bottom lets load more feed
 	*
 	*/
+	var timer;
+	
 	$( document ).on('scroll', function(e){
+		
+		clearTimeout(timer);
+		
+		if(!$body.hasClass('disable-hover')) {
+			$body.addClass('disable-hover')
+		}
+		
+		timer = setTimeout(function(){
+			$body.removeClass('disable-hover')
+		},200);
 		
 		var height = $(document).height();
 		var scrollBottom = $(window).scrollTop() + $(window).height();
