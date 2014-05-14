@@ -4161,17 +4161,15 @@ textarea {
 @media (min-width: 1200px) {
   .mobile-background {
     background: transparent !important; } }
-.login-wrapper.register {
-  margin-bottom: 5em; }
-  .login-wrapper.register form label {
-    margin-bottom: 0px;
-    margin-top: 5px; }
-  .login-wrapper.register form input, .login-wrapper.register form textarea {
-    width: 100%; }
-  .login-wrapper.register .tos {
-    text-align: center;
-    font-size: .6em;
-    margin-top: 15px; }
+.login-wrapper.register form label {
+  margin-bottom: 0px;
+  margin-top: 5px; }
+.login-wrapper.register form input, .login-wrapper.register form textarea {
+  width: 100%; }
+.login-wrapper.register .tos {
+  text-align: center;
+  font-size: .6em;
+  margin-top: 15px; }
 
 .home-logo {
   text-align: center;
