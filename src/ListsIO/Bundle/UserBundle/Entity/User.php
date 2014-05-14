@@ -10,14 +10,19 @@ use ListsIO\Bundle\ListBundle\Entity\LIOListView as LIOListView;
 use ListsIO\Bundle\UserBundle\Model\TwitterUserInterface;
 use ListsIO\Bundle\UserBundle\Model\FacebookUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * User
+ * @ExclusionPolicy("all")
  */
-class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, FacebookUserInterface
+class User extends BaseUser implements TwitterUserInterface, FacebookUserInterface
 {
     /**
      * @var integer
+     * @Expose
      */
     protected $id;
 
@@ -33,6 +38,7 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
 
     /**
      * @var string
+     * @Expose
      */
     protected $twitterUsername;
 
@@ -53,21 +59,28 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     * @Expose
+     * @MaxDepth(4)
      */
     protected $lists;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     * @Expose
+     * @MaxDepth(3)
      */
     protected $listViews;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     * @Expose
+     * @MaxDepth(3)
      */
     protected $listLikes;
 
     /**
      * @var \DateTime
+     * @Expose
      */
     protected $createdAt;
 
@@ -354,39 +367,6 @@ class User extends BaseUser implements \JsonSerializable, TwitterUserInterface, 
         if (empty($this->createdAt)) {
             $this->createdAt = new \DateTime(date('Y-m-d H:i:s'));
         }
-    }
-
-    public function jsonSerialize()
-    {
-        $lists = array();
-        foreach( $this->lists as $list ) {
-            $lists[] = $list->getId();
-        }
-        // TODO: Use appropriate serialization/HATEOAS, Jesse Rosato, 4/4/14
-        $listViews = array();
-        foreach($this->listViews as $listView) {
-            $listViews[] = $listView->getList()->getId();
-        }
-        $listLikes = array();
-        foreach($this->listLikes as $listLike) {
-            $listLikes[] = $listLike->getList()->getId();
-        }
-
-        return array(
-            'id'                => $this->id,
-            'username'          => $this->username,
-            'email'             => $this->email,
-            'twitterId'         => $this->twitterId,
-            'twitterUsername'   => $this->twitterUsername,
-            'facebookId'        => $this->facebookId,
-            'facebookUsername'  => $this->facebookUsername,
-            'gravatarURL'       => $this->getGravatarURL(),
-            'createdAt'         => $this->createdAt,
-            'updatedAt'         => $this->updatedAt,
-            'lists'             => $lists,
-            'listLikes'         => $listLikes,
-            'listViews'         => $listViews
-        );
     }
 
 }

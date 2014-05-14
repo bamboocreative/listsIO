@@ -5,6 +5,7 @@ namespace ListsIO\Bundle\ListBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ListsIO\Bundle\UserBundle\Entity\User;
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * LIOListLike

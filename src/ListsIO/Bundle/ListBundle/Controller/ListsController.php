@@ -2,11 +2,12 @@
 
 namespace ListsIO\Bundle\ListBundle\Controller;
 
+use JMS\Serializer\SerializationContext;
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use ListsIO\Bundle\ListBundle\Entity\LIOListItem;
 use ListsIO\Bundle\ListBundle\Entity\LIOListLike;
 use ListsIO\Bundle\ListBundle\Entity\LIOListView;
-use ListsIO\Bundle\ListBundle\Services\Recommender;
+use ListsIO\Bundle\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -30,45 +31,28 @@ class ListsController extends Controller
             throw $this->createNotFoundException("Unable to find list.");
         }
 
+        // Set the target path so user's can be redirected here after login (esp. when trying to like list).
         $this->get('session')->set('target_path', $this->get('router')->generate('lists_io_view_list', array('id' => $id)));
 
-        $author = $list->getUser();
         $user = $this->getUser();
 
-        $listView = new LIOListView();
-        $listView->setList($list);
+        $this->saveListView($request, $list, $user);
+        $liked = $this->listIsLikedByUser($list, $user);
 
         // Prep template data.
         $data = array(
-            'user'          => $user,
-            'list_user'     => $author,
             'list'          => $list,
-            'liked'         => false,
+            'liked'         => $liked,
         );
 
-        if ( ! empty($user)) {
-            // Author views should not count towards list views.
-            if ($author->getId() != $user->getId()) {
-                $listView->setUser($user);
-                $this->saveEntity($listView);
-            }
-            // Figure out whether the user has liked this list before.
-            $repo = $this->getDoctrine()->getRepository('ListsIO\Bundle\ListBundle\Entity\LIOListLike');
-            $listLikes = $repo->findOneBy(
-                array(
-                    'list'   => $list,
-                    'user'   => $user
-                )
-            );
-            $data['liked'] = !! (count($listLikes));
-        } else {
-            $listView->setAnonymousIdentifier($request->headers->get('User-Agent'), $request->getClientIp());
-            $this->saveEntity($listView);
-        }
-
         // If list does not belong to user, render view template, otherwise render edit template.
-        if (empty($user) || $author->getId() != $user->getId()) {
-
+        if (empty($user) || $list->getUser()->getId() != $user->getId()) {
+            // For JSON, only serialize the list.
+            if ($format == 'json') {
+                $serializer = $this->get('jms_serializer');
+                $data['list'] = $serializer->serialize($list, 'json', SerializationContext::create()->enableMaxDepthChecks());
+                $data['list'] = print_r(json_decode($data['list']), true);
+            }
             return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $data);
         }
 
@@ -287,6 +271,44 @@ class ListsController extends Controller
         $em->persist($list);
         $em->flush();
         return $listItem;
+    }
+
+    /**
+     * @param Request $request
+     * @param LIOList $list
+     * @param User $user
+     */
+    public function saveListView(Request $request, LIOList $list, User $user = null) {
+        $listView = new LIOListView();
+        $listView->setList($list);
+        // Author views should not count towards list views.
+        if ( ! empty($user)) {
+            if ($list->getUser()->getId() != $user->getId()) {
+                $listView->setUser($user);
+            }
+        } else {
+            $listView->setAnonymousIdentifier($request->headers->get('User-Agent'), $request->getClientIp());
+        }
+        $this->saveEntity($listView);
+    }
+
+    /**
+     * @param LIOList $list
+     * @param User $user
+     * @return bool
+     */
+    public function listIsLikedByUser(LIOList $list, User $user = null) {
+        if ( ! empty($user)) {
+            // Figure out whether the user has liked this list before.
+            $repo = $this->getDoctrine()->getRepository('ListsIO\Bundle\ListBundle\Entity\LIOListLike');
+            $listLikes = $repo->findOneBy(
+                array(
+                    'list'   => $list,
+                    'user'   => $user
+                )
+            );
+            return !! (count($listLikes));
+        }
     }
 
 }

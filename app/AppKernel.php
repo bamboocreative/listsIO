@@ -7,7 +7,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -22,8 +22,9 @@ class AppKernel extends Kernel
             new ListsIO\Bundle\ListBundle\ListsIOListBundle(),
             new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
             new ListsIO\Bundle\SearchBundle\ListsIOSearchBundle(),
-        );
+        ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();

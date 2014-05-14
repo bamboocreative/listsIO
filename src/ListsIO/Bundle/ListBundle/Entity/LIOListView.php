@@ -11,7 +11,7 @@ namespace ListsIO\Bundle\ListBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use ListsIO\Bundle\UserBundle\Entity\User;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use JMS\Serializer\Annotation\MaxDepth;
 
 class LIOListView {
 

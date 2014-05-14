@@ -3,16 +3,16 @@
 {% extends "::base.html.twig" %}
 
 {% block bgImage %} 
-<div class="bg-wrapper list-background" style="background-image: url(' {{ list.getImageURL() }} ');"></div> 
+<div class="bg-wrapper list-background" style="background-image: url(' {{ list.imageURL }} ');"></div>
 {% endblock %}
 
-{% block title %}Lists.io | {{ list.getTitle() }} {% endblock %}
+{% block title %}Lists.io | {{ list.title }} {% endblock %}
 
 {% block body %}
 <div class="background background-mobile" style="min-height: 100%; min-width: 100%;">
 	<div class="items">
 		<div class="container">
-			<div class="row mobile-background"  style="background-image: url(' {{ list.getImageURL() }} ');">
+			<div class="row mobile-background"  style="background-image: url(' {{ list.imageURL }} ');">
 				<div class="col-md-8 col-md-offset-2 edit-list-head-wrapper list-head" id="list-{{ list.id }}">
                     <input type="text" class="list-title" placeholder="List title" value="{{ list.title }}"/>
                     <input type="text" class="list-subtitle" placeholder="subtitle" value="{{ list.subtitle }}"/>
@@ -22,7 +22,7 @@
 			<div class="row">
 		        <div class="list">
 			        <div class="col-md-8 col-md-offset-2">
-			            <ol id="editable-list-{{ list.id }}" class="editable-list" data-id="{{ list.getId() }}" data-user_id="{{ list_user.getId() }}">
+			            <ol id="editable-list-{{ list.id }}" class="editable-list" data-id="{{ list.id }}" data-user_id="{{ app.user.id }}">
 			            {% for item in list.listItems %}
 			                <li class="list-item" data-order_index="{{ item.orderIndex }}" data-id="{{ item.id }}">
                                 <span class='number'>{{ item.orderIndex }}</span>

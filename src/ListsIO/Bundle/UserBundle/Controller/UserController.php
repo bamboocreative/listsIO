@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use JMS\Serializer\SerializationContext;
 
 class UserController extends Controller
 {
@@ -32,12 +33,17 @@ class UserController extends Controller
         if (empty($viewUser)) {
             throw new HttpException(404, "Could not find user by ID: " . htmlspecialchars($userId));
         }
+
+        if ($format == 'json') {
+            $serializer = $this->get('jms_serializer');
+            $viewUser = $serializer->serialize($viewUser, 'json', SerializationContext::create()->enableMaxDepthChecks());
+        }
+
         return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('user' => $viewUser));
     }
 
     public function viewByUsernameAction(Request $request, $username)
     {
-        $format = $request->getRequestFormat();
         $viewUser = $this->getDoctrine()
             ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')
             ->findOneBy(array('username' => $username));
@@ -45,6 +51,6 @@ class UserController extends Controller
             throw new HttpException(404, "No route or username found for username: " . htmlspecialchars($username));
         }
 
-        return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('user' => $viewUser));
+        return $this->render('ListsIOUserBundle:Profile:show.html.twig', array('user' => $viewUser));
     }
 }

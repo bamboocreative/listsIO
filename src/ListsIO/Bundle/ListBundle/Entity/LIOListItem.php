@@ -2,14 +2,13 @@
 
 namespace ListsIO\Bundle\ListBundle\Entity;
 
-use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Form\Exception\InvalidArgumentException;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * ListItem
  */
-class LIOListItem implements JsonSerializable
+class LIOListItem
 {
     /**
      * @var integer
@@ -140,19 +139,6 @@ class LIOListItem implements JsonSerializable
     public function getList()
     {
         return $this->list;
-    }
-
-    public function jsonSerialize()
-    {
-        $list = $this->getList();
-        $listId = empty($list) ? null : $list->getId();
-        return array(
-            'id'            => $this->id,
-            'orderIndex'    => $this->orderIndex,
-            'title'         => $this->title,
-            'description'   => $this->description,
-            'listID'        => $listId
-        );
     }
 
     /**
