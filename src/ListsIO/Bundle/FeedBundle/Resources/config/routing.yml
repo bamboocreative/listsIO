@@ -1,0 +1,7 @@
+lists_io_feed_homepage:
+    pattern:  /
+    defaults: { _controller: ListsIOFeedBundle:Feed:index }
+    
+lists_io_feed_next:
+    pattern:  /next
+    defaults: { _controller: ListsIOFeedBundle:Feed:next }

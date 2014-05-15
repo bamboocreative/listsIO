@@ -1,0 +1,28 @@
+.loader{
+	display: none;
+	width: 100%;
+	height: 2px;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: white;
+	z-index: 998;
+	
+	&:after{
+		content: '';
+		position: absolute;
+	    display: block;
+	    width: 20%;
+	    height: 2px;
+	    left:0%;
+	    background: rgba(243,211,24,0.3);
+	    @include animation(loader .8s ease-in-out);
+		@include animation-iteration-count(infinite);
+		z-index: 999;
+	}
+}
+@include keyframes(loader) {
+  0% { left: -10%;}
+  100% { left: 110%;}
+}

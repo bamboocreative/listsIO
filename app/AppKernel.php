@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new ListsIO\Bundle\SearchBundle\ListsIOSearchBundle(),
+            new ListsIO\Bundle\FeedBundle\ListsIOFeedBundle(),
         ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

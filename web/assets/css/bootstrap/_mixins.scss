@@ -214,6 +214,22 @@
           transform-origin: $origin;
 }
 
+//keyframse
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content; 
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  } 
+}
+
 // Animations
 @mixin animation($animation) {
   -webkit-animation: $animation;
@@ -242,6 +258,11 @@
 @mixin animation-direction($direction) {
   -webkit-animation-direction: $direction;
           animation-direction: $direction;
+}
+
+@mixin animation-fill-mode($fill) {
+  -webkit-animation: $fill;
+          animation: $fill;
 }
 
 // Backface visibility
