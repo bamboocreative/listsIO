@@ -77,14 +77,6 @@ class LIOListItemTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $this->listItem->getList()->getId());
     }
 
-    public function testJsonSerialize()
-    {
-        $this->listItem->setTitle("Test title");
-        $data = $this->listItem->jsonSerialize();
-        $this->assertArrayHasKey('title', $data);
-        $this->assertEquals("Test title", $data['title']);
-    }
-
     public function testTimestamping()
     {
         $this->listItem->prePersistTimestamp();

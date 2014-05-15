@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use JMS\Serializer\Serializer;
+use Doctrine\ORM\EntityManager;
 
 // TODO: REST API (INCLUDING AUTHENTICATION!)
 class ListsController extends Controller
@@ -47,12 +49,8 @@ class ListsController extends Controller
 
         // If list does not belong to user, render view template, otherwise render edit template.
         if (empty($user) || $list->getUser()->getId() != $user->getId()) {
-            // For JSON, only serialize the list.
-            if ($format == 'json') {
-                $serializer = $this->get('jms_serializer');
-                $data['list'] = $serializer->serialize($list, 'json', SerializationContext::create()->enableMaxDepthChecks());
-                $data['list'] = print_r(json_decode($data['list']), true);
-            }
+            // Format is always HTML for edit, only try serialization for view.
+            $data['list'] = $this->serialize($list, $format);
             return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', $data);
         }
 
@@ -73,6 +71,7 @@ class ListsController extends Controller
         $format = $request->getRequestFormat();
         $list = $this->loadEntityFromId('ListsIO\Bundle\ListBundle\Entity\LIOList', $listId);
         $listItem = $this->newListItem($list);
+        $listItem = $this->serialize($listItem, $format);
         return $this->render('ListsIOListBundle:Lists:viewListItem.'.$format.'.twig', array('listItem' => $listItem));
     }
 
@@ -102,10 +101,13 @@ class ListsController extends Controller
         }
         $list->setUser($user);
         $this->saveEntity($list);
+        $list = $this->serialize($list, $format);
         return $this->render('ListsIOListBundle:Lists:viewList.'.$format.'.twig', array('list' => $list));
     }
 
     /**
+     * TODO: Use HTTP response code.
+     *
      * @param Request $request
      * @param $listId
      * @return Response
@@ -132,11 +134,15 @@ class ListsController extends Controller
                 $listItem->$funct($value);
             }
         }
+
         $this->saveEntity($listItem);
+        $listItem = $this->serialize($listItem, $format);
         return $this->render('ListsIOListBundle:Lists:viewListItem.'.$format.'.twig', array('listItem' => $listItem));
     }
 
     /**
+     * TODO: Use HTTP response code instead of 'success' response.
+     *
      * @param Request $request
      * @param $listId
      * @return Response
@@ -156,6 +162,8 @@ class ListsController extends Controller
     }
 
     /**
+     * TODO: Use HTTP response code instead of 'success' response.
+     *
      * @param Request $request
      * @param $itemId
      * @return Response
@@ -198,7 +206,7 @@ class ListsController extends Controller
         $like->setList($list);
         $like->setUser($user);
         $this->saveEntity($like);
-        $response = json_encode(array('id' => $like->getId(), 'listId' => $list->getId()));
+        $response = $this->serialize($like, $request->getRequestFormat());
         return new Response($response, 201);
     }
 
@@ -309,6 +317,22 @@ class ListsController extends Controller
             );
             return !! (count($listLikes));
         }
+    }
+
+    /**
+     * TODO: DRY (also used in User)
+     *
+     * @param $entity
+     * @param string $format
+     * @return mixed
+     */
+    public function serialize($entity, $format = 'json') {
+        // HTML doesn't need serialization.
+        if ($format == 'html') {
+            return $entity;
+        }
+        $serializer = $this->get('jms_serializer');
+        return $serializer->serialize($entity, $format, SerializationContext::create()->enableMaxDepthChecks());
     }
 
 }

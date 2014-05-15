@@ -89,10 +89,4 @@ class UserTest extends WebTestCase {
         $this->assertGreaterThanOrEqual($this->createdAfter->getTimestamp(), $this->user->getUpdatedAt()->getTimestamp());
     }
 
-    public function testJsonSerialize()
-    {
-        $data = $this->user->jsonSerialize();
-        $this->assertArrayHasKey('email', $data);
-        $this->assertEquals('test@example.com', $data['email']);
-    }
 } 
