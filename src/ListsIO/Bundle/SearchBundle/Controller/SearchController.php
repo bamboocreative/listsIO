@@ -4,7 +4,7 @@ namespace ListsIO\Bundle\SearchBundle\Controller;
 
 use ListsIO\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityRepository;
 
 class SearchController extends Controller
@@ -33,12 +33,14 @@ class SearchController extends Controller
         $lists = $this->searchLists($term);
         // Search users
         $users = $this->searchUsers($term);
-        $response = new JsonResponse();
+        // Manually set response content-type (as opposed to using JsonResposne) to avoid using standard json_encode.
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
         $data = array(
             'users' => $users,
             'lists' => $lists
         );
-		$response->setData($data);
+		$response->setContent($this->serialize($data));
 		return $response;
     }
 

@@ -106,6 +106,14 @@ hwi_oauth:
             client_secret:       "%facebook.api_secret%"
             scope:               "email"
 
+#JMS Serializer
+jms_serializer:
+    metadata:
+        directories:
+            FOSUB:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "%kernel.root_dir%/../src/ListsIO/Bundle/UserBundle/Resources/config/serializer"
+
 services:
   listsio.recommender:
     class: ListsIO\Bundle\ListBundle\Services\Recommender

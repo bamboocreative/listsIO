@@ -13,6 +13,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\AccessType;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\SerializedName;
 
 /**
  * User
@@ -25,6 +28,15 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
      * @Expose
      */
     protected $id;
+
+    /**
+     * @var string
+     * @Expose
+     * @AccessType("public_method")
+     * @Accessor(getter="getGravatarURL", setter="setGravatarURL")
+     * @SerializedName("gravatarURL")
+     */
+    private $gravatarURL;
 
     /**
      * @var string
@@ -228,6 +240,12 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
     }
 
     /**
+     * Dummy function for JMS Serializer
+     */
+    public function setGravatarURL() {
+    }
+
+    /**
      * Get user's gravatar URL
      * http://gravatar.com
      *
@@ -238,10 +256,13 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
      */
     public function getGravatarURL($size = 240, $defaultImageset = 'mm', $maximumRating = 'x')
     {
-        $url = 'http://www.gravatar.com/avatar/';
-        $url .= md5(strtolower(trim($this->getEmail())));
-        $url .= "?s=$size&d=$defaultImageset&r=$maximumRating";
-        return $url;
+        if ( empty($this->gravatarURL)) {
+            $url = 'http://www.gravatar.com/avatar/';
+            $url .= md5(strtolower(trim($this->getEmail())));
+            $url .= "?s=$size&d=$defaultImageset&r=$maximumRating";
+            $this->gravatarURL = $url;
+        }
+        return $this->gravatarURL;
     }
 
     /**

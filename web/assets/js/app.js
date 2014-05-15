@@ -520,11 +520,8 @@ $(document).ready(function(){
 				url: '/search/query?all=' + keyword,
 				type: 'GET',
 			}).done(function(response){
-			
+
 				var users = response.users;
-
-                console.log(users);
-
 				var lists = response.lists;
 				
 				var usersEmpty = false;

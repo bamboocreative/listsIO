@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ListsIO\Bundle\UserBundle\Entity\User as User;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\SerializedName;
 
 
 /**
@@ -30,6 +31,7 @@ class LIOList
 
     /**
      * @var string
+     * @SerializedName("imageURL")
      */
     private $imageURL;
 
