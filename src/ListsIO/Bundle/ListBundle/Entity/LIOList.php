@@ -324,6 +324,7 @@ class LIOList implements JsonSerializable
             'user'      => $user ? $user->jsonSerialize() : null,
             'id'        => $this->getId(),
             'title'     => $this->getTitle(),
+			'imageURL'  => $this->getImageURL(),
             'subtitle'          => $this->getSubtitle(),
             'listItems'         => $listItems,
             'likedBy'           => $listLikes,
