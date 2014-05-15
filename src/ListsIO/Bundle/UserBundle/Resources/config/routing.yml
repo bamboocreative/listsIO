@@ -5,8 +5,7 @@ lists_io_user_view_by_id:
         _format: (html|json)
     defaults: { _controller: ListsIOUserBundle:User:viewById, _format: html }
 lists_io_user_view_by_username:
-    pattern:  /{username}.{_format}
+    pattern:  /{username}
     requirements:
         username: .+
-        _format: (html|json)
-    defaults: { _controller: ListsIOUserBundle:User:viewByUsername, _format: html }
+    defaults: { _controller: ListsIOUserBundle:User:viewByUsername }

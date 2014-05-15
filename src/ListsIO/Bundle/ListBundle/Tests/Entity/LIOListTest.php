@@ -129,31 +129,6 @@ class LIOListTest extends \PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('\ListsIO\Bundle\UserBundle\Entity\User', $this->list->getUser());
     }
 
-    public function testJsonSerializeNoUser()
-    {
-        $this->list->setTitle("Test title");
-        $data = $this->list->jsonSerialize();
-        $this->assertArrayHasKey("title", $data);
-        $this->assertEquals("Test title", $data['title']);
-    }
-
-    public function testJsonSerializeUser()
-    {
-        $this->list->setTitle("Test title");
-
-        $user = $this->getMockBuilder('\ListsIO\Bundle\UserBundle\Entity\User')
-            ->getMock();
-
-        $user->expects($this->any())
-            ->method('getId')
-            ->will($this->returnValue(1));
-
-        $this->list->setUser($user);
-        $data = $this->list->jsonSerialize();
-        $this->assertArrayHasKey("userID", $data);
-        $this->assertEquals(1, $data['userID']);
-    }
-
     public function testTimestamping()
     {
         $this->list->prePersistTimestamp();

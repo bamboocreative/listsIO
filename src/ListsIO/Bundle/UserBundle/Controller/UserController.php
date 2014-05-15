@@ -2,14 +2,17 @@
 
 namespace ListsIO\Bundle\UserBundle\Controller;
 
-use Doctrine\ORM\EntityNotFoundException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use ListsIO\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserController extends Controller
 {
 
+    /**
+     * Home action.
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function indexAction()
     {
         // If the user's not logged in, send them to registration.
@@ -23,28 +26,37 @@ class UserController extends Controller
         return $this->redirect($url);
     }
 
+    /**
+     * View user by ID.
+     * @param Request $request
+     * @param $userId
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     */
     public function viewByIdAction(Request $request, $userId)
     {
         $format = $request->getRequestFormat();
-        $viewUser = $this->getDoctrine()
-            ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')
-            ->find($userId);
+        $viewUser = $this->loadEntityFromId('ListsIO\Bundle\UserBundle\Entity\User', $userId);
         if (empty($viewUser)) {
             throw new HttpException(404, "Could not find user by ID: " . htmlspecialchars($userId));
         }
+        $viewUser = $this->serialize($viewUser, $format);
         return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('user' => $viewUser));
     }
 
+    /**
+     * View user by username.
+     * @param Request $request
+     * @param $username
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     */
     public function viewByUsernameAction(Request $request, $username)
     {
-        $format = $request->getRequestFormat();
-        $viewUser = $this->getDoctrine()
-            ->getRepository('ListsIO\Bundle\UserBundle\Entity\User')
-            ->findOneBy(array('username' => $username));
+        $viewUser = $this->loadOneEntityBy('ListsIO\Bundle\UserBundle\Entity\User', array('username' => $username));
         if (empty($viewUser)) {
             throw new HttpException(404, "No route or username found for username: " . htmlspecialchars($username));
         }
-
-        return $this->render('ListsIOUserBundle:Profile:show.'.$format.'.twig', array('user' => $viewUser));
+        return $this->render('ListsIOUserBundle:Profile:show.html.twig', array('user' => $viewUser));
     }
 }

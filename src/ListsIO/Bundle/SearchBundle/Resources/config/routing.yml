@@ -3,5 +3,5 @@ lists_io_search_homepage:
     defaults: { _controller: ListsIOSearchBundle:Search:index }
 
 lists_io_search_find:
-    pattern:  /find
-    defaults: { _controller: ListsIOSearchBundle:Search:find }
+    pattern:  /query
+    defaults: { _controller: ListsIOSearchBundle:Search:query }

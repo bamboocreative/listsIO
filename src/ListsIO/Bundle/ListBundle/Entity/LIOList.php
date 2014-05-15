@@ -2,15 +2,17 @@
 
 namespace ListsIO\Bundle\ListBundle\Entity;
 
-use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 use ListsIO\Bundle\UserBundle\Entity\User as User;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\SerializedName;
+
 
 /**
  * List
  */
-class LIOList implements JsonSerializable
+class LIOList
 {
     /**
      * @var integer
@@ -29,16 +31,19 @@ class LIOList implements JsonSerializable
 
     /**
      * @var string
+     * @SerializedName("imageURL")
      */
     private $imageURL;
 
     /**
      * @var \ListsIO\Bundle\UserBundle\Entity\User
+     * @MaxDepth(2)
      */
     private $user;
 
     /**
      * @var null|LIOList
+     * @MaxDepth(1)
      */
     private $nextList;
 
@@ -49,11 +54,13 @@ class LIOList implements JsonSerializable
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     * @MaxDepth(3)
      */
     private $listViews;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     * @MaxDepth(3)
      */
     private $listLikes;
 
@@ -295,42 +302,6 @@ class LIOList implements JsonSerializable
     public function getListViews()
     {
         return $this->listViews;
-    }
-
-    public function jsonSerialize()
-    {
-        $listItems = array();
-        foreach($this->listItems as $item) {
-            $listItems[] = $item->jsonSerialize();
-        }
-        $listViews = array();
-        $totalViewsCount = count($this->listViews);
-        // TODO: Use appropriate serialization/HATEOAS, Jesse Rosato, 4/4/14
-        foreach($this->listViews as $listView) {
-            $viewer = $listView->getUser();
-            if ($viewer) {
-                $listViews[] = $viewer->getId();
-            }
-        }
-
-        $listLikes = array();
-        foreach($this->listLikes as $listLike) {
-            $listLikes[] = $listLike->getUser()->getId();
-        }
-        /** @var  $user \ListsIO\Bundle\UserBundle\Entity\User */
-        $user = $this->getUser();
-        return array(
-            'userID'    => $user ? $user->getId() : null,
-            'user'      => $user ? $user->jsonSerialize() : null,
-            'id'        => $this->getId(),
-            'title'     => $this->getTitle(),
-            'subtitle'          => $this->getSubtitle(),
-            'listItems'         => $listItems,
-            'imageURL'  => $this->getImageURL(),
-            'likedBy'           => $listLikes,
-            'viewedBy'          => $listViews,          // Logged-in users who viewed this list.
-            'viewedCount'       => $totalViewsCount     // Number of list views (anonymous views included).            
-        );
     }
 
     /**

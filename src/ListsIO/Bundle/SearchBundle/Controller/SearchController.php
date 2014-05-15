@@ -2,20 +2,30 @@
 
 namespace ListsIO\Bundle\SearchBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use ListsIO\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityRepository;
 
 class SearchController extends Controller
 {
 
-	public function indexAction(Request $request)
+    /**
+     * Render template for search page.
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(Request $request)
     {
-    	  return $this->render('ListsIOSearchBundle:Search:search.html.twig');
+    	return $this->render('ListsIOSearchBundle:Search:search.html.twig');
     }
-    
-    public function findAction(Request $request)
+
+    /**
+     * Search for users and lists using 'all' query param.
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function queryAction(Request $request)
     {
         //$format = $request->getRequestFormat();
         $term = urldecode($request->query->get('all'));
@@ -23,15 +33,22 @@ class SearchController extends Controller
         $lists = $this->searchLists($term);
         // Search users
         $users = $this->searchUsers($term);
-        //return $this->render('ListsIOSearchBundle:Search:results.'.$format.'.twig', array('term' => $term, 'users' => $users, 'lists' => $lists));
-        $response = new JsonResponse();
-		$response->setData(array(
-		    'users' => $users,
-		    'lists' => $lists
-		));
+        // Manually set response content-type (as opposed to using JsonResposne) to avoid using standard json_encode.
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $data = array(
+            'users' => $users,
+            'lists' => $lists
+        );
+		$response->setContent($this->serialize($data));
 		return $response;
     }
 
+    /**
+     * Find lists containing $title in their title.
+     * @param $title
+     * @return array
+     */
     public function searchLists($title) {
         /**
          * @var EntityRepository $listsRepo
@@ -45,6 +62,11 @@ class SearchController extends Controller
         return $listsQuery->getResult();
     }
 
+    /**
+     * Find users containing $username in their username.
+     * @param $username
+     * @return array
+     */
     public function searchUsers($username) {
         /**
          * @var EntityRepository $userRepo
