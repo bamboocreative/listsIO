@@ -8,7 +8,7 @@ use ListsIO\Bundle\ListBundle\Entity\LIOListItem;
 use ListsIO\Bundle\ListBundle\Entity\LIOListLike;
 use ListsIO\Bundle\ListBundle\Entity\LIOListView;
 use ListsIO\Bundle\UserBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use ListsIO\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -211,17 +211,6 @@ class ListsController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
-     */
-    public function requireXmlHttpRequest(Request $request)
-    {
-        if (! $request->isXmlHttpRequest()) {
-            throw new AccessDeniedHttpException('The route you are attempting to access is not available externally.');
-        }
-    }
-
-    /**
      * @param LIOList $list
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
@@ -229,38 +218,6 @@ class ListsController extends Controller
         if ($this->getUser()->getId() != $list->getUser()->getId()) {
             throw new AccessDeniedHttpException("You must be authenticated as the list owner to save the list.");
         }
-    }
-
-    /**
-     * @param $entity
-     */
-    public function saveEntity($entity) {
-        $em = $this->getDoctrine()
-            ->getManager();
-        $em->persist($entity);
-        $em->flush();
-    }
-
-    /**
-     * @param string $entity_name
-     * @param string $id
-     * @return mixed
-     */
-    public function loadEntityFromId($entity_name, $id)
-    {
-        return $this->getDoctrine()
-            ->getRepository($entity_name)
-            ->find($id);
-    }
-
-    /**
-     * @param $entity
-     */
-    public function removeEntity($entity)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($entity);
-        $em->flush();
     }
 
     /**
@@ -317,22 +274,6 @@ class ListsController extends Controller
             );
             return !! (count($listLikes));
         }
-    }
-
-    /**
-     * TODO: DRY (also used in User)
-     *
-     * @param $entity
-     * @param string $format
-     * @return mixed
-     */
-    public function serialize($entity, $format = 'json') {
-        // HTML doesn't need serialization.
-        if ($format == 'html') {
-            return $entity;
-        }
-        $serializer = $this->get('jms_serializer');
-        return $serializer->serialize($entity, $format, SerializationContext::create()->enableMaxDepthChecks());
     }
 
 }

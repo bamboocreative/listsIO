@@ -6,7 +6,7 @@
  * Time: 12:30 AM
  */
 
-namespace ListsIO\Utilities\Testing;
+namespace ListsIO\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

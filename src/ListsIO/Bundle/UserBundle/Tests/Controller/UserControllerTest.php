@@ -2,7 +2,7 @@
 
 namespace ListsIO\Bundle\UserBundle\Tests\Controller;
 
-use ListsIO\Utilities\Testing\DoctrineWebTestCase;
+use ListsIO\Tests\DoctrineWebTestCase;
 use ListsIO\Bundle\UserBundle\Entity\User;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 

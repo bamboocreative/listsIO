@@ -11,7 +11,7 @@ namespace ListsIO\Bundle\ListBundle\Tests\Services;
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use ListsIO\Bundle\ListBundle\Services\Recommender;
 use ListsIO\Bundle\UserBundle\Entity\User;
-use ListsIO\Utilities\Testing\DoctrineWebTestCase;
+use ListsIO\Tests\DoctrineWebTestCase;
 
 
 class RecommenderTest extends DoctrineWebTestCase {

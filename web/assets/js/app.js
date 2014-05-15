@@ -517,11 +517,14 @@ $(document).ready(function(){
 			$listResults.empty();
 
 	        $.ajax({
-				url: '/search/find?all=' + keyword,
+				url: '/search/query?all=' + keyword,
 				type: 'GET',
 			}).done(function(response){
 			
 				var users = response.users;
+
+                console.log(users);
+
 				var lists = response.lists;
 				
 				var usersEmpty = false;
