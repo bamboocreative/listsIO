@@ -5,6 +5,8 @@ $(document).ready(function(){
 	var $body = $('body');
 	
 	var $siteWrapper = $('#site_wrapper');
+	
+	var $loader = $('.loader');
 
     var $list = $(".editable-list");
 
@@ -558,7 +560,6 @@ $(document).ready(function(){
 	var $feedInsert = $('#feed-insert');
 	var feedLoading = false;	
 	
-	
 	/*
 	*
 	*
@@ -586,6 +587,8 @@ $(document).ready(function(){
 			
 			feedloading = true;
 			
+			$loader.show();
+			
 			var last = $('.feed-item-count').last().attr('data-id');
 					
 			$.ajax({
@@ -603,10 +606,18 @@ $(document).ready(function(){
 					feedLoading = true;
 					
 					$('#feed-cta').show()
+					
+					setTimeout(function(){
+						$loader.hide();
+					},500);
 									
 				} else{
 				
 					showFeedNext(feedLists, function(){
+						console.log('he')
+						setTimeout(function(){
+							$loader.hide();
+						},500);
 						feedLoading = false;
 					});
 				}
