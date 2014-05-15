@@ -587,7 +587,7 @@ $(document).ready(function(){
 			
 			feedloading = true;
 			
-			$loader.show();
+			$loader.fadeIn(200);
 			
 			var last = $('.feed-item-count').last().attr('data-id');
 					
@@ -608,16 +608,16 @@ $(document).ready(function(){
 					$('#feed-cta').show()
 					
 					setTimeout(function(){
-						$loader.hide();
-					},500);
+						$loader.fadeOut(200);
+					},800);
 									
 				} else{
 				
 					showFeedNext(feedLists, function(){
 						console.log('he')
 						setTimeout(function(){
-							$loader.hide();
-						},500);
+							$loader.fadeOut(200);
+						},800);
 						feedLoading = false;
 					});
 				}
