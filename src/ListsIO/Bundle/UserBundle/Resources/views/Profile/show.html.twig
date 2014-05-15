@@ -94,9 +94,17 @@
 			{{ user.username }}
 		</h1>
 	</div>
-	<div class="divider"></div>
+	<div class="container toggle-wrapper">
+		<div class="profile-toggle">
+			<ul>
+				<li class="active" data-toggle="lists">Lists</li>
+				<li data-toggle="likes">Likes</li>
+			</ul>
+		</div>
+		<div class="divider"></div>
+	</div>
 </div>
-<div class="container profile-lists-wrapper">
+<div class="container profile-lists-wrapper profile-lists-toggle active">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
@@ -111,7 +119,7 @@
 					</a>
 				</div>
 			{% endif %}
-			<ul>
+			<ul>			
 			{% for list in user.lists %}
                 {% if (list.title) or (user.id == app.user.id) %}
                     {% set title = list.title ? list.title : "Untitled" %}
@@ -130,5 +138,31 @@
 		</div>
 	</div>
 </div>
+
+<div class="container profile-lists-wrapper profile-likes-toggle" style="display:none">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			{% if user.listLikes is empty%}
+					<h3 class='no-likes'>This user has no likes yet.</h3>
+			{% else %}		
+				{% for likes in user.listLikes %}
+					
+					<ul>
+						<li data-id="{{ likes.list.id }}">
+							<a href="{{ path('lists_io_view_list', {'id': likes.list.id}) }}">
+								<h3 class="list-title">{{ likes.list.title }}</h3>
+								<span class="list-subtitle">{{ likes.list.subtitle }}</span>
+							</a>
+						</li>
+					</ul>
+				{% endfor %}
+				
+			{% endif %}
+			
+		</div>
+	</div>
+</div>
+
+					
 {% include "FOSUserBundle:Profile:show_content.html.twig" %}
 {% endblock fos_user_content %}

@@ -75,12 +75,41 @@
 	}
 	
 }
-
+.toggle-wrapper{
+	position: relative;
+	.profile-likes-toggle{
+		h3.no-likes{
+			text-align: center;
+			margin: 40px 0 80px 0;
+		}
+	}
+}
 // Profile page divider
 .divider{
 	border-top: 1px solid #fff;
-	margin: 2.8em;
 	opacity: .7;
+	margin-bottom: 2em;
+}
+
+.profile-toggle{
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		
+		li{
+			display: inline-block;
+			padding: 0 20px 10px 20px;
+			font-size: 1em;
+			font-weight: 200;
+			cursor: pointer;
+			
+			&.active {
+				font-weight: 400;
+				border-bottom: 1px solid #FFFFFF;
+			}
+		}
+	}
 }
 
 // Smaller than 480px
@@ -96,8 +125,6 @@
 	
 	.divider{
 		padding-bottom: 1em;
-		margin-top: .3em !important;
-		margin-bottom: .3em !important;
 	}
 	
 	.profile-lists-wrapper{
@@ -115,8 +142,7 @@
 	
 	.divider{
 		padding-bottom: 1em;
-		margin-top: .3em !important;
-		margin-bottom: .3em !important;
+
 	}
 }
 
