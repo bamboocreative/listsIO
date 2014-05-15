@@ -12,3 +12,4 @@
 /bin/
 /composer.phar
 .elasticbeanstalk/
+/web/assets/css/.sass-cache/*

@@ -6,6 +6,10 @@ lists_io_search:
     resource: "@ListsIOSearchBundle/Resources/config/routing.yml"
     prefix:   /search
 
+lists_io_feed:
+    resource: "@ListsIOFeedBundle/Resources/config/routing.yml"
+    prefix:   /feed
+
 lists_io_tos:
     pattern:  /tos
     defaults:

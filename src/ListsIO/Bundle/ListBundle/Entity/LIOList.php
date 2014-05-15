@@ -326,9 +326,10 @@ class LIOList implements JsonSerializable
             'title'     => $this->getTitle(),
             'subtitle'          => $this->getSubtitle(),
             'listItems'         => $listItems,
+            'imageURL'  => $this->getImageURL(),
             'likedBy'           => $listLikes,
             'viewedBy'          => $listViews,          // Logged-in users who viewed this list.
-            'viewedCount'       => $totalViewsCount     // Number of list views (anonymous views included).
+            'viewedCount'       => $totalViewsCount     // Number of list views (anonymous views included).            
         );
     }
 

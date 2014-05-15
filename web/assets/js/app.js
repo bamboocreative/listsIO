@@ -5,6 +5,8 @@ $(document).ready(function(){
 	var $body = $('body');
 	
 	var $siteWrapper = $('#site_wrapper');
+	
+	var $loader = $('.loader');
 
     var $list = $(".editable-list, .non-editable-list");
 
@@ -492,13 +494,15 @@ $(document).ready(function(){
 	$listResults = $('#list-results ul');
 	$search =  $('#search');
 	
+	
+	
+	
 	/*
 	*
-	* Listen for stop in typing on search
+	* Listen for stop in typing on search and then search
 	*
 	*
 	*/
-	
 	$search.on('keyup', function(e){
 
         var $this = $(this);
@@ -561,6 +565,13 @@ $(document).ready(function(){
 		
 	});
 	
+	
+	/*
+	*
+	*
+	* Take the user and print it to the search results. If it is empty show nothing found message
+	*
+	*/
 	function search_print_user(user, empty){
 		if(empty){
 			var html = "<li><p class='nothing-found'>No user found...</p></li>";
@@ -570,6 +581,13 @@ $(document).ready(function(){
 		$userResults.append(html);
 	}
 	
+	
+	/*
+	*
+	*
+	* Take the list and print it to the search results. If it is empty show nothing found message
+	*
+	*/
 	function search_print_list(list, empty){
 		if(empty){
 			var html = "<li><p class='nothing-found'>No lists found...</p></li>";
@@ -578,6 +596,106 @@ $(document).ready(function(){
 		}
 		
 		$listResults.append(html);
+	}
+		
+	
+	/* 
+	*
+	* Feed
+	*
+	*/
+	var $feedInsert = $('#feed-insert');
+	var feedLoading = false;	
+	
+	/*
+	*
+	*
+	* Listen to the feed scroll and if we hit the bottom lets load more feed
+	*
+	*/
+	var timer;
+	
+	$( document ).on('scroll', function(e){
+		
+		clearTimeout(timer);
+		
+		if(!$body.hasClass('disable-hover')) {
+			$body.addClass('disable-hover')
+		}
+		
+		timer = setTimeout(function(){
+			$body.removeClass('disable-hover')
+		},200);
+		
+		var height = $(document).height();
+		var scrollBottom = $(window).scrollTop() + $(window).height();
+		
+		if(feedLoading == false && scrollBottom == height ){
+			
+			feedloading = true;
+			
+			$loader.fadeIn(200);
+			
+			var last = $('.feed-item-count').last().attr('data-id');
+					
+			$.ajax({
+				url: '/feed/next',
+				type: 'GET',
+				data: {
+					'cursor' : last
+				}
+			}).done(function(response){
+								
+				var feedLists = response.lists;
+				
+				if (feedLists == false){
+				
+					feedLoading = true;
+					
+					$('#feed-cta').show()
+					
+					setTimeout(function(){
+						$loader.fadeOut(200);
+					},800);
+									
+				} else{
+				
+					showFeedNext(feedLists, function(){
+						console.log('he')
+						setTimeout(function(){
+							$loader.fadeOut(200);
+						},800);
+						feedLoading = false;
+					});
+				}
+				
+			})
+		}	
+	});
+	
+	/*
+	*
+	*
+	* Print out the next 21 items returned from the feed.
+	*
+	*/
+	function showFeedNext(feedLists, callback) {
+	
+		for (i = 0; i < feedLists.length; i++){
+					
+			print(feedLists[i]);
+			
+		}
+		
+		callback();
+		
+		function print(feedList){
+			var html = '<div data-id="'+feedList.id+'" onclick="location.href=\'/list/'+feedList.id+'\'" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 feed-item-wrapper feed-item-count" style="background-image: url('+feedList.imageURL+')"> <div class="feed-item-overlay"> <div class="feed-item"> <h3 class="feed-item-title">'+feedList.title+'</h3> <a href="/'+feedList.user.username+'"> <div class="feed-item-profile"> <img src="'+feedList.user.gravatarURL+'" /> <span class="feed-item-username">'+feedList.user.username+'</span> </div> </a> </div> </div> </div>';
+		
+			$feedInsert.append(html);
+		}
+		
+		
 	}
 	
 });
