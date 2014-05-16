@@ -13,16 +13,6 @@ ListsIO\Bundle\UserBundle\Entity\User:
             type: string
             length: 255
             unique: false
-        username:
-            column: username
-            type: string
-            length: 255
-            nullable: true
-        usernameCanonical:
-            column: username_canonical
-            type: string
-            length: 255
-            nullable: true
     fields:
         twitterId:
             type: string
