@@ -28,7 +28,7 @@ security:
             oauth:
                 resource_owners:
                     twitter: "/user/login/check-twitter"
-                    facebook: "/login/check-facebook"
+                    facebook: "/user/login/check-facebook"
                 login_path: /user/login
                 failure_path: /user/login
                 success_handler: listsio.security.component.authentication.handler.login_success_handler
@@ -44,11 +44,8 @@ security:
 
     access_control:
         # TODO: Require HTTPS for login and register routes.
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/login/check-twitter$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login/check-facebook$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/register%, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
