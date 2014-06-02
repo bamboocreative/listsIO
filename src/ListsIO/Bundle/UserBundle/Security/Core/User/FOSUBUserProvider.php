@@ -146,7 +146,6 @@ class FOSUBUserProvider extends BaseClass {
     protected function bindFacebookUserByOAuthResponse(UserResponseInterface $response, FacebookUserInterface $user)
     {
         $data = $response->getResponse();
-        $this->logger->debug(print_r($data, true));
         $username = $data['name'];
         $email = $data['email'];
         $id = $this->getServiceIdByOAuthResponse($response);
