@@ -105,6 +105,9 @@ hwi_oauth:
             client_id:           "%facebook.api_id%"
             client_secret:       "%facebook.api_secret%"
             scope:               "email"
+            infos_url:           "https://graph.facebook.com/me?fields=name,email,picture.type(square)"
+            paths:
+                profilepicture: picture.data.url
 
 #JMS Serializer
 jms_serializer:

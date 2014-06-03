@@ -10,7 +10,9 @@ class UserController extends Controller
 {
 
     /**
-     * Home action.
+     * Home action:
+     * - Anonymous: /user/register
+     * - Logged in: /username
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction()
@@ -18,12 +20,14 @@ class UserController extends Controller
         // If the user's not logged in, send them to registration.
         $securityContext = $this->container->get('security.context');
         if( ! $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-            $url = $this->generateUrl('fos_user_registration_register');
+            return $this->redirect($this->generateUrl('fos_user_registration_register'));
         } else {
             // Otherwise, send them to their profile page.
-            $url = $this->generateUrl('lists_io_user_view_by_username',  array('username' => $this->getUser()->getUsername()));
+            $user = $this->getUser();
+            $username = $user->getUsername();
+            return $this->redirect($this->generateUrl('lists_io_user_view_by_username', array('username' => $username)));
         }
-        return $this->redirect($url);
+
     }
 
     /**
@@ -59,4 +63,5 @@ class UserController extends Controller
         }
         return $this->render('ListsIOUserBundle:Profile:show.html.twig', array('user' => $viewUser));
     }
+
 }
