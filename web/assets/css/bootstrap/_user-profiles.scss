@@ -81,6 +81,26 @@
   text-align: center;
   margin-bottom: 60px;
 
+  text-align: center;
+  position: relative;
+
+  .gravatar-image{
+    padding-top: 5em;
+    padding-bottom: 0em;
+
+    .gravatar-inner{
+      max-width: 140px;
+      margin: 0 auto;
+      @include border-radius(99999px);
+      overflow: hidden;
+
+      img{
+        max-width: 100%;
+      }
+
+    }
+  }
+
   form {
     div.wrapper {
       width: 100%;

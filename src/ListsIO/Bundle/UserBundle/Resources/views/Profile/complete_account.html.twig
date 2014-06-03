@@ -69,30 +69,29 @@
 
 {% block fos_user_content %}
     <div class="mobile-background"  style="background-image: url(' {{randomImgURL}} ');">
-        <div class="profile-wrapper">
+        <div class="complete-account-wrapper">
             <!-- Error: Getting current user's info, not author info -->
             <div class="gravatar-image">
                 <div class="gravatar-inner">
                     <a href="http://en.gravatar.com/"><img src="{{ app.user.gravatarURL }}" title="Click to add a profile pic."></a>
                 </div>
             </div>
-            <h3>Click above to set your profile pic.</h3>
-        </div>
-        <div class="divider"></div>
-    </div>
-    <div class="container complete-account-wrapper">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <h3>And then we just need your email address...</h3>
-                {{ form_start(form) }}
-                {{ form_errors(form.email) }}
-                <div class="wrapper">
+            <h3>Click above to change your profile pic,<br />and enter your email adddress below.</h3>
+            {{ form_start(form) }}
+            {{ form_errors(form.email) }}
+            <div class="wrapper">
+                <div>
                     {{ form_widget(form.email) }}
-                    {{ form_row(form.save) }}
                 </div>
-                {{ form_end(form) }}
+                <div>
+                    {{ form_widget(form.save) }}
+                </div>
             </div>
+            {{ form_end(form) }}
         </div>
+
     </div>
     {% include "FOSUserBundle:Profile:show_content.html.twig" %}
 {% endblock fos_user_content %}
+{% block footer %}
+{% endblock %}

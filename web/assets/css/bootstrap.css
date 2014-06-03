@@ -3853,7 +3853,21 @@ textarea {
 .complete-account-wrapper {
   width: 100%;
   text-align: center;
-  margin-bottom: 60px; }
+  margin-bottom: 60px;
+  text-align: center;
+  position: relative; }
+  .complete-account-wrapper .gravatar-image {
+    padding-top: 5em;
+    padding-bottom: 0em; }
+    .complete-account-wrapper .gravatar-image .gravatar-inner {
+      max-width: 140px;
+      margin: 0 auto;
+      -moz-border-radius: 99999px;
+      -webkit-border-radius: 99999px;
+      border-radius: 99999px;
+      overflow: hidden; }
+      .complete-account-wrapper .gravatar-image .gravatar-inner img {
+        max-width: 100%; }
   .complete-account-wrapper form div.wrapper {
     width: 100%; }
     .complete-account-wrapper form div.wrapper div {
