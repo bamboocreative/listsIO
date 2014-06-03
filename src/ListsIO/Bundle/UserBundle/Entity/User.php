@@ -23,6 +23,7 @@ use JMS\Serializer\Annotation\SerializedName;
  */
 class User extends BaseUser implements TwitterUserInterface, FacebookUserInterface
 {
+
     /**
      * @var integer
      * @Expose

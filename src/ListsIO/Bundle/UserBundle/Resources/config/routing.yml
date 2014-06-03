@@ -4,6 +4,10 @@ lists_io_user_view_by_id:
         userId: \d+
         _format: (html|json)
     defaults: { _controller: ListsIOUserBundle:User:viewById, _format: html }
+lists_io_user_complete_account:
+    pattern: /user/complete_account
+    defaults: { _controller: ListsIOUserBundle:User:completeAccount }
+# THIS ROUTE MUST GO LAST
 lists_io_user_view_by_username:
     pattern:  /{username}
     requirements:

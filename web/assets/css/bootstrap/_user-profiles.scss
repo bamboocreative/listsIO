@@ -76,6 +76,59 @@
 	
 }
 
+.complete-account-wrapper {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 60px;
+
+  text-align: center;
+  position: relative;
+
+  .gravatar-image{
+    padding-top: 5em;
+    padding-bottom: 0em;
+
+    .gravatar-inner{
+      max-width: 140px;
+      margin: 0 auto;
+      @include border-radius(99999px);
+      overflow: hidden;
+
+      img{
+        max-width: 100%;
+      }
+
+    }
+  }
+
+  form {
+    div.wrapper {
+      width: 100%;
+      div {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+    ul {
+      width: 100%;
+      padding: 0;
+      color: #ff1330;
+      list-style: none;
+      text-align: center;
+      li {
+        width: 100%;
+      }
+    }
+  }
+
+  button {
+    height: 50px;
+    border-radius: 8px;
+    margin-left: 10px;
+  }
+
+}
+
 // Profile page divider
 .divider{
 	border-top: 1px solid #fff;

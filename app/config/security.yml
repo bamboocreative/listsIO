@@ -51,5 +51,6 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/view/*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/list/\d+, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/complete_account, role: ROLE_USER }
         - { path: ^/list/\w+, role: ROLE_USER }
         - { path: ^/admin/, role: ROLE_ADMIN }
