@@ -76,6 +76,39 @@
 	
 }
 
+.complete-account-wrapper {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 60px;
+
+  form {
+    div.wrapper {
+      width: 100%;
+      div {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+    ul {
+      width: 100%;
+      padding: 0;
+      color: #ff1330;
+      list-style: none;
+      text-align: center;
+      li {
+        width: 100%;
+      }
+    }
+  }
+
+  button {
+    height: 50px;
+    border-radius: 8px;
+    margin-left: 10px;
+  }
+
+}
+
 // Profile page divider
 .divider{
 	border-top: 1px solid #fff;

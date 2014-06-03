@@ -35,8 +35,16 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
         $session = $this->container->get('session');
         $targetPath = $session->get('target_path');
         $session->remove('target_path');
+        // If there's a target path, send the user there, otherwise check if we need to get the user's email.
         if (empty($targetPath)) {
-            $response = new RedirectResponse($this->router->generate('lists_io_home'));
+            /** @var \ListsIO\Bundle\UserBundle\Entity\User $user */
+            $user = $this->container->get('security.context')->getToken()->getUser();
+            $email = $user->getEmail();
+            if (empty($email)) {
+                $response = new RedirectResponse($this->router->generate('lists_io_user_complete_account'));
+            } else {
+                $response = new RedirectResponse($this->router->generate('lists_io_home'));
+            }
         } else {
             $response = new RedirectResponse($targetPath);
         }

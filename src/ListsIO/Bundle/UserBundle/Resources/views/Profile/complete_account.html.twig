@@ -1,0 +1,98 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}
+    Lists.io | Almost There... Complete your Account
+{% endblock %}
+
+{% spaceless %}
+    {% set imgURL = [
+    "assets/images/bg/bg-img-01.jpg"
+    ,"assets/images/bg/bg-img-02.jpg"
+    ,"assets/images/bg/bg-img-03.jpg"
+    ,"assets/images/bg/bg-img-04.jpg"
+    ,"assets/images/bg/bg-img-05.jpg"
+    ,"assets/images/bg/bg-img-06.jpg"
+    ,"assets/images/bg/bg-img-07.jpg"
+    ,"assets/images/bg/bg-img-08.jpg"
+    ,"assets/images/bg/bg-img-09.jpg"
+    ,"assets/images/bg/bg-img-10.jpg"
+    ,"assets/images/bg/bg-img-11.jpg"
+    ,"assets/images/bg/bg-img-12.jpg"
+    ,"assets/images/bg/bg-img-13.jpg"
+    ,"assets/images/bg/bg-img-14.jpg"
+    ,"assets/images/bg/bg-img-15.jpg"
+    ,"assets/images/bg/bg-img-16.jpg"
+    ,"assets/images/bg/bg-img-17.jpg"
+    ,"assets/images/bg/bg-img-18.jpg"
+    ,"assets/images/bg/bg-img-19.jpg"
+    ,"assets/images/bg/bg-img-20.jpg"
+    ,"assets/images/bg/bg-img-21.jpg"
+    ,"assets/images/bg/bg-img-22.jpg"
+    ,"assets/images/bg/bg-img-23.jpg"
+    ,"assets/images/bg/bg-img-24.jpg"
+    ,"assets/images/bg/bg-img-25.jpg"
+    ,"assets/images/bg/bg-img-26.jpg"
+    ,"assets/images/bg/bg-img-27.jpg"
+    ,"assets/images/bg/bg-img-28.jpg"
+    ,"assets/images/bg/bg-img-29.jpg"
+    ,"assets/images/bg/bg-img-30.jpg"
+    ,"assets/images/bg/bg-img-31.jpg"
+    ,"assets/images/bg/bg-img-32.jpg"
+    ,"assets/images/bg/bg-img-33.jpg"
+    ,"assets/images/bg/bg-img-34.jpg"
+    ,"assets/images/bg/bg-img-35.jpg"
+    ,"assets/images/bg/bg-img-36.jpg"
+    ,"assets/images/bg/bg-img-37.jpg"
+    ,"assets/images/bg/bg-img-38.jpg"
+    ,"assets/images/bg/bg-img-39.jpg"
+    ,"assets/images/bg/bg-img-40.jpg"
+    ,"assets/images/bg/bg-img-41.jpg"
+    ,"assets/images/bg/bg-img-42.jpg"
+    ,"assets/images/bg/bg-img-43.jpg"
+    ,"assets/images/bg/bg-img-44.jpg"
+    ,"assets/images/bg/bg-img-45.jpg"
+    ,"assets/images/bg/bg-img-46.jpg"
+    ,"assets/images/bg/bg-img-47.jpg"
+    ,"assets/images/bg/bg-img-48.jpg"
+    ,"assets/images/bg/bg-img-49.jpg"
+    ] %}
+
+    {% set randomImgURL = asset(random(imgURL)) %}
+{% endspaceless %}
+
+{% block share %}
+{% endblock %}
+
+{% block bgImage %}
+    <div class="bg-wrapper" style="background-image: url(' {{randomImgURL}} ');"></div>
+{% endblock %}
+
+{% block fos_user_content %}
+    <div class="mobile-background"  style="background-image: url(' {{randomImgURL}} ');">
+        <div class="profile-wrapper">
+            <!-- Error: Getting current user's info, not author info -->
+            <div class="gravatar-image">
+                <div class="gravatar-inner">
+                    <a href="http://en.gravatar.com/"><img src="{{ app.user.gravatarURL }}" title="Click to add a profile pic."></a>
+                </div>
+            </div>
+            <h3>Click above to set your profile pic.</h3>
+        </div>
+        <div class="divider"></div>
+    </div>
+    <div class="container complete-account-wrapper">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>And then we just need your email address...</h3>
+                {{ form_start(form) }}
+                {{ form_errors(form.email) }}
+                <div class="wrapper">
+                    {{ form_widget(form.email) }}
+                    {{ form_row(form.save) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    {% include "FOSUserBundle:Profile:show_content.html.twig" %}
+{% endblock fos_user_content %}

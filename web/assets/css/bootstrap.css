@@ -3850,6 +3850,28 @@ textarea {
       .profile-lists-wrapper ul li a .list-subtitle {
         font-weight: 100; }
 
+.complete-account-wrapper {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 60px; }
+  .complete-account-wrapper form div.wrapper {
+    width: 100%; }
+    .complete-account-wrapper form div.wrapper div {
+      display: inline-block;
+      vertical-align: middle; }
+  .complete-account-wrapper form ul {
+    width: 100%;
+    padding: 0;
+    color: #ff1330;
+    list-style: none;
+    text-align: center; }
+    .complete-account-wrapper form ul li {
+      width: 100%; }
+  .complete-account-wrapper button {
+    height: 50px;
+    border-radius: 8px;
+    margin-left: 10px; }
+
 .divider {
   border-top: 1px solid #fff;
   margin: 2.8em;

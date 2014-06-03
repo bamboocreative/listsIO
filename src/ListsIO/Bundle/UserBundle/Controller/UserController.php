@@ -64,4 +64,26 @@ class UserController extends Controller
         return $this->render('ListsIOUserBundle:Profile:show.html.twig', array('user' => $viewUser));
     }
 
+
+    public function completeAccountAction(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createFormBuilder($user, array('validation_groups' => array('Profile')))
+            ->add('email', 'email', array(
+                'label' => false,
+                'attr' => array('placeholder' => 'your-email@example.com')
+            ))
+            ->add('save', 'submit', array('label' => 'Save'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->saveEntity($user);
+            return $this->redirect($this->generateUrl('lists_io_user_view_by_username', array('username' => $user->getUsername())));
+        }
+
+        return $this->render('ListsIOUserBundle:Profile:complete_account.html.twig', array('form' => $form->createView()));
+    }
+
 }
