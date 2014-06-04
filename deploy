@@ -99,7 +99,7 @@ then
 else
     echo "Push to origin branch $GIT_BRANCH successful.  Deploying to Elastic Beanstalk."
     git aws.push
-    AWS_STATUS = $?
+    AWS_STATUS=$?
     if [[ $AWS_STATUS -ne 0 ]]
     then
         echo "There was an error pushing to AWS."
