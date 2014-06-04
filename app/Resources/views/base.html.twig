@@ -56,6 +56,12 @@
 
 					<a href="{{ path('fos_user_security_logout') }}"><li>{{ 'logout'|trans({}, 'FOSUserBundle') }}</li></a>
 				</ul>
+                {% if app.user.twitterId is empty %}
+                    <a class="button register-social twitter" href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" alt="Connect Twitter"><span class="icon-twitter"></span>Connect Twitter</a>
+                {% endif %}
+                {% if app.user.facebookId is empty %}
+                    <a class="button register-social facebook" href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" alt="Connect Facebook"><span class="icon-facebook"></span>Connect Facebook</a>
+                {% endif %}
 				
 				{% else %}
 				
