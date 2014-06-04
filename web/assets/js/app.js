@@ -234,15 +234,15 @@ $(document).ready(function(){
 		  url: '/list/new_item/'+listID,
 		  data : {},
 		  success: function(data){
-
+              console.log(data);
               var $template = $item_template.clone();
               var $item = $template.find('li.list-item');
               var $number = $item.find('.number');
               var $description = $item.find('.description');
               $description.autosize();
-              $number.html(data.orderIndex);
+              $number.html(data.order_index);
               $item.attr('data-id', data.id)
-              $item.attr('data-order_index', data.orderIndex);
+              $item.attr('data-order_index', data.order_index);
               $('.editable-list').append($item);
               $item.find('.item').focus();
 		  }
