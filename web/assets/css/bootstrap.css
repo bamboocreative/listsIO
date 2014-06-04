@@ -3886,6 +3886,27 @@ textarea {
     border-radius: 8px;
     margin-left: 10px; }
 
+.social-connect-wrapper {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 60px;
+  text-align: center;
+  position: relative; }
+  .social-connect-wrapper .gravatar-image {
+    padding-top: 5em;
+    padding-bottom: 0em; }
+    .social-connect-wrapper .gravatar-image .gravatar-inner {
+      max-width: 140px;
+      margin: 0 auto;
+      -moz-border-radius: 99999px;
+      -webkit-border-radius: 99999px;
+      border-radius: 99999px;
+      overflow: hidden; }
+      .social-connect-wrapper .gravatar-image .gravatar-inner img {
+        max-width: 100%; }
+  .social-connect-wrapper button {
+    border-radius: 8px; }
+
 .divider {
   border-top: 1px solid #fff;
   margin: 2.8em;
