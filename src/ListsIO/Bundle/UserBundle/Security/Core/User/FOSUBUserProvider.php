@@ -29,6 +29,8 @@ class FOSUBUserProvider extends BaseClass {
      */
     protected $translator;
 
+    protected $logger;
+
     /**
      * Constructor
      * @param UserManagerInterface $userManager
@@ -39,18 +41,24 @@ class FOSUBUserProvider extends BaseClass {
     public function __construct(UserManagerInterface $userManager,
                                 array $properties,
                                 Validator $validator,
-                                Translator $translator
+                                Translator $translator,
+                                $logger
     )
     {
         parent::__construct($userManager, $properties);
         $this->validator = $validator;
         $this->translator = $translator;
+        $this->logger = $logger;
     }
 
     /**
      * {@inheritDoc}
      */
     public function connect(UserInterface $user, UserResponseInterface $response) {
+        $this->logger->error("CONNNECCT");
+        $this->logger->error(print_r(get_class_methods($response), true));
+        $this->logger->error($response->getProfilePicture());
+        $this->logger->error(print_r($response->getPaths(), true));
         $serviceName = ucfirst($response->getResourceOwner()->getName());
         $setter = 'set'.$serviceName;
         $idSetter = $setter.'Id';
