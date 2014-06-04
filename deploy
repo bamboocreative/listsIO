@@ -12,6 +12,13 @@ OPTIONS:
 EOF
 }
 
+FEATURE_BRANCH=$1
+if [[ -z "$FEATURE_BRANCH" ]]
+then
+    echo "You must specify a feature branch to deploy, e.g. './deploy HotFix_LoginBug'."
+    exit
+fi
+
 GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [[ $GIT_BRANCH =~ production ]]
@@ -25,6 +32,26 @@ then
     fi
 fi
 
+echo "Pulling from origin branch $GIT_BRANCH."
+git pull origin $GIT_BRANCH
+ORIGIN_PULL_STATUS=$?
+if [[ $ORIGIN_PUSH_STATUS -ne 0 ]]
+then
+    echo "Unable complete pull from origin branch $GIT_BRANCH."
+    exit
+else
+    echo "Pull from origin branch $GIT_BRANCH successful.  Merging feature branch $FEATURE_BRANCH."
+fi
+
+git merge $FEATURE_BRANCH
+MERGE_STATUS=$?
+if [[ $MERGE_STATUS -ne 0 ]]
+then
+    echo "Unable to completely merge $FEATURE_BRANCH into $GIT_BRANCH."
+    exit
+else
+    echo "$FEATURE_BRANCH merged into $GIT_BRANCH. Beginning testing."
+fi
 
 composer install
 COMPOSER_STATUS=$?
@@ -72,5 +99,45 @@ then
 else
     echo "Push to origin branch $GIT_BRANCH successful.  Deploying to Elastic Beanstalk."
     git aws.push
-    echo "BOOM!  Deployed!"
+    AWS_STATUS = $?
+    if [[ AWS_STATUS -ne 0 ]]
+    then
+        echo "There was an error pushing to AWS."
+        exit
+    else
+        echo "******************************************"
+        echo "*********BOOM!**********DEPLOYED!*********"
+        echo "******************************************"
+    fi
+fi
+
+if [[ $GIT_BRANCH =~ production ]]
+then
+    echo "Would you like to merge your feature branch into the development trunk (recommended)? (yes/no)"
+    read CONFIRMATION
+    if [[ $CONFIRMATION != yes ]]
+    then
+        echo "Make sure to manually merge your feature branch into the development trunk (and push it to origin) when you're ready."
+        exit
+    fi
+    git checkout development
+    git merge $FEATURE_BRANCH
+    MERGE_STATUS=$?
+    if [[ $MERGE_STATUS -ne 0 ]]
+    then
+        echo "Unable to fully merge feature branch into origin branch."
+        echo "Please fix any conflicts and merge the branch manually."
+        exit
+    else
+        echo "$FEATURE_BRANCH merged into development. Pushing to origin."
+    fi
+    git push origin development
+    PUSH_STATUS=$?
+    if [[ $PUSH_STATUS -ne 0 ]]
+    then
+        echo "Unable to push to origin development branch. Please fix any problems and push manually."
+        exit
+    else
+        echo "Push successful. All done! Just use 'git checkout -b NewFeatureBranch' to start your next task!"
+    fi
 fi
