@@ -34,9 +34,11 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
      * @var string
      * @Expose
      * @AccessType("public_method")
-     * @Accessor(getter="getGravatarURL", setter="setGravatarURL")
-     * @SerializedName("gravatarURL")
+     * @Accessor(getter="getProfilePicURL", setter="setProfilePicURL")
+     * @SerializedName("profilePicURL")
      */
+    protected $profilePicURL;
+
     private $gravatarURL;
 
     /**
@@ -240,10 +242,18 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
         return $this->facebookUsername;
     }
 
-    /**
-     * Dummy function for JMS Serializer
-     */
-    public function setGravatarURL() {
+    public function setProfilePicURL($url)
+    {
+        $this->profilePicURL = $url;
+    }
+
+    public function getProfilePicURL()
+    {
+        if (empty($this->profilePicURL)) {
+            return $this->getGravatarURL();
+        } else {
+            return $this->profilePicURL;
+        }
     }
 
     /**
@@ -255,7 +265,7 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
      * @param string $maximumRating Maximum rating (inclusive) [ g | pg | r | x ]
      * @return string
      */
-    public function getGravatarURL($size = 240, $defaultImageset = 'mm', $maximumRating = 'x')
+    protected function getGravatarURL($size = 240, $defaultImageset = 'mm', $maximumRating = 'x')
     {
         if ( empty($this->gravatarURL)) {
             $url = 'http://www.gravatar.com/avatar/';

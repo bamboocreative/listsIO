@@ -1,7 +1,7 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block title %}
-    Lists.io | Connect {{ service|capitalize }}
+    Lists.io | Account Connected
 {% endblock %}
 
 {% spaceless %}
@@ -72,7 +72,7 @@
         <div class="social-connect-wrapper">
             <div class="gravatar-image">
                 <div class="gravatar-inner">
-                    <img src="{{ app.user.gravatarURL }}" />
+                    <img src="{{ app.user.profilePicURL }}" />
                 </div>
             </div>
             <h3>Account connected. Redirecting you to your profile.</h3>

@@ -1,0 +1,2 @@
+ALTER TABLE User ADD profilePicURL VARCHAR(255) DEFAULT NULL, CHANGE username username VARCHAR(255) NOT NULL, CHANGE username_canonical username_canonical VARCHAR(255) NOT NULL;
+CREATE UNIQUE INDEX UNIQ_2DA1797792FC23A8 ON User (username_canonical);
