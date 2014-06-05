@@ -64,6 +64,7 @@
 				position: relative;
 				list-style-type: none;
 				padding-bottom: 4em;
+				
 				a{
 					color: white;
 					text-decoration: none;
@@ -78,6 +79,18 @@
 				}
 			}
 		
+		}
+	}
+	
+	&.profile-likes-toggle {
+		ul {
+			li {
+				padding-bottom: 2em !important;
+				
+				div#author{
+					margin-top: 15px;
+				}
+			}
 		}
 	}
 	

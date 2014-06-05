@@ -148,14 +148,18 @@
 		<div class="col-md-6 col-md-offset-3">
 			{% if user.listLikes is empty%}
 					<h3 class='no-info-message'>What?! {{user.username}} has no likes yet.</h3>
-			{% else %}		
+			{% else %}	
+				
 				{% for likes in user.listLikes %}
 					
 					<ul>
 						<li data-id="{{ likes.list.id }}">
 							<a href="{{ path('lists_io_view_list', {'id': likes.list.id}) }}">
 								<h3 class="list-title">{{ likes.list.title }}</h3>
-								<span class="list-subtitle">{{ likes.list.subtitle }}</span>
+								<div class="list-subtitle">{{ likes.list.subtitle }}</div>
+								
+								<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': likes.list.user.username}) }}"><img class="loggedin" src="{{ likes.list.user.gravatarURL }}"> by {{ likes.list.user.username }}</a></div>
+								
 							</a>
 						</li>
 					</ul>
