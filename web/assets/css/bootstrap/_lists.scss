@@ -87,31 +87,6 @@
       margin: 0px 0px 40px;
   }
 
-  div#author{
-      font-size: .9em;
-      padding-left: 3px;
-      font-weight: 300;
-      display: inline-block;
-      a{
-          display: inline-block;
-          line-height: 1em;
-          @include transition(background, .3s);
-          color: rgba(255,255,255,.7);
-          
-          &:hover{
-              color: white;
-              text-decoration: none;
-             
-          }
-          img{
-          	@extend .user-profile-image;
-          	height: 40px;
-          	width: 40px;
-            margin-right: 10px;
-          }
-      }
-  }
-
   .list-img{
       background: none;
       border: none;
@@ -132,6 +107,31 @@
 
   }
 
+}
+
+div#author{
+  font-size: .9em;
+  padding-left: 3px;
+  font-weight: 300;
+  display: inline-block;
+  a{
+      display: inline-block;
+      line-height: 1em;
+      @include transition(background, .3s);
+      color: rgba(255,255,255,.7);
+      
+      &:hover{
+          color: white;
+          text-decoration: none;
+         
+      }
+      img{
+      	@extend .user-profile-image;
+      	height: 40px;
+      	width: 40px;
+        margin-right: 10px;
+      }
+  }
 }
 
 

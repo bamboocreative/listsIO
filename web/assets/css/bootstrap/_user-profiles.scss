@@ -37,6 +37,13 @@
 
 // User profile Lists
 .profile-lists-wrapper{
+
+	min-height: 150px;
+	
+	h3.no-info-message{
+		text-align: center;
+		margin: 40px 0 80px 0;
+	}
 	
 	.no-list{
 		text-align: center;
@@ -57,6 +64,7 @@
 				position: relative;
 				list-style-type: none;
 				padding-bottom: 4em;
+				
 				a{
 					color: white;
 					text-decoration: none;
@@ -74,8 +82,24 @@
 		}
 	}
 	
+	&.profile-likes-toggle {
+		ul {
+			li {
+				padding-bottom: 2em !important;
+				
+				div#author{
+					margin-top: 15px;
+				}
+			}
+		}
+	}
+	
+}
+.toggle-wrapper{
+	position: relative;
 }
 
+<<<<<<< HEAD
 .complete-account-wrapper {
   width: 100%;
   text-align: center;
@@ -157,8 +181,29 @@
 // Profile page divider
 .divider{
 	border-top: 1px solid #fff;
-	margin: 2.8em;
 	opacity: .7;
+	margin-bottom: 2em;
+}
+
+.profile-toggle{
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		
+		li{
+			display: inline-block;
+			padding: 0 20px 10px 20px;
+			font-size: 1em;
+			font-weight: 200;
+			cursor: pointer;
+			
+			&.active {
+				font-weight: 400;
+				border-bottom: 1px solid #FFFFFF;
+			}
+		}
+	}
 }
 
 // Smaller than 480px
@@ -174,8 +219,6 @@
 	
 	.divider{
 		padding-bottom: 1em;
-		margin-top: .3em !important;
-		margin-bottom: .3em !important;
 	}
 	
 	.profile-lists-wrapper{
@@ -193,8 +236,7 @@
 	
 	.divider{
 		padding-bottom: 1em;
-		margin-top: .3em !important;
-		margin-bottom: .3em !important;
+
 	}
 }
 
