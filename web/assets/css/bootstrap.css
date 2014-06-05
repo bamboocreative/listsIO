@@ -3951,7 +3951,26 @@ textarea {
       padding-bottom: 2em; } }
 @media (max-width: 768px) {
   .divider {
-    padding-bottom: 1em; } }
+    padding-bottom: 1em; }
+
+  .complete-account-wrapper {
+    margin: 0;
+    width: 100%;
+    padding: 0 10px 20px 10px; }
+    .complete-account-wrapper div.wrapper {
+      text-align: left;
+      width: 100%; }
+    .complete-account-wrapper div.email-input-wrapper {
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0; }
+    .complete-account-wrapper div.submit-wrapper {
+      width: 100%;
+      box-sizing: border-box; }
+      .complete-account-wrapper div.submit-wrapper button {
+        width: 100%;
+        margin: 10px 0 0 0;
+        box-sizing: border-box; } }
 .list-button-wrapper {
   text-align: center;
   margin-top: 1em;
