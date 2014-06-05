@@ -31,12 +31,17 @@ class UserTest extends WebTestCase {
         $this->user->setEmail("test@example.com");
     }
 
-    public function testGetGravatarURL()
+    public function testProfilePicAccessors()
     {
+        // If no profile pic is set, we should get a gravatar url.
         $url = 'http://www.gravatar.com/avatar/';
         $url .= md5(strtolower(trim("test@example.com")));
         $url .= "?s=240&d=mm&r=x";
-        $this->assertEquals($url, $this->user->getGravatarURL(240, 'mm', 'x'));
+        $this->assertEquals($url, $this->user->getProfilePicURL());
+        // Test profile pic URL setter/getter.
+        $url = 'http://testprofilepicurl.com';
+        $this->user->setProfilePicURL($url);
+        $this->assertEquals($url, $this->user->getProfilePicURL());
     }
 
     public function testEmptyLists()

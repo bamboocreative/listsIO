@@ -3,7 +3,5 @@ listsio:
         oauth:
             account:
                 unique:
-                    email: The email address associated with that %resource_owner% account is already registered.  We'll be adding the ability to connect your %resource_owner% account to your Lists.IO account soon.
-                    username: The username associated with that %resource_owner% account is already registered.  We'll be adding the ability to connect your %resource_owner% account to your Lists.IO account soon.
-                    #email: The email address associated with that %resource_owner% account is already registered.  Log in using your Lists.IO username/email and password to connect your Lists.IO account to your %resource_owner% account.
-                    #username: The username associated with that %resource_owner% account is already registered.  Log in using your Lists.IO username/email and password to connect your Lists.IO account to your %resource_owner% account.
+                    email: Please login using your username or email address and connect your %resource_owner% account to your Lists.IO account via the button in the sidebar.
+                    username: Please login using your username or email address and connect your %resource_owner% account to your Lists.IO account via the button in the sidebar.

@@ -576,7 +576,7 @@ $(document).ready(function(){
 		if(empty){
 			var html = "<li><p class='nothing-found'>No user found...</p></li>";
 		} else {
-			var html = "<li> <a href='/" + user.username + "'><div class='search-user'><img src='" + user.gravatarURL +"'/>  <span class='search-user-username'>" + user.username + "</span> </div> </a> </li";
+			var html = "<li> <a href='/" + user.username + "'><div class='search-user'><img src='" + user.profilePicURL +"'/>  <span class='search-user-username'>" + user.username + "</span> </div> </a> </li";
 		}
 		$userResults.append(html);
 	}
@@ -592,7 +592,7 @@ $(document).ready(function(){
 		if(empty){
 			var html = "<li><p class='nothing-found'>No lists found...</p></li>";
 		} else {
-			var html = "<li> <a href='/list/" + list.id + "'> <div class='search-list'> <h3 class='search-title'>" + list.title + "</h3> <p class='search-subtitle'>" + list.subtitle + "</p></a> </div> <a href=/" + list.user.username + "><div class='search-list-profile'><img src='" + list.user.gravatarURL + "' /><span class='search-list-username'>by " + list.user.username + "</span> </div> </a></li>";
+			var html = "<li> <a href='/list/" + list.id + "'> <div class='search-list'> <h3 class='search-title'>" + list.title + "</h3> <p class='search-subtitle'>" + list.subtitle + "</p></a> </div> <a href=/" + list.user.username + "><div class='search-list-profile'><img src='" + list.user.profilePicURL + "' /><span class='search-list-username'>by " + list.user.username + "</span> </div> </a></li>";
 		}
 		
 		$listResults.append(html);
@@ -690,7 +690,7 @@ $(document).ready(function(){
 		callback();
 		
 		function print(feedList){
-			var html = '<div data-id="'+feedList.id+'" onclick="location.href=\'/list/'+feedList.id+'\'" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 feed-item-wrapper feed-item-count" style="background-image: url('+feedList.imageURL+')"> <div class="feed-item-overlay"> <div class="feed-item"> <h3 class="feed-item-title">'+feedList.title+'</h3> <a href="/'+feedList.user.username+'"> <div class="feed-item-profile"> <img src="'+feedList.user.gravatarURL+'" /> <span class="feed-item-username">'+feedList.user.username+'</span> </div> </a> </div> </div> </div>';
+			var html = '<div data-id="'+feedList.id+'" onclick="location.href=\'/list/'+feedList.id+'\'" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 feed-item-wrapper feed-item-count" style="background-image: url('+feedList.imageURL+')"> <div class="feed-item-overlay"> <div class="feed-item"> <h3 class="feed-item-title">'+feedList.title+'</h3> <a href="/'+feedList.user.username+'"> <div class="feed-item-profile"> <img src="'+feedList.user.profilePicURL+'" /> <span class="feed-item-username">'+feedList.user.username+'</span> </div> </a> </div> </div> </div>';
 		
 			$feedInsert.append(html);
 		}
@@ -717,7 +717,5 @@ $(document).ready(function(){
 		}		 
 		
 	})
-	
-	
 	
 });

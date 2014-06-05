@@ -45,7 +45,7 @@
 				{% if app.user %}
 				<a href="/">
 					<div class="loggedin-user">
-						<img class="loggedin-user-img" src="{{ app.user.gravatarURL }}">
+						<a href="{{ path('lists_io_user_view_by_username', { 'username' : app.user.username }) }}" title="Home"><img class="loggedin-user-img" src="{{ app.user.profilePicURL }}" /></a>
 						<p>{{app.user.username}}</p>
 					</div>
 				</a>

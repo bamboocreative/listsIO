@@ -55,15 +55,12 @@ class FOSUBUserProvider extends BaseClass {
      * {@inheritDoc}
      */
     public function connect(UserInterface $user, UserResponseInterface $response) {
-        $this->logger->error("CONNNECCT");
-        $this->logger->error(print_r(get_class_methods($response), true));
-        $this->logger->error($response->getProfilePicture());
-        $this->logger->error(print_r($response->getPaths(), true));
         $serviceName = ucfirst($response->getResourceOwner()->getName());
         $setter = 'set'.$serviceName;
         $idSetter = $setter.'Id';
         $tokenSetter = $setter.'AccessToken';
         $usernameSetter = $setter.'Username';
+        $pictureSetter = $setter.'Picture';
 
         // "Disconnect" previously connected users.
         $previousUser = $this->loadServiceUserByOAuthResponse($response);
@@ -73,6 +70,7 @@ class FOSUBUserProvider extends BaseClass {
             $this->userManager->updateUser($previousUser);
         }
 
+        $this->$pictureSetter($response, $user);
         $user->$idSetter($this->getServiceIdByOAuthResponse($response));
         $user->$usernameSetter($response->getUsername());
         $user->$tokenSetter($response->getAccessToken());
@@ -86,7 +84,9 @@ class FOSUBUserProvider extends BaseClass {
     {
         $serviceName = ucfirst($response->getResourceOwner()->getName());
         $tokenSetter = 'set'.$serviceName.'AccessToken';
+        $pictureSetter = 'set'.$serviceName.'Picture';
         $user = $this->loadServiceUserByOAuthResponse($response);
+        $this->$pictureSetter($response, $user, true);
 
         // Check for new user
         if (null === $user) {
@@ -129,6 +129,37 @@ class FOSUBUserProvider extends BaseClass {
         return $user;
     }
 
+    protected function setTwitterPicture(UserResponseInterface $response, $user, $override = false) {
+        $data = $response->getResponse();
+        $notDefaultPicture = empty($data['default_profile_image']);
+        $this->setPicture($response, $user, $notDefaultPicture);
+    }
+
+    protected function setFacebookPicture(UserResponseInterface $response, $user, $override = false) {
+        $data = $response->getResponse();
+        $notDefaultPicture = empty($data['picture']['data']['is_silhouette']);
+        $this->setPicture($response, $user, $notDefaultPicture, $override);
+    }
+
+    /**
+     * Set the user picture from the service response.
+     * - If the returned picture is not the default picture,
+     * - And if override is set to true or the user does not have a profile pic set.
+     * @param UserResponseInterface $response
+     * @param $user
+     * @param $notDefaultPicture
+     * @param $override
+     */
+    protected function setPicture(UserResponseInterface $response, $user, $notDefaultPicture, $override = false) {
+        if ( $notDefaultPicture ) {
+            if ($override || preg_match('/gravatar/', $user->getProfilePicURL())) {
+                // Use the original size Twitter pic.
+                $profilePicURL = str_replace('_normal', '', $response->getProfilePicture());
+                $user->setProfilePicURL($profilePicURL);
+            }
+        }
+    }
+
     /**
      * Bind Twitter User by OAuth response data.
      * @param UserResponseInterface $response
@@ -137,6 +168,7 @@ class FOSUBUserProvider extends BaseClass {
     protected function bindTwitterUserByOAuthResponse(UserResponseInterface $response, TwitterUserInterface $user)
     {
         $data = $response->getResponse();
+        // We need at least screen name.
         $username = $data['screen_name'];
         $id = $this->getServiceIdByOAuthResponse($response);
         $user->setTwitterId($id);
@@ -144,6 +176,7 @@ class FOSUBUserProvider extends BaseClass {
         $user->setUsername($username);
         $user->setEmail("");
         $user->setPassword($id);
+        $this->setTwitterPicture($response, $user);
     }
 
     /**
@@ -154,14 +187,18 @@ class FOSUBUserProvider extends BaseClass {
     protected function bindFacebookUserByOAuthResponse(UserResponseInterface $response, FacebookUserInterface $user)
     {
         $data = $response->getResponse();
+        // We gotta have at least the name field.
         $username = $data['name'];
-        $email = $data['email'];
+        if ( ! empty ($data['email'])) {
+            $email = $data['email'];
+        }
         $id = $this->getServiceIdByOAuthResponse($response);
         $user->setFacebookId($id);
         $user->setFacebookUsername($username);
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($id);
+        $this->setFacebookPicture($response, $user);
     }
 
     /**

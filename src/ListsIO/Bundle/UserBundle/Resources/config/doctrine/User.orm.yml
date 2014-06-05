@@ -14,6 +14,10 @@ ListsIO\Bundle\UserBundle\Entity\User:
             length: 255
             unique: false
     fields:
+        profilePicURL:
+            type: string
+            length: 255
+            nullable: true
         twitterId:
             type: string
             length: 255
