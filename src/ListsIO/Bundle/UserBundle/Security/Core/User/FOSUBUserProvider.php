@@ -86,7 +86,6 @@ class FOSUBUserProvider extends BaseClass {
         $tokenSetter = 'set'.$serviceName.'AccessToken';
         $pictureSetter = 'set'.$serviceName.'Picture';
         $user = $this->loadServiceUserByOAuthResponse($response);
-        $this->$pictureSetter($response, $user, true);
 
         // Check for new user
         if (null === $user) {
@@ -99,6 +98,8 @@ class FOSUBUserProvider extends BaseClass {
         // Update access token
         $user->$tokenSetter($response->getAccessToken());
 
+        $this->$pictureSetter($response, $user, true);
+
         $this->userManager->updateUser($user);
         return $user;
     }
@@ -110,10 +111,13 @@ class FOSUBUserProvider extends BaseClass {
      */
     protected function createServiceUserByOAuthResponse(UserResponseInterface $response)
     {
+        $this->logger->debug("CREATING SERVICE USER");
         $serviceName = ucfirst($response->getResourceOwner()->getName());
+        $this->logger->debug("SERVICE NAME: " . $serviceName);
         $user = $this->userManager->createUser();
         $dataBinder = 'bind'.$serviceName.'UserByOAuthResponse';
         $this->$dataBinder($response, $user);
+        $this->logger->debug("USERNAME: " . $user->getUsername());
 
         $errors = $this->validator->validate($user);
 
@@ -132,7 +136,7 @@ class FOSUBUserProvider extends BaseClass {
     protected function setTwitterPicture(UserResponseInterface $response, $user, $override = false) {
         $data = $response->getResponse();
         $notDefaultPicture = empty($data['default_profile_image']);
-        $this->setPicture($response, $user, $notDefaultPicture);
+        $this->setPicture($response, $user, $notDefaultPicture, $override);
     }
 
     protected function setFacebookPicture(UserResponseInterface $response, $user, $override = false) {
