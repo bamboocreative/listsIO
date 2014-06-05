@@ -37,6 +37,13 @@
 
 // User profile Lists
 .profile-lists-wrapper{
+
+	min-height: 150px;
+	
+	h3.no-info-message{
+		text-align: center;
+		margin: 40px 0 80px 0;
+	}
 	
 	.no-list{
 		text-align: center;
@@ -77,13 +84,9 @@
 }
 .toggle-wrapper{
 	position: relative;
-	.profile-likes-toggle{
-		h3.no-likes{
-			text-align: center;
-			margin: 40px 0 80px 0;
-		}
-	}
 }
+
+
 // Profile page divider
 .divider{
 	border-top: 1px solid #fff;

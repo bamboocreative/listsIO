@@ -3828,33 +3828,35 @@ textarea {
     .profile-wrapper .profile-email a {
       color: white; }
 
-.profile-lists-wrapper .no-list {
-  text-align: center;
-  font-weight: 100;
-  margin-bottom: 4em; }
-.profile-lists-wrapper ul {
-  margin: 0;
-  padding: 0; }
-  .profile-lists-wrapper ul li {
-    position: relative;
-    list-style-type: none;
-    padding-bottom: 4em; }
-    .profile-lists-wrapper ul li:hover .delete-button {
-      opacity: 1; }
-    .profile-lists-wrapper ul li a {
-      color: white;
-      text-decoration: none; }
-      .profile-lists-wrapper ul li a .list-title {
-        font-weight: 900;
-        margin-bottom: 8px; }
-      .profile-lists-wrapper ul li a .list-subtitle {
-        font-weight: 100; }
+.profile-lists-wrapper {
+  min-height: 150px; }
+  .profile-lists-wrapper h3.no-info-message {
+    text-align: center;
+    margin: 40px 0 80px 0; }
+  .profile-lists-wrapper .no-list {
+    text-align: center;
+    font-weight: 100;
+    margin-bottom: 4em; }
+  .profile-lists-wrapper ul {
+    margin: 0;
+    padding: 0; }
+    .profile-lists-wrapper ul li {
+      position: relative;
+      list-style-type: none;
+      padding-bottom: 4em; }
+      .profile-lists-wrapper ul li:hover .delete-button {
+        opacity: 1; }
+      .profile-lists-wrapper ul li a {
+        color: white;
+        text-decoration: none; }
+        .profile-lists-wrapper ul li a .list-title {
+          font-weight: 900;
+          margin-bottom: 8px; }
+        .profile-lists-wrapper ul li a .list-subtitle {
+          font-weight: 100; }
 
 .toggle-wrapper {
   position: relative; }
-  .toggle-wrapper .profile-likes-toggle h3.no-likes {
-    text-align: center;
-    margin: 40px 0 80px 0; }
 
 .divider {
   border-top: 1px solid #fff;
