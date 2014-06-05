@@ -698,4 +698,24 @@ $(document).ready(function(){
 		
 	}
 	
+	/*
+	*
+	*
+	* Toggle the profile page
+	*
+	*/
+	$('.profile-toggle li').on('click', function(e){
+		
+		$this = $(this);
+		
+		if ($this.hasClass('active')){
+			return false;
+		} else {
+			$('.profile-lists-wrapper').toggle();
+			$('.profile-toggle li.active').removeClass('active');
+			$this.addClass('active');
+		}		 
+		
+	})
+	
 });

@@ -13,3 +13,4 @@
 /composer.phar
 .elasticbeanstalk/
 /web/assets/css/.sass-cache/*
+/web/assets/css/config.codekit
