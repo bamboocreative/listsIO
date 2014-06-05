@@ -94,9 +94,17 @@
 			{{ user.username }}
 		</h1>
 	</div>
-	<div class="divider"></div>
+	<div class="container toggle-wrapper">
+		<div class="profile-toggle">
+			<ul>
+				<li class="active" data-toggle="lists">Lists</li>
+				<li data-toggle="likes">Likes</li>
+			</ul>
+		</div>
+		<div class="divider"></div>
+	</div>
 </div>
-<div class="container profile-lists-wrapper">
+<div class="container profile-lists-wrapper profile-lists-toggle active">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
@@ -112,23 +120,57 @@
 				</div>
 			{% endif %}
 			<ul>
-			{% for list in user.lists %}
-                {% if (list.title) or (user.id == app.user.id) %}
-                    {% set title = list.title ? list.title : "Untitled" %}
-					<li data-id="{{ list.id }}">
-						<a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
-							<h3 class="list-title">{{ title }}</h3>
-							<span class="list-subtitle">{{ list.subtitle }}</span>
-						</a>
-						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
-						    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
-						{% endif %}
-					</li>
-                {% endif %}
-			{% endfor %}
+			{% if user.lists is empty%}
+					<h3 class='no-info-message'>Dang! {{user.username}} has no lists yet.</h3>
+			{% else %}					
+				{% for list in user.lists %}
+	                {% if (list.title) or (user.id == app.user.id) %}
+	                    {% set title = list.title ? list.title : "Untitled" %}
+						<li data-id="{{ list.id }}">
+							<a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
+								<h3 class="list-title">{{ title }}</h3>
+								<span class="list-subtitle">{{ list.subtitle }}</span>
+							</a>
+							{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
+							    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
+							{% endif %}
+						</li>
+	                {% endif %}
+				{% endfor %}
+			{% endif %}
 			</ul>
 		</div>
 	</div>
 </div>
+
+<div class="container profile-lists-wrapper profile-likes-toggle" style="display:none">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			{% if user.listLikes is empty%}
+					<h3 class='no-info-message'>What?! {{user.username}} has no likes yet.</h3>
+			{% else %}	
+				
+				{% for likes in user.listLikes %}
+					
+					<ul>
+						<li data-id="{{ likes.list.id }}">
+							<a href="{{ path('lists_io_view_list', {'id': likes.list.id}) }}">
+								<h3 class="list-title">{{ likes.list.title }}</h3>
+								<div class="list-subtitle">{{ likes.list.subtitle }}</div>
+								
+								<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': likes.list.user.username}) }}"><img class="loggedin" src="{{ likes.list.user.gravatarURL }}"> by {{ likes.list.user.username }}</a></div>
+								
+							</a>
+						</li>
+					</ul>
+				{% endfor %}
+				
+			{% endif %}
+			
+		</div>
+	</div>
+</div>
+
+					
 {% include "FOSUserBundle:Profile:show_content.html.twig" %}
 {% endblock fos_user_content %}

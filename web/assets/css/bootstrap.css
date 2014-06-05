@@ -3775,11 +3775,11 @@ textarea {
       max-width: 300px;
       margin: 0 auto; }
 
-.user-profile-image, .list-head div#author a img, nav.sidebar .loggedin-user .loggedin-user-img {
+.user-profile-image, div#author a img, nav.sidebar .loggedin-user .loggedin-user-img {
   -moz-border-radius: 100%;
   -webkit-border-radius: 100%;
   border-radius: 100%; }
-  .user-profile-image.small, .list-head div#author a img.small, nav.sidebar .loggedin-user .small.loggedin-user-img {
+  .user-profile-image.small, div#author a img.small, nav.sidebar .loggedin-user .small.loggedin-user-img {
     height: 25px;
     width: 25px; }
 
@@ -3828,27 +3828,39 @@ textarea {
     .profile-wrapper .profile-email a {
       color: white; }
 
-.profile-lists-wrapper .no-list {
-  text-align: center;
-  font-weight: 100;
-  margin-bottom: 4em; }
-.profile-lists-wrapper ul {
-  margin: 0;
-  padding: 0; }
-  .profile-lists-wrapper ul li {
-    position: relative;
-    list-style-type: none;
-    padding-bottom: 4em; }
-    .profile-lists-wrapper ul li:hover .delete-button {
-      opacity: 1; }
-    .profile-lists-wrapper ul li a {
-      color: white;
-      text-decoration: none; }
-      .profile-lists-wrapper ul li a .list-title {
-        font-weight: 900;
-        margin-bottom: 8px; }
-      .profile-lists-wrapper ul li a .list-subtitle {
-        font-weight: 100; }
+.profile-lists-wrapper {
+  min-height: 150px; }
+  .profile-lists-wrapper h3.no-info-message {
+    text-align: center;
+    margin: 40px 0 80px 0; }
+  .profile-lists-wrapper .no-list {
+    text-align: center;
+    font-weight: 100;
+    margin-bottom: 4em; }
+  .profile-lists-wrapper ul {
+    margin: 0;
+    padding: 0; }
+    .profile-lists-wrapper ul li {
+      position: relative;
+      list-style-type: none;
+      padding-bottom: 4em; }
+      .profile-lists-wrapper ul li:hover .delete-button {
+        opacity: 1; }
+      .profile-lists-wrapper ul li a {
+        color: white;
+        text-decoration: none; }
+        .profile-lists-wrapper ul li a .list-title {
+          font-weight: 900;
+          margin-bottom: 8px; }
+        .profile-lists-wrapper ul li a .list-subtitle {
+          font-weight: 100; }
+  .profile-lists-wrapper.profile-likes-toggle ul li {
+    padding-bottom: 2em !important; }
+    .profile-lists-wrapper.profile-likes-toggle ul li div#author {
+      margin-top: 15px; }
+
+.toggle-wrapper {
+  position: relative; }
 
 .complete-account-wrapper {
   width: 100%;
@@ -3909,17 +3921,29 @@ textarea {
 
 .divider {
   border-top: 1px solid #fff;
-  margin: 2.8em;
-  opacity: .7; }
+  opacity: .7;
+  margin-bottom: 2em; }
+
+.profile-toggle ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+  .profile-toggle ul li {
+    display: inline-block;
+    padding: 0 20px 10px 20px;
+    font-size: 1em;
+    font-weight: 200;
+    cursor: pointer; }
+    .profile-toggle ul li.active {
+      font-weight: 400;
+      border-bottom: 1px solid #FFFFFF; }
 
 @media (max-width: 480px) {
   .profile-wrapper .profile-name {
     font-size: 1.5em; }
 
   .divider {
-    padding-bottom: 1em;
-    margin-top: .3em !important;
-    margin-bottom: .3em !important; }
+    padding-bottom: 1em; }
 
   .profile-lists-wrapper ul {
     margin-bottom: 3em; }
@@ -3927,9 +3951,7 @@ textarea {
       padding-bottom: 2em; } }
 @media (max-width: 768px) {
   .divider {
-    padding-bottom: 1em;
-    margin-top: .3em !important;
-    margin-bottom: .3em !important; } }
+    padding-bottom: 1em; } }
 .list-button-wrapper {
   text-align: center;
   margin-top: 1em;
@@ -4009,24 +4031,6 @@ textarea {
 .list-head div.list-subtitle {
   line-height: 1.3em;
   margin: 0px 0px 40px; }
-.list-head div#author {
-  font-size: .9em;
-  padding-left: 3px;
-  font-weight: 300;
-  display: inline-block; }
-  .list-head div#author a {
-    display: inline-block;
-    line-height: 1em;
-    -webkit-transition: background, 0.3s;
-    transition: background, 0.3s;
-    color: rgba(255, 255, 255, 0.7); }
-    .list-head div#author a:hover {
-      color: white;
-      text-decoration: none; }
-    .list-head div#author a img {
-      height: 40px;
-      width: 40px;
-      margin-right: 10px; }
 .list-head .list-img {
   background: none;
   border: none;
@@ -4052,6 +4056,25 @@ textarea {
     color: rgba(255, 255, 255, 0.5); }
   .list-head .list-img::-webkit-input-placeholder {
     color: rgba(255, 255, 255, 0.5); }
+
+div#author {
+  font-size: .9em;
+  padding-left: 3px;
+  font-weight: 300;
+  display: inline-block; }
+  div#author a {
+    display: inline-block;
+    line-height: 1em;
+    -webkit-transition: background, 0.3s;
+    transition: background, 0.3s;
+    color: rgba(255, 255, 255, 0.7); }
+    div#author a:hover {
+      color: white;
+      text-decoration: none; }
+    div#author a img {
+      height: 40px;
+      width: 40px;
+      margin-right: 10px; }
 
 .list {
   list-style: none; }
