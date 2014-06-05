@@ -158,7 +158,7 @@
 								<h3 class="list-title">{{ likes.list.title }}</h3>
 								<div class="list-subtitle">{{ likes.list.subtitle }}</div>
 								
-								<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': likes.list.user.username}) }}"><img class="loggedin" src="{{ likes.list.user.gravatarURL }}"> by {{ likes.list.user.username }}</a></div>
+								<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': likes.list.user.username}) }}"><img class="loggedin" src="{{ likes.list.user.profilePicURL }}"> by {{ likes.list.user.username }}</a></div>
 								
 							</a>
 						</li>
