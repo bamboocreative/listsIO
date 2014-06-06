@@ -99,7 +99,6 @@
 	position: relative;
 }
 
-<<<<<<< HEAD
 .complete-account-wrapper {
   width: 100%;
   text-align: center;
@@ -236,8 +235,33 @@
 	
 	.divider{
 		padding-bottom: 1em;
-
 	}
+
+  .complete-account-wrapper {
+    margin: 0;
+    width: 100%;
+    padding: 0 10px 20px 10px;
+    div.wrapper {
+      text-align: left;
+      width: 100%;
+    }
+    div.email-input-wrapper {
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0;
+    }
+    div.submit-wrapper {
+      width: 100%;
+      box-sizing: border-box;
+      button {
+        width: 100%;
+        margin: 10px 0 0 0;
+        box-sizing: border-box;
+      }
+
+    }
+
+  }
 }
 
 
