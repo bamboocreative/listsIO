@@ -4,6 +4,9 @@ lists_io_view_list:
     requirements:
         id: \d+
         _format: html|json
+lists_io_view_popular_lists:
+    pattern: /lists/popular
+    defaults: { _controller: ListsIOListBundle:Lists:viewPopularLists, _format: json }
 lists_io_new_list:
     pattern: /list/new.{_format}
     requirements:

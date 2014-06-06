@@ -57,6 +57,23 @@ class ListsController extends Controller
         return $this->render('ListsIOListBundle:Lists:editList.html.twig', $data);
     }
 
+    public function viewPopularListsAction(Request $request)
+    {
+        $limit = $request->request->get('limit');
+        $limit = $limit ? $limit : 10;
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT l, COUNT(v.list) AS HIDDEN num_views
+            FROM ListsIOListBundle:LIOListView v, ListsIOListBundle:LIOList l
+            WHERE v.list = l
+            GROUP BY v.list
+            ORDER BY num_views DESC'
+        )->setMaxResults($limit);
+
+        $lists = $this->serialize($query->getResult());
+        return $this->render('ListsIOListBundle:Lists:viewLists.json.twig', array('lists' => $lists));
+    }
+
     public function newListAction()
     {
         $list = new LIOList();
