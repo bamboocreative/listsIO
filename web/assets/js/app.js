@@ -640,13 +640,13 @@ $(document).ready(function(){
 					
 			$.ajax({
 				url: '/feed/next',
-				type: 'GET',
+				type: 'POST',
 				data: {
 					'cursor' : last
 				}
-			}).done(function(response){
-								
-				var feedLists = response.lists;
+			}).done(function(feedLists){
+
+                console.log(feedLists);
 				
 				if (feedLists == false){
 				
@@ -661,7 +661,6 @@ $(document).ready(function(){
 				} else{
 				
 					showFeedNext(feedLists, function(){
-						console.log('he')
 						setTimeout(function(){
 							$loader.fadeOut(200);
 						},800);
