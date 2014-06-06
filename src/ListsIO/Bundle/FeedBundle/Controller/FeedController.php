@@ -2,56 +2,49 @@
 
 namespace ListsIO\Bundle\FeedBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use ListsIO\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityRepository;
 
 class FeedController extends Controller
 {
-
     
     public function indexAction(Request $request)
     {
-     	     	   
-        $lists = $this->listsFeed();
-        
+
+        $lists = $this->feedStart();
         return $this->render('ListsIOFeedBundle:Feed:feed.html.twig', array('lists' => $lists));
+
     }
     
     public function nextAction(Request $request)
     {
         
-        $cursor = $request->query->get('cursor');
-        
-        $response = new JsonResponse();
+        $this->requireXmlHttpRequest($request);
+
+        $cursor = $request->request->get('cursor');
         
         //4 is the oldest list :)
         if ($cursor <= 4){
         
-        	$response->setData(array(
-			    'lists' => false,
-			));
-        
-        	return $response;
+        	$lists = json_encode(false);
 	        
         } else {
 	        
-	        $lists = $this->feedNext($cursor);
-	        
-	        $response->setData(array(
-			    'lists' => $lists
-			));
-			
-			return $response;
+	        $lists = $this->serialize($this->feedNext($cursor));
+
         }
+
+        return $this->render('ListsIOFeedBundle:Feed:feedNext.json.twig', array('lists' => $lists));
 
     }
 
 
 
 
-    public function listsFeed() {
+    public function feedStart()
+    {
         /**
          * @var EntityRepository $listsRepo
          */
@@ -68,7 +61,8 @@ class FeedController extends Controller
     
     
     
-        public function feedNext($cursor) {
+    public function feedNext($cursor)
+    {
         /**
          * @var EntityRepository $listsRepo
          */

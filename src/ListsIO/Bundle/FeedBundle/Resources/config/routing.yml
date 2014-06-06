@@ -4,4 +4,6 @@ lists_io_feed_homepage:
     
 lists_io_feed_next:
     pattern:  /next
-    defaults: { _controller: ListsIOFeedBundle:Feed:next }
+    requirements:
+        _format: json
+    defaults: { _controller: ListsIOFeedBundle:Feed:next, _format: json }
