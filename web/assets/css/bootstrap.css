@@ -3788,7 +3788,7 @@ textarea {
     padding-top: 40px;
     padding-bottom: 40px; }
     .login-wrapper .button, .login-wrapper .button-full, .login-wrapper input[type="submit"], .login-wrapper textarea[type="submit"], .login-wrapper button {
-      font-size: 13px; }
+      font-size: 12px; }
     .login-wrapper .checkbox-label {
       font-size: .6em;
       width: 35%; }
@@ -3970,7 +3970,10 @@ textarea {
       .complete-account-wrapper div.submit-wrapper button {
         width: 100%;
         margin: 10px 0 0 0;
-        box-sizing: border-box; } }
+        box-sizing: border-box; }
+
+  .social-connect-wrapper {
+    padding-bottom: 20px; } }
 .list-button-wrapper {
   text-align: center;
   margin-top: 1em;
