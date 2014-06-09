@@ -8,6 +8,7 @@ use ListsIO\Bundle\ListBundle\Entity\LIOListLike;
 use ListsIO\Bundle\ListBundle\Entity\LIOListView;
 use ListsIO\Bundle\UserBundle\Entity\User;
 use ListsIO\Bundle\ListBundle\Controller\Controller as BaseController;
+use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -38,14 +39,13 @@ class APIController extends BaseController
             'list'          => $this->serialize($list, $format),
             'liked'         => $liked,
         );
-
         return $this->render('ListsIOListBundle:API:list.'.$format.'.twig', $data);
-
     }
 
     public function newListAction()
     {
-        return $this->jsonResponse($this->newList(), Response::HTTP_CREATED);
+        $list = $this->newList();
+        return $this->jsonResponse($list, Response::HTTP_CREATED);
     }
 
     public function newListItemAction(Request $request)
@@ -72,7 +72,7 @@ class APIController extends BaseController
         $this->deserialize($list, $data);
         $this->saveEntity($list);
         $list = $this->serialize($list);
-        // PUT should return 200.
+        // POST should return 200.
         return $this->render('ListsIOListBundle:API:list.json.twig', array('list' => $list));
     }
 

@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new ListsIO\Bundle\SearchBundle\ListsIOSearchBundle(),
             new ListsIO\Bundle\FeedBundle\ListsIOFeedBundle(),
+            new ListsIO\Bundle\AppBundle\ListsIOAppBundle(),
         ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

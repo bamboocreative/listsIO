@@ -101,7 +101,7 @@ class Controller extends BaseController {
      * @param User $user
      * @return bool
      */
-    public function listIsLikedByUser(LIOList $list, User $user) {
+    public function listIsLikedByUser(LIOList $list, User $user = null) {
         if (empty($user)) {
             return false;
         }

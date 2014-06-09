@@ -94,7 +94,7 @@ class Controller extends BaseController {
         return $entity;
     }
 
-    protected function jsonResponse($rawContent, $statusCode)
+    protected function jsonResponse($rawContent, $statusCode = 200)
     {
         $response = new Response();
         if ( ! empty($rawContent)) {
@@ -112,6 +112,7 @@ class Controller extends BaseController {
         if( ! $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
             throw new HttpException(403);
         }
+        $this->get('logger')->debug("USER LOGGED IN");
     }
 
     /**

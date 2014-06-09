@@ -1,6 +1,6 @@
 # GET LIST
 lists_io_view_list:
-    pattern: /list/{id}
+    pattern: /list/{id}.{_format}
     requirements:
         id: \d+
         _format: html|json
@@ -16,23 +16,23 @@ lists_io_edit_list:
     defaults:  { _controller: ListsIOListBundle:Page:editList, _format: html }
 # NEW LIST
 lists_io_edit_new_list:
-    pattern: /list
+    pattern: /list/new
     methods: [GET]
     defaults: { _controller: ListsIOListBundle:Page:newList, _format: html }
-# PUT LIST
+# POST LIST
 lists_io_new_list:
-    pattern: /list
+    pattern: /lists
     requirements:
         _format: json
-    methods: [PUT]
+    methods: [POST]
     defaults:  { _controller: ListsIOListBundle:API:newList, _format: json }
-# PUT LIST ITEM
+# POSTLIST ITEM
 lists_io_new_list_item:
-    pattern: /list_item
+    pattern: /list_items
     requirements:
         _format: json
     defaults: { _controller: ListsIOListBundle:API:newListItem, _format: json }
-    methods: [PUT]
+    methods: [POST]
 # POST LIST
 lists_io_save_list:
     pattern: /list/{id}
@@ -66,8 +66,8 @@ lists_io_remove_list_item:
     defaults: { _controller: ListsIOListBundle:API:removeListItem, _format: json }
 # PUT LIST LIKE
 lists_io_new_list_like:
-    pattern: /list_like
-    methods: [PUT]
+    pattern: /list_likes
+    methods: [POST]
     requirements:
         _format: json
     defaults:  { _controller: ListsIOListBundle:API:newListLike, _format: json }

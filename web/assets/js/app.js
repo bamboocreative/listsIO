@@ -149,8 +149,8 @@ $(document).ready(function(){
 
         show_save('Liking...');
         $.ajax({
-            type: "PUT",
-            url: '/list_like',
+            type: "POST",
+            url: '/list_likes',
             data : {
                 listId: listID
             },
@@ -231,8 +231,8 @@ $(document).ready(function(){
 		listCount++;
 					
 		$.ajax({
-		  type: "PUT",
-		  url: '/list_item',
+		  type: "POST",
+		  url: '/list_items',
 		  data : {
               'listId' : listID
           },

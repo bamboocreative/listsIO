@@ -40,60 +40,38 @@ class APIControllerTest extends DoctrineWebTestCase
 
     public function testViewListDoesNotThrowExceptionForListThatShouldExist()
     {
-        $crawler = static::$client->request('GET', '/list/1');
+        static::$client->request('GET', '/list/1');
         $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
-
     }
 
     public function testViewListJsonResponse()
     {
-        static::$client->request(
-            'GET',
-            '/list/1',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
-        );
+        static::$client->request('GET', '/list/1.json');
         $this->assertJsonResponse(static::$client->getResponse(), 200);
     }
 
     public function testViewListJsonHasAppropriateTitle()
     {
-        static::$client->request(
-            'GET',
-            '/list/1',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
-        );
+        static::$client->request('GET', '/list/1.json');
         $raw = static::$client->getResponse()->getContent();
         $data = json_decode($raw);
         $this->assertObjectHasAttribute('title', $data);
         $this->assertEquals("Test title", $data->title);
     }
 
-    public function testNewListThrows403ForAnonymousUser()
+    /**
+     * Should redirect to login.
+     */
+    public function testNewListThrows302ForAnonymousUser()
     {
-        static::$client->request(
-            'GET',
-            '/list',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
-        );
-        $this->assertJsonResponse(static::$client->getResponse(), 403);
+        static::$client->request('POST', '/lists');
+        $this->assertEquals(302, static::$client->getResponse()->getStatusCode());
     }
 
     public function testNewListReturns201ForLoggedInUser()
     {
         $this->logIn($this->user);
-        static::$client->request(
-            'GET',
-            '/list',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
-        );
+        static::$client->request('POST', '/lists');
         $this->assertJsonResponse(static::$client->getResponse(), 201);
     }
 
@@ -101,8 +79,8 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'PUT',
-            '/list',
+            'POST',
+            '/lists',
             array(),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -117,8 +95,8 @@ class APIControllerTest extends DoctrineWebTestCase
 
         $this->logIn($this->user);
         static::$client->request(
-            'GET',
-            '/list',
+            'POST',
+            '/lists',
             array(),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -129,37 +107,40 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->assertEquals(2, $data->id);
     }
 
-    public function testNewListItemThrows403ForAnonymousUser()
+    /**
+     * Should redirect to login.
+     */
+    public function testNewListItemThrows302ForAnonymousUser()
     {
         static::$client->request(
-            'GET',
-            '/list_item',
+            'POST',
+            '/list_items',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
-        $this->assertJsonResponse(static::$client->getResponse(), 403);
+        $this->assertEquals(302, static::$client->getResponse()->getStatusCode());
     }
 
-    public function testNewListItemReturns403ForNonOwner()
+    public function testNewListItemThrows403ForNonOwner()
     {
         $this->logIn($this->notOwner);
         static::$client->request(
-            'GET',
-            '/list_item',
+            'POST',
+            '/list_items',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
-        $this->assertJsonResponse(static::$client->getResponse(), 403);
+        $this->assertEquals(403, static::$client->getResponse()->getStatusCode());
     }
 
     public function testNewListItemReturns201ForListOwner()
     {
         $this->logIn($this->user);
         static::$client->request(
-            'GET',
-            '/list_item',
+            'POST',
+            '/list_items',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -171,8 +152,8 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'PUT',
-            '/list_item',
+            'POST',
+            '/list_items',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -187,8 +168,8 @@ class APIControllerTest extends DoctrineWebTestCase
 
         $this->logIn($this->user);
         static::$client->request(
-            'GET',
-            '/list_item',
+            'POST',
+            '/list_items',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -199,7 +180,10 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->assertEquals(2, $data->id);
     }
 
-    public function testSaveListThrows403ForAnonymousUser()
+    /**
+     * Should redirect to login.
+     */
+    public function testSaveListThrows302ForAnonymousUser()
     {
         static::$client->request(
             'POST',
@@ -208,7 +192,7 @@ class APIControllerTest extends DoctrineWebTestCase
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
-        $this->assertEquals(403, static::$client->getResponse()->getStatusCode());
+        $this->assertEquals(302, static::$client->getResponse()->getStatusCode());
     }
 
     public function testSaveListThrows403ForNotOwner()
@@ -282,7 +266,10 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->assertEquals("New test title", $data->title);
     }
 
-    public function testSaveListItemThrows403ForAnonymousUser()
+    /**
+     * Should redirect to login.
+     */
+    public function testSaveListItemThrows302ForAnonymousUser()
     {
         static::$client->request(
             'POST',
@@ -291,7 +278,7 @@ class APIControllerTest extends DoctrineWebTestCase
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
-        $this->assertEquals(403, static::$client->getResponse()->getStatusCode());
+        $this->assertEquals(302, static::$client->getResponse()->getStatusCode());
     }
 
     public function testSaveListItemThrows403ForNotUser()
@@ -377,7 +364,10 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
 
-    public function testRemoveListThrows403ForAnonymousUser()
+    /**
+     * Should redirect to login.
+     */
+    public function testRemoveListThrows302ForAnonymousUser()
     {
         static::$client->request(
             'DELETE',
@@ -386,7 +376,7 @@ class APIControllerTest extends DoctrineWebTestCase
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
-        $this->assertEquals(403, static::$client->getResponse()->getStatusCode());
+        $this->assertEquals(302, static::$client->getResponse()->getStatusCode());
     }
 
     public function testRemoveListThrows403ForNotOwner()
@@ -442,7 +432,10 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
 
-    public function testRemoveListItemThrows403ForAnonymousUser()
+    /**
+     * Should redirect to login.
+     */
+    public function testRemoveListItemThrows302ForAnonymousUser()
     {
         static::$client->request(
             'DELETE',
@@ -451,7 +444,7 @@ class APIControllerTest extends DoctrineWebTestCase
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
-        $this->assertEquals(403, static::$client->getResponse()->getStatusCode());
+        $this->assertEquals(302, static::$client->getResponse()->getStatusCode());
     }
 
     public function testRemoveListItemThrows403ForNotOwner()
@@ -464,7 +457,7 @@ class APIControllerTest extends DoctrineWebTestCase
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
-        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+        $this->assertEquals(403, static::$client->getResponse()->getStatusCode());
     }
 
     public function testRemoveListItemRemovesListItem()
@@ -495,24 +488,27 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->assertJsonResponse(static::$client->getResponse(), 204);
     }
 
-    public function testNewListLikeReturns403ForAnonymousUser()
+    /**
+     * Should redirect to login.
+     */
+    public function testNewListLikeReturns302ForAnonymousUser()
     {
         static::$client->request(
-            'PUT',
-            'list_like',
+            'POST',
+            'list_likes',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
         );
-        $this->assertJsonResponse(static::$client->getResponse(), 403);
+        $this->assertEquals(302, static::$client->getResponse()->getStatusCode());
     }
 
     public function testNewListLikeReturns201()
     {
-        $this->logIn($this->notOwner);
+        $this->logIn($this->user);
         static::$client->request(
-            'PUT',
-            'list_like',
+            'POST',
+            'list_likes',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -524,15 +520,8 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->notOwner);
         static::$client->request(
-            'PUT',
-            'list_like',
-            array('listId' => '1'),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
-        );
-        static::$client->request(
-            'PUT',
-            'list_like',
+            'POST',
+            'list_likes',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -546,22 +535,6 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
     }
 
-    public function testPopularListsReturnsArrayOfListsSortedByPopularity()
-    {
-        static::$client->request(
-            'GET',
-            'lists/popular',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
-        );
-        $raw = static::$client->getResponse()->getContent();
-        $data = json_decode($raw);
-        $this->assertNotEmpty($data[0]);
-        $this->assertNotEmpty($data[1]);
-        $this->assertObjectHasAttribute('id', $data[0]);
-        // The first list is the only one with views/likes attached.
-        $this->assertEquals(1, $data[0]->id);
-    }
+    // TODO: Check popularLists are sorted by popularity.
 
 }
