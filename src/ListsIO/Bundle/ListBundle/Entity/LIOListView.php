@@ -12,8 +12,10 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use ListsIO\Bundle\UserBundle\Entity\User;
 use JMS\Serializer\Annotation\MaxDepth;
+use ListsIO\Entity\OwnableInterface;
 
-class LIOListView {
+class LIOListView implements OwnableInterface
+{
 
     /**
      * @var int

@@ -43,14 +43,9 @@ security:
                 lifetime: 4147200
 
     access_control:
-        # TODO: Require HTTPS for login and register routes.
-        - { path: ^/login*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/login*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/register%, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/view/*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/list/\d+, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user/complete_account, role: ROLE_USER }
-        - { path: ^/list/\w+, role: ROLE_USER }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        # COMPLETING ACCOUNT REQUIRES LOGIN
+        - { path: ^/user/complete_account, roles: ROLE_USER }
+        # DELETE, PUT and POST REQUIRE LOGIN
+        - { path: ^/.*, roles: ROLE_USER, methods: [DELETE, POST, PUT] }
+        # ALL GETS NOT SPECIFIED ABOVE ARE ANONYMOUS
+        - { path: ^/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET] }

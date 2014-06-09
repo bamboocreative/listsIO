@@ -7,12 +7,13 @@ use ListsIO\Bundle\UserBundle\Entity\User as User;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\SerializedName;
+use ListsIO\Entity\OwnableInterface;
 
 
 /**
  * List
  */
-class LIOList
+class LIOList implements OwnableInterface
 {
     /**
      * @var integer

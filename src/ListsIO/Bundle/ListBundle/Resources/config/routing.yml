@@ -1,47 +1,78 @@
+# GET LIST
 lists_io_view_list:
-    pattern: /list/{id}.{_format}
-    defaults:  { _controller: ListsIOListBundle:Lists:viewList, _format: html }
+    pattern: /list/{id}
     requirements:
         id: \d+
         _format: html|json
-lists_io_view_popular_lists:
-    pattern: /lists/popular
-    defaults: { _controller: ListsIOListBundle:Lists:viewPopularLists, _format: json }
-lists_io_new_list:
-    pattern: /list/new.{_format}
+    methods: [GET]
+    defaults:  { _controller: ListsIOListBundle:API:viewList, _format: html }
+# EDIT LIST
+lists_io_edit_list:
+    pattern: /list/{id}/edit
     requirements:
+        id: \d+
         _format: html
-    defaults:  { _controller: ListsIOListBundle:Lists:newList, _format: html }
-lists_io_new_list_item:
-    pattern: /list/new_item/{listId}.{_format}
+    methods: [GET]
+    defaults:  { _controller: ListsIOListBundle:Page:editList, _format: html }
+# NEW LIST
+lists_io_edit_new_list:
+    pattern: /list
+    methods: [GET]
+    defaults: { _controller: ListsIOListBundle:Page:newList, _format: html }
+# PUT LIST
+lists_io_new_list:
+    pattern: /list
     requirements:
-        listId: \d+
         _format: json
-    defaults: { _controller: ListsIOListBundle:Lists:newListItem, _format: json }
+    methods: [PUT]
+    defaults:  { _controller: ListsIOListBundle:API:newList, _format: json }
+# PUT LIST ITEM
+lists_io_new_list_item:
+    pattern: /list_item
+    requirements:
+        _format: json
+    defaults: { _controller: ListsIOListBundle:API:newListItem, _format: json }
+    methods: [PUT]
+# POST LIST
 lists_io_save_list:
-    pattern: /list/save.{_format}
+    pattern: /list/{id}
     requirements:
         userId: \d+
         _format: json
-    defaults: { _controller: ListsIOListBundle:Lists:saveList, _format: json }
+    methods: [POST]
+    defaults: { _controller: ListsIOListBundle:API:saveList, _format: json }
+# POST LIST ITEM
 lists_io_save_list_item:
-    pattern: /list/save_item/{listId}.{_format}
-    requirements:
-        listId: \d+
-        _format: json
-    defaults: { _controller: ListsIOListBundle:Lists:saveListItem, _format: json }
-lists_io_remove_list:
-    pattern: /list/remove/{listId}.{_format}
-    requirements:
-        listId: \d+
-        _format: json
-    defaults: { _controller: ListsIOListBundle:Lists:removeList, _format: json }
-lists_io_remove_list_item:
-    pattern: /list/remove_item/{itemId}.{_format}
+    pattern: /list_item/{itemId}
     requirements:
         itemId: \d+
         _format: json
-    defaults: { _controller: ListsIOListBundle:Lists:removeListItem, _format: json }
-lists_io_like_list:
-    pattern: /list/like
-    defaults:  { _controller: ListsIOListBundle:Lists:likeList }
+    methods: [POST]
+    defaults: { _controller: ListsIOListBundle:API:saveListItem, _format: json }
+# DELETE LIST
+lists_io_remove_list:
+    pattern: /list/{listId}
+    requirements:
+        listId: \d+
+        _format: json
+    methods: [DELETE]
+    defaults: { _controller: ListsIOListBundle:API:removeList, _format: json }
+# DELETE LIST ITEM
+lists_io_remove_list_item:
+    pattern: /list_item/{itemId}
+    requirements:
+        itemId: \d+
+        _format: json
+    defaults: { _controller: ListsIOListBundle:API:removeListItem, _format: json }
+# PUT LIST LIKE
+lists_io_new_list_like:
+    pattern: /list_like
+    methods: [PUT]
+    requirements:
+        _format: json
+    defaults:  { _controller: ListsIOListBundle:API:newListLike, _format: json }
+# GET POPULAR LISTS
+lists_io_view_popular_lists:
+    pattern: /lists/popular
+    methods: [GET]
+    defaults: { _controller: ListsIOListBundle:API:viewPopularLists, _format: json }

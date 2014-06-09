@@ -149,12 +149,13 @@ $(document).ready(function(){
 
         show_save('Liking...');
         $.ajax({
-            type: "POST",
-            url: '/list/like',
+            type: "PUT",
+            url: '/list_like',
             data : {
                 listId: listID
             },
             success: function(data, textStatus, jqXHR){
+                console.log(data);
                 // 201 indicates new like created.
                 // Otherwise = redirect to login (user is not logged in).
                 if (jqXHR.status == 201) {
@@ -168,6 +169,7 @@ $(document).ready(function(){
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
+                hide_save();
                 // 409 indicates like already exists.
                 if (jqXHR.status == 409) {
                     $this.addClass('liked');
@@ -175,7 +177,6 @@ $(document).ready(function(){
                 } else {
                     show_status(error_msg);
                 }
-                hide_save();
                 hide_status();
             }
         });
@@ -230,22 +231,33 @@ $(document).ready(function(){
 		listCount++;
 					
 		$.ajax({
-		  type: "POST",
-		  url: '/list/new_item/'+listID,
-		  data : {},
-		  success: function(data){
-              console.log(data);
-              var $template = $item_template.clone();
-              var $item = $template.find('li.list-item');
-              var $number = $item.find('.number');
-              var $description = $item.find('.description');
-              $description.autosize();
-              $number.html(data.order_index);
-              $item.attr('data-id', data.id)
-              $item.attr('data-order_index', data.order_index);
-              $('.editable-list').append($item);
-              $item.find('.item').focus();
-		  }
+		  type: "PUT",
+		  url: '/list_item',
+		  data : {
+              'listId' : listID
+          },
+		  success: function(data, textStatus, jqXHR){
+              if (jqXHR.status == 201) {
+                  var $template = $item_template.clone();
+                  var $item = $template.find('li.list-item');
+                  var $number = $item.find('.number');
+                  var $description = $item.find('.description');
+                  $description.autosize();
+                  $number.html(data.order_index);
+                  $item.attr('data-id', data.id)
+                  $item.attr('data-order_index', data.order_index);
+                  $('.editable-list').append($item);
+                  $item.find('.item').focus();
+              } else {
+                  show_save("Error adding list item. Refresh and try again.");
+                  hide_save();
+              }
+		  },
+          error: function(jqXHR, textStatus, errorThrown) {
+              show_save("Error adding list item.");
+              hide_save();
+          }
+
 
 		});
 	});
@@ -265,22 +277,31 @@ $(document).ready(function(){
         var $container = $this.parents('li');
         var listID = $container.attr('data-id');
 
-        var url = '/list/remove/'+listID;
+        var url = '/list/'+listID;
         
         var confirmation = confirm("Are you sure you want to delete this list?");
 
 		if(confirmation == true){
 					
 			$.ajax({
-			  type: "POST",
+			  type: "DELETE",
 			  url: url,
 			  data : {},
-			  success: function(data){
-				  $container.fadeOut();
-                  $container.remove();
-                  show_save('List deleted.');
-	              hide_save()
-			  }
+			  success: function(data, textStatus, jqXHR){
+                  if (jqXHR.status == 204) {
+                      $container.fadeOut();
+                      $container.remove();
+                      show_save('List deleted.');
+                      hide_save()
+                  } else {
+                      show_save('Error deleting list. Refresh and try again.');
+                      hide_save();
+                  }
+			  },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  show_save("Error deleting list.");
+                  hide_save();
+              }
 	
 			});
 			
@@ -341,26 +362,24 @@ $(document).ready(function(){
 		$.ajax({
 
 		  type: "POST",
-		  url: '/list/save',
+		  url: '/list/' + dataID,
 		  data: {
-		  	'id': dataID,
 		  	'title' : title,
 		  	'subtitle' : subtitle,
 		  	'imageURL' : imgURL
 		  },
-		  success: function(data) {
-
+		  success: function(data, textStatus, jqXHR) {
               show_save(saved_msg);
               hide_save();
-
-		  }
+		  },
+          error: function(jqXHR, textStatus, errorThrown) {
+              show_save("Error saving list.");
+              hide_save();
+          }
 
 		});
 
 	}
-	
-	
-	
 	
 	/*
 	*
@@ -407,9 +426,9 @@ $(document).ready(function(){
 		
 		$.ajax({
 		  type: "POST",
-		  url: 'save_item/'+listID,
+		  url: '/list_item/'+dataID,
 		  data: {
-		  	'id': dataID,
+		  	'listId': listID,
 		  	'title' : title,
 		  	'description' : desc,
             'orderIndex' : orderIndex
@@ -457,7 +476,7 @@ $(document).ready(function(){
         $container = $(this).parents('li.list-item');
         
         var itemID = $container.attr('data-id');
-        var url = '/list/remove_item/'+itemID;
+        var url = '/list_item/'+itemID;
         
         var confirmation = confirm("Are you sure you want to delete this item?");
 
@@ -466,7 +485,7 @@ $(document).ready(function(){
 			show_save("Deleting item...");
 			
 			$.ajax({
-			  type: "POST",
+			  type: "DELETE",
 			  url: url,
 			  data : {},
 			  success: function(data) {
