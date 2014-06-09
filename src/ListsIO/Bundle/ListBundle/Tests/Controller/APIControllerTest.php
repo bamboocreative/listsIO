@@ -64,14 +64,14 @@ class APIControllerTest extends DoctrineWebTestCase
      */
     public function testNewListThrows302ForAnonymousUser()
     {
-        static::$client->request('POST', '/lists');
+        static::$client->request('POST', '/list');
         $this->assertEquals(302, static::$client->getResponse()->getStatusCode());
     }
 
     public function testNewListReturns201ForLoggedInUser()
     {
         $this->logIn($this->user);
-        static::$client->request('POST', '/lists');
+        static::$client->request('POST', '/list');
         $this->assertJsonResponse(static::$client->getResponse(), 201);
     }
 
@@ -80,7 +80,7 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            '/lists',
+            '/list',
             array(),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -96,7 +96,7 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            '/lists',
+            '/list',
             array(),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -114,7 +114,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         static::$client->request(
             'POST',
-            '/list_items',
+            '/list_item',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -127,7 +127,7 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->logIn($this->notOwner);
         static::$client->request(
             'POST',
-            '/list_items',
+            '/list_item',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -140,7 +140,7 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            '/list_items',
+            '/list_item',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -153,7 +153,7 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            '/list_items',
+            '/list_item',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -169,7 +169,7 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            '/list_items',
+            '/list_item',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -186,7 +186,7 @@ class APIControllerTest extends DoctrineWebTestCase
     public function testSaveListThrows302ForAnonymousUser()
     {
         static::$client->request(
-            'POST',
+            'PUT',
             '/list/1',
             array(),
             array(),
@@ -199,7 +199,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->notOwner);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list/1',
             array(),
             array(),
@@ -212,7 +212,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list/108',
             array(),
             array(),
@@ -225,7 +225,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list/1',
             array('title' => "New test title"),
             array(),
@@ -240,7 +240,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list/1',
             array('title' => "New test title"),
             array(),
@@ -253,7 +253,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list/1',
             array('title' => "New test title"),
             array(),
@@ -272,7 +272,7 @@ class APIControllerTest extends DoctrineWebTestCase
     public function testSaveListItemThrows302ForAnonymousUser()
     {
         static::$client->request(
-            'POST',
+            'PUT',
             '/list_item/1',
             array(),
             array(),
@@ -285,7 +285,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->notOwner);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list_item/1',
             array(),
             array(),
@@ -298,7 +298,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list_item/108',
             array(),
             array(),
@@ -311,7 +311,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list_item/1',
             array('title' => 'New test title'),
             array(),
@@ -326,7 +326,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list_item/1',
             array('title' => 'New test title'),
             array(),
@@ -339,7 +339,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         $this->logIn($this->user);
         static::$client->request(
-            'POST',
+            'PUT',
             '/list_item/1',
             array('title' => 'New test title'),
             array(),
@@ -495,7 +495,7 @@ class APIControllerTest extends DoctrineWebTestCase
     {
         static::$client->request(
             'POST',
-            'list_likes',
+            'list_like',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -508,7 +508,7 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->logIn($this->user);
         static::$client->request(
             'POST',
-            'list_likes',
+            'list_like',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')
@@ -521,7 +521,7 @@ class APIControllerTest extends DoctrineWebTestCase
         $this->logIn($this->notOwner);
         static::$client->request(
             'POST',
-            'list_likes',
+            'list_like',
             array('listId' => '1'),
             array(),
             array('CONTENT_TYPE' => 'application/json')

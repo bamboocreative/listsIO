@@ -6,7 +6,7 @@ use ListsIO\Tests\DoctrineWebTestCase;
 use ListsIO\Bundle\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
-class ListsControllerTest extends DoctrineWebTestCase
+class PageControllerTest extends DoctrineWebTestCase
 {
     // protected static $entityManager;
     // protected static $client;
@@ -35,21 +35,21 @@ class ListsControllerTest extends DoctrineWebTestCase
 
     public function testNewListThrows403ForAnonymousUser()
     {
-        static::$client->request('GET', '/list');
+        static::$client->request('GET', '/list/new');
         $this->assertEquals(403, static::$client->getResponse()->getStatusCode());
     }
 
     public function testNewListReturns303ForLoggedInUser()
     {
         $this->logIn($this->user);
-        static::$client->request('GET', '/list');
+        static::$client->request('GET', '/list/new');
         $this->assertEquals(303, static::$client->getResponse()->getStatusCode());
     }
 
     public function testNewListRedirectsToEditList()
     {
         $this->logIn($this->user);
-        static::$client->request('GET', '/list');
+        static::$client->request('GET', '/list/new');
         $crawler = static::$client->followRedirect();
         //The edit template has a title input
         $this->assertGreaterThan(0, $crawler->filter('input.list-title')->count());
@@ -58,7 +58,7 @@ class ListsControllerTest extends DoctrineWebTestCase
     public function testNewListCreatesList()
     {
         $this->logIn($this->user);
-        static::$client->request('GET', '/list');
+        static::$client->request('GET', '/list/new');
         $newList = static::$entityManager->getRepository('ListsIOListBundle:LIOList')
             ->find(2);
         $this->assertInstanceOf('ListsIO\Bundle\ListBundle\Entity\LIOList', $newList);

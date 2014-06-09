@@ -150,7 +150,7 @@ $(document).ready(function(){
         show_save('Liking...');
         $.ajax({
             type: "POST",
-            url: '/list_likes',
+            url: '/list_like',
             data : {
                 listId: listID
             },
@@ -232,7 +232,7 @@ $(document).ready(function(){
 					
 		$.ajax({
 		  type: "POST",
-		  url: '/list_items',
+		  url: '/list_item',
 		  data : {
               'listId' : listID
           },
@@ -361,7 +361,7 @@ $(document).ready(function(){
 
 		$.ajax({
 
-		  type: "POST",
+		  type: "PUT",
 		  url: '/list/' + dataID,
 		  data: {
 		  	'title' : title,
@@ -425,7 +425,7 @@ $(document).ready(function(){
 		show_save(saving_msg);
 		
 		$.ajax({
-		  type: "POST",
+		  type: "PUT",
 		  url: '/list_item/'+dataID,
 		  data: {
 		  	'listId': listID,

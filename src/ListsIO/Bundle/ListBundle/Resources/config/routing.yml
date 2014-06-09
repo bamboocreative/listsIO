@@ -21,14 +21,14 @@ lists_io_edit_new_list:
     defaults: { _controller: ListsIOListBundle:Page:newList, _format: html }
 # POST LIST
 lists_io_new_list:
-    pattern: /lists
+    pattern: /list
     requirements:
         _format: json
     methods: [POST]
     defaults:  { _controller: ListsIOListBundle:API:newList, _format: json }
 # POSTLIST ITEM
 lists_io_new_list_item:
-    pattern: /list_items
+    pattern: /list_item
     requirements:
         _format: json
     defaults: { _controller: ListsIOListBundle:API:newListItem, _format: json }
@@ -39,7 +39,7 @@ lists_io_save_list:
     requirements:
         userId: \d+
         _format: json
-    methods: [POST]
+    methods: [PUT]
     defaults: { _controller: ListsIOListBundle:API:saveList, _format: json }
 # POST LIST ITEM
 lists_io_save_list_item:
@@ -47,7 +47,7 @@ lists_io_save_list_item:
     requirements:
         itemId: \d+
         _format: json
-    methods: [POST]
+    methods: [PUT]
     defaults: { _controller: ListsIOListBundle:API:saveListItem, _format: json }
 # DELETE LIST
 lists_io_remove_list:
@@ -66,7 +66,7 @@ lists_io_remove_list_item:
     defaults: { _controller: ListsIOListBundle:API:removeListItem, _format: json }
 # PUT LIST LIKE
 lists_io_new_list_like:
-    pattern: /list_likes
+    pattern: /list_like
     methods: [POST]
     requirements:
         _format: json
