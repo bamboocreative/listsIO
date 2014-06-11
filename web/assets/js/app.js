@@ -664,8 +664,6 @@ $(document).ready(function(){
 					'cursor' : last
 				}
 			}).done(function(feedLists){
-
-                console.log(feedLists);
 				
 				if (feedLists == false){
 				
