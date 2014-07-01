@@ -82,7 +82,10 @@ class Recommender {
                 }
                 if ($otherListScore >= -1) {
                     $scores[$otherList->getId()] = $otherListScore;
-                    $scoredLists[$otherList->getId()] = $otherList;
+                    $scoredLists[$otherList->getId()] = array(
+                        "list" => $otherList,
+                        "score" => $otherListScore
+                    );
                 }
             }
         }
