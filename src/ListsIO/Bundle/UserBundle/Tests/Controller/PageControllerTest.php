@@ -27,12 +27,6 @@ class PageControllerTest extends DoctrineWebTestCase
             ->find(1);
     }
 
-    public function testIndexRedirectsAnonymousUserToRegister()
-    {
-        static::$client->request('GET', '/');
-        $this->assertTrue(static::$client->getResponse()->isRedirect('/user/register/'));
-    }
-
     public function testIndexRedirectsAuthenticatedUserToOwnProfile()
     {
         $this->logIn($this->user);
