@@ -1,0 +1,37 @@
+{# Terms of Service #}
+
+{% extends "::base.html.twig" %}
+
+{% block logo %}
+{% endblock %}
+{% block bgImage %}
+{% endblock %}
+
+{% block body %}
+    <div class="home-header" style="background-image: url('assets/images/bg/bg-img-45.jpg');">
+        <div class="home-logo">
+            <img class="svg-img lists-bg" src="{{ asset('assets/images/lists.svg') }}"><br>
+            <h3 class="title">Lists.io</h3>
+        </div>
+        <h1>These are a few of your favorite things.</h1>
+    </div>
+    <div class="feed container-fluid">
+        <div class="row" id="feed-insert">
+            {% for list in lists %}
+                <div data-id="{{ list.id}}" onclick="location.href='/list/{{ list.id}}'" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 feed-item-wrapper feed-item-count" style="background-image: url('{{ list.imageURL}}')">
+                    <div class="feed-item-overlay">
+                        <div class="feed-item">
+                            <h3 class="feed-item-title">{{ list.title}}</h3>
+                            <a href="/{{ list.user.username}}">
+                                <div class='feed-item-profile'>
+                                    <img src="{{ list.user.profilePicURL}}" />
+                                    <span class="feed-item-username">{{ list.user.username}}</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

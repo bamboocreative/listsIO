@@ -4290,7 +4290,8 @@ div#author {
 .home-header {
   background-attachment: fixed !important;
   background-size: cover;
-  background-position: center center; }
+  background-position: center center;
+  padding-bottom: 20px; }
   .home-header h1 {
     margin: 0px;
     text-align: center;
