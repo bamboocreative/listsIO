@@ -62,6 +62,12 @@
 {% set randomImgURL = asset(random(imgURL)) %}
 {% endspaceless %}
 
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
+    {% set userIsAuthor = true %}
+{% else %}
+    {% set userIsAuthor = false %}
+{% endif %}
+
 {% block bgImage %}
 <div class="bg-wrapper" style="background-image: url(' {{randomImgURL}} ');"></div>  	
 {% endblock %}
@@ -107,7 +113,7 @@
 <div class="container profile-lists-wrapper profile-lists-toggle active">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
-			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
+			{% if userIsAuthor %}
 				<div class="list-button-wrapper">
 					<a class="add-list-button" href="{{ path('lists_io_edit_new_list') }}">
 						<table>
@@ -127,11 +133,15 @@
 	                {% if (list.title) or (user.id == app.user.id) %}
 	                    {% set title = list.title ? list.title : "Untitled" %}
 						<li data-id="{{ list.id }}">
-							<a href="{{ path('lists_io_edit_list', {'id': list.id}) }}">
+                            {% if userIsAuthor %}
+                                <a href="{{ path('lists_io_edit_list', {'id': list.id}) }}">
+                            {% else %}
+                                <a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
+                            {% endif %}
 								<h3 class="list-title">{{ title }}</h3>
 								<span class="list-subtitle">{{ list.subtitle }}</span>
 							</a>
-							{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
+							{% if userIsAuthor %}
 							    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
 							{% endif %}
 						</li>
