@@ -4,6 +4,7 @@ namespace ListsIO\Bundle\ListBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\MaxDepth;
+use ListsIO\Entity\OwnableInterface;
 
 /**
  * ListItem

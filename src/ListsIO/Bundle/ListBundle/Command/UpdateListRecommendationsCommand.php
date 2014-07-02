@@ -32,25 +32,33 @@ class UpdateListRecommendationsCommand extends ContainerAwareCommand
         $i = 0;
         $found = 0;
         $not_found = 0;
-        $this_one_found = false;
+        $recommendations = array();
         foreach($lists as $list) {
+            $this_one_found = false;
             $i++;
             $recommended = $recommender->mostSimilarLists($list, 5);
             if (count($recommended)) {
-                $nextList = array_shift($recommended);
+                $nextListArr = array_shift($recommended);
+                $nextList = $nextListArr["list"];
                 if (($nextNextList = $nextList->getNextList()) && ($list->getId() == $nextNextList->getId())) {
-                    $nextList = array_shift($recommended);
+                    $nextListArr = array_shift($recommended);
+                    $nextList = $nextListArr["list"];
                 }
-                if ($nextList) {
-                    $found++;
-                    $output->writeln("List '" . $nextList->getTitle() . "' recommended as next list for list '" . $list->getTitle() . "'.");
+                $nextScore = $nextListArr["score"];
+                if ($nextList && $nextScore > 0) {
+                    if (empty($recommendations[$nextList->getId()])) {
+                        $recommendations[$nextList->getId()] = array(
+                            'list' => $nextList,
+                            'count' => 1
+                        );
+                    } else {
+                        $recommendations[$nextList->getId()]['count']++;
+                    }
+                    $output->writeln("List '" . $nextList->getTitle() . "' recommended as next list for list '" . $list->getTitle() . "' with similarity score " . $nextScore . ".");
                     $list->setNextList($nextList);
                     $this_one_found = true;
-                } else {
-                    $this_one_found = false;
+                    $found++;
                 }
-            } else {
-                $this_one_found = false;
             }
 
             if ( ! $this_one_found) {
@@ -63,6 +71,9 @@ class UpdateListRecommendationsCommand extends ContainerAwareCommand
         $output->writeln($i . " lists updated.");
         $output->writeln("A recommended next list was found for " . $found . " of " . $i . ".");
         $output->writeln("A recommended next list could not be found for " . $not_found . " of " . $i . ".");
+        foreach($recommendations as $recsArr) {
+            $output->writeln("List '" . $recsArr['list']->getTitle() . "' recommended " . $recsArr['count'] . " times.");
+        }
         $em->flush();
     }
 

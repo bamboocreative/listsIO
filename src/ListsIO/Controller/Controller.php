@@ -8,23 +8,15 @@
 
 namespace ListsIO\Controller;
 
+use ListsIO\Entity\OwnableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use JMS\Serializer\SerializationContext;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Controller extends BaseController {
-
-    /**
-     * @param Request $request
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
-     */
-    public function requireXmlHttpRequest(Request $request)
-    {
-        if (! $request->isXmlHttpRequest()) {
-            throw new AccessDeniedHttpException('The route you are attempting to access is not available externally.');
-        }
-    }
 
     /**
      * @param $entity
@@ -75,7 +67,8 @@ class Controller extends BaseController {
      * @param string $format
      * @return mixed
      */
-    public function serialize($entity, $format = 'json') {
+    public function serialize($entity, $format = 'json')
+    {
         // HTML doesn't need serialization.
         if ($format == 'html') {
             return $entity;
@@ -83,4 +76,66 @@ class Controller extends BaseController {
         $serializer = $this->get('jms_serializer');
         return $serializer->serialize($entity, $format, SerializationContext::create()->enableMaxDepthChecks());
     }
+
+    /**
+     * TODO: Use serializer, see saveListItemAction. - Jesse Rosato 6/8/14
+     * @param $entity
+     * @param $data
+     * @return mixed
+     */
+    public function deserialize($entity, $data)
+    {
+        foreach($data as $key => $value) {
+            $funct = 'set'.ucfirst($key);
+            if (method_exists($entity, $funct)) {
+                $entity->$funct($value);
+            }
+        }
+        return $entity;
+    }
+
+    protected function jsonResponse($rawContent, $statusCode = 200)
+    {
+        $response = new Response();
+        if ( ! empty($rawContent)) {
+            $content = $this->serialize($rawContent);
+            $response->setContent($content);
+        }
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setStatusCode($statusCode);
+        return $response;
+    }
+
+    protected function requireAuthentication()
+    {
+        $securityContext = $this->container->get('security.context');
+        if( ! $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+            throw new HttpException(403);
+        }
+        $this->get('logger')->debug("USER LOGGED IN");
+    }
+
+    /**
+     * @param Request $request
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     */
+    protected function requireXmlHttpRequest(Request $request)
+    {
+        if (! $request->isXmlHttpRequest()) {
+            throw new AccessDeniedHttpException('The route you are attempting to access is not available externally.');
+        }
+    }
+
+    /**
+     * TODO: Use Voters or ACL, see all non-idempotent functions. - Jesse Rosato 3/27/14
+     * @param OwnableInterface $object
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     */
+    protected function requireUserIsObjectOwner(OwnableInterface $object) {
+        $this->requireAuthentication();
+        if ($this->getUser()->getId() != $object->getUser()->getId()) {
+            throw new AccessDeniedHttpException("You must be authenticated as the list owner to save the list.");
+        }
+    }
+
 } 

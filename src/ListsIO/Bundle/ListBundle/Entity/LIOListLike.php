@@ -6,11 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use ListsIO\Bundle\UserBundle\Entity\User;
 use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use JMS\Serializer\Annotation\MaxDepth;
+use ListsIO\Entity\OwnableInterface;
 
 /**
  * LIOListLike
  */
-class LIOListLike
+class LIOListLike implements OwnableInterface
 {
     /**
      * @var integer

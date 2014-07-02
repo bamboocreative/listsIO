@@ -104,12 +104,13 @@ class DoctrineWebTestCase extends WebTestCase
     protected function assertJsonResponse($response, $statusCode = 200)
     {
         $this->assertEquals(
-            $statusCode, $response->getStatusCode(),
-            $response->getContent()
+            $statusCode,
+            $response->getStatusCode(),
+            "Failed asserting that actual response status code " . $response->getStatusCode() . " equals expected response code" . $statusCode . "."
         );
         $this->assertTrue(
             $response->headers->contains('Content-Type', 'application/json'),
-            $response->headers
+            "Failed asserting HTTP Content-Type is 'application/json', actual content type is '".$response->headers->get('Content-Type')."'."
         );
     }
 
