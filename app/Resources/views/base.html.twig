@@ -123,7 +123,7 @@
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 <a href="{{ path('lists_io_new_list') }}" class="button">Create a List</a>
                             {% else %}
-                                <a href="{{ path('lists_io_home') }}" class="button">Signup Now</a
+                                <a href="{{ path('fos_user_registration_register') }}" class="button">Signup Now</a
                             {% endif %}
                         </div>
                     </div>

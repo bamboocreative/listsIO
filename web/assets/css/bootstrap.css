@@ -3538,9 +3538,6 @@ html {
 
   .body-screen {
     height: 1300px; } }
-@media (max-width: 768px) {
-  .bg-wrapper {
-    display: none; } }
 input[type="submit"], textarea[type="submit"], button {
   background: #75a960;
   border: 1px solid #75a960;
