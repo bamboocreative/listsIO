@@ -4288,10 +4288,9 @@ div#author {
     font-weight: 900; }
 
 .home-header {
-  background-attachment: fixed !important;
   background-size: cover;
   background-position: center center;
-  padding-bottom: 20px; }
+  padding: 20px; }
   .home-header h1 {
     margin: 0px;
     text-align: center;
