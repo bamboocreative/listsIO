@@ -4287,13 +4287,34 @@ div#author {
 .home-header {
   background-size: cover;
   background-position: center center;
-  padding: 20px; }
+  padding: 20px;
+  text-align: center; }
   .home-header h1 {
     margin: 0px;
     text-align: center;
     padding: 1em 0 1em;
     font-weight: 100;
     line-height: 1.2em; }
+  .home-header .register-social {
+    width: auto;
+    display: inline-block;
+    text-align: center; }
+    .home-header .register-social .icon-twitter, .home-header .register-social .icon-facebook {
+      margin-right: 0; }
+  .home-header .register-social.twitter {
+    -webkit-border-top-right-radius: 0;
+    -moz-border-radius-topright: 0;
+    border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    border-bottom-right-radius: 0; }
+  .home-header .register-social.facebook {
+    -webkit-border-top-left-radius: 0;
+    -moz-border-radius-topleft: 0;
+    border-top-left-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-left-radius: 0; }
 
 .home-content {
   position: relative;
