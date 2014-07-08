@@ -4287,7 +4287,7 @@ div#author {
 .home-header {
   background-size: cover;
   background-position: center center;
-  padding: 20px;
+  padding-bottom: 40px;
   text-align: center; }
   .home-header h1 {
     margin: 0px;
@@ -4367,6 +4367,10 @@ div#author {
       min-height: 60px; }
 
 @media (max-width: 480px) {
+  .home-header {
+    padding-left: 20px;
+    padding-right: 0; }
+
   .home-content h1 {
     line-height: 1em; }
   .home-content ol {

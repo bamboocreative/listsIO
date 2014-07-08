@@ -39,7 +39,7 @@
 	// background-attachment: fixed !important;
 	background-size: cover;
 	background-position: center center;
-    padding: 20px;
+    padding-bottom: 40px;
     text-align: center;
 	
 	h1{
@@ -144,6 +144,12 @@
 
 // Smaller than 480px
 @media (max-width: $screen-xs) {
+
+    .home-header{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
 	.home-content{
 		h1{
 			line-height: 1em;
