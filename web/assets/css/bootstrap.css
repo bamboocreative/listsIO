@@ -4081,19 +4081,10 @@ div#author {
   padding-left: 3px;
   font-weight: 300;
   display: inline-block; }
-  div#author a {
-    display: inline-block;
-    line-height: 1em;
-    -webkit-transition: background, 0.3s;
-    transition: background, 0.3s;
-    color: rgba(255, 255, 255, 0.7); }
-    div#author a:hover {
-      color: white;
-      text-decoration: none; }
-    div#author a img {
-      height: 40px;
-      width: 40px;
-      margin-right: 10px; }
+  div#author a img {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px; }
 
 .list {
   list-style: none; }
@@ -4101,27 +4092,47 @@ div#author {
     margin: 0;
     padding: 0; }
 
-.next-list h3 {
+.next-list h3,
+.list-like-container h3 {
   font-weight: 600;
   margin-bottom: 5px; }
-.next-list h4 {
+.next-list h4,
+.list-like-container h4 {
   color: #fff;
   font-weight: 100; }
-.next-list p {
+.next-list p,
+.list-like-container p {
   color: #fff;
   font-weight: 100;
   font-size: 1.2em; }
-.next-list p.heading {
+.next-list p.heading,
+.list-like-container p.heading {
   font-style: normal;
   font-weight: bold; }
-.next-list img {
+.next-list img,
+.list-like-container img {
   width: 30px;
   -moz-border-radius: 100%;
   -webkit-border-radius: 100%;
   border-radius: 100%; }
-.next-list span {
+.next-list span,
+.list-like-container span {
   font-size: .9em;
   padding-left: 10px; }
+
+.list-like {
+  display: inline-block;
+  padding-right: 20px;
+  margin: 20px 20px 20px 0; }
+
+.col-md-4 .list-like {
+  display: block; }
+
+.list-like:first-of-type {
+  margin-top: 25px; }
+
+.list-like:last-of-type {
+  margin-right: 0; }
 
 .list-item {
   position: relative;
@@ -4254,10 +4265,22 @@ div#author {
       .background-mobile .list * a {
         color: #f2d118; }
 
-  .next-list h4 {
+  .next-list h4,
+  .list-like-container h4 {
     color: #666; }
-  .next-list p {
+  .next-list p,
+  .list-like-container p {
     color: #666; } }
+@media (min-width: 768px) {
+  a.author {
+    display: inline-block;
+    line-height: 1em;
+    -webkit-transition: background, 0.3s;
+    transition: background, 0.3s;
+    color: rgba(255, 255, 255, 0.7); }
+    a.author:hover {
+      color: white;
+      text-decoration: none; } }
 @media (min-width: 768px) and (max-width: 1200px) {
   .mobile-background {
     background: transparent !important; } }
