@@ -114,26 +114,15 @@ div#author{
   padding-left: 3px;
   font-weight: 300;
   display: inline-block;
-  a{
-      display: inline-block;
-      line-height: 1em;
-      @include transition(background, .3s);
-      color: rgba(255,255,255,.7);
-      
-      &:hover{
-          color: white;
-          text-decoration: none;
-         
-      }
-      img{
-      	@extend .user-profile-image;
-      	height: 40px;
-      	width: 40px;
-        margin-right: 10px;
-      }
+  a {
+    img{
+      @extend .user-profile-image;
+      height: 40px;
+      width: 40px;
+      margin-right: 10px;
+    }
   }
 }
-
 
 .list{
 	list-style: none;
@@ -145,7 +134,8 @@ div#author{
 	}
 }
 
-.next-list{
+.next-list,
+.list-like-container {
 
   h3 {
     font-weight: 600;
@@ -180,6 +170,24 @@ div#author{
     padding-left: 10px;
   }
 
+}
+
+.list-like {
+  display: inline-block;
+  padding-right: 20px;
+  margin: 20px 20px 20px 0;
+}
+
+.col-md-4 .list-like {
+  display: block;
+}
+
+.list-like:first-of-type {
+  margin-top: 25px;
+}
+
+.list-like:last-of-type {
+  margin-right: 0;
 }
 
 .list-item{
@@ -331,7 +339,8 @@ div#author{
 		
 	}
 
-    .next-list{
+    .next-list,
+    .list-like-container {
         h4 {
           color: #666;
         }
@@ -340,6 +349,20 @@ div#author{
           color: #666;
         }
     }
+}
+
+@media(min-width: $screen-sm) {
+  a.author {
+    display: inline-block;
+    line-height: 1em;
+    @include transition(background, .3s);
+    color: rgba(255,255,255,.7);
+
+    &:hover{
+      color: white;
+      text-decoration: none;
+    }
+  }
 }
 
 

@@ -43,23 +43,40 @@
 			        </div>
 		        </div>
 			</div>
-            {% if list.nextList %}
+            {% if list.listLikes|length or list.nextList %}
                 <hr>
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="next-list">
-                            <h4>Next Up</h4>
-                            <a href="{{ path('lists_io_view_list', {'id': list.nextList.id}) }}">
-                                <h3>{{ list.nextList.title }}</h3>
-                            </a>
-                            <p>{{ list.nextList.subtitle }}</p>
-                            <a href="{{ path('lists_io_user_view_by_username', {'username': list.nextList.user.username}) }}">
-                                <img src="{{ list.nextList.user.profilePicURL }}">
-                                <span>{{ list.nextList.user.username }}</span>
-                            </a>
+                    {% if list.listLikes|length %}
+                        <div class="{{ list.nextList ? "col-md-3 col-md-offset-2"  : "col-md-8 col-md-offset-2" }} list-like-container">
+                            <h4>Recently Liked By</h4>
+                            {% set i = 0 %}
+                            {% for like in list.listLikes if i < 3 %}
+                                <div class="list-like">
+                                    <a class="author" href="{{ path('lists_io_user_view_by_username', {'username': like.user.username}) }}">
+                                        <img src="{{ like.user.profilePicURL }}">
+                                        <span>{{ like.user.username }}</span>
+                                    </a>
+                                </div>
+                                {% set i = i + 1 %}
+                            {% endfor %}
                         </div>
-                    </div>
-                </div>
+                    {% endif %}
+                    {% if list.nextList %}
+                        <div class="{{ list.listLikes|length ? "col-md-5" : "col-md-8 col-md-offset-2" }}">
+                            <div class="next-list">
+                                <h4>Next Up</h4>
+                                <a href="{{ path('lists_io_view_list', {'id': list.nextList.id}) }}">
+                                    <h3>{{ list.nextList.title }}</h3>
+                                </a>
+                                <p>{{ list.nextList.subtitle }}</p>
+                                <a class="author" href="{{ path('lists_io_user_view_by_username', {'username': list.nextList.user.username}) }}">
+                                    <img src="{{ list.nextList.user.profilePicURL }}">
+                                    <span>{{ list.nextList.user.username }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                 </div>
             {% endif %}
 			<br /><br />
 		</div>
