@@ -62,15 +62,15 @@
 {% set randomImgURL = asset(random(imgURL)) %}
 {% endspaceless %}
 
+{% block bgImage %}
+<div class="bg-wrapper" style="background-image: url(' {{randomImgURL}} ');"></div>  	
+{% endblock %}
+
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
     {% set userIsAuthor = true %}
 {% else %}
     {% set userIsAuthor = false %}
 {% endif %}
-
-{% block bgImage %}
-<div class="bg-wrapper" style="background-image: url(' {{randomImgURL}} ');"></div>  	
-{% endblock %}
 
 {% block share %}
 <div class="share-wrapper">

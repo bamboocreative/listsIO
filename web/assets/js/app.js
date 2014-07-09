@@ -204,10 +204,10 @@ $(document).ready(function(){
 	* Hide Save
 	*
 	*/
-	function hide_save(){
+	function hide_save(delay){
 		setTimeout(function(){
 			$saveIndicator.fadeOut();
-		}, 1200);
+		}, (delay ? delay : 1200));
 	}
 
     function hide_status()
@@ -616,78 +616,121 @@ $(document).ready(function(){
 		
 		$listResults.append(html);
 	}
-		
-	
-	/* 
-	*
-	* Feed
-	*
-	*/
-	var $feedInsert = $('#feed-insert');
-	var feedLoading = false;	
-	
-	/*
-	*
-	*
-	* Listen to the feed scroll and if we hit the bottom lets load more feed
-	*
-	*/
-	var timer;
-	
-	$( document ).on('scroll', function(e){
-		
-		clearTimeout(timer);
-		
-		if(!$body.hasClass('disable-hover')) {
-			$body.addClass('disable-hover')
-		}
-		
-		timer = setTimeout(function(){
-			$body.removeClass('disable-hover')
-		},200);
-		
-		var height = $(document).height();
-		var scrollBottom = $(window).scrollTop() + $(window).height();
-		
-		if(feedLoading == false && scrollBottom == height ){
-			
-			feedloading = true;
-			
-			$loader.fadeIn(200);
-			
-			var last = $('.feed-item-count').last().attr('data-id');
-					
-			$.ajax({
-				url: '/feed/next',
-				type: 'POST',
-				data: {
-					'cursor' : last
-				}
-			}).done(function(feedLists){
-				
-				if (feedLists == false){
-				
-					feedLoading = true;
-					
-					$('#feed-cta').show()
-					
-					setTimeout(function(){
-						$loader.fadeOut(200);
-					},800);
-									
-				} else{
-				
-					showFeedNext(feedLists, function(){
-						setTimeout(function(){
-							$loader.fadeOut(200);
-						},800);
-						feedLoading = false;
-					});
-				}
-				
-			})
-		}	
-	});
+
+
+  /*
+   *
+   * Feed and Home Feed
+   *
+   */
+  var feedLoading = false;
+  var $feedInsert = $('#feed-insert');
+  var timer;
+
+  if ($('.feed').length) {
+    if($('.home-header').length) {
+      initScrollListenerForHome();
+    } else {
+      var $feedInsert = $('#feed-insert');
+      initScrollListenerForFeed();
+    }
+  }
+
+  function initScrollListenerForHome() {
+    $( document ).on('scroll', function(e){
+
+      var $logo = $('.sidebar .logo');
+
+      manageHover();
+
+      var height = $(document).height();
+      var scrollBottom = windowBottom();
+
+      if (scrollBottom >= height  && ! feedLoading) {
+        $logo.addClass("wiggling");
+        setTimeout(function(){
+          $logo.removeClass('wiggling');
+          show_save("&larr; Check out the sidebar for more...");
+          feedLoading = true;
+          setTimeout(function(){
+            $saveIndicator.fadeOut(function() {feedLoading = false;});
+          }, 3000);
+        },800);
+      }
+    });
+  }
+
+  /*
+   *
+   *
+   * Listen to the feed scroll and if we hit the bottom lets load more feed
+   *
+   */
+  function initScrollListenerForFeed() {
+
+    $( document ).on('scroll', function(e){
+
+      manageHover();
+
+      var height = $(document).height();
+      var scrollBottom = windowBottom();
+
+      if(feedLoading == false && scrollBottom == height ){
+
+        feedloading = true;
+
+        $loader.fadeIn(200);
+
+        var last = $('.feed-item-count').last().attr('data-id');
+
+        $.ajax({
+          url: '/feed/next',
+          type: 'GET',
+          data: {
+            'cursor' : last
+          }
+        }).done(function(feedLists){
+
+          if (feedLists == false){
+
+            feedLoading = true;
+
+            $('#feed-cta').show()
+
+            setTimeout(function(){
+              $loader.fadeOut(200);
+            },800);
+
+          } else{
+
+            showFeedNext(feedLists, function(){
+              setTimeout(function(){
+                $loader.fadeOut(200);
+              },800);
+              feedLoading = false;
+            });
+          }
+
+        })
+      }
+    });
+  }
+
+  function manageHover() {
+    clearTimeout(timer);
+
+    if(!$body.hasClass('disable-hover')) {
+      $body.addClass('disable-hover')
+    }
+
+    timer = setTimeout(function(){
+      $body.removeClass('disable-hover')
+    },200);
+  }
+
+  function windowBottom() {
+    return $(window).scrollTop() + $(window).height();
+  }
 	
 	/*
 	*

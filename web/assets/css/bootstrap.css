@@ -3538,9 +3538,6 @@ html {
 
   .body-screen {
     height: 1300px; } }
-@media (max-width: 768px) {
-  .bg-wrapper {
-    display: none; } }
 input[type="submit"], textarea[type="submit"], button {
   background: #75a960;
   border: 1px solid #75a960;
@@ -4288,15 +4285,36 @@ div#author {
     font-weight: 900; }
 
 .home-header {
-  background-attachment: fixed !important;
   background-size: cover;
-  background-position: center center; }
+  background-position: center center;
+  padding-bottom: 40px;
+  text-align: center; }
   .home-header h1 {
     margin: 0px;
     text-align: center;
     padding: 1em 0 1em;
     font-weight: 100;
     line-height: 1.2em; }
+  .home-header .register-social {
+    width: auto;
+    display: inline-block;
+    text-align: center; }
+    .home-header .register-social .icon-twitter, .home-header .register-social .icon-facebook {
+      margin-right: 0; }
+  .home-header .register-social.twitter {
+    -webkit-border-top-right-radius: 0;
+    -moz-border-radius-topright: 0;
+    border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    border-bottom-right-radius: 0; }
+  .home-header .register-social.facebook {
+    -webkit-border-top-left-radius: 0;
+    -moz-border-radius-topleft: 0;
+    border-top-left-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-left-radius: 0; }
 
 .home-content {
   position: relative;
@@ -4349,6 +4367,10 @@ div#author {
       min-height: 60px; }
 
 @media (max-width: 480px) {
+  .home-header {
+    padding-left: 20px;
+    padding-right: 20px; }
+
   .home-content h1 {
     line-height: 1em; }
   .home-content ol {
@@ -4542,6 +4564,90 @@ nav {
       nav.sidebar .register-social .register-social-icons, nav.sidebar .button.register-social .icon-twitter, nav.sidebar .register-social.button-full .icon-twitter, nav.sidebar .login-wrapper input.register-social[type="submit"] .icon-twitter, .login-wrapper nav.sidebar input.register-social[type="submit"] .icon-twitter, nav.sidebar .login-wrapper textarea.register-social[type="submit"] .icon-twitter, .login-wrapper nav.sidebar textarea.register-social[type="submit"] .icon-twitter, nav.sidebar .login-wrapper button.register-social .icon-twitter, .login-wrapper nav.sidebar button.register-social .icon-twitter, nav.sidebar .button.register-social .icon-facebook, nav.sidebar .register-social.button-full .icon-facebook, nav.sidebar .login-wrapper input.register-social[type="submit"] .icon-facebook, .login-wrapper nav.sidebar input.register-social[type="submit"] .icon-facebook, nav.sidebar .login-wrapper textarea.register-social[type="submit"] .icon-facebook, .login-wrapper nav.sidebar textarea.register-social[type="submit"] .icon-facebook, nav.sidebar .login-wrapper button.register-social .icon-facebook, .login-wrapper nav.sidebar button.register-social .icon-facebook {
         font-size: 25px; }
 
+.sidebar .logo.wiggling {
+  -webkit-animation: spin 0.4s infinite;
+  animation: spin 0.4s infinite; }
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg); }
+
+  25% {
+    -webkit-transform: rotateY(45deg);
+    -ms-transform: rotateY(45deg);
+    transform: rotateY(45deg); }
+
+  75% {
+    -webkit-transform: rotateY(45deg);
+    -ms-transform: rotateY(45deg);
+    transform: rotateY(45deg); }
+
+  to {
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg); } }
+@-moz-keyframes spin {
+  from {
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg); }
+
+  25% {
+    -webkit-transform: rotateY(45deg);
+    -ms-transform: rotateY(45deg);
+    transform: rotateY(45deg); }
+
+  75% {
+    -webkit-transform: rotateY(45deg);
+    -ms-transform: rotateY(45deg);
+    transform: rotateY(45deg); }
+
+  to {
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg); } }
+@-ms-keyframes spin {
+  from {
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg); }
+
+  25% {
+    -webkit-transform: rotateY(45deg);
+    -ms-transform: rotateY(45deg);
+    transform: rotateY(45deg); }
+
+  75% {
+    -webkit-transform: rotateY(45deg);
+    -ms-transform: rotateY(45deg);
+    transform: rotateY(45deg); }
+
+  to {
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg); } }
+@keyframes spin {
+  from {
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg); }
+
+  25% {
+    -webkit-transform: rotateY(45deg);
+    -ms-transform: rotateY(45deg);
+    transform: rotateY(45deg); }
+
+  75% {
+    -webkit-transform: rotateY(45deg);
+    -ms-transform: rotateY(45deg);
+    transform: rotateY(45deg); }
+
+  to {
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg); } }
 .sidebar-open {
   height: 100%;
   overflow: hidden; }

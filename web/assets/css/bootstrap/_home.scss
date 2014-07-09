@@ -36,9 +36,11 @@
 
 .home-header{
 	
-	background-attachment: fixed !important;
+	// background-attachment: fixed !important;
 	background-size: cover;
 	background-position: center center;
+    padding-bottom: 40px;
+    text-align: center;
 	
 	h1{
 		margin: 0px;
@@ -47,6 +49,23 @@
 		font-weight: 100;
 		line-height: 1.2em;
 	}
+
+    .register-social {
+      width: auto;
+      display: inline-block;
+      text-align: center;
+      .icon-twitter, .icon-facebook {
+        margin-right: 0;
+      }
+    }
+    .register-social.twitter {
+      @include border-radius-top-right(0);
+      @include border-radius-bottom-right(0);
+    }
+    .register-social.facebook {
+      @include border-radius-top-left(0);
+      @include border-radius-bottom-left(0);
+    }
 }
 
 .home-content{
@@ -125,6 +144,12 @@
 
 // Smaller than 480px
 @media (max-width: $screen-xs) {
+
+    .home-header{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
 	.home-content{
 		h1{
 			line-height: 1em;
