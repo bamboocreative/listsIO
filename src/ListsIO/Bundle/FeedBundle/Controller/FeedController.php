@@ -23,7 +23,7 @@ class FeedController extends Controller
         
         $this->requireXmlHttpRequest($request);
 
-        $cursor = $request->request->get('cursor');
+        $cursor = $request->query->get('cursor');
         
         //4 is the oldest list :)
         if ($cursor <= 4){

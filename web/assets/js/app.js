@@ -623,7 +623,6 @@ $(document).ready(function(){
    * Feed and Home Feed
    *
    */
-  var $feedInsert = $('#feed-insert');
   var feedLoading = false;
   var timer;
 
@@ -631,6 +630,7 @@ $(document).ready(function(){
     if($('.home-header').length) {
       initScrollListenerForHome();
     } else {
+      var $feedInsert = $('#feed-insert');
       initScrollListenerForFeed();
     }
   }
@@ -684,7 +684,7 @@ $(document).ready(function(){
 
         $.ajax({
           url: '/feed/next',
-          type: 'POST',
+          type: 'GET',
           data: {
             'cursor' : last
           }
