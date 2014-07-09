@@ -4369,7 +4369,7 @@ div#author {
 @media (max-width: 480px) {
   .home-header {
     padding-left: 20px;
-    padding-right: 0; }
+    padding-right: 20px; }
 
   .home-content h1 {
     line-height: 1em; }

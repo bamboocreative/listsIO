@@ -616,78 +616,113 @@ $(document).ready(function(){
 		
 		$listResults.append(html);
 	}
-	
-	
-	/* 
-	*
-	* Feed
-	*
-	*/
-	var $feedInsert = $('#feed-insert');
-	var feedLoading = false;	
-	
-	/*
-	*
-	*
-	* Listen to the feed scroll and if we hit the bottom lets load more feed
-	*
-	*/
-	var timer;
-	
-	$( document ).on('scroll', function(e){
-		
-		clearTimeout(timer);
-		
-		if(!$body.hasClass('disable-hover')) {
-			$body.addClass('disable-hover')
-		}
-		
-		timer = setTimeout(function(){
-			$body.removeClass('disable-hover')
-		},200);
-		
-		var height = $(document).height();
-		var scrollBottom = $(window).scrollTop() + $(window).height();
-		
-		if(feedLoading == false && scrollBottom == height ){
-			
-			feedloading = true;
-			
-			$loader.fadeIn(200);
-			
-			var last = $('.feed-item-count').last().attr('data-id');
-					
-			$.ajax({
-				url: '/feed/next',
-				type: 'POST',
-				data: {
-					'cursor' : last
-				}
-			}).done(function(feedLists){
-				
-				if (feedLists == false){
-				
-					feedLoading = true;
-					
-					$('#feed-cta').show()
-					
-					setTimeout(function(){
-						$loader.fadeOut(200);
-					},800);
-									
-				} else{
-				
-					showFeedNext(feedLists, function(){
-						setTimeout(function(){
-							$loader.fadeOut(200);
-						},800);
-						feedLoading = false;
-					});
-				}
-				
-			})
-		}	
-	});
+
+
+  /*
+   *
+   * Feed and Home Feed
+   *
+   */
+  var $feedInsert = $('#feed-insert');
+  var feedLoading = false;
+  var timer;
+
+  if ($('.feed').length) {
+    if($('.home-header').length) {
+      initScrollListenerForHome();
+    } else {
+      initScrollListenerForFeed();
+    }
+  }
+
+  function initScrollListenerForHome() {
+    $( document ).on('scroll', function(e){
+
+      manageHover();
+
+      var height = $(document).height();
+      var scrollBottom = windowBottom();
+
+      console.log("Scroll bottom: " + scrollBottom + ", Height: " + height);
+
+      if (scrollBottom >= height  && ! $statusIndicator.is(":visible")) {
+        $('.sidebar .logo').addClass("wiggling");
+        show_status("Click the logo in the top corner for more...");
+      }
+    });
+  }
+
+  /*
+   *
+   *
+   * Listen to the feed scroll and if we hit the bottom lets load more feed
+   *
+   */
+  function initScrollListenerForFeed() {
+
+    $( document ).on('scroll', function(e){
+
+      manageHover();
+
+      var height = $(document).height();
+      var scrollBottom = windowBottom();
+
+      if(feedLoading == false && scrollBottom == height ){
+
+        feedloading = true;
+
+        $loader.fadeIn(200);
+
+        var last = $('.feed-item-count').last().attr('data-id');
+
+        $.ajax({
+          url: '/feed/next',
+          type: 'POST',
+          data: {
+            'cursor' : last
+          }
+        }).done(function(feedLists){
+
+          if (feedLists == false){
+
+            feedLoading = true;
+
+            $('#feed-cta').show()
+
+            setTimeout(function(){
+              $loader.fadeOut(200);
+            },800);
+
+          } else{
+
+            showFeedNext(feedLists, function(){
+              setTimeout(function(){
+                $loader.fadeOut(200);
+              },800);
+              feedLoading = false;
+            });
+          }
+
+        })
+      }
+    });
+  }
+
+  function manageHover() {
+    clearTimeout(timer);
+
+    if(!$body.hasClass('disable-hover')) {
+      $body.addClass('disable-hover')
+    }
+
+    timer = setTimeout(function(){
+      $body.removeClass('disable-hover')
+    },200);
+  }
+
+  function windowBottom() {
+    return $(window).scrollTop() + $(window).height();
+  }
 	
 	/*
 	*
