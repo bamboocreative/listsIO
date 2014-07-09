@@ -204,10 +204,10 @@ $(document).ready(function(){
 	* Hide Save
 	*
 	*/
-	function hide_save(){
+	function hide_save(delay){
 		setTimeout(function(){
 			$saveIndicator.fadeOut();
-		}, 1200);
+		}, (delay ? delay : 1200));
 	}
 
     function hide_status()
@@ -638,16 +638,23 @@ $(document).ready(function(){
   function initScrollListenerForHome() {
     $( document ).on('scroll', function(e){
 
+      var $logo = $('.sidebar .logo');
+
       manageHover();
 
       var height = $(document).height();
       var scrollBottom = windowBottom();
 
-      console.log("Scroll bottom: " + scrollBottom + ", Height: " + height);
-
-      if (scrollBottom >= height  && ! $statusIndicator.is(":visible")) {
-        $('.sidebar .logo').addClass("wiggling");
-        show_status("Click the logo in the top corner for more...");
+      if (scrollBottom >= height  && ! feedLoading) {
+        $logo.addClass("wiggling");
+        setTimeout(function(){
+          $logo.removeClass('wiggling');
+          show_save("&larr; Check out the sidebar for more...");
+          feedLoading = true;
+          setTimeout(function(){
+            $saveIndicator.fadeOut(function() {feedLoading = false;});
+          }, 3000);
+        },800);
       }
     });
   }

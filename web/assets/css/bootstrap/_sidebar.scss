@@ -35,8 +35,6 @@ nav {
 			}
 		}
 
-
-
         #status_indicator{
             position: fixed;
             right: 50px;
@@ -122,6 +120,28 @@ nav {
 			}
 		}
 	}
+}
+
+.sidebar .logo.wiggling {
+  @include animation(spin .4s infinite);
+}
+
+@include keyframes(spin) {
+  from {
+    @include rotateY(0deg);
+  }
+
+  25% {
+    @include rotateY(45deg);
+  }
+
+  75% {
+    @include rotateY(45deg);
+  }
+
+  to {
+    @include rotateY(0deg);
+  }
 }
 
 .sidebar-open{
