@@ -48,7 +48,7 @@
                 <div class="row">
                     {% if list.listLikes|length %}
                         <div class="{{ list.nextList ? "col-md-3 col-md-offset-2"  : "col-md-8 col-md-offset-2" }} list-like-container">
-                            <h4>Recently Liked By</h4>
+                            <h4>Liked By</h4>
                             {% set i = 0 %}
                             {% for like in list.listLikes if i < 3 %}
                                 <div class="list-like">
