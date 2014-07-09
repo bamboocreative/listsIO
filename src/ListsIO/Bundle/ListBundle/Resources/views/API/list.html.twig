@@ -19,7 +19,7 @@
 				<div class="col-md-8 col-md-offset-2 view-list-head-wrapper list-head" id="list-{{ list.id }}">
 					<div class="list-title" data-id="{{ list.id }}">{{ title }}</div>
 					<div class="list-subtitle">{{ list.subtitle|converturls|nl2br }}</div>
-					<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list.user.username}) }}"><img class="loggedin" src="{{ list.user.profilePicURL }}"> by {{ list.user.username }}</a></div>
+					<div class="author" id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list.user.username}) }}"><img class="loggedin" src="{{ list.user.profilePicURL }}"> by {{ list.user.username }}</a></div>
 				</div>
 			</div>
             <div class="row">
