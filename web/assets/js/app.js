@@ -649,7 +649,7 @@ $(document).ready(function(){
         $logo.addClass("wiggling");
         setTimeout(function(){
           $logo.removeClass('wiggling');
-          show_save("Check out the sidebar for more...");
+          show_save("&larr; Pssst, over here...");
           feedLoading = true;
           setTimeout(function(){
             $saveIndicator.fadeOut(function() {feedLoading = false;});
