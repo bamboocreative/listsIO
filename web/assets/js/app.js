@@ -52,7 +52,13 @@ $(document).ready(function () {
   $(document).ready(function () {
     $('textarea.description', '.editable-list').autosize();
     $location.autocomplete({
-      source: locationAutocompleteCallback
+      source: locationAutocompleteCallback,
+      select: function(event, ui) {
+        $location.val(ui.item.value);
+        $location.attr('data-long', false);
+        $location.attr('data-lat', false);
+        save_list();
+      }
     });
   });
 
@@ -66,7 +72,7 @@ $(document).ready(function () {
       var stillMatches = false;
       for(var i = 0; i < numLocs; i++) {
         location = locationAutocompleteData[i ];
-        if (location.locString.indexOf(request.term) >= 0) {
+        if (location.locString.indexOf(request.term) > 0) {
           stillMatches = true;
         }
       }
@@ -101,7 +107,7 @@ $(document).ready(function () {
     for (var i = 0; i < numLocs; i++) {
       result = {
         label: data[i].locString,
-        value: data[i].locString
+        value: data[i].locString,
       };
       results[i] = result;
     }

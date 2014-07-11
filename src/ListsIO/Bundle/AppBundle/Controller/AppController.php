@@ -54,31 +54,35 @@ class AppController extends Controller
         $term = $request->query->get('term');
 
         $em = $this->getDoctrine()->getManager();
+        /**
         $query = $em->createQuery(
-            "SELECT l, COUNT(l) AS HIDDEN loc_count
+            "SELECT l.lat, l.lon, l.locString, COUNT(DISTINCT l.locString) AS HIDDEN loc_count
             FROM ListsIOListBundle:LIOList l
             WHERE l.lat IS NOT NULL
             AND l.lon IS NOT NULL
-            AND l.id IS NOT NULL
             AND l.locString LIKE ?1
             ORDER BY loc_count DESC"
-        )->setParameter(1, $term."%")
-         ->setMaxResults(5);
+        )->setMaxResults(5)
+            ->setParameter(1, $term."%");
 
-        $lists = $query->getResult();
+         */
 
-        $locations = array();
-        foreach($lists as $list) {
-            // Doctrine empty query is giving back an empty List object with id = 0 for some reason.
-            if ($list->getId()) {
-                /** @var LIOList $list */
-                $location = new stdClass;
-                $location->locString = $list->getLocString();
-                $location->lat = $list->getLat();
-                $location->lon = $list->getLon();
-                $locations[] = $location;
-            }
-        }
+        $query = $em->createQuery(
+            "SELECT l.lat, l.lon, l.locString, COUNT(l.locString) AS HIDDEN loc_count
+            FROM ListsIOListBundle:LIOList l
+            WHERE l.lat <> ''
+            AND l.lat IS NOT NULL
+            AND l.lon <> ''
+            AND l.lon IS NOT NULL
+            AND l.locString LIKE ?1
+            GROUP BY l.locString
+            ORDER BY loc_count DESC"
+        )->setMaxResults(5)
+            ->setParameter(1, $term."%");
+
+        $locations = $query->getResult();
+
+        $this->get('logger')->error(print_r($locations, true));
 
         return new JsonResponse($locations);
 

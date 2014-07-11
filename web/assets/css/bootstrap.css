@@ -4103,6 +4103,15 @@ textarea {
   -webkit-animation: throbble 1s infinite;
   animation: throbble 1s infinite; }
 
+.ui-menu {
+  background: rgba(0, 0, 0, 0.6);
+  border: 0; }
+  .ui-menu .ui-menu-item {
+    background: transparent;
+    color: #fff;
+    font-family: "open-sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 200; }
+
 @-webkit-keyframes throbble {
   0% {
     opacity: 1; }
