@@ -3,7 +3,9 @@
 namespace ListsIO\Bundle\AppBundle\Controller;
 
 use Doctrine\ORM\Query;
+use ListsIO\Bundle\ListBundle\Entity\LIOList;
 use ListsIO\Controller\Controller;
+use stdClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityRepository;
@@ -46,4 +48,40 @@ class AppController extends Controller
         $lists = $query->getResult();
         return $this->render('ListsIOAppBundle:App:home.html.twig', array('lists' => $lists));
     }
+
+    public function locationAutocompleteAction(Request $request)
+    {
+        $term = $request->query->get('term');
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            "SELECT l, COUNT(l) AS HIDDEN loc_count
+            FROM ListsIOListBundle:LIOList l
+            WHERE l.lat IS NOT NULL
+            AND l.lon IS NOT NULL
+            AND l.id IS NOT NULL
+            AND l.locString LIKE ?1
+            ORDER BY loc_count DESC"
+        )->setParameter(1, $term."%")
+         ->setMaxResults(5);
+
+        $lists = $query->getResult();
+
+        $locations = array();
+        foreach($lists as $list) {
+            // Doctrine empty query is giving back an empty List object with id = 0 for some reason.
+            if ($list->getId()) {
+                /** @var LIOList $list */
+                $location = new stdClass;
+                $location->locString = $list->getLocString();
+                $location->lat = $list->getLat();
+                $location->lon = $list->getLon();
+                $locations[] = $location;
+            }
+        }
+
+        return new JsonResponse($locations);
+
+    }
+
 }

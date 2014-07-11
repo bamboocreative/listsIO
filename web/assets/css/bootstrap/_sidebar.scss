@@ -123,10 +123,10 @@ nav {
 }
 
 .sidebar .logo.wiggling {
-  @include animation(spin .4s infinite);
+  @include animation(wiggle .4s infinite);
 }
 
-@include keyframes(spin) {
+@include keyframes(wiggle) {
   from {
     @include rotateY(0deg);
   }
