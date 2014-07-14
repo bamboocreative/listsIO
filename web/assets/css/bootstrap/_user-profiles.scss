@@ -205,6 +205,24 @@
 	}
 }
 
+.profile-toggle li.loading {
+  @include animation(throbble 1s infinite);
+}
+
+@include keyframes(throbble) {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .2;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 // Smaller than 480px
 @media (max-width: $screen-xs) {
 	.profile-wrapper{

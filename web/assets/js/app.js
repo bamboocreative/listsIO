@@ -36,11 +36,20 @@ $(document).ready(function () {
   var error_msg = "Please try again later.";
   var login_to_like_msg = 'Please <a href="/register">sign up</a> or <a href="/login">login</a> to like.';
 
+  /** GEOLOCATION VARS **/
+  var position = false;
+  var locString = false;
   var $geolocationBtn = $('button.geolocation');
-  var $location = $('.list-location');
+  var $location = $('.edit-list-location');
+  // Attach nearby lists callback.
+  $('.nearby-lists-tab').data('async_load_func', loadNearbyLists);
 
+  /** AUTOSIZE LIST ITEM DESCRIPTIONS **/
+  $('textarea.description', '.editable-list').autosize();
+
+  /** SORTABLE LIST ITEMS **/
   if (list) {
-    var sortableList = new Sortable(list, {
+    new Sortable(list, {
       handle: ".number", // Restricts sort start click/touch to the specified element
       ghostClass: "dragging",
       onUpdate: function (evt) {
@@ -49,21 +58,28 @@ $(document).ready(function () {
     });
   }
 
-  $(document).ready(function () {
-    $('textarea.description', '.editable-list').autosize();
-    $location.autocomplete({
-      source: locationAutocompleteCallback,
-      select: function(event, ui) {
-        $location.val(ui.item.value);
-        $location.attr('data-long', false);
-        $location.attr('data-lat', false);
-        save_list();
-      }
-    });
+  /** LOCATION AUTOCOMPLETE **/
+  var locationAutocompleteData = false;
+  $location.autocomplete({
+    source: locationAutocompleteCallback,
+    select: function(event, ui) {
+      $location.val(ui.item.value);
+      $location.attr('data-lat', false);
+      $location.attr('data-long', false);
+    }
   });
 
-  var locationAutocompleteData;
-  function locationAutocompleteCallback(request, callback) {
+  $location.on('keyup', function(e) {
+    var code = e.keyCode || e.which;
+    // Remove lat, long on backspace and 0 - z
+    if (code == 8 || (code >= 48 && code <= 90)) {
+      $location.removeAttr('data-lat');
+      $location.removeAttr('data-long');
+    }
+  });
+
+  function locationAutocompleteCallback(request, callback)
+  {
     if (! locationAutocompleteData) {
       locationAutocompleteCallout(request.term, callback);
     } else {
@@ -94,12 +110,12 @@ $(document).ready(function () {
       },
       success: function (data, textStatus, jqXHR) {
         locationAutocompleteData = data;
-        locationAutocompleteHandler(callback, locationAutocompleteData);
+        locationAutocompleteResponseHandler(callback, locationAutocompleteData);
       },
     });
   }
 
-  function locationAutocompleteHandler(callback, data)
+  function locationAutocompleteResponseHandler(callback, data)
   {
     var numLocs = data.length;
     var results = [];
@@ -118,87 +134,71 @@ $(document).ready(function () {
     }
   }
 
-  $geolocationBtn.on('click', function(e) {
-    e.preventDefault();
-    $(this).addClass('loading');
-    getLocation();
-  });
-
-  $location.on('keyup', function(e) {
-    var code = e.keyCode || e.which;
-    // Remove lat, long on backspace and 0 - z
-    if (code == 8 || (code >= 48 && code <= 90)) {
-      $location.removeAttr('data-lat');
-      $location.removeAttr('data-long');
-    }
-  });
-
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getAddressFromPosition);
+  /** GEOLOCATION **/
+  // Get user location for relevant pages (edit list and user profile, for nearby tab).
+  if ($location.length + $('.nearby-lists-tab').length > 0) {
+    getPosition(function() {});
+  }
+  function getPosition(callback) {
+    if (position) {
+      callback(position);
     } else {
-      show_status("Error accessing location.");
-      hide_status();
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          position = pos;
+          callback(position);
+        });
+      } else {
+        show_status("Error accessing location.");
+        hide_status();
+      }
     }
   }
 
-  function getAddressFromPosition(position) {
+  function getLocString(position, callback) {
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
-    $.ajax({
-      type: 'GET',
-      url: 'http://nominatim.openstreetmap.org/reverse',
-      data: {
-        format: 'json',
-        lat: lat,
-        lon: long,
-        addressdetails: 1,
-        email: 'info@lists.io'
-      },
-      success: function (data, textStatus, jqXHR) {
-        if (data.address.country_code == 'us') {
-          var locString = data.address.city + ", " + data.address.state;
-        } else {
-          var locString = data.address.city + ", " + data.address.country;
+    if (locString) {
+      callback(lat, long, locString);
+    } else {
+      $.ajax({
+        type: 'GET',
+        url: 'http://nominatim.openstreetmap.org/reverse',
+        data: {
+          format: 'json',
+          lat: lat,
+          lon: long,
+          addressdetails: 1,
+          email: 'info@lists.io'
+        },
+        success: function (data, textStatus, jqXHR) {
+          if (data.address.country_code == 'us') {
+            locString = data.address.city + ", " + data.address.state;
+          } else {
+            locString = data.address.city + ", " + data.address.country;
+          }
+          callback(lat, long, locString);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          show_status("Unable to get location name.");
+          hide_status();
         }
+      });
+    }
+  }
+
+  /** GEOLCATION BUTTON **/
+  $geolocationBtn.on('click', function(e) {
+    e.preventDefault();
+    $(this).addClass('loading');
+    getPosition(function(position) {
+      getLocString(position, function (lat, long, locString) {
         $location.val(locString);
         $location.attr('data-lat', lat);
         $location.attr('data-long', long);
         $geolocationBtn.removeClass('loading');
         save_list();
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        show_status("Unable to get location name.");
-      }
-    });
-  }
-
-  /*
-   *
-   * Toggle Register Form
-   *
-   */
-  $('#register-form-button').on('click', function (e) {
-
-    e.preventDefault();
-
-    $button = $(this);
-
-    $button.fadeOut();
-
-    $form = $('#register-form');
-
-    $form.slideDown();
-
-    $(document).on('click', function (e) {
-
-      var target = $(e.target)
-
-      if (!target.parents('#register-form').length && target.attr('id') != 'register-form-button') {
-
-        $form.slideUp();
-        $button.fadeIn();
-      }
+      });
     });
   });
 
@@ -281,7 +281,6 @@ $(document).ready(function () {
         listId: listID
       },
       success: function (data, textStatus, jqXHR) {
-        console.log(data);
         // 201 indicates new like created.
         // Otherwise = redirect to login (user is not logged in).
         if (jqXHR.status == 201) {
@@ -911,15 +910,57 @@ $(document).ready(function () {
   $('.profile-toggle li').on('click', function (e) {
 
     $this = $(this);
-
+    var loadData = false;
     if ($this.hasClass('active')) {
       return false;
     } else {
-      $('.profile-lists-wrapper').toggle();
-      $('.profile-toggle li.active').removeClass('active');
-      $this.addClass('active');
+      if($this.data('async_load_func')) {
+        $this.addClass('loading');
+        var $container = $(getActiveTabSelector($this)).find('.col-md-6');
+        // Only async load if container is empty.
+        if ($container.children().length <= 0) {
+          // Call async callback (set/attached at top of script).
+          $this.data('async_load_func').apply(this, [$container]);
+        } else {
+          toggleContent($this);
+        }
+      } else {
+        toggleContent($this);
+      }
     }
 
-  })
+  });
+
+  function toggleContent($element) {
+    $('.profile-lists-wrapper').fadeOut();
+    $(getActiveTabSelector($element)).fadeIn();
+    $('.profile-toggle li.active').removeClass('active');
+    $element.addClass('active');
+    $element.removeClass('loading');
+  }
+
+  function getActiveTabSelector($element) {
+    return '.profile-' + $element.attr('data-toggle') + '-toggle';
+  }
+
+  function loadNearbyLists($container)
+  {
+    var $this = $(this);
+    getPosition(function(position) {
+      getLocString(position, function(lat, long, locString) {
+        $.ajax({
+          type: 'GET',
+          url: '/lists/nearby',
+          data: {
+            locString: locString,
+          },
+          success: function(data, textStatus, jqXHR) {
+            $container.html(data);
+            toggleContent($this);
+          }
+        });
+      });
+    });
+  }
 
 });

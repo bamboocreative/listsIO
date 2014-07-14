@@ -1,0 +1,17 @@
+{% if lists is empty%}
+    <h3 class='no-info-message'>{{ emptyMessage ? emptyMessage : "What?! No lists yet." }}</h3>
+{% else %}
+    <ul>
+    {% for list in lists %}
+        {% if list.title %}
+            <li data-id="{{ list.id }}">
+                <a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
+                    <h3 class="list-title">{{ list.title }}</h3>
+                    <div class="list-subtitle">{{ list.subtitle }}</div>
+                    <div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list.user.username}) }}"><img class="loggedin" src="{{ list.user.profilePicURL }}"> by {{ list.user.username }}</a></div>
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% endif %}

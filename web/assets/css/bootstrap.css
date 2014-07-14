@@ -3935,6 +3935,46 @@ textarea {
       font-weight: 400;
       border-bottom: 1px solid #FFFFFF; }
 
+.profile-toggle li.loading {
+  -webkit-animation: throbble 1s infinite;
+  animation: throbble 1s infinite; }
+
+@-webkit-keyframes throbble {
+  0% {
+    opacity: 1; }
+
+  50% {
+    opacity: .2; }
+
+  100% {
+    opacity: 1; } }
+@-moz-keyframes throbble {
+  0% {
+    opacity: 1; }
+
+  50% {
+    opacity: .2; }
+
+  100% {
+    opacity: 1; } }
+@-ms-keyframes throbble {
+  0% {
+    opacity: 1; }
+
+  50% {
+    opacity: .2; }
+
+  100% {
+    opacity: 1; } }
+@keyframes throbble {
+  0% {
+    opacity: 1; }
+
+  50% {
+    opacity: .2; }
+
+  100% {
+    opacity: 1; } }
 @media (max-width: 480px) {
   .profile-wrapper .profile-name {
     font-size: 1.5em; }
@@ -4049,8 +4089,8 @@ textarea {
     color: rgba(255, 255, 255, 0.5); }
 .list-head div.list-subtitle {
   line-height: 1.3em;
-  margin: 0px 0px 40px; }
-.list-head .list-img, .list-head .list-location {
+  margin: 0; }
+.list-head .list-img, .list-head .edit-list-location {
   background: none;
   border: none;
   border-bottom: 2px dotted rgba(255, 255, 255, 0.5) !important;
@@ -4067,21 +4107,39 @@ textarea {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px; }
-  .list-head .list-img:-moz-placeholder, .list-head .list-location:-moz-placeholder {
+  .list-head .list-img:-moz-placeholder, .list-head .edit-list-location:-moz-placeholder {
     color: rgba(255, 255, 255, 0.5); }
-  .list-head .list-img::-moz-placeholder, .list-head .list-location::-moz-placeholder {
+  .list-head .list-img::-moz-placeholder, .list-head .edit-list-location::-moz-placeholder {
     color: rgba(255, 255, 255, 0.5);
     opacity: 1; }
-  .list-head .list-img:-ms-input-placeholder, .list-head .list-location:-ms-input-placeholder {
+  .list-head .list-img:-ms-input-placeholder, .list-head .edit-list-location:-ms-input-placeholder {
     color: rgba(255, 255, 255, 0.5); }
-  .list-head .list-img::-webkit-input-placeholder, .list-head .list-location::-webkit-input-placeholder {
+  .list-head .list-img::-webkit-input-placeholder, .list-head .edit-list-location::-webkit-input-placeholder {
     color: rgba(255, 255, 255, 0.5); }
-.list-head .list-location {
+.list-head .edit-list-location {
   display: inline-block;
   vertical-align: baseline;
   width: calc(100% - 54px);
   border: 0 !important;
   margin: 0; }
+.list-head .list-location {
+  padding: 10px 0 10px 55px;
+  margin: 0 0 20px 0;
+  border: 0; }
+  .list-head .list-location:before {
+    position: relative;
+    top: 30px;
+    left: -55px;
+    display: block;
+    height: 30px;
+    width: 45px;
+    opacity: .2;
+    background-color: transparent;
+    background-image: url(../images/geolocation.svg);
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: center center;
+    content: ""; }
 .list-head .geolocation {
   display: inline-block;
   background-color: transparent;

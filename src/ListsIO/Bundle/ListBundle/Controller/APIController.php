@@ -144,8 +144,7 @@ class APIController extends BaseController
      */
     public function viewPopularListsAction(Request $request)
     {
-        $limit = $request->request->get('limit');
-        $limit = $limit ? $limit : 10;
+        $limit = $request->request->get('limit', 10);
 
         $em = $this->getDoctrine()->getManager();
         /** @var Query $query */
@@ -158,7 +157,21 @@ class APIController extends BaseController
         )->setMaxResults($limit);
 
         $lists = $this->serialize($query->getResult());
-        return $this->render('ListsIOListBundle:API:popularLists.json.twig', array('lists' => $lists));
+        return $this->render('ListsIOListBundle:API:lists.json.twig', array('lists' => $lists));
+    }
+
+    public function viewNearbyListsAction(Request $request) {
+        $format = $request->getRequestFormat();
+        $locString = $request->query->get('locString');
+        $limit = $request->query->get('limit', 10);
+        $offset = $request->query->get('offset', 0);
+        $lists = $this->loadEntitiesBy('ListsIO\Bundle\ListBundle\Entity\LIOList', array('locString' => $locString), null, $limit, $offset);
+        if ($format == 'json') {
+            $lists = $this->serialize($lists);
+        }
+        $createURL = $this->generateUrl('lists_io_edit_new_list');
+        $emptyMessage = 'Ah snap, no lists found in ' . $locString . ', <a href="' . $createURL . '">create the first</a>!';
+        return $this->render('ListsIOListBundle:API:lists.' . $format . '.twig', array('lists' => $lists, 'emptyMessage' => $emptyMessage));
     }
 
 }

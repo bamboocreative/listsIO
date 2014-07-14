@@ -53,6 +53,18 @@ class Controller extends BaseController {
     }
 
     /**
+     * @param $entityName
+     * @param array $findBy
+     * @return array
+     */
+    public function loadEntitiesBy($entityName, array $findBy, array $orderBy = null, $limit = null, $offset = null)
+    {
+        return $this->getDoctrine()
+            ->getRepository($entityName)
+            ->findBy($findBy, $orderBy, $limit, $offset);
+    }
+
+    /**
      * @param $entity
      */
     public function removeEntity($entity)
