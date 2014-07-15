@@ -141,7 +141,7 @@
                                 <a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
                             {% endif %}
 								<h3 class="list-title">{{ title }}</h3>
-								<span class="list-subtitle">{{ list.subtitle }}</span>
+								<span class="list-subtitle">{{ list.subtitle|converturls|nl2br }}</span>
 							</a>
 							{% if userIsOwner %}
 							    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>

@@ -7,7 +7,7 @@
             <li data-id="{{ list.id }}">
                 <a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
                     <h3 class="list-title">{{ list.title }}</h3>
-                    <div class="list-subtitle">{{ list.subtitle }}</div>
+                    <div class="list-subtitle">{{ list.subtitle|converturls|nl2br }}</div>
                     <div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list.user.username}) }}"><img class="loggedin" src="{{ list.user.profilePicURL }}"> by {{ list.user.username }}</a></div>
                 </a>
             </li>
