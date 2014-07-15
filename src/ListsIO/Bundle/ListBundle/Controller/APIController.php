@@ -166,39 +166,39 @@ class APIController extends BaseController
         $limit = $request->query->get('limit', 10);
         $offset = $request->query->get('offset', 0);
         $profileUserId = $request->query->get('profileUserId', false);
+        $em = $this->getDoctrine()->getManager();
 
         // If the profileUserId param is set, we're loading nearby lists belonging to a particular user.
         if ($profileUserId) {
             $user = $this->loadEntityFromId('ListsIOUserBundle:User', $profileUserId);
             $emptyMessage = 'Ah snap, ' . $user->getUsername() . " doesn't have any lists about " . $locString . ".";
-            $query = "SELECT l
+            $dql = "SELECT l
             FROM ListsIOListBundle:LIOList l
             WHERE l.locString = ?1
             AND l.title IS NOT NULL
             AND l.title <> ''
             AND l.user = ?2
             ORDER BY l.updatedAt DESC";
+            $query = $em->createQuery($dql)
+                ->setParameter(1, $locString)
+                ->setParameter(2, $user)
+                ->setMaxResults($limit)
+                ->setFirstResult($offset);
         } else {
-            $user = $this->getUser();
             $createURL = $this->generateUrl('lists_io_edit_new_list');
             $emptyMessage = 'Ah snap, no lists found in ' . $locString . ', <a href="' . $createURL . '">create the first</a>!';
-            $query = "SELECT l
+            $dql = "SELECT l
             FROM ListsIOListBundle:LIOList l
             WHERE l.locString = ?1
             AND l.title IS NOT NULL
             AND l.title <> ''
-            AND l.user != ?2
             ORDER BY l.updatedAt DESC";
+            $query = $em->createQuery($dql)
+                ->setParameter(1, $locString)
+                ->setMaxResults($limit)
+                ->setFirstResult($offset);
         }
-
-        $em = $this->getDoctrine()->getManager();
-        $lists = $em->createQuery($query)->setParameter(1, $locString)
-            ->setParameter(2, $user)
-            ->setMaxResults($limit)
-            ->setFirstResult($offset)
-            ->getResult();
-
-        $this->get('logger')->error($this->serialize($lists));
+        $lists = $query->getResult();
 
         if ($format == 'json') {
             $lists = $this->serialize($lists);
