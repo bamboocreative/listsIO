@@ -1,5 +1,5 @@
 {% if lists is empty%}
-    <h3 class='no-info-message'>{{ emptyMessage ? emptyMessage : "What?! No lists yet." }}</h3>
+    <h3 class='no-info-message'>{{ emptyMessage ? emptyMessage|raw : "What?! No lists yet." }}</h3>
 {% else %}
     <ul>
     {% for list in lists %}
