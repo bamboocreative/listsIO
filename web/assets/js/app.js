@@ -982,6 +982,7 @@ $(document).ready(function () {
   function loadNearbyLists($container)
   {
     var $this = $(this);
+    var user = $('body').hasClass('logged-in') ? null : $('.profile-wrapper').attr('data-user_id');
     getPosition(function(pos) {
       getLocString(pos, function(lat, long, locString) {
         if (locString) {
@@ -989,7 +990,8 @@ $(document).ready(function () {
             type: 'GET',
             url: '/lists/nearby',
             data: {
-              locString: locString
+              locString: locString,
+              profileUserId: user
             },
             success: function(data, textStatus, jqXHR) {
               $container.html(data);
@@ -1001,6 +1003,8 @@ $(document).ready(function () {
         }
       });
     });
+
+
 
   }
 
