@@ -952,7 +952,7 @@ $(document).ready(function () {
           type: 'GET',
           url: '/lists/nearby',
           data: {
-            locString: locString,
+            locString: locString
           },
           success: function(data, textStatus, jqXHR) {
             $container.html(data);

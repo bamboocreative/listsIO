@@ -165,7 +165,19 @@ class APIController extends BaseController
         $locString = $request->query->get('locString');
         $limit = $request->query->get('limit', 10);
         $offset = $request->query->get('offset', 0);
-        $lists = $this->loadEntitiesBy('ListsIO\Bundle\ListBundle\Entity\LIOList', array('locString' => $locString), null, $limit, $offset);
+        $em = $this->getDoctrine()->getManager();
+        $lists = $em->createQuery(
+            'SELECT l
+            FROM ListsIOListBundle:LIOList l
+            WHERE l.locString = ?1
+            AND l.user != ?2
+            ORDER BY l.updatedAt DESC'
+        )->setParameter(1, $locString)
+            ->setParameter(2, $this->getUser())
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getResult();
+
         if ($format == 'json') {
             $lists = $this->serialize($lists);
         }
