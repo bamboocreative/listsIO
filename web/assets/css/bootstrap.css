@@ -4673,6 +4673,11 @@ nav {
       font-weight: 100;
       padding-right: 15px;
       top: 40px; }
+    nav.sidebar #status_indicator.important {
+      font-size: 1.2em; }
+    nav.sidebar #status_indicator.error {
+      padding: 10px;
+      background-color: red; }
     nav.sidebar .loggedin-user {
       text-align: center; }
       nav.sidebar .loggedin-user .loggedin-user-img {

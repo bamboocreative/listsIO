@@ -41,6 +41,9 @@ $(document).ready(function () {
   var locString = false;
   var $geolocationBtn = $('button.geolocation');
   var $location = $('.edit-list-location');
+  var NORMAL_STATUS = 'normal';
+  var IMPORTANT_STATUS = 'important';
+  var ERROR_STATUS = 'error';
   // Attach nearby lists callback.
   $('.nearby-lists-tab').data('async_load_func', loadNearbyLists);
 
@@ -139,25 +142,43 @@ $(document).ready(function () {
   if ($location.length + $('.nearby-lists-tab').length > 0) {
     getPosition(function() {});
   }
+  function geolocationError(message) {
+    show_status(message ? message : 'Geolocation disabled.', ERROR_STATUS);
+    hide_status(5000);
+  }
   function getPosition(callback) {
+
+    function getCurrentPositionSuccessCallback(pos) {
+      position = pos;
+      callback(position);
+    }
+
+    function getCurrentPositionErrorCallback(posError) {
+      var message = posError.code == posError.PERMISSION_DENIED ? "Dang, geolocation is disabled." : false;
+      geolocationError(message);
+      callback();
+    }
+
     if (position) {
       callback(position);
     } else {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          position = pos;
-          callback(position);
-        });
+        navigator.geolocation.getCurrentPosition(getCurrentPositionSuccessCallback, getCurrentPositionErrorCallback);
       } else {
-        show_status("Error accessing location.");
-        hide_status();
+        geolocationError();
+        callback();
       }
     }
   }
 
-  function getLocString(position, callback) {
-    var lat = position.coords.latitude;
-    var long = position.coords.longitude;
+  function getLocString(pos, callback)
+  {
+    if ( ! pos) {
+      callback();
+      return;
+    }
+    var lat = pos.coords.latitude;
+    var long = pos.coords.longitude;
     if (locString) {
       callback(lat, long, locString);
     } else {
@@ -182,6 +203,7 @@ $(document).ready(function () {
         error: function (jqXHR, textStatus, errorThrown) {
           show_status("Unable to get location name.");
           hide_status();
+          callback();
         }
       });
     }
@@ -190,14 +212,19 @@ $(document).ready(function () {
   /** GEOLCATION BUTTON **/
   $geolocationBtn.on('click', function(e) {
     e.preventDefault();
-    $(this).addClass('loading');
-    getPosition(function(position) {
-      getLocString(position, function (lat, long, locString) {
-        $location.val(locString);
-        $location.attr('data-lat', lat);
-        $location.attr('data-long', long);
-        $geolocationBtn.removeClass('loading');
-        save_list();
+    var $this = $(this);
+    $this.addClass('loading');
+    getPosition(function(pos) {
+      getLocString(pos, function (lat, long, locString) {
+        if ( lat && long && locString) {
+          $location.val(locString);
+          $location.attr('data-lat', lat);
+          $location.attr('data-long', long);
+          $geolocationBtn.removeClass('loading');
+          save_list();
+        } else {
+          $this.removeClass('loading');
+        }
       });
     });
   });
@@ -317,10 +344,20 @@ $(document).ready(function () {
 
   }
 
-  function show_status(msg) {
+  var statusClasses = {
+    NORMAL_STATUS: 'normal',
+    IMPORTANT_STATUS: 'important',
+    ERROR_STATUS: 'error'
+  };
+  function show_status(msg, status) {
+    for (var statusClass in statusClasses) {
+      $statusIndicator.removeClass(statusClass);
+    }
+    if (status) {
+      $statusIndicator.addClass(status);
+    }
     $statusIndicator.fadeIn().html(msg);
   }
-
 
   /*
    *
@@ -333,10 +370,10 @@ $(document).ready(function () {
     }, (delay ? delay : 1200));
   }
 
-  function hide_status() {
+  function hide_status(delay) {
     setTimeout(function () {
       $statusIndicator.fadeOut();
-    }, 3000);
+    }, delay ? delay : 3000);
   }
 
   /*
@@ -910,7 +947,6 @@ $(document).ready(function () {
   $('.profile-toggle li').on('click', function (e) {
 
     $this = $(this);
-    var loadData = false;
     if ($this.hasClass('active')) {
       return false;
     } else {
@@ -946,21 +982,26 @@ $(document).ready(function () {
   function loadNearbyLists($container)
   {
     var $this = $(this);
-    getPosition(function(position) {
-      getLocString(position, function(lat, long, locString) {
-        $.ajax({
-          type: 'GET',
-          url: '/lists/nearby',
-          data: {
-            locString: locString
-          },
-          success: function(data, textStatus, jqXHR) {
-            $container.html(data);
-            toggleContent($this);
-          }
-        });
+    getPosition(function(pos) {
+      getLocString(pos, function(lat, long, locString) {
+        if (locString) {
+          $.ajax({
+            type: 'GET',
+            url: '/lists/nearby',
+            data: {
+              locString: locString
+            },
+            success: function(data, textStatus, jqXHR) {
+              $container.html(data);
+              toggleContent($this);
+            }
+          });
+        } else {
+          $this.removeClass('loading');
+        }
       });
     });
+
   }
 
 });
