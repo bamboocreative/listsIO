@@ -3825,6 +3825,9 @@ textarea {
     .profile-wrapper .profile-email a {
       color: white; }
 
+.list-button-wrapper {
+  border-bottom: 1px dotted #fff; }
+
 .profile-lists-wrapper {
   min-height: 150px; }
   .profile-lists-wrapper h3.no-info-message {
