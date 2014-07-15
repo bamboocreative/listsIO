@@ -63,7 +63,6 @@
 {% endspaceless %}
 
 {% block bgImage %}
-<div class="bg-wrapper" style="background-image: url(' {{randomImgURL}} ');"></div>  	
 {% endblock %}
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
@@ -88,28 +87,30 @@
 {% endblock %}
 
 {% block fos_user_content %}
-<div class="mobile-background"  style="background-image: url(' {{randomImgURL}} ');">
-	<div class="profile-wrapper">
-		<!-- Error: Getting current user's info, not author info -->
-		<div class="gravatar-image">
-			<div class="gravatar-inner">
-			    <img src="{{ user.profilePicURL }}">
-			</div>
-		</div>
-		<h1 class="profile-name">
-			{{ user.username }}
-		</h1>
-	</div>
-	<div class="container toggle-wrapper">
-		<div class="profile-toggle">
-			<ul>
-				<li class="active" data-toggle="lists">Lists</li>
-				<li data-toggle="likes">Likes</li>
-                <li class="nearby-lists-tab" data-toggle="nearby">Nearby</li>
-			</ul>
-		</div>
-		<div class="divider"></div>
-	</div>
+<div class="background background-mobile" style="min-height: 100%; min-width: 100%;">
+    <div class="mobile-background" style="background-image: url(' {{randomImgURL}} ');">
+        <div class="profile-wrapper">
+            <!-- Error: Getting current user's info, not author info -->
+            <div class="gravatar-image">
+                <div class="gravatar-inner">
+                    <img src="{{ user.profilePicURL }}">
+                </div>
+            </div>
+            <h1 class="profile-name">
+                {{ user.username }}
+            </h1>
+        </div>
+        <div class="container toggle-wrapper">
+            <div class="profile-toggle">
+                <ul>
+                    <li class="active" data-toggle="lists">Lists</li>
+                    <li data-toggle="likes">Likes</li>
+                    <li class="nearby-lists-tab" data-toggle="nearby">Nearby</li>
+                </ul>
+            </div>
+            <div class="divider"></div>
+        </div>
+    </div>
 </div>
 <div class="container profile-lists-wrapper profile-lists-toggle active">
 	<div class="row">

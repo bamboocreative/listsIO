@@ -3990,6 +3990,9 @@ textarea {
   .divider {
     padding-bottom: 1em; }
 
+  .list-subtitle {
+    word-break: break-all; }
+
   .complete-account-wrapper {
     margin: 0;
     width: 100%;
