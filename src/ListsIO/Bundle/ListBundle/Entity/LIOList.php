@@ -37,6 +37,22 @@ class LIOList implements OwnableInterface
     private $imageURL;
 
     /**
+     * @var string
+     */
+    private $lat;
+
+    /**
+     * @var string
+     */
+    private $lon;
+
+    /**
+     * @var string
+     * @SerializedName("locString")
+     */
+    private $locString;
+
+    /**
      * @var \ListsIO\Bundle\UserBundle\Entity\User
      * @MaxDepth(2)
      */
@@ -163,6 +179,60 @@ class LIOList implements OwnableInterface
     public function getImageURL()
     {
         return $this->imageURL;
+    }
+
+    /**
+     * @param string $lat
+     * @return LIOList
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * @param string $long
+     * @return LIOList
+     */
+    public function setLon($long)
+    {
+        $this->lon = $long;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLon()
+    {
+        return $this->lon;
+    }
+
+    /**
+     * @param string $locString
+     * @return LIOList
+     */
+    public function setLocString($locString)
+    {
+        $this->locString = $locString;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocString()
+    {
+        return $this->locString;
     }
 
     /**

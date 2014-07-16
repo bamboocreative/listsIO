@@ -144,8 +144,7 @@ class APIController extends BaseController
      */
     public function viewPopularListsAction(Request $request)
     {
-        $limit = $request->request->get('limit');
-        $limit = $limit ? $limit : 10;
+        $limit = $request->request->get('limit', 10);
 
         $em = $this->getDoctrine()->getManager();
         /** @var Query $query */
@@ -158,7 +157,53 @@ class APIController extends BaseController
         )->setMaxResults($limit);
 
         $lists = $this->serialize($query->getResult());
-        return $this->render('ListsIOListBundle:API:popularLists.json.twig', array('lists' => $lists));
+        return $this->render('ListsIOListBundle:API:lists.json.twig', array('lists' => $lists));
+    }
+
+    public function viewNearbyListsAction(Request $request) {
+        $format = $request->getRequestFormat();
+        $locString = $request->query->get('locString');
+        $limit = $request->query->get('limit', 10);
+        $offset = $request->query->get('offset', 0);
+        $profileUserId = $request->query->get('profileUserId', false);
+        $em = $this->getDoctrine()->getManager();
+
+        // If the profileUserId param is set, we're loading nearby lists belonging to a particular user.
+        if ($profileUserId) {
+            $user = $this->loadEntityFromId('ListsIOUserBundle:User', $profileUserId);
+            $emptyMessage = 'Ah snap, ' . $user->getUsername() . " doesn't have any lists about " . $locString . ".";
+            $dql = "SELECT l
+            FROM ListsIOListBundle:LIOList l
+            WHERE l.locString = ?1
+            AND l.title IS NOT NULL
+            AND l.title <> ''
+            AND l.user = ?2
+            ORDER BY l.updatedAt DESC";
+            $query = $em->createQuery($dql)
+                ->setParameter(1, $locString)
+                ->setParameter(2, $user)
+                ->setMaxResults($limit)
+                ->setFirstResult($offset);
+        } else {
+            $createURL = $this->generateUrl('lists_io_edit_new_list');
+            $emptyMessage = 'Ah snap, no lists found in ' . $locString . ', <a href="' . $createURL . '">create the first</a>!';
+            $dql = "SELECT l
+            FROM ListsIOListBundle:LIOList l
+            WHERE l.locString = ?1
+            AND l.title IS NOT NULL
+            AND l.title <> ''
+            ORDER BY l.updatedAt DESC";
+            $query = $em->createQuery($dql)
+                ->setParameter(1, $locString)
+                ->setMaxResults($limit)
+                ->setFirstResult($offset);
+        }
+        $lists = $query->getResult();
+
+        if ($format == 'json') {
+            $lists = $this->serialize($lists);
+        }
+        return $this->render('ListsIOListBundle:API:lists.' . $format . '.twig', array('lists' => $lists, 'emptyMessage' => $emptyMessage));
     }
 
 }

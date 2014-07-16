@@ -35,6 +35,10 @@
 	}
 }
 
+.list-button-wrapper {
+  border-bottom: 1px dotted #fff;
+}
+
 // User profile Lists
 .profile-lists-wrapper{
 
@@ -205,6 +209,24 @@
 	}
 }
 
+.profile-toggle li.loading {
+  @include animation(throbble 1s infinite);
+}
+
+@include keyframes(throbble) {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .2;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 // Smaller than 480px
 @media (max-width: $screen-xs) {
 	.profile-wrapper{
@@ -233,9 +255,13 @@
 // Smaller than 767px
 @media (max-width: $screen-sm){
 	
-	.divider{
-		padding-bottom: 1em;
-	}
+  .divider{
+      padding-bottom: 1em;
+  }
+
+  .list-subtitle a {
+    word-break: break-all;
+  }
 
   .complete-account-wrapper {
     margin: 0;

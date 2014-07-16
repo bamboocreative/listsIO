@@ -84,10 +84,10 @@
 
   div.list-subtitle{
       line-height: 1.3em;
-      margin: 0px 0px 40px;
+      margin: 0;
   }
 
-  .list-img{
+  .list-img, .edit-list-location {
       background: none;
       border: none;
       border-bottom: 2px dotted rgba(255,255,255, 0.5) !important;
@@ -97,6 +97,7 @@
       margin-left: 3px;
       font-weight: 300;
       margin-top: 10px;
+      margin-bottom: 10px;
       padding-left: 0px;
       padding-right: 20px;
       color: rgba(255,255,255,1);
@@ -104,9 +105,87 @@
       @include border-radius(0px);
 
       @include placeholder(rgba(255,255,255,0.5));
-
   }
 
+  .edit-list-location {
+      display: inline-block;
+      vertical-align: baseline;
+      width: calc(100% - 54px);
+      border: 0 !important;
+      margin: 0;
+  }
+
+  .list-location {
+    padding: 10px 0 10px 55px;
+    margin: 0 0 20px 0;
+    border: 0;
+    &:before {
+      position: relative;
+      top: 30px;
+      left: -55px;
+      display: block;
+      height: 30px;
+      width: 45px;
+      opacity: .2;
+      background-color: transparent;
+      background-image: url(../images/geolocation.svg);
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
+      background-position: center center;
+      content: "";
+    }
+  }
+
+  .geolocation {
+      display: inline-block;
+      background-color: transparent;
+      background-image: url(../images/geolocation.svg);
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
+      background-position: center center;
+      padding: 20px;
+      vertical-align: middle;
+      height: 1.3em;
+      width: 1.3em;
+      margin-right: 10px;
+      opacity: .8;
+      border: 0;
+  }
+
+  .geolocation:hover {
+      background-color: transparent;
+      opacity: 1;
+  }
+
+  .geolocation.loading {
+      @include animation(throbble 1s infinite);
+  }
+
+}
+
+.ui-menu {
+  background: rgba(0, 0, 0, .6);
+  border: 0;
+  .ui-menu-item {
+    background: transparent;
+    color: #fff;
+    font-family: $font-family-base;
+    font-weight: 200;
+  }
+}
+
+@include keyframes(throbble) {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .2;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 div#author{

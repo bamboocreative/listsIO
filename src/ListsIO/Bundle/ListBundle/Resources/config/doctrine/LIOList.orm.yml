@@ -17,6 +17,18 @@ ListsIO\Bundle\ListBundle\Entity\LIOList:
         imageURL:
             type: string
             length: 255
+        lat:
+            type: string
+            length: 20
+            nullable: true
+        lon:
+            type: string
+            length: 20
+            nullable: true
+        locString:
+            type: string
+            length: 255
+            nullable: true
         createdAt:
             type: datetime
         updatedAt:

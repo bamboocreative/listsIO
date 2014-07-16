@@ -76,3 +76,10 @@ lists_io_view_popular_lists:
     pattern: /lists/popular
     methods: [GET]
     defaults: { _controller: ListsIOListBundle:API:viewPopularLists, _format: json }
+# GET NEARBY LISTS
+lists_io_view_nearby_lists:
+    pattern: /lists/nearby.{_format}
+    methods: [GET]
+    requirements:
+        _format: html|json
+    defaults: { _controller: ListsIOListBundle:API:viewNearbyLists, _format: html}

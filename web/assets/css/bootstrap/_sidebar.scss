@@ -44,6 +44,15 @@ nav {
             top: 40px;
         }
 
+        #status_indicator.important {
+          font-size: 1.2em;
+        }
+
+        #status_indicator.error {
+            padding: 10px;
+            background-color: red;
+        }
+
 
 		//User profile image 
 		.loggedin-user {
@@ -123,10 +132,10 @@ nav {
 }
 
 .sidebar .logo.wiggling {
-  @include animation(spin .4s infinite);
+  @include animation(wiggle .4s infinite);
 }
 
-@include keyframes(spin) {
+@include keyframes(wiggle) {
   from {
     @include rotateY(0deg);
   }

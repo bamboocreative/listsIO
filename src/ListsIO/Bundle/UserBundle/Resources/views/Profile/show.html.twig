@@ -63,13 +63,12 @@
 {% endspaceless %}
 
 {% block bgImage %}
-<div class="bg-wrapper" style="background-image: url(' {{randomImgURL}} ');"></div>  	
 {% endblock %}
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user.id == app.user.id %}
-    {% set userIsAuthor = true %}
+    {% set userIsOwner = true %}
 {% else %}
-    {% set userIsAuthor = false %}
+    {% set userIsOwner = false %}
 {% endif %}
 
 {% block share %}
@@ -88,32 +87,35 @@
 {% endblock %}
 
 {% block fos_user_content %}
-<div class="mobile-background"  style="background-image: url(' {{randomImgURL}} ');">
-	<div class="profile-wrapper">
-		<!-- Error: Getting current user's info, not author info -->
-		<div class="gravatar-image">
-			<div class="gravatar-inner">
-			    <img src="{{ user.profilePicURL }}">
-			</div>
-		</div>
-		<h1 class="profile-name">
-			{{ user.username }}
-		</h1>
-	</div>
-	<div class="container toggle-wrapper">
-		<div class="profile-toggle">
-			<ul>
-				<li class="active" data-toggle="lists">Lists</li>
-				<li data-toggle="likes">Likes</li>
-			</ul>
-		</div>
-		<div class="divider"></div>
-	</div>
+<div class="background background-mobile" style="min-height: 100%; min-width: 100%;">
+    <div class="mobile-background" style="background-image: url(' {{randomImgURL}} ');">
+        <div class="profile-wrapper" data-user_id="{{ user.Id }}">
+            <!-- Error: Getting current user's info, not author info -->
+            <div class="gravatar-image">
+                <div class="gravatar-inner">
+                    <img src="{{ user.profilePicURL }}">
+                </div>
+            </div>
+            <h1 class="profile-name">
+                {{ user.username }}
+            </h1>
+        </div>
+        <div class="container toggle-wrapper">
+            <div class="profile-toggle">
+                <ul>
+                    <li class="active" data-toggle="lists">Lists</li>
+                    <li data-toggle="likes">Likes</li>
+                    <li class="nearby-lists-tab" data-toggle="nearby">Nearby</li>
+                </ul>
+            </div>
+            <div class="divider"></div>
+        </div>
+    </div>
 </div>
 <div class="container profile-lists-wrapper profile-lists-toggle active">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
-			{% if userIsAuthor %}
+			{% if userIsOwner %}
 				<div class="list-button-wrapper">
 					<a class="add-list-button" href="{{ path('lists_io_edit_new_list') }}">
 						<table>
@@ -133,15 +135,15 @@
 	                {% if (list.title) or (user.id == app.user.id) %}
 	                    {% set title = list.title ? list.title : "Untitled" %}
 						<li data-id="{{ list.id }}">
-                            {% if userIsAuthor %}
+                            {% if userIsOwner %}
                                 <a href="{{ path('lists_io_edit_list', {'id': list.id}) }}">
                             {% else %}
                                 <a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
                             {% endif %}
 								<h3 class="list-title">{{ title }}</h3>
-								<span class="list-subtitle">{{ list.subtitle }}</span>
+								<span class="list-subtitle">{{ list.subtitle|converturls|nl2br }}</span>
 							</a>
-							{% if userIsAuthor %}
+							{% if userIsOwner %}
 							    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
 							{% endif %}
 						</li>
@@ -179,6 +181,12 @@
 			
 		</div>
 	</div>
+</div>
+<div class="container profile-lists-wrapper profile-nearby-toggle" style="display:none">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+        </div>
+    </div>
 </div>
 
 					
