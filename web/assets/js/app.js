@@ -193,10 +193,20 @@ $(document).ready(function () {
           email: 'info@lists.io'
         },
         success: function (data, textStatus, jqXHR) {
+          var municipality;
+          if (data.address.city) {
+            municipality = data.address.city;
+          } else if (data.address.town) {
+            municipality = data.address.city;
+          } else if (data.address.village) {
+            municipality = data.address.village;
+          }else if (data.address.county) {
+            municipality = data.address.county;
+          }
           if (data.address.country_code == 'us') {
-            locString = data.address.city + ", " + data.address.state;
+            locString = municipality + ", " + data.address.state;
           } else {
-            locString = data.address.city + ", " + data.address.country;
+            locString = municipality + ", " + data.address.country;
           }
           callback(lat, long, locString);
         },
