@@ -203,11 +203,23 @@ $(document).ready(function () {
           }else if (data.address.county) {
             municipality = data.address.county;
           }
-          if (data.address.country_code == 'us') {
-            locString = municipality + ", " + data.address.state;
+
+          var locString;
+          if (municipality) {
+            locString = municipality + ", ";
           } else {
-            locString = municipality + ", " + data.address.country;
+            locString = "";
           }
+
+          var provinceOrCountry;
+          if (data.address.country_code == 'us') {
+            locString += data.address.state;
+          } else if (data.address.country) {
+            locString += data.address.country;
+          } else {
+            locString = false;
+          }
+
           callback(lat, long, locString);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -1009,6 +1021,8 @@ $(document).ready(function () {
             }
           });
         } else {
+          show_status("We can't find you on our map! Sorry!", ERROR_STATUS);
+          hide_status(5000);
           $this.removeClass('loading');
         }
       });
