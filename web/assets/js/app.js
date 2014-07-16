@@ -211,7 +211,6 @@ $(document).ready(function () {
             locString = "";
           }
 
-          var provinceOrCountry;
           if (data.address.country_code == 'us') {
             locString += data.address.state;
           } else if (data.address.country) {
