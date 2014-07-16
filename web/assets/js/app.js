@@ -197,7 +197,7 @@ $(document).ready(function () {
           if (data.address.city) {
             municipality = data.address.city;
           } else if (data.address.town) {
-            municipality = data.address.city;
+            municipality = data.address.town;
           } else if (data.address.village) {
             municipality = data.address.village;
           }else if (data.address.county) {
