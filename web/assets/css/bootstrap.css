@@ -3772,11 +3772,11 @@ textarea {
       max-width: 300px;
       margin: 0 auto; }
 
-.user-profile-image, div#author a img, nav.sidebar .loggedin-user .loggedin-user-img {
+.user-profile-image, div#author a img, div.author a img, nav.sidebar .loggedin-user .loggedin-user-img {
   -moz-border-radius: 100%;
   -webkit-border-radius: 100%;
   border-radius: 100%; }
-  .user-profile-image.small, div#author a img.small, nav.sidebar .loggedin-user .small.loggedin-user-img {
+  .user-profile-image.small, div#author a img.small, div.author a img.small, nav.sidebar .loggedin-user .small.loggedin-user-img {
     height: 25px;
     width: 25px; }
 
@@ -3825,8 +3825,47 @@ textarea {
     .profile-wrapper .profile-email a {
       color: white; }
 
-.list-button-wrapper {
+.list-button-wrapper.create-button {
   border-bottom: 1px dotted #fff; }
+
+.list-location {
+  padding: 10px;
+  vertical-align: middle;
+  margin: 0;
+  border: 0;
+  font-weight: 300; }
+  .list-location:before {
+    position: relative;
+    top: 0;
+    left: -10px;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    opacity: .2;
+    background-color: transparent;
+    background-image: url(../images/geolocation.svg);
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: -5px center;
+    content: "";
+    vertical-align: middle; }
+
+.list-button-wrapper ul {
+  text-align: left; }
+.list-button-wrapper .list-location {
+  padding: 10px 0 0 0;
+  vertical-align: middle;
+  margin: 0;
+  font-size: .9em; }
+  .list-button-wrapper .list-location:before {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-right: 10px;
+    display: inline-block;
+    height: 30px;
+    width: 50px;
+    background-position: center center; }
 
 .profile-lists-wrapper {
   min-height: 150px; }
@@ -4129,7 +4168,7 @@ textarea {
   border: 0 !important;
   margin: 0; }
 .list-head .list-location {
-  padding: 10px 0 10px 55px;
+  padding: 10px 0 0 55px;
   margin: 0 0 20px 0;
   border: 0; }
   .list-head .list-location:before {
@@ -4212,15 +4251,19 @@ textarea {
 
   100% {
     opacity: 1; } }
-div#author {
+div#author, div.author {
   font-size: .9em;
   padding-left: 3px;
   font-weight: 300;
-  display: inline-block; }
-  div#author a img {
+  display: inline-block;
+  padding-top: 10px; }
+  div#author a img, div.author a img {
     height: 40px;
     width: 40px;
     margin-right: 10px; }
+
+div#author {
+  padding-top: 20px; }
 
 .list {
   list-style: none; }

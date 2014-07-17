@@ -116,7 +116,7 @@
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			{% if userIsOwner %}
-				<div class="list-button-wrapper">
+				<div class="list-button-wrapper create-button">
 					<a class="add-list-button" href="{{ path('lists_io_edit_new_list') }}">
 						<table>
 							<tr>
@@ -142,6 +142,9 @@
                             {% endif %}
 								<h3 class="list-title">{{ title }}</h3>
 								<span class="list-subtitle">{{ list.subtitle|converturls|nl2br }}</span>
+                                {% if list.locString %}
+                                    <div class="list-location">{{ list.locString }}</div>
+                                {% endif %}
 							</a>
 							{% if userIsOwner %}
 							    <a class="delete-list delete-button" href="javascript:void(0)"><span class="icon-cancel"></span></a>
@@ -160,23 +163,24 @@
 		<div class="col-md-6 col-md-offset-3">
 			{% if user.listLikes is empty%}
 					<h3 class='no-info-message'>What?! {{user.username}} has no likes yet.</h3>
-			{% else %}	
-				
+			{% else %}
+                <div class="list-button-wrapper">
 				{% for likes in user.listLikes %}
-					
-					<ul>
-						<li data-id="{{ likes.list.id }}">
-							<a href="{{ path('lists_io_view_list', {'id': likes.list.id}) }}">
-								<h3 class="list-title">{{ likes.list.title }}</h3>
-								<div class="list-subtitle">{{ likes.list.subtitle }}</div>
-								
-								<div id="author"><a href="{{ path('lists_io_user_view_by_username', {'username': likes.list.user.username}) }}"><img class="loggedin" src="{{ likes.list.user.profilePicURL }}"> by {{ likes.list.user.username }}</a></div>
-								
-							</a>
-						</li>
-					</ul>
+                    <ul>
+                        <li data-id="{{ likes.list.id }}">
+                            <a href="{{ path('lists_io_view_list', {'id': likes.list.id}) }}">
+                                <h3 class="list-title">{{ likes.list.title }}</h3>
+                                <div class="list-subtitle">{{ likes.list.subtitle }}</div>
+                                {% if list.locString %}
+                                    <div class="list-location">{{ list.locString }}</div>
+                                {% endif %}
+                                <div class="author"><a href="{{ path('lists_io_user_view_by_username', {'username': likes.list.user.username}) }}"><img class="loggedin" src="{{ likes.list.user.profilePicURL }}"> by {{ likes.list.user.username }}</a></div>
+
+                            </a>
+                        </li>
+                    </ul>
 				{% endfor %}
-				
+                </div>
 			{% endif %}
 			
 		</div>

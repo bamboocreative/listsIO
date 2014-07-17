@@ -116,7 +116,7 @@
   }
 
   .list-location {
-    padding: 10px 0 10px 55px;
+    padding: 10px 0 0 55px;
     margin: 0 0 20px 0;
     border: 0;
     &:before {
@@ -188,11 +188,12 @@
   }
 }
 
-div#author{
+div#author, div.author {
   font-size: .9em;
   padding-left: 3px;
   font-weight: 300;
   display: inline-block;
+  padding-top: 10px;
   a {
     img{
       @extend .user-profile-image;
@@ -201,6 +202,10 @@ div#author{
       margin-right: 10px;
     }
   }
+}
+
+div#author {
+  padding-top: 20px;
 }
 
 .list{
