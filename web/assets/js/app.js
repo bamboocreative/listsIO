@@ -37,6 +37,7 @@ $(document).ready(function () {
   var login_to_like_msg = 'Please <a href="/register">sign up</a> or <a href="/login">login</a> to like.';
 
   /** GEOLOCATION VARS **/
+  var locationApiKey = 'AnLymyMeoSzSTiPis2W3kL0fW95ewe-LlrNXANkqd_TLorg8tTIYMdtV3v66h3xl';
   var position = false;
   var locString = false;
   var $geolocationBtn = $('button.geolocation');
@@ -46,6 +47,7 @@ $(document).ready(function () {
   var ERROR_STATUS = 'error';
   // Attach nearby lists callback.
   $('.nearby-lists-tab').data('async_load_func', loadNearbyLists);
+
 
   /** AUTOSIZE LIST ITEM DESCRIPTIONS **/
   $('textarea.description', '.editable-list').autosize();
@@ -173,6 +175,10 @@ $(document).ready(function () {
 
   function getLocString(pos, callback)
   {
+
+    // MS Maps API requires valid callback function for JSONP.
+    function reverseGeocodeCallback(data) {}
+
     if ( ! pos) {
       callback();
       return;
@@ -182,49 +188,38 @@ $(document).ready(function () {
     if (locString) {
       callback(lat, long, locString);
     } else {
+      var point = lat + "," + long;
       $.ajax({
         type: 'GET',
-        url: 'http://nominatim.openstreetmap.org/reverse',
+        url: 'http://dev.virtualearth.net/REST/v1/Locations/' + point,
+        cache: true,
         data: {
-          format: 'json',
-          lat: lat,
-          lon: long,
-          addressdetails: 1,
-          email: 'info@lists.io'
+          includeEntityTypes: 'Neighborhood, PopulatedPlace, AdminDivision1, AdminDivision2, CountryRegion',
+          includeNeighborhood: 1,
+          // ciso2 option returns country code
+          include: 'ciso2',
+          key: locationApiKey,
         },
-        success: function (data, textStatus, jqXHR) {
-          var municipality;
-          if (data.address.city) {
-            municipality = data.address.city;
-          } else if (data.address.town) {
-            municipality = data.address.town;
-          } else if (data.address.village) {
-            municipality = data.address.village;
-          }else if (data.address.county) {
-            municipality = data.address.county;
+        dataType: 'jsonp',
+        jsonp: 'jsonp',
+        jsonpCallback: 'reverseGeocodeCallback',
+        success: function(data) {
+          var address = data.resourceSets[0].resources[0].address;
+
+          var locString = address.locality ? address.locality + ', ' : '';
+
+          // Use Locality, ST for US, Locality, Country Name for others.
+          if (address.countryRegionIso2 == "US") {
+            if (address.adminDistrict) {
+              locString += address.adminDistrict;
+            }
+          } else if (address.countryRegion) {
+              locString += address.countryRegion;
           }
 
-          var locString;
-          if (municipality) {
-            locString = municipality + ", ";
-          } else {
-            locString = "";
-          }
-
-          if (data.address.country_code == 'us') {
-            locString += data.address.state;
-          } else if (data.address.country) {
-            locString += data.address.country;
-          } else {
-            locString = false;
-          }
+          locString = locString.length ? locString : false;
 
           callback(lat, long, locString);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          show_status("Unable to get location name.");
-          hide_status();
-          callback();
         }
       });
     }
@@ -825,6 +820,7 @@ $(document).ready(function () {
    *
    */
   var feedLoading = false;
+  var $feedInsert = $('#feed-insert');
   var timer;
 
   if ($('.feed').length) {
