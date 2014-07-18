@@ -63,15 +63,23 @@
   }
 }
 
-.list-button-wrapper {
+.lists-wrapper.with-author {
   ul {
     text-align: left;
   }
+
+  .author {
+    display: inline-block;
+    padding-top: 20px;
+  }
+
   .list-location {
-    padding: 10px 0 0 0;
+    padding: 10px 0 10px 0;
     vertical-align: middle;
     margin: 0;
     font-size: .9em;
+    display: inline-block;
+    margin-left: 20px;
     &:before {
       position: relative;
       top: 0;
@@ -79,7 +87,7 @@
       margin-right: 10px;
       display: inline-block;
       height: 30px;
-      width: 50px;
+      width: 30px;
       background-position: center center;
     }
   }

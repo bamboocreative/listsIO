@@ -141,7 +141,9 @@
                                 <a href="{{ path('lists_io_view_list', {'id': list.id}) }}">
                             {% endif %}
 								<h3 class="list-title">{{ title }}</h3>
-								<span class="list-subtitle">{{ list.subtitle|converturls|nl2br }}</span>
+                                {%  if list.subtitle %}
+								    <span class="list-subtitle">{{ list.subtitle|converturls|nl2br }}</span>
+                                {% endif %}
                                 {% if list.locString %}
                                     <div class="list-location">{{ list.locString }}</div>
                                 {% endif %}
@@ -164,18 +166,17 @@
 			{% if user.listLikes is empty%}
 					<h3 class='no-info-message'>What?! {{user.username}} has no likes yet.</h3>
 			{% else %}
-                <div class="list-button-wrapper">
+                <div class="lists-wrapper with-author">
 				{% for likes in user.listLikes %}
                     <ul>
                         <li data-id="{{ likes.list.id }}">
                             <a href="{{ path('lists_io_view_list', {'id': likes.list.id}) }}">
                                 <h3 class="list-title">{{ likes.list.title }}</h3>
                                 <div class="list-subtitle">{{ likes.list.subtitle }}</div>
+                                <div class="author"><a href="{{ path('lists_io_user_view_by_username', {'username': likes.list.user.username}) }}"><img class="loggedin" src="{{ likes.list.user.profilePicURL }}"> by {{ likes.list.user.username }}</a></div>
                                 {% if list.locString %}
                                     <div class="list-location">{{ list.locString }}</div>
                                 {% endif %}
-                                <div class="author"><a href="{{ path('lists_io_user_view_by_username', {'username': likes.list.user.username}) }}"><img class="loggedin" src="{{ likes.list.user.profilePicURL }}"> by {{ likes.list.user.username }}</a></div>
-
                             </a>
                         </li>
                     </ul>

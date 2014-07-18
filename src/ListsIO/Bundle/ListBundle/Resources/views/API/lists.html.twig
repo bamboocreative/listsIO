@@ -1,7 +1,7 @@
 {% if lists is empty %}
     <h3 class='no-info-message'>{{ emptyMessage ? emptyMessage|raw : "What?! No lists yet." }}</h3>
 {% else %}
-    <div class="list-button-wrapper">
+    <div class="lists-wrapper with-author">
         <ul>
         {% for list in lists %}
             {% if list.title %}
@@ -11,7 +11,7 @@
                         <div class="list-subtitle">{{ list.subtitle|converturls|nl2br }}</div>
                         <div class="author"><a href="{{ path('lists_io_user_view_by_username', {'username': list.user.username}) }}"><img class="loggedin" src="{{ list.user.profilePicURL }}"> by {{ list.user.username }}</a></div>
                         {% if list.locString %}
-                            <div class="list-location">{{ list.locString }}</div>
+                            <div class="list-location with-author">{{ list.locString }}</div>
                         {% endif %}
                     </a>
                 </li>

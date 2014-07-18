@@ -3850,21 +3850,26 @@ textarea {
     content: "";
     vertical-align: middle; }
 
-.list-button-wrapper ul {
+.lists-wrapper.with-author ul {
   text-align: left; }
-.list-button-wrapper .list-location {
-  padding: 10px 0 0 0;
+.lists-wrapper.with-author .author {
+  display: inline-block;
+  padding-top: 20px; }
+.lists-wrapper.with-author .list-location {
+  padding: 10px 0 10px 0;
   vertical-align: middle;
   margin: 0;
-  font-size: .9em; }
-  .list-button-wrapper .list-location:before {
+  font-size: .9em;
+  display: inline-block;
+  margin-left: 20px; }
+  .lists-wrapper.with-author .list-location:before {
     position: relative;
     top: 0;
     left: 0;
     margin-right: 10px;
     display: inline-block;
     height: 30px;
-    width: 50px;
+    width: 30px;
     background-position: center center; }
 
 .profile-lists-wrapper {
