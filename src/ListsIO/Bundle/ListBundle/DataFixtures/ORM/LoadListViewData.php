@@ -37,6 +37,6 @@ class LoadListViewData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function getOrder()
     {
-        return 4; // the order in which fixtures will be loaded
+        return 5; // the order in which fixtures will be loaded
     }
 }

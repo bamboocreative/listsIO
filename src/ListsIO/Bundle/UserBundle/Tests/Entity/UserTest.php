@@ -9,6 +9,7 @@
 namespace ListsIO\Bundle\UserBundle\Tests\Entity;
 
 use DateTime;
+use ListsIO\Bundle\UserBundle\Entity\Follow;
 use ListsIO\Bundle\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -20,6 +21,16 @@ class UserTest extends WebTestCase {
     protected $user;
 
     /**
+     * @var User
+     */
+    protected $user2;
+
+    /**
+     * @var User
+     */
+    protected $user3;
+
+    /**
      * @var DateTime
      */
     protected $createdAfter;
@@ -29,6 +40,12 @@ class UserTest extends WebTestCase {
         $this->createdAfter = new \DateTime();
         $this->user = new User();
         $this->user->setEmail("test@example.com");
+
+        $this->user2 = new User();
+        $this->user2->setEmail("test2@example.com");
+
+        $this->user2 = new User();
+        $this->user2->setEmail("test2@example.com");
     }
 
     public function testProfilePicAccessors()
@@ -75,6 +92,8 @@ class UserTest extends WebTestCase {
         $this->user->addListView($listView);
         $this->assertEquals(1, count($this->user->getListViews()));
     }
+
+    /** Follow accessors covered by functional tests **/
 
     public function testRemoveListView()
     {

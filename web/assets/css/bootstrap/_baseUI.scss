@@ -46,6 +46,32 @@ html{
 #IntercomDefaultWidget {
 	display: none !important;
 }
+
+.follow-button {
+  cursor: pointer;
+  opacity: .8;
+  border: 1px solid white;
+  display: inline-block;
+  padding: 10px 20px;
+  @include border-radius(4px);
+  width: auto;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.follow-button.following {
+  opacity: .2;
+  &:hover {
+    opacity: .8;
+  }
+}
+
+.follow-button.loading {
+  @include animation(throbble 1s infinite);
+}
+
 // Smaller than 480px
 @media (max-width: $screen-xs) {
 

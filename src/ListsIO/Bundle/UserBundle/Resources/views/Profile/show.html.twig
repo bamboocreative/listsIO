@@ -99,6 +99,8 @@
             <h1 class="profile-name">
                 {{ user.username }}
             </h1>
+            {% set followed = user %}
+            {% include 'ListsIOUserBundle:Follow:follow_btn.html.twig' %}
         </div>
         <div class="container toggle-wrapper">
             <div class="profile-toggle">

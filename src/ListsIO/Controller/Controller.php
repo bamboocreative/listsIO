@@ -29,6 +29,19 @@ class Controller extends BaseController {
     }
 
     /**
+     * @param array $entities
+     */
+    public function saveEntities(array $entities = array())
+    {
+        $em = $this->getDoctrine()
+            ->getManager();
+        foreach($entities as $entity) {
+            $em->persist($entity);
+        }
+        $em->flush();
+    }
+
+    /**
      * @param string $entity_name
      * @param string $id
      * @return mixed

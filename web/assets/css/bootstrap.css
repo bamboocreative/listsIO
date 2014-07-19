@@ -3518,6 +3518,28 @@ html {
 #IntercomDefaultWidget {
   display: none !important; }
 
+.follow-button {
+  cursor: pointer;
+  opacity: .8;
+  border: 1px solid white;
+  display: inline-block;
+  padding: 10px 20px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  width: auto; }
+  .follow-button:hover {
+    opacity: 1; }
+
+.follow-button.following {
+  opacity: .2; }
+  .follow-button.following:hover {
+    opacity: .8; }
+
+.follow-button.loading {
+  -webkit-animation: throbble 1s infinite;
+  animation: throbble 1s infinite; }
+
 @media (max-width: 480px) {
   h1 {
     font-size: 34px; }

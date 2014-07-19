@@ -50,7 +50,7 @@ ListsIO\Bundle\UserBundle\Entity\User:
         lists:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
             orderBy:
-              createdAt: DESC
+                createdAt: DESC
             mappedBy: user
             cascade: ["remove", "persist"]
         listViews:
@@ -61,6 +61,18 @@ ListsIO\Bundle\UserBundle\Entity\User:
             targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListLike
             mappedBy: user
             cascade: ["remove"]
+        follows:
+            targetEntity: ListsIO\Bundle\UserBundle\Entity\Follow
+            orderBy:
+                createdAt: DESC
+            mappedBy: follower
+            cascade: ["persist", "remove"]
+        followedBy:
+            targetEntity: ListsIO\Bundle\UserBundle\Entity\Follow
+            orderBy:
+                createdAt: DESC
+            mappedBy: followed
+            cascade: ["persist", "remove"]
     lifecycleCallbacks:
         prePersist: [prePersistTimestamp]
         preUpdate: [prePersistTimestamp]

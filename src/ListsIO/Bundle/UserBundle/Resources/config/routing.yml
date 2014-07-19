@@ -7,6 +7,24 @@ lists_io_user_view_by_id:
 lists_io_user_complete_account:
     pattern: /user/complete_account
     defaults: { _controller: ListsIOUserBundle:Page:completeAccount }
+lists_io_new_follow:
+    pattern: /follow
+    methods: [POST]
+    requirements:
+        _format: json
+    defaults:  { _controller: ListsIOUserBundle:API:newFollow, _format: json }
+lists_io_remove_follow:
+    pattern: /follow/{followId}
+    methods: [DELETE]
+    requirements:
+        _format: json
+    defaults: { _controller: ListsIOUserBundle:API:removeFollow, followId: false, _format: json }
+lists_io_remove_follow_by_followed_id:
+    pattern: /follow
+    methods: [DELETE]
+    requirements:
+        _format: json
+    defaults:  { _controller: ListsIOUserBundle:API:removeFollow, _format: json }
 # THIS ROUTE MUST GO LAST
 lists_io_user_view_by_username:
     pattern:  /{username}

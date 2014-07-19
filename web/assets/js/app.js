@@ -35,6 +35,7 @@ $(document).ready(function () {
   var saved_msg = "Saved.";
   var error_msg = "Please try again later.";
   var login_to_like_msg = 'Please <a href="/register">sign up</a> or <a href="/login">login</a> to like.';
+  var login_to_follow_msg = 'Please <a href="/register">sign up</a> or <a href="/login">login</a> to follow.';
 
   /** GEOLOCATION VARS **/
   var locationApiKey = 'AnLymyMeoSzSTiPis2W3kL0fW95ewe-LlrNXANkqd_TLorg8tTIYMdtV3v66h3xl';
@@ -59,6 +60,73 @@ $(document).ready(function () {
       ghostClass: "dragging",
       onUpdate: function (evt) {
         reorder_list_items();
+      }
+    });
+  }
+
+  /** FOLLOW **/
+  $('.follow-button').on('click', function(e) {
+    var $this = $(this);
+    $this.addClass('loading');
+    var followedId = $this.attr('data-followed_id');
+    if ($this.hasClass('following')) {
+      unfollow($this, followedId);
+    } else {
+      follow($this, followedId);
+    }
+  });
+
+  function follow($element, followedId)
+  {
+    $.ajax({
+      url: '/follow',
+      type: 'POST',
+      data: {followedId: followedId},
+      success: function(data, textStatus, jqXHR) {
+        // 200 is a redirect to login.
+        if (jqXHR.status == 200) {
+          show_status(login_to_follow_msg, IMPORTANT_STATUS);
+          hide_status();
+        } else if (jqXHR.status == 201) {
+          $element.html("Unfollow");
+          show_status("Followed.");
+          hide_status();
+          $element.removeClass('loading').addClass('following');
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        show_status("Error following. Please try again later.");
+        $element.removeClass('loading');
+      }
+    });
+  }
+
+  function unfollow($element, followedId)
+  {
+    $.ajax({
+      url: '/follow',
+      type: 'DELETE',
+      data: {followedId: followedId},
+      success: function(data, textStatus, jqXHR) {
+        // 200 is a redirect to login.
+        if (jqXHR.status == 200) {
+          show_status(login_to_follow_msg, IMPORTANT_STATUS);
+          hide_status();
+        } else if (jqXHR.status == 204) {
+          $element.html("Follow");
+          show_status("Unollowed.");
+          hide_status();
+          $element.removeClass('loading').removeClass('following');
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status == 403) {
+          show_status(login_to_follow_msg, ERROR_STATUS);
+          hide_status();
+        } else {
+          show_status("Error following. Please try again later.");
+          $element.removeClass('loading');
+        }
       }
     });
   }

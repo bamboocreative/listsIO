@@ -1,72 +1,24 @@
-ListsIO\Bundle\UserBundle\Entity\User:
+ListsIO\Bundle\UserBundle\Entity\Follow:
     type: entity
-    table: User
+    table: Follow
     id:
         id:
             type: integer
             id: true
             generator:
                 strategy: AUTO
-    attributeOverride:
-        emailCanonical:
-            column: email_canonical
-            type: string
-            length: 255
-            unique: false
     fields:
-        profilePicURL:
-            type: string
-            length: 255
-            nullable: true
-        twitterId:
-            type: string
-            length: 255
-            nullable: true
-        twitterUsername:
-            type: string
-            length: 255
-            nullable: true
-        twitterAccessToken:
-            type: string
-            length: 255
-            nullable: true
-        facebookId:
-            type: string
-            length: 255
-            nullable: true
-        facebookUsername:
-            type: string
-            length: 255
-            nullable: true
-        facebookAccessToken:
-            type: string
-            length: 255
-            nullable: true
         createdAt:
             type: datetime
         updatedAt:
             type: datetime
-    oneToMany:
-        lists:
-            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOList
-            orderBy:
-                createdAt: DESC
-            mappedBy: user
-            cascade: ["remove", "persist"]
-        listViews:
-            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListView
-            mappedBy: user
-            cascade: ["remove"]
-        listLikes:
-            targetEntity: ListsIO\Bundle\ListBundle\Entity\LIOListLike
-            mappedBy: user
-            cascade: ["remove"]
-    oneToMany:
-        follows:
-            targetEntity: ListsIO\Bundle\UserBundle\Entity\Follow
-            orderBy:
-                createdAt: DESC
-            mappedBy: follower
+    manyToOne:
+        follower:
+            targetEntity: ListsIO\Bundle\UserBundle\Entity\User
+            inversedBy: follows
+        followed:
+            targetEntity: ListsIO\Bundle\UserBundle\Entity\User
+            inversedBy: followedBy
     lifecycleCallbacks:
         prePersist: [prePersistTimestamp]
         preUpdate: [prePersistTimestamp]

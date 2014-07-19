@@ -2,6 +2,7 @@
 
 namespace ListsIO\Bundle\UserBundle\Entity;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use ListsIO\Bundle\ListBundle\Entity\LIOList as LIOList;
@@ -94,6 +95,20 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
     protected $listLikes;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @Expose
+     * @MaxDepth(3)
+     */
+    protected $follows;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @Expose
+     * @MaxDepth(3)
+     */
+    protected $followedBy;
+
+    /**
      * @var \DateTime
      * @Expose
      */
@@ -110,6 +125,8 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
         $this->lists = new ArrayCollection();
         $this->listViews = new ArrayCollection();
         $this->listLikes = new ArrayCollection();
+        $this->follows = new ArrayCollection();
+        $this->followedBy = new ArrayCollection();
     }
 
     /**
@@ -371,6 +388,82 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
     public function getListLikes()
     {
         return $this->listLikes;
+    }
+
+    /**
+     * @param User $followed
+     * @return bool
+     */
+    public function follows(User $followed)
+    {
+        $criteria = Criteria::create()->where(Criteria::expr()->eq("followed", $followed));
+        return !! count($this->follows->matching($criteria));
+    }
+
+    /**
+     * @param User $follower
+     * @return bool
+     */
+    public function isFollowedBy(User $follower)
+    {
+        $criteria = Criteria::create()->where(Criteria::expr()->eq("follower", $follower));
+        return !! count($this->followedBy->matching($criteria));
+    }
+
+    /**
+     * @param Follow $follow
+     * @return $this
+     */
+    public function addFollow(Follow $follow)
+    {
+        $this->follows[] = $follow;
+        $follow->setFollower($this);
+        return $this;
+    }
+
+    /**
+     * @param Follow $follow
+     */
+    public function removeFollow(Follow $follow)
+    {
+        $this->follows->removeElement($follow);
+    }
+
+    /**
+     * @return ArrayCollection|\Doctrine\Common\Collections\Collection
+     */
+    public function getFollows()
+    {
+        return $this->follows;
+    }
+
+    /**
+     * @param Follow $follow
+     * @return $this
+     */
+    public function addFollowedBy(Follow $follow)
+    {
+        $this->followedBy[] = $follow;
+        $follow->setFollowed($this);
+        return $this;
+    }
+
+    /**
+     * @param Follow $follow
+     */
+    public function removeFollowedBy(Follow $follow)
+    {
+        $this->followedBy->removeElement($follow);
+    }
+
+    /**
+     * Get listLikes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFollowedBy()
+    {
+        return $this->followedBy;
     }
 
     /**
