@@ -117,10 +117,6 @@
     }
 
     .author a {
-      img {
-        display: block;
-        margin: 0 auto;
-      }
       color: #fff;
       text-decoration: none;
       opacity: .8;
@@ -184,6 +180,7 @@
       display: inline-block;
     }
   }
+
   .profile-toggle ul li {
     margin-right: 0;
   }
@@ -196,6 +193,10 @@
     text-align: center;
     li {
       margin-right: 0;
+      img {
+        display: block;
+        margin: 0 auto;
+      }
     }
   }
 }

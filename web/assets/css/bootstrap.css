@@ -3911,9 +3911,6 @@ textarea {
     color: #fff;
     text-decoration: none;
     opacity: .8; }
-    .profile-lists-wrapper .author a img, .profile-users-wrapper .author a img {
-      display: block;
-      margin: 0 auto; }
     .profile-lists-wrapper .author a:hover, .profile-users-wrapper .author a:hover {
       opacity: 1; }
   .profile-lists-wrapper ul, .profile-users-wrapper ul {
@@ -3955,6 +3952,9 @@ textarea {
   text-align: center; }
   .profile-users-wrapper ul.list-of-users li {
     margin-right: 0; }
+    .profile-users-wrapper ul.list-of-users li img {
+      display: block;
+      margin: 0 auto; }
 
 .toggle-wrapper {
   position: relative; }
