@@ -50,7 +50,7 @@ class UserTest extends DoctrineWebTestCase
 
     public function testFollows()
     {
-        $this->assertTrue($this->user->follows($this->user2));
+        $this->assertTrue($this->user->isFollowing($this->user2));
     }
 
     public function testFollowedBy()
