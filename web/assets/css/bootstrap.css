@@ -4048,7 +4048,7 @@ textarea {
     margin-bottom: 0;
     border-bottom: 0; }
     .profile-toggle.sub-profile-toggle ul li {
-      font-size: .8em;
+      font-size: .9em;
       border-bottom: 1px solid #fff; }
       .profile-toggle.sub-profile-toggle ul li.active {
         margin-top: -2px;
@@ -4113,6 +4113,9 @@ textarea {
     .profile-lists-wrapper ul li {
       padding-bottom: 2em; } }
 @media (max-width: 768px) {
+  .profile-toggle.sub-profile-toggle ul li {
+    font-size: .8em; }
+
   .profile-users-wrapper ul.list-of-users li {
     display: block; }
 

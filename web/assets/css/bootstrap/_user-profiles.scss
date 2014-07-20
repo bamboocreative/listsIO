@@ -323,7 +323,7 @@
     margin-bottom: 0;
     border-bottom: 0;
     li {
-      font-size: .8em;
+      font-size: .9em;
       border-bottom: 1px solid #fff;
       &.active{
         margin-top: -2px;
@@ -392,6 +392,12 @@
 
 // Smaller than 767px
 @media (max-width: $screen-sm){
+
+  .profile-toggle.sub-profile-toggle {
+    ul li {
+      font-size: .8em;
+    }
+  }
 
   .profile-users-wrapper {
     ul.list-of-users {
