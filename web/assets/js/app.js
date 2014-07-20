@@ -88,11 +88,11 @@ $(document).ready(function () {
           show_status(login_to_follow_msg, IMPORTANT_STATUS);
           hide_status();
         } else if (jqXHR.status == 201) {
-          $element.html("Unfollow");
+          $element.html("Unfollow").addClass('following');
           show_status("Followed.");
           hide_status();
-          $element.removeClass('loading').addClass('following');
         }
+        $element.removeClass('loading');
       },
       error: function(jqXHR, textStatus, errorThrown) {
         show_status("Error following. Please try again later.");
@@ -1030,7 +1030,6 @@ $(document).ready(function () {
    *
    */
   $('.profile-toggle li').on('click', function (e) {
-
     $this = $(this);
     if ($this.hasClass('active')) {
       return false;
@@ -1053,11 +1052,29 @@ $(document).ready(function () {
   });
 
   function toggleContent($element) {
-    $('.profile-lists-wrapper').fadeOut();
-    $(getActiveTabSelector($element)).fadeIn();
-    $('.profile-toggle li.active').removeClass('active');
+    if ($element.hasClass('sub-toggle')) {
+      $('.sub-toggle-wrapper').hide();
+      $element.parents('.sub-profile-toggle').find('li.active').removeClass('active');
+    } else {
+      $('.profile-lists-wrapper, .profile-users-wrapper').not('sub-toggle-wrapper').hide();
+      var $parent = $element.parents('.profile-toggle')
+      $parent.not('sub-profile-toggle').find('li.active').removeClass('active');
+      var $subToggle = $(getActiveTabSelector($element)).find('.sub-profile-toggle');
+      console.log($subToggle);
+      if ($subToggle.length > 0) {
+        var $activeSubToggle = $subToggle.find('li.active');
+        console.log(getActiveTabSelector($activeSubToggle));
+        $(getActiveTabSelector($activeSubToggle)).show();
+      }
+
+    }
+
+
+
     $element.addClass('active');
     $element.removeClass('loading');
+    $(getActiveTabSelector($element)).fadeIn(800);
+    $(getActiveTabSelector($element)).show();
   }
 
   function getActiveTabSelector($element) {
@@ -1067,7 +1084,7 @@ $(document).ready(function () {
   function loadNearbyLists($container)
   {
     var $this = $(this);
-    var user = $('body').hasClass('logged-in') ? null : $('.profile-wrapper').attr('data-user_id');
+    var user = $('body').hasClass('logged-in') ? $('.profile-wrapper').attr('data-user_id') : null;
     getPosition(function(pos) {
       getLocString(pos, function(lat, long, locString) {
         if (locString) {

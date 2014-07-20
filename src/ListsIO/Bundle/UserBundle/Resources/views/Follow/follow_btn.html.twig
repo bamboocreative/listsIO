@@ -1,5 +1,5 @@
-{% set following = user.follows(followed) %}
-{% if app.user != followed %}
+{% set following = app.user.isFollowing(followed) %}
+{% if app.user.id != followed.Id %}
     <div class="follow-button {{ following ? 'following' : '' }}" data-followed_id="{{ followed.Id }}">
         {{ following ? 'Unfollow' : 'Follow' }}
     </div>

@@ -25,6 +25,9 @@ class APIController extends Controller {
      */
     public function viewUserAction(Request $request, $userId)
     {
+        // Set the target path so user's can be redirected here after login (esp. when trying to follow a user).
+        $this->get('session')->set('target_path', $this->get('router')->generate('lists_io_user_view_by_id', array('userId' => $userId)));
+
         $format = $request->getRequestFormat();
         $viewUser = $this->loadEntityFromId('ListsIO\Bundle\UserBundle\Entity\User', $userId);
         if (empty($viewUser)) {

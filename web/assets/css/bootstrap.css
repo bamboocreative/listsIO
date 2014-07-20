@@ -3524,6 +3524,7 @@ html {
   border: 1px solid white;
   display: inline-block;
   padding: 10px 20px;
+  margin-bottom: 2em;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
@@ -3794,11 +3795,11 @@ textarea {
       max-width: 300px;
       margin: 0 auto; }
 
-.user-profile-image, div#author a img, div.author a img, nav.sidebar .loggedin-user .loggedin-user-img {
+.user-profile-image, div#author a img, div.author a img, li.author a img, nav.sidebar .loggedin-user .loggedin-user-img {
   -moz-border-radius: 100%;
   -webkit-border-radius: 100%;
   border-radius: 100%; }
-  .user-profile-image.small, div#author a img.small, div.author a img.small, nav.sidebar .loggedin-user .small.loggedin-user-img {
+  .user-profile-image.small, div#author a img.small, div.author a img.small, li.author a img.small, nav.sidebar .loggedin-user .small.loggedin-user-img {
     height: 25px;
     width: 25px; }
 
@@ -3894,36 +3895,58 @@ textarea {
     width: 30px;
     background-position: center center; }
 
-.profile-lists-wrapper {
+.profile-lists-wrapper, .profile-users-wrapper {
   min-height: 150px; }
-  .profile-lists-wrapper h3.no-info-message {
+  .profile-lists-wrapper h3.no-info-message, .profile-users-wrapper h3.no-info-message {
     text-align: center;
     margin: 40px 0 80px 0; }
-  .profile-lists-wrapper .no-list {
+  .profile-lists-wrapper .no-list, .profile-users-wrapper .no-list {
     text-align: center;
     font-weight: 100;
     margin-bottom: 4em; }
-  .profile-lists-wrapper ul {
+  .profile-lists-wrapper div.author, .profile-users-wrapper div.author {
+    padding: 1em 0; }
+  .profile-lists-wrapper .author a, .profile-users-wrapper .author a {
+    color: #fff;
+    text-decoration: none;
+    opacity: .8; }
+    .profile-lists-wrapper .author a:hover, .profile-users-wrapper .author a:hover {
+      opacity: 1; }
+  .profile-lists-wrapper ul, .profile-users-wrapper ul {
     margin: 0;
     padding: 0; }
-    .profile-lists-wrapper ul li {
+    .profile-lists-wrapper ul li, .profile-users-wrapper ul li {
+      opacity: .8;
       position: relative;
       list-style-type: none;
       padding-bottom: 4em; }
-      .profile-lists-wrapper ul li:hover .delete-button {
+      .profile-lists-wrapper ul li:hover, .profile-users-wrapper ul li:hover {
         opacity: 1; }
-      .profile-lists-wrapper ul li a {
+        .profile-lists-wrapper ul li:hover .delete-button, .profile-users-wrapper ul li:hover .delete-button {
+          opacity: 1; }
+      .profile-lists-wrapper ul li a, .profile-users-wrapper ul li a {
         color: white;
         text-decoration: none; }
-        .profile-lists-wrapper ul li a .list-title {
+        .profile-lists-wrapper ul li a .list-title, .profile-users-wrapper ul li a .list-title {
           font-weight: 900;
           margin-bottom: 8px; }
-        .profile-lists-wrapper ul li a .list-subtitle {
+        .profile-lists-wrapper ul li a .list-subtitle, .profile-users-wrapper ul li a .list-subtitle {
           font-weight: 100; }
-  .profile-lists-wrapper.profile-likes-toggle ul li {
+  .profile-lists-wrapper.profile-likes-toggle ul li, .profile-users-wrapper.profile-likes-toggle ul li {
     padding-bottom: 2em !important; }
-    .profile-lists-wrapper.profile-likes-toggle ul li div#author {
+    .profile-lists-wrapper.profile-likes-toggle ul li div#author, .profile-users-wrapper.profile-likes-toggle ul li div#author {
       margin-top: 15px; }
+
+.profile-users-wrapper ul {
+  padding-top: 2em; }
+  .profile-users-wrapper ul li {
+    padding-bottom: 2em;
+    margin-right: 20px;
+    display: inline-block; }
+.profile-users-wrapper .profile-toggle ul li {
+  margin-right: 0; }
+.profile-users-wrapper ul.list-of-users li {
+  margin-right: 0; }
 
 .toggle-wrapper {
   position: relative; }
@@ -3993,16 +4016,34 @@ textarea {
 .profile-toggle ul {
   list-style: none;
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  border-bottom: 1px solid #fff; }
   .profile-toggle ul li {
     display: inline-block;
     padding: 0 20px 10px 20px;
     font-size: 1em;
     font-weight: 200;
-    cursor: pointer; }
+    cursor: pointer;
+    border-bottom: 0;
+    opacity: .8; }
     .profile-toggle ul li.active {
       font-weight: 400;
-      border-bottom: 1px solid #FFFFFF; }
+      border-bottom: 2px solid #FFFFFF; }
+    .profile-toggle ul li:hover {
+      opacity: 1; }
+
+.profile-toggle.sub-profile-toggle {
+  text-align: center;
+  margin-bottom: 0; }
+  .profile-toggle.sub-profile-toggle ul {
+    padding-top: 1em;
+    margin-bottom: 0;
+    border-bottom: 0; }
+    .profile-toggle.sub-profile-toggle ul li {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #fff; }
+      .profile-toggle.sub-profile-toggle ul li.active {
+        border-bottom: 3px solid #fff; }
 
 .profile-toggle li.loading {
   -webkit-animation: throbble 1s infinite;
@@ -4045,19 +4086,32 @@ textarea {
   100% {
     opacity: 1; } }
 @media (max-width: 480px) {
+  .bg-wrapper {
+    display: none; }
+
   .profile-wrapper .profile-name {
     font-size: 1.5em; }
 
   .divider {
     padding-bottom: 1em; }
 
+  .profile-users-wrapper ul {
+    margin-bottom: 3em; }
+
   .profile-lists-wrapper ul {
     margin-bottom: 3em; }
     .profile-lists-wrapper ul li {
       padding-bottom: 2em; } }
 @media (max-width: 768px) {
-  .divider {
-    padding-bottom: 1em; }
+  .profile-users-wrapper ul.list-of-users li {
+    display: block; }
+
+  .profile-toggle {
+    text-align: center;
+    padding-bottom: 2em; }
+
+  .profile-toggle.sub-profile-toggle {
+    padding-bottom: 0; }
 
   .list-subtitle a {
     word-break: break-all; }
@@ -4278,13 +4332,13 @@ textarea {
 
   100% {
     opacity: 1; } }
-div#author, div.author {
+div#author, div.author, li.author {
   font-size: .9em;
   padding-left: 3px;
   font-weight: 300;
   display: inline-block;
   padding-top: 10px; }
-  div#author a img, div.author a img {
+  div#author a img, div.author a img, li.author a img {
     height: 40px;
     width: 40px;
     margin-right: 10px; }

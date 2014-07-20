@@ -96,7 +96,7 @@
 
 
 // User profile Lists
-.profile-lists-wrapper{
+.profile-lists-wrapper, .profile-users-wrapper{
 
 	min-height: 150px;
 	
@@ -110,13 +110,28 @@
 		font-weight: 100;
 		margin-bottom: 4em;
 	}
+
+    div.author {
+      padding: 1em 0;
+    }
+
+    .author a {
+      color: #fff;
+      text-decoration: none;
+      opacity: .8;
+      &:hover {
+        opacity: 1;
+      }
+    }
 	
 	ul{
 		margin: 0;
 		padding: 0;
 			
 			li{
+                opacity: .8;
 				&:hover{
+                    opacity: 1;
 					.delete-button{
 						opacity: 1;
 					}
@@ -125,13 +140,13 @@
 				list-style-type: none;
 				padding-bottom: 4em;
 				
-				a{
+				a, {
 					color: white;
 					text-decoration: none;
 
 				.list-title{
-						font-weight: 900;
-						margin-bottom: 8px;
+                    font-weight: 900;
+                    margin-bottom: 8px;
 				}
 					
 				.list-subtitle{
@@ -153,8 +168,28 @@
 			}
 		}
 	}
-	
 }
+
+.profile-users-wrapper {
+  ul {
+    padding-top: 2em;
+    li{
+      padding-bottom: 2em;
+      margin-right: 20px;
+      display: inline-block;
+    }
+  }
+  .profile-toggle ul li {
+    margin-right: 0;
+  }
+
+  ul.list-of-users {
+    li {
+      margin-right: 0;
+    }
+  }
+}
+
 .toggle-wrapper{
 	position: relative;
 }
@@ -249,20 +284,41 @@
 		list-style: none;
 		padding: 0;
 		margin: 0;
-		
+		border-bottom: 1px solid #fff;
 		li{
 			display: inline-block;
 			padding: 0 20px 10px 20px;
 			font-size: 1em;
 			font-weight: 200;
 			cursor: pointer;
-			
+            border-bottom: 0;
+			opacity: .8;
 			&.active {
 				font-weight: 400;
-				border-bottom: 1px solid #FFFFFF;
+				border-bottom: 2px solid #FFFFFF;
 			}
+          &:hover {
+            opacity: 1;
+          }
 		}
 	}
+}
+
+.profile-toggle.sub-profile-toggle {
+  text-align: center;
+  margin-bottom: 0;
+  ul {
+    padding-top: 1em;
+    margin-bottom: 0;
+    border-bottom: 0;
+    li {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #fff;
+      &.active{
+        border-bottom: 3px solid #fff;
+      }
+    }
+  }
 }
 
 .profile-toggle li.loading {
@@ -285,6 +341,11 @@
 
 // Smaller than 480px
 @media (max-width: $screen-xs) {
+
+    .bg-wrapper {
+      display: none;
+    }
+
 	.profile-wrapper{
 		.profile-name{
 			font-size: 1.5em;
@@ -297,6 +358,12 @@
 	.divider{
 		padding-bottom: 1em;
 	}
+
+  .profile-users-wrapper{
+    ul{
+      margin-bottom: 3em;
+    }
+  }
 	
 	.profile-lists-wrapper{
 		ul{
@@ -305,14 +372,29 @@
 				padding-bottom: 2em;
 			}
 		}
-	}	  		
+    }
+
+
 }
 
 // Smaller than 767px
 @media (max-width: $screen-sm){
+
+  .profile-users-wrapper {
+    ul.list-of-users {
+      li {
+        display: block;
+      }
+    }
+  }
 	
-  .divider{
-      padding-bottom: 1em;
+  .profile-toggle {
+      text-align: center;
+      padding-bottom: 2em;
+  }
+
+  .profile-toggle.sub-profile-toggle {
+    padding-bottom: 0;
   }
 
   .list-subtitle a {

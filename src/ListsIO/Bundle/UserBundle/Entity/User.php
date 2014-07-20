@@ -394,7 +394,7 @@ class User extends BaseUser implements TwitterUserInterface, FacebookUserInterfa
      * @param User $followed
      * @return bool
      */
-    public function follows(User $followed)
+    public function isFollowing(User $followed)
     {
         $criteria = Criteria::create()->where(Criteria::expr()->eq("followed", $followed));
         return !! count($this->follows->matching($criteria));

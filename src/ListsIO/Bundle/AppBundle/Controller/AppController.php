@@ -54,18 +54,6 @@ class AppController extends Controller
         $term = $request->query->get('term');
 
         $em = $this->getDoctrine()->getManager();
-        /**
-        $query = $em->createQuery(
-            "SELECT l.lat, l.lon, l.locString, COUNT(DISTINCT l.locString) AS HIDDEN loc_count
-            FROM ListsIOListBundle:LIOList l
-            WHERE l.lat IS NOT NULL
-            AND l.lon IS NOT NULL
-            AND l.locString LIKE ?1
-            ORDER BY loc_count DESC"
-        )->setMaxResults(5)
-            ->setParameter(1, $term."%");
-
-         */
 
         $query = $em->createQuery(
             "SELECT l.lat, l.lon, l.locString, COUNT(l.locString) AS HIDDEN loc_count
