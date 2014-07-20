@@ -1084,7 +1084,9 @@ $(document).ready(function () {
   function loadNearbyLists($container)
   {
     var $this = $(this);
-    var user = $('body').hasClass('logged-in') ? $('.profile-wrapper').attr('data-user_id') : null;
+    var appUserId = $('body').hasClass('logged-in') ? $('body').attr('data-app_user_id') : false;
+    var userId = $('.profile-wrapper').attr('data-user_id')
+    var user =  appUserId && appUserId == userId ? null : userId;
     getPosition(function(pos) {
       getLocString(pos, function(lat, long, locString) {
         if (locString) {

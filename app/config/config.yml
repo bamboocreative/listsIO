@@ -125,4 +125,4 @@ services:
     arguments: [@doctrine.orm.entity_manager]
   listsio.security.component.authentication.handler.login_success_handler:
     class: ListsIO\Bundle\UserBundle\Component\Authentication\Handler\LoginSuccessHandler
-    arguments: [@service_container, @router]
+    arguments: [@service_container, @router, @logger]

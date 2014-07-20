@@ -35,8 +35,12 @@
 		</script>
 		{% endif %}
 	</head>
-	
-	<body class="{{ app.user ? 'logged-in' : '' }}">
+
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	    <body class="logged-in" data-app_user_id="{{ app.user.id }}">
+    {% else %}
+        <body>
+    {% endif %}
 		{% block sidebar %}
 			<nav class="sidebar">
 				<div class="logo">

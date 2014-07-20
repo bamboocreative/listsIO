@@ -46,6 +46,7 @@ class AppController extends Controller
         )->setMaxResults(20);
 
         $lists = $query->getResult();
+
         return $this->render('ListsIOAppBundle:App:home.html.twig', array('lists' => $lists));
     }
 
@@ -69,8 +70,6 @@ class AppController extends Controller
             ->setParameter(1, $term."%");
 
         $locations = $query->getResult();
-
-        $this->get('logger')->error(print_r($locations, true));
 
         return new JsonResponse($locations);
 

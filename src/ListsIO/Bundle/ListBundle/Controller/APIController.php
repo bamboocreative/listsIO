@@ -171,7 +171,7 @@ class APIController extends BaseController
         // If the profileUserId param is set, we're loading nearby lists belonging to a particular user.
         if ($profileUserId) {
             $user = $this->loadEntityFromId('ListsIOUserBundle:User', $profileUserId);
-            $emptyMessage = 'Ah snap, ' . $user->getUsername() . " doesn't have any lists about " . $locString . ".";
+            $emptyMessage = 'Ah snap, ' . $user->getUsername() . " doesn't have any Lists about " . $locString . ".";
             $dql = "SELECT l
             FROM ListsIOListBundle:LIOList l
             WHERE l.locString = ?1
@@ -186,7 +186,7 @@ class APIController extends BaseController
                 ->setFirstResult($offset);
         } else {
             $createURL = $this->generateUrl('lists_io_edit_new_list');
-            $emptyMessage = 'Ah snap, no lists found in ' . $locString . ', <a href="' . $createURL . '">create the first</a>!';
+            $emptyMessage = 'Ah snap, no Lists found in ' . $locString . ', <a href="' . $createURL . '">create the first</a>!';
             $dql = "SELECT l
             FROM ListsIOListBundle:LIOList l
             WHERE l.locString = ?1

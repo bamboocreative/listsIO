@@ -3831,7 +3831,7 @@ textarea {
     padding-top: 5em;
     padding-bottom: 0em; }
     .profile-wrapper .gravatar-image .gravatar-inner {
-      max-width: 140px;
+      max-width: 128px;
       margin: 0 auto;
       -moz-border-radius: 99999px;
       -webkit-border-radius: 99999px;

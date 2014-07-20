@@ -123,7 +123,12 @@
                 {% endif %}
                 <ul>
                     {% if user.lists is empty%}
-                        <h3 class='no-info-message'>Dang! {{user.username}} has no lists yet.</h3>
+                        {% if (app.user) %}
+                            {% set newListPath = path('lists_io_edit_new_list') %}
+                            <h3 class='no-info-message'>What's the deal?! You haven't created any Lists yet. <a href="{{ newListPath }}">Create your first List now!</a></h3>
+                        {% else %}
+                            <h3 class='no-info-message'>Dang! {{user.username}} has no lists yet.</h3>
+                        {% endif %}
                     {% else %}
                         {% for list in user.lists %}
                             {% if (list.title) or (user.id == app.user.id) %}
@@ -152,7 +157,12 @@
         <div class="container profile-lists-wrapper sub-toggle-wrapper profile-lists-likes-toggle" style="display:none">
             <div class="col-md-8 col-md-offset-2">
                 {% if user.listLikes is empty%}
-                    <h3 class='no-info-message'>What?! {{user.username}} has no likes yet.</h3>
+                    {% if app.user %}
+                        {% set feedURL = path('lists_io_feed_homepage') %}
+                        <h3 class='no-info-message'>What?! You haven't liked any Lists yet. Check out the <a href="{{ feedURL }}">feed</a> to find great Lists.</h3>
+                    {% else %}
+                        <h3 class='no-info-message'>What?! {{user.username}} has no likes yet.</h3>
+                    {% endif %}
                 {% else %}
                     <div class="lists-wrapper with-author">
                         <ul>
@@ -202,9 +212,19 @@
                     {% endif %}
                 {% else %}
                     <ul class="list-of-users">
+                        {% if (follows|length <= 1) %}
+                            {% set colSize = 12 %}
+                        {% elseif (follows|length == 2) %}
+                            <div class="col-md-3"></div>
+                            {% set colSize = 3 %}
+                        {% elseif (follows|length == 3) %}
+                            {% set colSize = 4 %}
+                        {% else %}
+                            {% set colSize = 3 %}
+                        {% endif %}
                         {% for follow in follows %}
                             {% set followed = follow.followed %}
-                            <li class="author col-md-3" data-id="{{ followed.id }}"><a href="{{ path('lists_io_user_view_by_username', {'username': followed.username}) }}"><img class="loggedin" src="{{ followed.profilePicURL }}"> {{ followed.username }}</a></li>
+                            <li class="author col-md-{{ colSize }}" data-id="{{ followed.id }}"><a href="{{ path('lists_io_user_view_by_username', {'username': followed.username}) }}"><img class="loggedin" src="{{ followed.profilePicURL }}"> {{ followed.username }}</a></li>
                         {% endfor %}
                     </ul>
                 {% endif %}
@@ -220,10 +240,19 @@
                         <h3 class='no-info-message'>Weird, {{user.username}} isn't followed by anyone yet.</h3>
                     {% endif %}
                 {% else %}
+                    {% if (follows.length <= 1) %}
+                        {% set colSize = 12 %}
+                    {% elseif (follows.length == 2) %}
+                        {% set colSize = 6 %}
+                    {% elseif (follows.length == 3) %}
+                        {% set colSize = 4 %}
+                    {% else %}
+                        {% set colSize = 3 %}
+                    {% endif %}
                     <ul class="list-of-users">
                         {% for follow in follows %}
                             {% set follower = follow.follower %}
-                            <li class="author col-md-3" data-id="{{ follower.id }}"><a href="{{ path('lists_io_user_view_by_username', {'username': follower.username}) }}"><img class="loggedin" src="{{ follower.profilePicURL }}"> {{ follower.username }}</a></li>
+                            <li class="author col-md-{{ colSize }}" data-id="{{ follower.id }}"><a href="{{ path('lists_io_user_view_by_username', {'username': follower.username}) }}"><img class="loggedin" src="{{ follower.profilePicURL }}"> {{ follower.username }}</a></li>
                         {% endfor %}
                     </ul>
                 {% endif %}

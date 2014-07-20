@@ -178,6 +178,12 @@ class LIOList implements OwnableInterface
      */
     public function getImageURL()
     {
+        $scheme = parse_url($this->imageURL, PHP_URL_SCHEME);
+        // Force scheme to prevent security issue where unspecified scheme
+        // triggers user by username route, causing session targetPath to be incorrectly set.
+        if (empty($scheme)) {
+            return 'http://' . $this->imageURL;
+        }
         return $this->imageURL;
     }
 
