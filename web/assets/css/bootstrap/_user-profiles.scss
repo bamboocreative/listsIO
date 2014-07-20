@@ -183,7 +183,12 @@
     margin-right: 0;
   }
 
+  .profile-follows-follows-toggle, .profile-follows-followedby-toggle {
+    text-align: center;
+  }
+
   ul.list-of-users {
+    text-align: left;
     li {
       margin-right: 0;
     }

@@ -3945,8 +3945,12 @@ textarea {
     display: inline-block; }
 .profile-users-wrapper .profile-toggle ul li {
   margin-right: 0; }
-.profile-users-wrapper ul.list-of-users li {
-  margin-right: 0; }
+.profile-users-wrapper .profile-follows-follows-toggle, .profile-users-wrapper .profile-follows-followedby-toggle {
+  text-align: center; }
+.profile-users-wrapper ul.list-of-users {
+  text-align: left; }
+  .profile-users-wrapper ul.list-of-users li {
+    margin-right: 0; }
 
 .toggle-wrapper {
   position: relative; }
