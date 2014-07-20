@@ -240,16 +240,17 @@
                         <h3 class='no-info-message'>Weird, {{user.username}} isn't followed by anyone yet.</h3>
                     {% endif %}
                 {% else %}
-                    {% if (follows.length <= 1) %}
+                    <ul class="list-of-users">
+                    {% if (follows|length <= 1) %}
                         {% set colSize = 12 %}
-                    {% elseif (follows.length == 2) %}
-                        {% set colSize = 6 %}
-                    {% elseif (follows.length == 3) %}
+                    {% elseif (follows|length == 2) %}
+                        <div class="col-md-3"></div>
+                        {% set colSize = 3 %}
+                    {% elseif (follows|length == 3) %}
                         {% set colSize = 4 %}
                     {% else %}
                         {% set colSize = 3 %}
                     {% endif %}
-                    <ul class="list-of-users">
                         {% for follow in follows %}
                             {% set follower = follow.follower %}
                             <li class="author col-md-{{ colSize }}" data-id="{{ follower.id }}"><a href="{{ path('lists_io_user_view_by_username', {'username': follower.username}) }}"><img class="loggedin" src="{{ follower.profilePicURL }}"> {{ follower.username }}</a></li>
