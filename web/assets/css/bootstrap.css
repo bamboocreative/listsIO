@@ -3899,6 +3899,7 @@ textarea {
   min-height: 150px; }
   .profile-lists-wrapper h3.no-info-message, .profile-users-wrapper h3.no-info-message {
     text-align: center;
+    width: 100%;
     margin: 40px 0 80px 0; }
   .profile-lists-wrapper .no-list, .profile-users-wrapper .no-list {
     text-align: center;
@@ -3910,6 +3911,9 @@ textarea {
     color: #fff;
     text-decoration: none;
     opacity: .8; }
+    .profile-lists-wrapper .author a img, .profile-users-wrapper .author a img {
+      display: block;
+      margin: 0 auto; }
     .profile-lists-wrapper .author a:hover, .profile-users-wrapper .author a:hover {
       opacity: 1; }
   .profile-lists-wrapper ul, .profile-users-wrapper ul {
@@ -3948,7 +3952,7 @@ textarea {
 .profile-users-wrapper .profile-follows-follows-toggle, .profile-users-wrapper .profile-follows-followedby-toggle {
   text-align: center; }
 .profile-users-wrapper ul.list-of-users {
-  text-align: left; }
+  text-align: center; }
   .profile-users-wrapper ul.list-of-users li {
     margin-right: 0; }
 
@@ -4044,6 +4048,7 @@ textarea {
     margin-bottom: 0;
     border-bottom: 0; }
     .profile-toggle.sub-profile-toggle ul li {
+      font-size: .8em;
       border-bottom: 1px solid #fff; }
       .profile-toggle.sub-profile-toggle ul li.active {
         margin-top: -2px;

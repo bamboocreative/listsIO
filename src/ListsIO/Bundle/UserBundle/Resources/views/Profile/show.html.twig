@@ -181,7 +181,7 @@
 </div>
 <div class="container profile-users-wrapper profile-follows-toggle" style="display:none">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="profile-toggle sub-profile-toggle sub-master-profile-toggle">
                 <ul>
                     <li class="sub-toggle active" data-toggle="follows-follows">Following ({{ user.follows|length}})
@@ -192,7 +192,7 @@
     </div>
     <div class="row">
         <div class="container profile-users-wrapper default sub-toggle-wrapper profile-follows-follows-toggle">
-            <div class="col-md-12 col-md-offset-1">
+            <div class="col-md-12">
                 {% set follows = user.follows() %}
                 {% if follows is empty %}
                     {% if userIsOwner %}
@@ -204,14 +204,14 @@
                     <ul class="list-of-users">
                         {% for follow in follows %}
                             {% set followed = follow.followed %}
-                            <li class="author col-md-4" data-id="{{ followed.id }}"><a href="{{ path('lists_io_user_view_by_username', {'username': followed.username}) }}"><img class="loggedin" src="{{ followed.profilePicURL }}"> {{ followed.username }}</a></li>
+                            <li class="author col-md-3" data-id="{{ followed.id }}"><a href="{{ path('lists_io_user_view_by_username', {'username': followed.username}) }}"><img class="loggedin" src="{{ followed.profilePicURL }}"> {{ followed.username }}</a></li>
                         {% endfor %}
                     </ul>
                 {% endif %}
             </div>
         </div>
         <div class="container profile-users-wrapper sub-toggle-wrapper profile-follows-followedby-toggle" style="display:none">
-            <div class="col-md-6 col-md-offset-2">
+            <div class="col-md-12">
                 {% set follows = user.followedBy %}
                 {% if follows is empty %}
                     {% if userIsOwner %}
@@ -223,7 +223,7 @@
                     <ul class="list-of-users">
                         {% for follow in follows %}
                             {% set follower = follow.follower %}
-                            <li class="author col-md-4" data-id="{{ follower.id }}"><a href="{{ path('lists_io_user_view_by_username', {'username': follower.username}) }}"><img class="loggedin" src="{{ follower.profilePicURL }}"> {{ follower.username }}</a></li>
+                            <li class="author col-md-3" data-id="{{ follower.id }}"><a href="{{ path('lists_io_user_view_by_username', {'username': follower.username}) }}"><img class="loggedin" src="{{ follower.profilePicURL }}"> {{ follower.username }}</a></li>
                         {% endfor %}
                     </ul>
                 {% endif %}

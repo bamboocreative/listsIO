@@ -102,6 +102,7 @@
 	
 	h3.no-info-message{
 		text-align: center;
+        width: 100%;
 		margin: 40px 0 80px 0;
 	}
 	
@@ -116,6 +117,10 @@
     }
 
     .author a {
+      img {
+        display: block;
+        margin: 0 auto;
+      }
       color: #fff;
       text-decoration: none;
       opacity: .8;
@@ -188,7 +193,7 @@
   }
 
   ul.list-of-users {
-    text-align: left;
+    text-align: center;
     li {
       margin-right: 0;
     }
@@ -317,6 +322,7 @@
     margin-bottom: 0;
     border-bottom: 0;
     li {
+      font-size: .8em;
       border-bottom: 1px solid #fff;
       &.active{
         margin-top: -2px;
