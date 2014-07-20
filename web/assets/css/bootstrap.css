@@ -4044,9 +4044,10 @@ textarea {
     margin-bottom: 0;
     border-bottom: 0; }
     .profile-toggle.sub-profile-toggle ul li {
-      padding-bottom: 10px;
       border-bottom: 1px solid #fff; }
       .profile-toggle.sub-profile-toggle ul li.active {
+        margin-top: -2px;
+        padding-top: 12px;
         border-bottom: 3px solid #fff; }
 
 .profile-toggle li.loading {

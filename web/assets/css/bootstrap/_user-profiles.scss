@@ -317,9 +317,10 @@
     margin-bottom: 0;
     border-bottom: 0;
     li {
-      padding-bottom: 10px;
       border-bottom: 1px solid #fff;
       &.active{
+        margin-top: -2px;
+        padding-top: 12px;
         border-bottom: 3px solid #fff;
       }
     }
